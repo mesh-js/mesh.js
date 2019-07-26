@@ -1,0 +1,17 @@
+body {
+  display: flex;
+}
+
+#container {
+  width: 100%;
+  max-width: 512px;
+  margin: auto;
+  display: inline-block;
+}
+
+#app {
+  width: 100%;
+  max-width: 512px;
+  padding-bottom: 100%;
+  background: white;
+}

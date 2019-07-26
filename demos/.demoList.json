@@ -1,0 +1,10 @@
+[
+  {
+    "label": "benchmark triangles meshjs",
+    "src": "benchmark/triangles"
+  },
+  {
+    "label": "benchmark triangles spritejs",
+    "src": "benchmark/triangles_spritejs"
+  }
+]

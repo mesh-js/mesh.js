@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas);
+
+    const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
+
+    (async function () {
+      let texture = await renderer.loadTexture(textureURL);
+      texture = renderer.createText('abcdefg', {font: 'normal 24px arial'});
+
+      const meshList = [];
+      const NUM = 1000;
+      const size = 50;
+
+      // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
+      // const d = 'M30 30A10 10 1 1 0 10 10z';
+      const figure = new Figure2D();
+      figure.rect(0, 0, size, size);
+
+      for(let i = 0; i < NUM; i++) {
+        // figure.arc(50, 50, 30, 0, 2 * Math.PI);
+        // figure.rect(50, 50, 100, 100);
+        // console.log(figure.contours);
+
+        const mesh = new Mesh2D(figure, {width: 512, height: 512});
+        mesh.setStroke({
+          thickness: 6,
+          color: [1, 0, 1, 1],
+        });
+
+        mesh.setFill({
+          color: [1, 0, 0, 1],
+        });
+
+        // mesh.setTransform([Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100]);
+
+        // if(i > NUM / 2) {
+        mesh.setTexture(texture, {
+          scale: false,
+          repeat: false,
+          rect: [10, 10],
+        });
+        // }
+
+        meshList.push(mesh);
+      }
+
+      function getData() {
+        return meshList.map((mesh) => {
+          mesh.setTransform([1, 0, 0, 1, 500 * Math.random(), 500 * Math.random()]);
+          // mesh.transform([1, 0, 0, 1, -25, -25]);
+          // mesh.translate(-25, -25);
+          // const ang = Math.PI / 6;
+          // mesh.transform([Math.cos(ang), Math.sin(ang), -Math.sin(ang), Math.cos(ang), 0, 0]);
+          // mesh.rotate(ang, [25, 25]);
+          // mesh.scale(2);
+          // mesh.translate(50, 50);
+          // mesh.skew(0, 1.10, [75, 75]);
+          // mesh.translate(25, 25);
+          // mesh.translate(50, 50);
+          // mesh.setTransform([Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100]);
+          return mesh;
+        });
+      }
+
+      window.getData = getData;
+
+      function update() {
+        const meshes = getData();
+        renderer.drawMeshes(meshes);
+        requestAnimationFrame(update);
+      }
+      update();
+    }());
+  </script>
+</body>
+</html>
