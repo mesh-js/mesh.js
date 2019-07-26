@@ -30,9 +30,8 @@ export default class Renderer extends GlRenderer {
     return loadImage(src);
   }
 
-  createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
-    const img = createText(text, {font, fillColor, strokeColor});
-    window.canvascc = img;
+  async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
+    const img = await createText(text, {font, fillColor, strokeColor});
     const texture = this.createTexture(img);
     texture._img = img;
     this.textures.push(texture);

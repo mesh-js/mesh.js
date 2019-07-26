@@ -228,55 +228,61 @@ export function parseFont(str, defaultHeight) {
   return font;
 }
 
-// function create2DContext() {
-//   let canvas;
-//   if(typeof OffscreenCanvas === 'function') {
-//     canvas = new OffscreenCanvas(1, 1);
-//   } else {
-//     canvas = document.createElement('canvas');
-//   }
-//   return canvas;
-// }
+function create2DContext() {
+  let canvas;
+  if(typeof OffscreenCanvas === 'function' && typeof createImageBitmap === 'function') {
+    canvas = new OffscreenCanvas(1, 1);
+  } else {
+    canvas = document.createElement('canvas');
+  }
+  return canvas.getContext('2d');
+}
 
-const textCache = {};
+
+let textContext = null;
 export function createText(text, {font, fillColor, strokeColor}) {
-  const key = `${text}$$${font}`;
-  if(textCache[key]) return textCache[key];
-
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  context.save();
-  context.font = font;
-  const {width} = context.measureText(text);
-  context.restore();
+  if(!textContext) {
+    // textContext = document.createElement('canvas').getContext('2d');
+    textContext = create2DContext();
+  }
+  textContext.save();
+  textContext.font = font;
+  const {width} = textContext.measureText(text);
+  textContext.restore();
 
   const fontInfo = parseFont(font);
   const height = fontInfo.pxLineHeight;
 
   if(!fillColor && !strokeColor) fillColor = '#000';
 
+  const canvas = textContext.canvas;
   canvas.width = Math.ceil(width);
   canvas.height = Math.ceil(height);
 
-  context.save();
-  context.font = font;
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
+  textContext.save();
+  textContext.font = font;
+  textContext.textAlign = 'center';
+  textContext.textBaseline = 'middle';
 
   const top = canvas.height / 2;
   const left = canvas.width / 2;
 
   if(fillColor) {
-    context.fillStyle = fillColor;
-    context.fillText(text, left, top);
+    textContext.fillStyle = fillColor;
+    textContext.fillText(text, left, top);
   }
   if(strokeColor) {
-    context.strokeStyle = strokeColor;
-    context.strokeText(text, left, top);
+    textContext.strokeStyle = strokeColor;
+    textContext.strokeText(text, left, top);
   }
-  context.restore();
+  textContext.restore();
 
-  textCache[key] = canvas;
-
-  return canvas;
+  let img = null;
+  if(canvas.transferToImageBitmap) {
+    img = canvas.transferToImageBitmap();
+    return createImageBitmap(img, {imageOrientation: 'flipY'});
+  }
+  img = new Image();
+  img.src = canvas.toDataURL('image/png');
+  return img;
 }

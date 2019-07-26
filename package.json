@@ -30,7 +30,7 @@
     "eslint-plugin-html": "^5.0.5",
     "extrude-polyline": "^1.0.6",
     "gl-matrix": "^3.0.0",
-    "gl-renderer": "^0.5.0",
+    "gl-renderer": "^0.5.2",
     "glsl-shader-loader": "^0.1.6",
     "normalize-path-scale": "^2.0.0",
     "parse-svg-path": "^0.1.2",

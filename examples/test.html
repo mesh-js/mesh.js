@@ -19,11 +19,12 @@
 
     (async function () {
       let texture = await renderer.loadTexture(textureURL);
-      texture = renderer.createText('abcdefg', {font: 'normal 24px arial'});
+      texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
+      // console.log(texture);
 
       const meshList = [];
-      const NUM = 1000;
-      const size = 50;
+      const NUM = 1;
+      const size = 150;
 
       // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
       // const d = 'M30 30A10 10 1 1 0 10 10z';
@@ -81,7 +82,7 @@
       function update() {
         const meshes = getData();
         renderer.drawMeshes(meshes);
-        requestAnimationFrame(update);
+        // requestAnimationFrame(update);
       }
       update();
     }());
