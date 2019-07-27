@@ -17,14 +17,15 @@ const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
 const _applyTransform = Symbol('applyTransform');
 
-function transformPoint(p, m, w, h) {
+function transformPoint(p, m, w, h, flipY) {
   let [x, y] = p;
 
   x = (x + 1) * 0.5 * w;
   y = (-y + 1) * 0.5 * h;
 
   p[0] = x * m[0] + y * m[2] + m[4];
-  p[1] = h - (x * m[1] + y * m[3] + m[5]);
+  p[1] = x * m[1] + y * m[3] + m[5];
+  if(flipY) p[1] = h - p[1];
   return p;
 }
 
@@ -129,7 +130,7 @@ export default class Mesh2D {
 
     for(let i = 0; i < positions.length; i++) {
       const point = positions[i];
-      transformPoint(point, m, w, h);
+      transformPoint(point, m, w, h, true);
     }
 
     normalize(positions, this[_bound]);
@@ -162,7 +163,7 @@ export default class Mesh2D {
       const m = mat2d.invert(transform);
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) {
-          [x, y] = transformPoint([x, y], m, w, h);
+          [x, y] = transformPoint([x, y], m, w, h, true);
           [x, y] = [x / w, y / h];
           return getTexCoord([x, y], [rect[0] / imgWidth, rect[1] / imgHeight, rect[2] / w, rect[3] / h], this[_texOptions]);
         }
@@ -181,6 +182,68 @@ export default class Mesh2D {
       this[_uniforms].u_repeat = 1;
     } else {
       this[_uniforms].u_repeat = 0;
+    }
+  }
+
+  /**
+    vector: [x0, y0, x1, y1],
+    gradientColors: [{offset:0, color}, {offset:1, color}, ...],
+    type: 'fill|stroke',
+   */
+  setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
+    let {positions, fillPointCount} = this.meshData;
+    let colors = this.meshData.attributes.a_color;
+
+    gradientColors.sort((a, b) => {
+      return a.offset - b.offset;
+    });
+
+    if(type === 'fill') {
+      positions = positions.slice(0, fillPointCount);
+      colors = colors.slice(0, fillPointCount);
+    } else {
+      positions = positions.slice(fillPointCount);
+      colors = colors.slice(fillPointCount);
+    }
+
+    const [w, h] = this[_bound][1];
+    const m = mat2d.invert(this[_transform]);
+
+    function mixColor(out, startColor, stopColor, p) {
+      const s = 1 - p;
+      out[0] = startColor[0] * s + stopColor[0] * p;
+      out[1] = startColor[1] * s + stopColor[1] * p;
+      out[2] = startColor[2] * s + stopColor[2] * p;
+      out[3] = startColor[3] * s + stopColor[3] * p;
+      return out;
+    }
+
+    for(let i = 0; i < positions.length; i++) {
+      const [x, y] = transformPoint(positions[i].slice(0, 2), m, w, h, false);
+      const color = colors[i];
+
+      const v1 = [x - vector[0], y - vector[1]];
+      const v2 = [vector[2] - vector[0], vector[3] - vector[1]];
+
+      const p = (v1[0] * v2[0] + v1[1] * v2[1]) / (v2[0] ** 2 + v2[1] ** 2);
+      const len = gradientColors.length;
+
+      for(let j = 0; j < len; j++) {
+        const {offset, color: gradientColor} = gradientColors[j];
+        if(p <= offset) {
+          if(j === 0) mixColor(color, gradientColor, gradientColor, 1);
+          else {
+            const {color: startColor, offset: startOffset} = gradientColors[j - 1];
+            const stopColor = gradientColor;
+            const stopOffset = offset;
+            const pp = (p - startOffset) / (stopOffset - startOffset);
+            mixColor(color, startColor, stopColor, pp);
+          }
+          break;
+        } else if(j === len - 1) {
+          mixColor(color, gradientColor, gradientColor, 1);
+        }
+      }
     }
   }
 
@@ -210,7 +273,7 @@ export default class Mesh2D {
           return p;
         });
         mesh.attributes = {
-          a_color: Array(mesh.positions.length).fill(this[_fillColor]),
+          a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_fillColor]]),
         };
         meshes.fill = mesh;
       }
@@ -224,7 +287,7 @@ export default class Mesh2D {
             return p;
           });
           mesh.attributes = {
-            a_color: Array(mesh.positions.length).fill(this[_strokeColor]),
+            a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_strokeColor]]),
           };
         });
         meshes.stroke = flattenMeshes(_meshes);
@@ -232,6 +295,7 @@ export default class Mesh2D {
     }
 
     const mesh = flattenMeshes([meshes.fill, meshes.stroke]);
+    mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
     normalize(mesh.positions, this[_bound]);
     if(!this[_uniforms].u_texSampler) {
       mesh.textureCoord = mesh.positions.map(() => [0, 0]);
