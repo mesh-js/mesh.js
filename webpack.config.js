@@ -41,7 +41,7 @@ module.exports = function (env = {}) {
         {
           test: /\.(frag|vert|glsl)$/,
           use: {
-            loader: 'glsl-shader-loader',
+            loader: 'raw-loader',
             options: {},
           },
         },

@@ -1,16 +1,21 @@
-/* eslint-disable */
+import {vec2} from 'gl-matrix';
+
 function clone(arr) {
-    return [arr[0], arr[1]]
+  return [arr[0], arr[1]];
 }
 
 function create() {
-    return [0, 0]
+  return [0, 0];
 }
 
-module.exports = {
-    create: create,
-    clone: clone,
-    copy: require('gl-vec2/copy'),
-    scaleAndAdd: require('gl-vec2/scaleAndAdd'),
-    dot: require('gl-vec2/dot')
-}
+const copy = vec2.copy;
+const scaleAndAdd = vec2.scaleAndAdd;
+const dot = vec2.dot;
+
+export {
+  create,
+  clone,
+  copy,
+  scaleAndAdd,
+  dot,
+};
