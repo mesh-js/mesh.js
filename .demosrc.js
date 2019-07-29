@@ -11,7 +11,7 @@ export default {
   demoList: '.demoList.json',
   name: 'MESHJS',
   version: 'v1',
-  homePage: 'https://github.com/colajs/renderer',
+  homePage: 'https://github.com/mesh-js/mesh.js',
   logo: '',
   // 可选主题: active4d, allHallowsEve, amy, blackboard, brillianceBlack,
   // brillianceDull, chromeDevtools, cloudsMidnight, clouds, cobalt,
