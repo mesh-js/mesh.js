@@ -38,9 +38,9 @@ export default class Renderer extends GlRenderer {
     return texture;
   }
 
-  drawMeshes(meshes) {
+  drawMeshes(meshes, clearBuffer = true) {
     const meshData = compress(meshes);
     this.setMeshData(meshData);
-    if(!this.options.autoUpdate) this.render();
+    if(!this.options.autoUpdate) this.render(clearBuffer);
   }
 }
