@@ -1,5 +1,4 @@
 import GlRenderer from 'gl-renderer';
-import {loadImage} from 'gl-renderer/src/helpers';
 import vertShader from './shader.vert';
 import fragShader from './shader.frag';
 import {compress, createText} from './utils';
@@ -24,10 +23,6 @@ export default class Renderer extends GlRenderer {
     // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
-  }
-
-  loadImage(src) {
-    return loadImage(src);
   }
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {

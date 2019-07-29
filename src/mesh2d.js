@@ -141,6 +141,13 @@ export default class Mesh2D {
     Object.assign(this[_uniforms], uniforms);
   }
 
+  /**
+    options: {
+      scale: false,
+      repeat: false,
+      rect: [10, 10],
+    }
+   */
   setTexture(texture, options = {}) {
     if(!this[_fill]) {
       this.setFill({color: [0, 0, 0, 0]});
