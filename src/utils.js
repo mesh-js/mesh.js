@@ -73,23 +73,27 @@ export function compress(meshes, maxSize = 5000) {
 
   for(let i = 0; i < meshes.length; i++) {
     const mesh = meshes[i].meshData;
-    const len = mesh.positions.length;
+    let len = 0;
 
-    if(size + len > maxSize) { // cannot merge
-      packData(temp, ret, enableBlend);
-      size = 0;
-      enableBlend = false;
-    } else if(size) {
-      const lastMesh = meshes[i - 1].meshData;
-      if(!compareUniform(lastMesh, mesh)) {
+    if(mesh) {
+      len = mesh.positions.length;
+
+      if(size + len > maxSize) { // cannot merge
         packData(temp, ret, enableBlend);
         size = 0;
         enableBlend = false;
+      } else if(size) {
+        const lastMesh = meshes[i - 1].meshData;
+        if(!compareUniform(lastMesh, mesh)) {
+          packData(temp, ret, enableBlend);
+          size = 0;
+          enableBlend = false;
+        }
       }
-    }
 
-    temp.push(mesh);
-    enableBlend = enableBlend || meshes[i].enableBlend;
+      temp.push(mesh);
+      enableBlend = enableBlend || meshes[i].enableBlend;
+    }
 
     if(i === meshes.length - 1) {
       packData(temp, ret, enableBlend);

@@ -70,7 +70,7 @@ export default class Mesh2D {
     this[_enableBlend] = color[3] < 1.0;
   }
 
-  setFill({delaunay = true, clean = true, randomization = 0, color = [0, 0, 0, 0]}) {
+  setFill({delaunay = true, clean = true, randomization = 0, color = [0, 0, 0, 0]} = {}) {
     this[_mesh] = null;
     this[_fill] = {delaunay, clean, randomization};
     this[_fillColor] = color;
@@ -81,14 +81,14 @@ export default class Mesh2D {
     return this[_enableBlend];
   }
 
-  setTransform(m) {
+  setTransform(...m) {
     const transform = this[_transform];
     this[_transform] = m;
     m = mat2d(m) * mat2d.invert(transform);
     return this[_applyTransform](m);
   }
 
-  transform(m) {
+  transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(m) * mat2d(transform);
     return this[_applyTransform](m);
@@ -97,7 +97,7 @@ export default class Mesh2D {
   translate(x, y) {
     let m = mat2d.create();
     m = mat2d.translate(m, [x, y]);
-    return this.transform(m);
+    return this.transform(...m);
   }
 
   rotate(rad, [ox, oy] = [0, 0]) {
@@ -105,7 +105,7 @@ export default class Mesh2D {
     m = mat2d.translate(m, [ox, oy]);
     m = mat2d.rotate(m, rad);
     m = mat2d.translate(m, [-ox, -oy]);
-    return this.transform(m);
+    return this.transform(...m);
   }
 
   scale(x, y = x, [ox, oy] = [0, 0]) {
@@ -113,7 +113,7 @@ export default class Mesh2D {
     m = mat2d.translate(m, [ox, oy]);
     m = mat2d.scale(m, [x, y]);
     m = mat2d.translate(m, [-ox, -oy]);
-    return this[_applyTransform](m);
+    return this.transform(...m);
   }
 
   skew(x, y = x, [ox, oy] = [0, 0]) {
@@ -121,19 +121,21 @@ export default class Mesh2D {
     m = mat2d.translate(m, [ox, oy]);
     m = mat2d(m) * mat2d(1, Math.tan(y), Math.tan(x), 1, 0, 0);
     m = mat2d.translate(m, [-ox, -oy]);
-    return this[_applyTransform](m);
+    return this.transform(...m);
   }
 
   [_applyTransform](m) {
-    const {positions} = this.meshData;
+    if(!this[_mesh]) return;
+
+    const {positions} = this[_mesh];
     const [w, h] = this[_bound][1];
 
     for(let i = 0; i < positions.length; i++) {
       const point = positions[i];
       transformPoint(point, m, w, h, true);
     }
-
     normalize(positions, this[_bound]);
+
     return this;
   }
 
@@ -150,7 +152,7 @@ export default class Mesh2D {
    */
   setTexture(texture, options = {}) {
     if(!this[_fill]) {
-      this.setFill({color: [0, 0, 0, 0]});
+      this.setFill();
     }
     this.setUniforms({
       u_texFlag: 1,
@@ -198,6 +200,12 @@ export default class Mesh2D {
     type: 'fill|stroke',
    */
   setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
+    if(type === 'fill' && !this[_fill]) {
+      this.setFill();
+    }
+    if(type === 'stroke' && !this[_stroke]) {
+      this.setStroke();
+    }
     let {positions, fillPointCount} = this.meshData;
     let colors = this.meshData.attributes.a_color;
 
@@ -267,6 +275,9 @@ export default class Mesh2D {
     if(this[_mesh]) {
       return this[_mesh];
     }
+    if(!this[_fill] && !this[_stroke]) {
+      return null;
+    }
 
     const contours = this[_contours];
     const meshes = {};
@@ -310,6 +321,12 @@ export default class Mesh2D {
     mesh.uniforms = this[_uniforms];
     if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
     this[_mesh] = mesh;
+
+    const transform = this[_transform];
+    if(!isUnitTransform(transform)) {
+      this[_applyTransform](transform);
+    }
+
     return this[_mesh];
   }
 }
