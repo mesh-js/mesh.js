@@ -7,7 +7,7 @@ A super fast 2D renderer for modern browsers.
 From CDN:
 
 ```html
-<script src="https://s3.ssl.qhres.com/static/70d7e0d445dbf509.js"></script>
+<script src="https://s2.ssl.qhres.com/static/42cee46429efa138.js"></script>
 ```
 
 Use NPM:
@@ -44,7 +44,7 @@ mesh2.setFill({
 });
 
 function update(t) {
-  mesh2.setTransform([1, 0, 0, 1, 50, 50]);
+  mesh2.setTransform(1, 0, 0, 1, 50, 50);
   mesh2.rotate(t * 0.001 * Math.PI, [150, 150]);
   renderer.drawMeshes([mesh1, mesh2]);
   requestAnimationFrame(update);

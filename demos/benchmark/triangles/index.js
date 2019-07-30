@@ -30,7 +30,7 @@ const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
       color: [1, 0, 0, 1],
     });
 
-    // mesh.setTransform([Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100]);
+    // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
 
     // if(i > NUM / 2) {
     // mesh.setTexture(texture, {
@@ -46,9 +46,9 @@ const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
   function getData() {
     return meshList.map((mesh) => {
       const ang = Math.random() * Math.PI;
-      mesh.setTransform([Math.cos(ang), Math.sin(ang), -Math.sin(ang), Math.cos(ang), 500 * Math.random(), 500 * Math.random()]);
-      // mesh.setTransform([1, 0, 0, 1, 0, 0]);
-      // mesh.setTransform([Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100]);
+      mesh.setTransform(Math.cos(ang), Math.sin(ang), -Math.sin(ang), Math.cos(ang), 500 * Math.random(), 500 * Math.random());
+      // mesh.setTransform(1, 0, 0, 1, 0, 0);
+      // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
       return mesh;
     });
   }
