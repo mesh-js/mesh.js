@@ -36,7 +36,7 @@ export default class Figure2D {
     return null;
   }
 
-  get BoundingBox() {
+  get boundingBox() {
     return getBounds(this.contours);
   }
 

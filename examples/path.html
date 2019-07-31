@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas);
+
+    const figure = new Figure2D();
+    figure.addPath('M 100 300 Q 150 50 200 300 Q 250 550 250 300 Q 350 50 350 300 C 400 550 450 50 300 100 C 550 50 500 550 300 450 A 50 50 0 1 1 100 300Z');
+    // figure.rect(50, 50, 100, 100);
+
+    const meshList = [];
+
+    for(let i = 0; i < 1; i++) {
+      const pos = [Math.random() * 400, Math.random() * 400];
+      const mesh = new Mesh2D(figure, canvas);
+      mesh.pos = pos;
+      mesh.setFill({
+        color: [1, 0, 0, 0.6],
+      });
+      meshList.push(mesh);
+    }
+
+    function update(t) {
+      meshList.forEach((mesh) => {
+        mesh.setTransform(1, 0, 0, 1, 0, 0);
+        mesh.rotate(t * 0.001 * Math.PI, mesh.boundingCenter);
+      });
+      renderer.drawMeshes(meshList);
+      requestAnimationFrame(update);
+    }
+    update(0);
+  </script>
+</body>
+</html>

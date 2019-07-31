@@ -1,6 +1,7 @@
 import normalize from 'normalize-path-scale';
 import triangulate from 'triangulate-contours';
 import {mat2d} from 'gl-matrix';
+import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
 import {flattenMeshes} from './utils';
 
@@ -16,6 +17,7 @@ const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
 const _applyTransform = Symbol('applyTransform');
+const _boundingBox = Symbol('boundingBox');
 
 function transformPoint(p, m, w, h, flipY) {
   let [x, y] = p;
@@ -59,6 +61,31 @@ export default class Mesh2D {
     this[_bound] = [[0, 0], [width, height]];
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
+  }
+
+  get boundingBox() {
+    if(this[_mesh] && this[_boundingBox]) return this[_boundingBox];
+
+    const meshData = this.meshData;
+    if(meshData) {
+      let {positions} = meshData;
+      const m = mat2d.invert(this[_transform]);
+      const [w, h] = this[_bound][1];
+      positions = positions.map(([x, y]) => {
+        return transformPoint([x, y], m, w, h, false);
+      });
+      this[_boundingBox] = getBounds(positions);
+      return this[_boundingBox];
+    }
+    return null;
+  }
+
+  get boundingCenter() {
+    const bound = this.boundingBox;
+    if(bound) {
+      return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
+    }
+    return null;
   }
 
   // join: 'miter' or 'bevel'
