@@ -16,10 +16,22 @@
 <body>
   <div id="app"></div>
   <script>
+    // const language = navigator.language;
+    const language = 'en';
     window.$docsify = {
       name: '@mesh.js/core',
       repo: 'mesh-js/mesh.js',
       loadNavbar: true,
+      loadSidebar: language === 'zh-CN',
+      // logo: '/logo.svg',
+      homepage: language === 'zh-CN' ? 'zh-cn/README.md' : 'en/README.md',
+      alias: {
+        '/zh-cn/.*/_sidebar.md': '/zh-cn/_sidebar.md',
+        '/zh-cn/.*/_navbar.md': '/zh-cn/_navbar.md',
+        '/en/.*/_sidebar.md': '/en/_sidebar.md',
+        '/en/.*/_navbar.md': '/en/_navbar.md',
+        '/_sidebar.md': language === 'zh-CN' ? '/zh-cn/_sidebar.md' : '/en/_sidebar.md',
+      },
     };
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
