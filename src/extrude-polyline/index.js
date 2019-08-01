@@ -31,13 +31,20 @@ Stroke.prototype.mapThickness = function (point, i, points) {
   return this.thickness;
 };
 
-Stroke.prototype.build = function (points) {
+Stroke.prototype.build = function (points, closed = false) {
   const complex = {
     positions: [],
     cells: [],
   };
 
   if(points.length <= 1) return complex;
+
+  if(closed) {
+    const [a, b] = points;
+    const v = [b[0] - a[0], b[1] - a[1]];
+    const v2 = vec.scaleAndAdd(vec.create(), a, v, 1e-7);
+    points.push(v2);
+  }
 
   const total = points.length;
 

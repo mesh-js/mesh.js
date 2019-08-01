@@ -3,7 +3,7 @@ import triangulate from 'triangulate-contours';
 import {mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
-import {flattenMeshes} from './utils';
+import {flattenMeshes, vectorToRGBA} from './utils';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -18,6 +18,7 @@ const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
 const _applyTransform = Symbol('applyTransform');
 const _boundingBox = Symbol('boundingBox');
+const _gradient = Symbol('gradient');
 
 function transformPoint(p, m, w, h, flipY) {
   let [x, y] = p;
@@ -63,6 +64,10 @@ export default class Mesh2D {
     this[_uniforms] = {};
   }
 
+  get contours() {
+    return this[_contours];
+  }
+
   get boundingBox() {
     if(this[_mesh] && this[_boundingBox]) return this[_boundingBox];
 
@@ -102,6 +107,62 @@ export default class Mesh2D {
     this[_fill] = {delaunay, clean, randomization};
     this[_fillColor] = color;
     this[_enableBlend] = color[3] < 1.0;
+  }
+
+  get lineWidth() {
+    if(this[_stroke]) {
+      return this[_stroke].thickness;
+    }
+    return null;
+  }
+
+  get lineCap() {
+    if(this[_stroke]) {
+      return this[_stroke].cap;
+    }
+    return null;
+  }
+
+  get lineJoin() {
+    if(this[_stroke]) {
+      return this[_stroke].join;
+    }
+    return null;
+  }
+
+  get miterLimit() {
+    if(this[_stroke]) {
+      return this[_stroke].miterLimit;
+    }
+    return null;
+  }
+
+  get strokeStyle() {
+    if(this[_strokeColor]) {
+      return vectorToRGBA(this[_strokeColor]);
+    }
+    return null;
+  }
+
+  get fillStyle() {
+    if(this[_fillColor]) {
+      return vectorToRGBA(this[_fillColor]);
+    }
+    return null;
+  }
+
+  get gradient() {
+    return this[_gradient];
+  }
+
+  get texture() {
+    if(this[_uniforms].u_texSampler) {
+      return {
+        image: this[_uniforms].u_texSampler._img,
+        options: this[_texOptions],
+      };
+    }
+    return null;
   }
 
   get enableBlend() {
@@ -214,6 +275,11 @@ export default class Mesh2D {
         return [0, 0];
       });
     }
+    const srcRect = options.srcRect;
+    if(srcRect) {
+      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[2] / imgHeight];
+      this[_uniforms].u_srcRect = sRect;
+    }
     if(options.repeat) {
       this[_uniforms].u_repeat = 1;
     } else {
@@ -223,7 +289,7 @@ export default class Mesh2D {
 
   /**
     vector: [x0, y0, x1, y1],
-    gradientColors: [{offset:0, color}, {offset:1, color}, ...],
+    colors: [{offset:0, color}, {offset:1, color}, ...],
     type: 'fill|stroke',
    */
   setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
@@ -233,6 +299,8 @@ export default class Mesh2D {
     if(type === 'stroke' && !this[_stroke]) {
       this.setStroke();
     }
+    this[_gradient] = this[_gradient] || {};
+    this[_gradient][type] = {vector, colors: gradientColors, type};
     let {positions, fillPointCount} = this.meshData;
     let colors = this.meshData.attributes.a_color;
 
@@ -324,7 +392,14 @@ export default class Mesh2D {
       }
 
       if(this[_stroke]) {
-        const _meshes = contours.map(lines => this[_stroke].build(lines));
+        const closed = contours.closed;
+        const len = contours.length;
+        const _meshes = contours.map((lines, i) => {
+          if(closed && i === len - 1) {
+            return this[_stroke].build([...lines], true);
+          }
+          return this[_stroke].build(lines);
+        });
         _meshes.forEach((mesh) => {
           mesh.positions = mesh.positions.map((p) => {
             p[1] = this[_bound][1][1] - p[1];

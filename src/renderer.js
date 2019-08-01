@@ -1,4 +1,5 @@
 import GlRenderer from 'gl-renderer';
+import CanvasRenderer from './canvas-renderer';
 import vertShader from './shader.vert';
 import fragShader from './shader.frag';
 import {compress, createText} from './utils';
@@ -7,35 +8,101 @@ const defaultOpts = {
   autoUpdate: false,
 };
 
-export default class Renderer extends GlRenderer {
-  constructor(canvas, opts = {}) {
-    super(canvas, Object.assign({}, defaultOpts, opts));
-    const program = this.compileSync(fragShader, vertShader);
-    this.useProgram(program);
+const _glRenderer = Symbol('glRenderer');
+const _canvasRenderer = Symbol('canvasRenderer');
+const _options = Symbol('options');
 
-    // bind default Texture to eliminate warning
-    const img = document.createElement('canvas');
-    img.width = 1;
-    img.height = 1;
-    const texture = this.createTexture(img);
-    const gl = this.gl;
-    // gl.enable(gl.BLEND);
-    // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, texture);
+export default class Renderer {
+  constructor(canvas, opts = {}) {
+    let contextType = opts.contextType || 'webgl';
+    if(typeof WebGLRenderingContext !== 'function') {
+      contextType = '2d';
+    }
+    if(!canvas.getContext) { // 小程序
+      const context = canvas;
+      canvas = {
+        getContext() {
+          return context;
+        },
+      };
+      contextType = '2d';
+    }
+    if(contextType !== 'webgl' && contextType !== '2d') {
+      throw new Error(`Unknown context type ${contextType}`);
+    }
+    opts.contextType = contextType;
+
+    this[_options] = Object.assign({}, defaultOpts, opts);
+
+    if(contextType === 'webgl') {
+      const renderer = new GlRenderer(canvas, this[_options]);
+
+      const program = renderer.compileSync(fragShader, vertShader);
+      renderer.useProgram(program);
+
+      // bind default Texture to eliminate warning
+      const img = document.createElement('canvas');
+      img.width = 1;
+      img.height = 1;
+      const texture = renderer.createTexture(img);
+      const gl = renderer.gl;
+      // gl.enable(gl.BLEND);
+      // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+      this[_glRenderer] = renderer;
+    } else {
+      this[_canvasRenderer] = new CanvasRenderer(canvas, this[_options]);
+    }
+  }
+
+  get options() {
+    return this[_options];
+  }
+
+  get glRenderer() {
+    return this[_glRenderer];
+  }
+
+  get canvasRenderer() {
+    return this[_canvasRenderer];
   }
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
-    const img = await createText(text, {font, fillColor, strokeColor});
-    const texture = this.createTexture(img);
-    texture._img = img;
-    this.textures.push(texture);
-    return texture;
+    const img = await createText(text, {font, fillColor, strokeColor}, this[_options].contextType === 'webgl');
+    return this.createTexture(img);
+  }
+
+  createTexture(img) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.createTexture(img);
+  }
+
+  loadTexture(textureURL) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.loadTexture(textureURL);
+  }
+
+  deleteTexture(texture) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.deleteTexture(texture);
   }
 
   drawMeshes(meshes, clearBuffer = true) {
-    const meshData = compress(meshes);
-    this.setMeshData(meshData);
-    if(!this.options.autoUpdate) this.render(clearBuffer);
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    if(this[_glRenderer]) {
+      const meshData = compress(meshes);
+      renderer.setMeshData(meshData);
+      // renderer.setMeshData(meshes.map((mesh) => {
+      //   const data = mesh.meshData;
+      //   data.enableBlend = true;
+      //   return data;
+      // }));
+      if(!renderer.options.autoUpdate) renderer.render(clearBuffer);
+    } else {
+      renderer.drawMeshes(meshes, clearBuffer);
+    }
   }
 }

@@ -64,7 +64,7 @@ function packData(temp, ret, enableBlend) {
   }
 }
 
-export function compress(meshes, maxSize = 5000) {
+export function compress(meshes, maxSize = 1500) {
   const ret = [];
   const temp = [];
 
@@ -244,7 +244,7 @@ function create2DContext() {
 
 
 let textContext = null;
-export function createText(text, {font, fillColor, strokeColor}) {
+export function createText(text, {font, fillColor, strokeColor}, flipY = true) {
   if(!textContext) {
     // textContext = document.createElement('canvas').getContext('2d');
     textContext = create2DContext();
@@ -284,9 +284,33 @@ export function createText(text, {font, fillColor, strokeColor}) {
   let img = null;
   if(canvas.transferToImageBitmap) {
     img = canvas.transferToImageBitmap();
-    return createImageBitmap(img, {imageOrientation: 'flipY'});
+    if(flipY) return createImageBitmap(img, {imageOrientation: 'flipY'});
+    return createImageBitmap(img);
   }
   img = new Image();
   img.src = canvas.toDataURL('image/png');
   return img;
+}
+
+export function vectorToRGBA(vector) {
+  return `rgba(${vector.map((c, i) => {
+    if(i < 3) return Math.floor(c * 255);
+    return c;
+  }).join()})`;
+}
+
+const imageCache = {};
+export function loadImage(src) {
+  if(!imageCache[src]) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    imageCache[src] = new Promise((resolve) => {
+      img.onload = function () {
+        imageCache[src] = img;
+        resolve(img);
+      };
+      img.src = src;
+    });
+  }
+  return Promise.resolve(imageCache[src]);
 }

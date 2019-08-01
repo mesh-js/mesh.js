@@ -5,6 +5,7 @@ precision mediump float;
 uniform sampler2D u_texSampler;
 uniform int u_texFlag;
 uniform int u_repeat;
+uniform vec4 u_srcRect;
 
 varying vec4 vColor;
 varying vec2 vTextureCoord;
@@ -22,6 +23,10 @@ void main() {
   if(u_texFlag > 0 && flagBackground > 0.0 
     && texCoord.x <= 1.0 && texCoord.x >= 0.0
     && texCoord.y <= 1.0 && texCoord.y >= 0.0) {
+    if(u_srcRect.z > 0.0) {
+      texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;
+      texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
+    }
     vec4 texColor = texture2D(u_texSampler, texCoord);
     gl_FragColor = mix(vColor, texColor, texColor.a);
     // gl_FragColor = texColor;

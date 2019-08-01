@@ -26,14 +26,16 @@ export default class Figure2D {
   }
 
   get contours() {
+    let ret = null;
     if(this[_contours]) return this[_contours].map(c => [...c]);
     if(this[_path]) {
       this[_contours] = contours(parse(this[_path])).map((path) => {
         return simplify(path, this[_simplify]);
       });
-      return this[_contours].map(c => [...c]);
+      ret = this[_contours].map(c => [...c]);
     }
-    return null;
+    if(/Z$/ig.test(this[_path])) ret.closed = true;
+    return ret;
   }
 
   get boundingBox() {

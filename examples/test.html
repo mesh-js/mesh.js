@@ -13,7 +13,9 @@
     const {Renderer, Figure2D, Mesh2D} = meshjs;
 
     const canvas = document.querySelector('canvas');
-    const renderer = new Renderer(canvas);
+    const renderer = new Renderer(canvas, {
+      // contextType: '2d',
+    });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
 
@@ -29,7 +31,7 @@
       // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
       // const d = 'M30 30A10 10 1 1 0 10 10z';
       const figure = new Figure2D();
-      figure.rect(0, 0, size, size);
+      figure.rect(50, 50, size, size);
 
       for(let i = 0; i < NUM; i++) {
         // figure.arc(50, 50, 30, 0, 2 * Math.PI);
@@ -46,18 +48,19 @@
           color: [1, 0, 0, 1],
         });
 
-        // mesh.setTransform([Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100]);
+        // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
 
         // if(i > NUM / 2) {
         mesh.setTexture(texture, {
           scale: false,
           repeat: false,
-          rect: [10, 10],
+          rect: [60, 60],
+          // srcRect: [0, 0, 70, 70],
         });
         // }
 
         mesh.setLinearGradient({
-          vector: [0, 0, 0, 150],
+          vector: [50, 50, 50, 200],
           colors: [
             {offset: 0, color: [1, 1, 0, 1]},
             {offset: 1, color: [0, 1, 0, 1]},
@@ -70,7 +73,7 @@
 
       function getData() {
         return meshList.map((mesh) => {
-          mesh.setTransform(1, 0, 0, 1, 500 * Math.random(), 500 * Math.random());
+          // mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
           // mesh.transform([1, 0, 0, 1, -25, -25]);
           // mesh.translate(-25, -25);
           // const ang = Math.PI / 6;
