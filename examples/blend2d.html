@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: '2d',
+    });
+
+    const figure = new Figure2D();
+    figure.rect(50, 50, 150, 150);
+
+    const mesh1 = new Mesh2D(figure, canvas);
+    const mesh2 = new Mesh2D(figure, canvas);
+
+    mesh1.setFill({
+      color: [1, 0, 0, 0.5],
+    });
+
+    mesh2.setFill({
+      color: [0, 0, 1, 0.5],
+    });
+
+    mesh2.translate(50, 50);
+
+    function update(t) {
+      renderer.drawMeshes([mesh1, mesh2]);
+      // requestAnimationFrame(update);
+    }
+    update(0);
+  </script>
+</body>
+</html>
