@@ -2,7 +2,9 @@ import GlRenderer from 'gl-renderer';
 import CanvasRenderer from './canvas-renderer';
 import vertShader from './shader.vert';
 import fragShader from './shader.frag';
-import {compress, createText} from './utils';
+import compress from './utils/compress';
+import createText from './utils/create-text';
+import {normalize, denormalize} from './utils/positions';
 
 const defaultOpts = {
   autoUpdate: false,
@@ -24,9 +26,14 @@ export default class Renderer {
         getContext() {
           return context;
         },
+        width: opts.width,
+        height: opts.height,
       };
+      context.canvas = canvas;
       contextType = '2d';
     }
+    this.canvas = canvas;
+
     if(contextType !== 'webgl' && contextType !== '2d') {
       throw new Error(`Unknown context type ${contextType}`);
     }
@@ -69,6 +76,16 @@ export default class Renderer {
 
   get canvasRenderer() {
     return this[_canvasRenderer];
+  }
+
+  normalize(x, y) {
+    const {width, height} = this.canvas;
+    return normalize([x, y], width, height);
+  }
+
+  denormalize(x, y) {
+    const {width, height} = this.canvas;
+    return denormalize([x, y], width, height);
   }
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {

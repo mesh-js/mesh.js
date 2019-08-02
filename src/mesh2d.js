@@ -1,9 +1,11 @@
-import normalize from 'normalize-path-scale';
+import normalizePoints from 'normalize-path-scale';
 import triangulate from 'triangulate-contours';
 import {mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
-import {flattenMeshes, vectorToRGBA} from './utils';
+import flattenMeshes from './utils/flatten-meshes';
+import vectorToRGBA from './utils/vector-to-rgba';
+import {normalize, denormalize} from './utils/positions';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -21,11 +23,7 @@ const _boundingBox = Symbol('boundingBox');
 const _gradient = Symbol('gradient');
 
 function transformPoint(p, m, w, h, flipY) {
-  let [x, y] = p;
-
-  x = (x + 1) * 0.5 * w;
-  y = (-y + 1) * 0.5 * h;
-
+  const [x, y] = denormalize(p, w, h);
   p[0] = x * m[0] + y * m[2] + m[4];
   p[1] = x * m[1] + y * m[3] + m[5];
   if(flipY) p[1] = h - p[1];
@@ -222,9 +220,54 @@ export default class Mesh2D {
       const point = positions[i];
       transformPoint(point, m, w, h, true);
     }
-    normalize(positions, this[_bound]);
+    normalizePoints(positions, this[_bound]);
 
     return this;
+  }
+
+  isPointCollision(x, y, type = 'both') {
+    const [w, h] = this[_bound][1];
+    [x, y] = normalize([x, y], w, h);
+
+    const meshData = this.meshData;
+    const {positions, cells} = meshData;
+
+    function projectionOn([x0, y0], [x1, y1], [x2, y2]) {
+      const v2x = x2 - x1;
+      const v2y = y2 - y1;
+      const p = ((x0 - x1) * v2x + (y0 - y1) * v2y) / (v2x ** 2 + v2y ** 2);
+      return p >= 0 && p <= 1;
+    }
+
+    for(let i = 0; i < cells.length; i++) {
+      const cell = cells[i];
+      if(type === 'fill' && cell[0] >= meshData.fillPointCount) break;
+      if(type === 'stroke' && cell[0] < meshData.fillPointCount) continue; // eslint-disable-line no-continue
+      const [[x1, y1], [x2, y2], [x3, y3]] = cell.map(idx => positions[idx]);
+      const s1 = Math.sign((x - x1) * (y2 - y1) - (x2 - x1) * (y - y1));
+      if(s1 === 0 && projectionOn([x, y], [x1, y1], [x2, y2])) {
+        return true;
+      }
+      const s2 = Math.sign((x - x2) * (y3 - y2) - (x3 - x2) * (y - y2));
+      if(s2 === 0 && projectionOn([x, y], [x2, y2], [x3, y3])) {
+        return true;
+      }
+      const s3 = Math.sign((x - x3) * (y1 - y3) - (x1 - x3) * (y - y3));
+      if(s3 === 0 && projectionOn([x, y], [x3, y3], [x1, y1])) {
+        return true;
+      }
+      if(s1 === s2 && s1 === s3) return true;
+    }
+
+    return false;
+  }
+
+  isPointInPath(x, y) {
+    return this.isPointCollision(x, y, 'fill');
+  }
+
+  isPointInStroke(x, y) {
+    return this.isPointCollision(x, y, 'stroke');
   }
 
   setUniforms(uniforms = {}) {
@@ -416,7 +459,7 @@ export default class Mesh2D {
 
     const mesh = flattenMeshes([meshes.fill, meshes.stroke]);
     mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
-    normalize(mesh.positions, this[_bound]);
+    normalizePoints(mesh.positions, this[_bound]);
     if(!this[_uniforms].u_texSampler) {
       mesh.textureCoord = mesh.positions.map(() => [0, 0]);
     }

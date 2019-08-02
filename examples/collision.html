@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      // contextType: '2d',
+    });
+
+    const figure = new Figure2D();
+    figure.rect(50, 50, 50, 50);
+
+    const mesh = new Mesh2D(figure, canvas);
+    mesh.setFill({
+      color: [1, 0, 0, 0.6],
+    });
+    mesh.setStroke({
+      thickness: 6,
+      color: [1, 0, 1, 1],
+    });
+
+    function update(t) {
+      // meshList.forEach((mesh) => {
+      //   mesh.setTransform(1, 0, 0, 1, ...mesh.pos);
+      //   mesh.rotate(t * 0.001 * Math.PI, [mesh.pos[0] + 75, mesh.pos[1] + 75]);
+      // });
+      renderer.drawMeshes([mesh]);
+      // requestAnimationFrame(update);
+    }
+    update(0);
+
+    canvas.addEventListener('mousemove', (e) => {
+      console.log([mesh.isPointInPath(e.offsetX, e.offsetY), mesh.isPointInStroke(e.offsetX, e.offsetY)]);
+    });
+  </script>
+</body>
+</html>

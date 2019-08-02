@@ -1,4 +1,5 @@
-import {vectorToRGBA, loadImage} from './utils';
+import vectorToRGBA from './utils/vector-to-rgba';
+import loadImage from './utils/load-image';
 
 export default class CanvasRenderer {
   constructor(canvas, options) {
