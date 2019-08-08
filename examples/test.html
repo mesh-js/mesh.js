@@ -18,13 +18,12 @@
     });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
+    const meshList = [];
 
     (async function () {
       let texture = await renderer.loadTexture(textureURL);
       texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
       // console.log(texture);
-
-      const meshList = [];
       const NUM = 1;
       const size = 150;
 
@@ -44,11 +43,11 @@
           color: [1, 0, 1, 1],
         });
 
-        mesh.setFill({
-          color: [1, 0, 0, 1],
-        });
-
         // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
+
+        // mesh.setFill({
+        //   color: [1, 0, 0, 1],
+        // });
 
         // if(i > NUM / 2) {
         mesh.setTexture(texture, {
@@ -68,12 +67,17 @@
           type: 'stroke',
         });
 
+        mesh.setFill({
+          color: [1, 0, 0, 1],
+        });
+
         meshList.push(mesh);
       }
 
       function getData() {
         return meshList.map((mesh) => {
-          mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
+          mesh.setTransform(1, 0, 0, 1, 200, 200);
+          // mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
           // mesh.transform([1, 0, 0, 1, -25, -25]);
           // mesh.translate(-25, -25);
           // const ang = Math.PI / 6;

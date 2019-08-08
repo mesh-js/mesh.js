@@ -19,6 +19,8 @@ const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
 const _applyTransform = Symbol('applyTransform');
+const _applyTexture = Symbol('applyTexture');
+const _applyGradient = Symbol('applyGradient');
 const _boundingBox = Symbol('boundingBox');
 const _gradient = Symbol('gradient');
 
@@ -171,14 +173,21 @@ export default class Mesh2D {
     const transform = this[_transform];
     this[_transform] = m;
     m = mat2d(m) * mat2d.invert(transform);
-    return this[_applyTransform](m);
+    if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    return this;
   }
 
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(m) * mat2d(transform);
-    return this[_applyTransform](m);
+    if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    return this;
   }
+
+  // apply linear color transform
+  // transformColor(...m) {
+
+  // }
 
   translate(x, y) {
     let m = mat2d.create();
@@ -210,9 +219,7 @@ export default class Mesh2D {
     return this.transform(...m);
   }
 
-  [_applyTransform](m) {
-    if(!this[_mesh]) return;
-
+  [_applyTransform](mesh, m) {
     const {positions} = this[_mesh];
     const [w, h] = this[_bound][1];
 
@@ -221,8 +228,6 @@ export default class Mesh2D {
       transformPoint(point, m, w, h, true);
     }
     normalizePoints(positions, this[_bound]);
-
-    return this;
   }
 
   isPointCollision(x, y, type = 'both') {
@@ -274,32 +279,20 @@ export default class Mesh2D {
     Object.assign(this[_uniforms], uniforms);
   }
 
-  /**
-    options: {
-      scale: false,
-      repeat: false,
-      rect: [10, 10],
-    }
-   */
-  setTexture(texture, options = {}) {
-    if(!this[_fill]) {
-      this.setFill();
-    }
-    this.setUniforms({
-      u_texFlag: 1,
-      u_texSampler: texture,
-    });
-    this[_texOptions] = options;
-    const mesh = this.meshData;
+  [_applyTexture](mesh, transformed) {
+    const texture = this[_uniforms].u_texSampler;
+    if(!texture) return;
+
+    const options = this[_texOptions];
+    const {width: imgWidth, height: imgHeight} = texture._img;
 
     const transform = this[_transform];
-    const {width: imgWidth, height: imgHeight} = texture._img;
     const rect = options.rect || [0, 0, imgWidth, imgHeight];
     if(rect[2] == null) rect[2] = imgWidth;
     if(rect[3] == null) rect[3] = imgHeight;
 
     const [w, h] = this[_bound][1];
-    if(!isUnitTransform(transform)) {
+    if(transformed && !isUnitTransform(transform)) {
       const m = mat2d.invert(transform);
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) {
@@ -318,6 +311,7 @@ export default class Mesh2D {
         return [0, 0];
       });
     }
+
     const srcRect = options.srcRect;
     if(srcRect) {
       const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[2] / imgHeight];
@@ -331,21 +325,31 @@ export default class Mesh2D {
   }
 
   /**
-    vector: [x0, y0, x1, y1],
-    colors: [{offset:0, color}, {offset:1, color}, ...],
-    type: 'fill|stroke',
+    options: {
+      scale: false,
+      repeat: false,
+      rect: [10, 10],
+    }
    */
-  setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
-    if(type === 'fill' && !this[_fill]) {
+  setTexture(texture, options = {}) {
+    if(!this[_fill]) {
       this.setFill();
     }
-    if(type === 'stroke' && !this[_stroke]) {
-      this.setStroke();
+    this.setUniforms({
+      u_texFlag: 1,
+      u_texSampler: texture,
+    });
+
+    this[_texOptions] = options;
+
+    if(this[_mesh]) {
+      this[_applyTexture](this[_mesh], true);
     }
-    this[_gradient] = this[_gradient] || {};
-    this[_gradient][type] = {vector, colors: gradientColors, type};
-    let {positions, fillPointCount} = this.meshData;
-    let colors = this.meshData.attributes.a_color;
+  }
+
+  [_applyGradient](mesh, {vector, colors: gradientColors, type}) {
+    let {positions, fillPointCount} = mesh;
+    let colors = mesh.attributes.a_color;
 
     gradientColors.sort((a, b) => {
       return a.offset - b.offset;
@@ -398,6 +402,24 @@ export default class Mesh2D {
         }
       }
     }
+  }
+
+  /**
+    vector: [x0, y0, x1, y1],
+    colors: [{offset:0, color}, {offset:1, color}, ...],
+    type: 'fill|stroke',
+   */
+  setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
+    if(type === 'fill' && !this[_fill]) {
+      this.setFill();
+    }
+    if(type === 'stroke' && !this[_stroke]) {
+      this.setStroke();
+    }
+    this[_gradient] = this[_gradient] || {};
+    this[_gradient][type] = {vector, colors: gradientColors, type};
+    if(this[_mesh]) this[_applyGradient](this[_mesh], this[_gradient][type]);
+    return this;
   }
 
   get uniforms() {
@@ -462,6 +484,8 @@ export default class Mesh2D {
     normalizePoints(mesh.positions, this[_bound]);
     if(!this[_uniforms].u_texSampler) {
       mesh.textureCoord = mesh.positions.map(() => [0, 0]);
+    } else {
+      this[_applyTexture](mesh, false);
     }
     mesh.uniforms = this[_uniforms];
     if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
@@ -469,7 +493,13 @@ export default class Mesh2D {
 
     const transform = this[_transform];
     if(!isUnitTransform(transform)) {
-      this[_applyTransform](transform);
+      this[_applyTransform](mesh, transform);
+    }
+
+    if(this[_gradient] && this[_gradient].fill) {
+      this[_applyGradient](this[_mesh], this[_gradient].fill);
+    } else if(this[_gradient] && this[_gradient].stroke) {
+      this[_applyGradient](this[_mesh], this[_gradient].stroke);
     }
 
     return this[_mesh];
