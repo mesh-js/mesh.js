@@ -56,6 +56,10 @@ export default class CanvasRenderer {
           context.fillStyle = gradient;
         }
       }
+      const filter = mesh.filter;
+      if(filter) {
+        context.filter = filter;
+      }
       context.setTransform(...mesh.transformMatrix);
       mesh.contours.forEach((points) => {
         const closed = points.closed;

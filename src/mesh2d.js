@@ -6,6 +6,8 @@ import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
 import {normalize, denormalize} from './utils/positions';
+import {multiply} from './utils/color-matrix';
+import {clamp, mix} from './utils/math';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -15,14 +17,18 @@ const _bound = Symbol('bound');
 const _strokeColor = Symbol('strokeColor');
 const _fillColor = Symbol('fillColor');
 const _transform = Symbol('transform');
+const _colorTransform = Symbol('colorTransform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
 const _applyTransform = Symbol('applyTransform');
 const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
+const _applyColorTransform = Symbol('applyColorTransform');
 const _boundingBox = Symbol('boundingBox');
 const _gradient = Symbol('gradient');
+
+const _filter = Symbol('filter');
 
 function transformPoint(p, m, w, h, flipY) {
   const [x, y] = denormalize(p, w, h);
@@ -62,6 +68,7 @@ export default class Mesh2D {
     this[_bound] = [[0, 0], [width, height]];
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
+    this[_filter] = [];
   }
 
   get contours() {
@@ -184,10 +191,81 @@ export default class Mesh2D {
     return this;
   }
 
-  // apply linear color transform
-  // transformColor(...m) {
+  setColorTransform(...m) {
+    if(m[0] === null) {
+      this.setUniforms({
+        u_filterFlag: 0,
+      });
+    } else {
+      this.setUniforms({
+        u_filterFlag: 1,
+        u_colorMatrix: m,
+      });
+    }
+    return this;
+  }
 
-  // }
+  // apply linear color transform
+  transformColor(...m) {
+    let transform = this.uniforms.u_colorMatrix;
+    if(transform) {
+      transform = multiply(transform, m);
+    } else {
+      transform = m;
+    }
+    this.setUniforms({
+      u_filterFlag: 1,
+      u_colorMatrix: transform,
+    });
+    return this;
+  }
+
+  grayscale(p = 1.0) {
+    p = clamp(0, 1, p);
+    const r = 0.212 * p;
+    const g = 0.714 * p;
+    const b = 0.074 * p;
+
+    const matrix = [
+      r + 1 - p, g, b, 0, 0,
+      r, g + 1 - p, b, 0, 0,
+      r, g, b + 1 - p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+
+    this[_filter].push(`grayscale(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  brightness(p = 1.0) {
+    const matrix = [
+      p, 0, 0, 0, 0,
+      0, p, 0, 0, 0,
+      0, 0, p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`brightness(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  saturate(p = 1.0) {
+    p = clamp(0, 1, p);
+    const r = 0.212 * (1 - p);
+    const g = 0.714 * (1 - p);
+    const b = 0.074 * (1 - p);
+    const matrix = [
+      r + p, g, b, 0, 0,
+      r, g + p, b, 0, 0,
+      r, g, b + p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`saturate(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  get filter() {
+    return this[_filter].join(' ');
+  }
 
   translate(x, y) {
     let m = mat2d.create();
@@ -489,6 +567,7 @@ export default class Mesh2D {
     }
     mesh.uniforms = this[_uniforms];
     if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
+    if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
     this[_mesh] = mesh;
 
     const transform = this[_transform];
@@ -500,6 +579,10 @@ export default class Mesh2D {
       this[_applyGradient](this[_mesh], this[_gradient].fill);
     } else if(this[_gradient] && this[_gradient].stroke) {
       this[_applyGradient](this[_mesh], this[_gradient].stroke);
+    }
+
+    if(this[_colorTransform]) {
+      this[_applyColorTransform](mesh.attributes.a_color, this[_colorTransform]);
     }
 
     return this[_mesh];
