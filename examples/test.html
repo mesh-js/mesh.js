@@ -21,8 +21,9 @@
     const meshList = [];
 
     (async function () {
-      let texture = await renderer.loadTexture(textureURL);
+      let texture = await renderer.loadTexture(textureURL, {useImageBitmap: false});
       // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
+
       // console.log(texture);
       const NUM = 1;
       const size = 150;
@@ -38,16 +39,18 @@
         // console.log(figure.contours);
 
         const mesh = new Mesh2D(figure, {width: 512, height: 512});
-        mesh.setStroke({
-          thickness: 6,
-          color: [1, 0, 1, 1],
-        });
+        // mesh.setStroke({
+        //   thickness: 6,
+        //   color: [1, 0, 1, 1],
+        // });
 
         // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
 
-        // mesh.setFill({
-        //   color: [1, 0, 0, 1],
-        // });
+        mesh.setFill({
+          color: [1, 0, 0, 1],
+        });
+        mesh.setTransform(1, 0, 0, 1, 200, 200);
+        // console.log(mesh.meshData);
 
         // if(i > NUM / 2) {
         mesh.setTexture(texture, {
@@ -58,30 +61,34 @@
         });
         // }
 
-        mesh.setLinearGradient({
-          vector: [50, 50, 50, 200],
-          colors: [
-            {offset: 0, color: [1, 1, 0, 1]},
-            {offset: 1, color: [0, 1, 0, 1]},
-          ],
-          type: 'stroke',
-        });
+        // mesh.setLinearGradient({
+        //   vector: [50, 50, 50, 200],
+        //   colors: [
+        //     {offset: 0, color: [1, 1, 0, 1]},
+        //     {offset: 1, color: [0, 1, 0, 1]},
+        //   ],
+        //   type: 'stroke',
+        // });
 
-        mesh.setFill({
-          color: [1, 0, 0, 1],
-        });
+        // mesh.setFill({
+        //   color: [1, 0, 0, 1],
+        // });
 
         // mesh.brightness(3);
         // mesh.grayscale(1);
-        mesh.saturate(1);
+        // mesh.saturate(1);
+        // mesh.blur(5);
+        mesh.dropShadow(10, 10, 10, 'blue');
+        mesh.dropShadow(-10, -10, 10, 'blue');
+        mesh.contrast(0.5);
 
         meshList.push(mesh);
       }
 
       function getData() {
         return meshList.map((mesh) => {
-          mesh.setTransform(1, 0, 0, 1, 200, 200);
-          // mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
+          // mesh.setTransform(1, 0, 0, 1, 200, 200);
+          mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
           // mesh.transform([1, 0, 0, 1, -25, -25]);
           // mesh.translate(-25, -25);
           // const ang = Math.PI / 6;
@@ -105,6 +112,8 @@
         // requestAnimationFrame(update);
       }
       update();
+
+      window.update = update;
     }());
   </script>
 </body>

@@ -7,7 +7,7 @@ import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
 import {normalize, denormalize} from './utils/positions';
 import {multiply} from './utils/color-matrix';
-import {clamp, mix} from './utils/math';
+import {clamp} from './utils/math';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -21,9 +21,9 @@ const _colorTransform = Symbol('colorTransform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
-const _applyTransform = Symbol('applyTransform');
 const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
+const _applyTransform = Symbol('applyTransform');
 const _applyColorTransform = Symbol('applyColorTransform');
 const _boundingBox = Symbol('boundingBox');
 const _gradient = Symbol('gradient');
@@ -69,6 +69,14 @@ export default class Mesh2D {
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
     this[_filter] = [];
+  }
+
+  get width() {
+    return this[_bound][1][0];
+  }
+
+  get height() {
+    return this[_bound][1][1];
   }
 
   get contours() {
@@ -145,14 +153,14 @@ export default class Mesh2D {
   }
 
   get strokeStyle() {
-    if(this[_strokeColor]) {
+    if(this[_strokeColor] && this[_strokeColor][3] !== 0) {
       return vectorToRGBA(this[_strokeColor]);
     }
     return null;
   }
 
   get fillStyle() {
-    if(this[_fillColor]) {
+    if(this[_fillColor] && this[_fillColor][3] !== 0) {
       return vectorToRGBA(this[_fillColor]);
     }
     return null;
@@ -195,6 +203,7 @@ export default class Mesh2D {
     if(m[0] === null) {
       this.setUniforms({
         u_filterFlag: 0,
+        u_colorMatrix: null,
       });
     } else {
       this.setUniforms({
@@ -263,6 +272,32 @@ export default class Mesh2D {
     return this.transformColor(...matrix);
   }
 
+  blur(length) {
+    this[_mesh] = null;
+    this[_filter].push(`blur(${length}px)`);
+  }
+
+  dropShadow(offsetX, offsetY, blurRadius = 0, color = 'black') {
+    this[_mesh] = null;
+    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${color})`);
+  }
+
+  contrast(p = 1.0) {
+    const d = 0.5 * (1 - p);
+    const matrix = [
+      p, 0, 0, 0, d,
+      0, p, 0, 0, d,
+      0, 0, p, 0, d,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`contrast(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  get filterCanvas() {
+    return /blur|drop-shadow/.test(this.filter);
+  }
+
   get filter() {
     return this[_filter].join(' ');
   }
@@ -298,7 +333,7 @@ export default class Mesh2D {
   }
 
   [_applyTransform](mesh, m) {
-    const {positions} = this[_mesh];
+    const {positions} = mesh;
     const [w, h] = this[_bound][1];
 
     for(let i = 0; i < positions.length; i++) {
@@ -357,11 +392,10 @@ export default class Mesh2D {
     Object.assign(this[_uniforms], uniforms);
   }
 
-  [_applyTexture](mesh, transformed) {
+  [_applyTexture](mesh, options, transformed) {
     const texture = this[_uniforms].u_texSampler;
     if(!texture) return;
 
-    const options = this[_texOptions];
     const {width: imgWidth, height: imgHeight} = texture._img;
 
     const transform = this[_transform];
@@ -370,6 +404,7 @@ export default class Mesh2D {
     if(rect[3] == null) rect[3] = imgHeight;
 
     const [w, h] = this[_bound][1];
+
     if(transformed && !isUnitTransform(transform)) {
       const m = mat2d.invert(transform);
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
@@ -421,7 +456,7 @@ export default class Mesh2D {
     this[_texOptions] = options;
 
     if(this[_mesh]) {
-      this[_applyTexture](this[_mesh], true);
+      this[_applyTexture](this[_mesh], options, true);
     }
   }
 
@@ -563,7 +598,7 @@ export default class Mesh2D {
     if(!this[_uniforms].u_texSampler) {
       mesh.textureCoord = mesh.positions.map(() => [0, 0]);
     } else {
-      this[_applyTexture](mesh, false);
+      this[_applyTexture](mesh, this[_texOptions], false);
     }
     mesh.uniforms = this[_uniforms];
     if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
