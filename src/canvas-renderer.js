@@ -1,5 +1,5 @@
 import loadImage from './utils/load-image';
-import {drawMesh2D} from './utils/canvas';
+import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 
 export default class CanvasRenderer {
   constructor(canvas, options) {
@@ -26,9 +26,31 @@ export default class CanvasRenderer {
     if(clearBuffer) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }
-    meshes.forEach((mesh) => {
+    let lastFilter = null;
+    const {width, height} = context.canvas;
+    const len = meshes.length;
+    meshes.forEach((mesh, i) => {
       // TODO: merge filter
-      drawMesh2D(mesh, context);
+      const filter = mesh.filter;
+      if(lastFilter && lastFilter !== filter) {
+        applyFilter(this.filterBuffer, lastFilter);
+        context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
+        this.filterBuffer.clearRect(0, 0, width, height);
+        lastFilter = null;
+      }
+      if(filter) {
+        this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
+        drawMesh2D(mesh, this.filterBuffer, false);
+        if(i === len - 1) {
+          applyFilter(this.filterBuffer, filter);
+          context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
+          this.filterBuffer.clearRect(0, 0, width, height);
+        } else {
+          lastFilter = filter;
+        }
+      } else {
+        drawMesh2D(mesh, context);
+      }
     });
   }
 }

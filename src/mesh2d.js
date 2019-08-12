@@ -43,7 +43,6 @@ function isUnitTransform(m) {
 }
 
 function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
-  // console.log(imgWidth, imgHeight);
   if(!scale) {
     x /= w;
     y = 1 - (1 - y) / h;
@@ -461,7 +460,9 @@ export default class Mesh2D {
     const {width: imgWidth, height: imgHeight} = texture._img;
 
     const transform = this[_transform];
+    const srcRect = options.srcRect;
     const rect = options.rect || [0, 0, imgWidth, imgHeight];
+
     if(rect[2] == null) rect[2] = imgWidth;
     if(rect[3] == null) rect[3] = imgHeight;
 
@@ -473,7 +474,7 @@ export default class Mesh2D {
         if(z > 0) {
           [x, y] = transformPoint([x, y], m, w, h, true);
           [x, y] = [x / w, y / h];
-          return getTexCoord([x, y], [rect[0] / imgWidth, rect[1] / imgHeight, rect[2] / w, rect[3] / h], this[_texOptions]);
+          return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
         }
         return [0, 0];
       });
@@ -481,15 +482,14 @@ export default class Mesh2D {
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) { // fillTag
           [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
-          return getTexCoord([x, y], [rect[0] / imgWidth, rect[1] / imgHeight, rect[2] / w, rect[3] / h], this[_texOptions]);
+          return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
         }
         return [0, 0];
       });
     }
 
-    const srcRect = options.srcRect;
     if(srcRect) {
-      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[2] / imgHeight];
+      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
       this[_uniforms].u_srcRect = sRect;
     }
     if(options.repeat) {
@@ -504,6 +504,7 @@ export default class Mesh2D {
       scale: false,
       repeat: false,
       rect: [10, 10],
+      srcRect: [...],
     }
    */
   setTexture(texture, options = {}) {

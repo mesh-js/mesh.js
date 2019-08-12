@@ -107,8 +107,11 @@ export default class Renderer {
   }
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
-    const img = await createText(text, {font, fillColor, strokeColor}, this[_options].contextType === 'webgl');
-    return this.createTexture(img);
+    if(this[_glRenderer]) {
+      const img = await createText(text, {font, fillColor, strokeColor}, this[_options].contextType === 'webgl');
+      return this.createTexture(img);
+    }
+    return {_img: {font, fillColor, strokeColor, text}};
   }
 
   createTexture(img) {
@@ -116,7 +119,7 @@ export default class Renderer {
     return renderer.createTexture(img);
   }
 
-  loadTexture(textureURL, {useImageBitmap = true} = {}) {
+  loadTexture(textureURL, {useImageBitmap = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     return renderer.loadTexture(textureURL, {useImageBitmap});
   }

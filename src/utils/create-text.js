@@ -1,22 +1,12 @@
 import parseFont from './parse-font';
-
-function create2DContext() {
-  let canvas;
-  if(typeof OffscreenCanvas === 'function' && typeof createImageBitmap === 'function') {
-    canvas = new OffscreenCanvas(1, 1);
-  } else {
-    canvas = document.createElement('canvas');
-  }
-  return canvas.getContext('2d');
-}
-
+import {createCanvas} from './canvas';
 
 let textContext = null;
 
-export default function createText(text, {font, fillColor, strokeColor}, flipY = true) {
+export default async function createText(text, {font, fillColor, strokeColor}, flipY = true) {
   if(!textContext) {
     // textContext = document.createElement('canvas').getContext('2d');
-    textContext = create2DContext();
+    textContext = createCanvas(1, 1).getContext('2d');
   }
   textContext.save();
   textContext.font = font;
@@ -50,13 +40,25 @@ export default function createText(text, {font, fillColor, strokeColor}, flipY =
   }
   textContext.restore();
 
-  let img = null;
-  if(canvas.transferToImageBitmap) {
-    img = canvas.transferToImageBitmap();
-    if(flipY) return createImageBitmap(img, {imageOrientation: 'flipY'});
-    return createImageBitmap(img);
+  const img = new Image();
+  let src = null;
+  // if(canvas.transferToImageBitmap) {
+  //   img = canvas.transferToImageBitmap();
+  //   if(flipY) return createImageBitmap(img, {imageOrientation: 'flipY'});
+  //   return createImageBitmap(img);
+  // }
+
+  if(canvas.convertToBlob) {
+    const blob = await canvas.convertToBlob();
+    src = URL.createObjectURL(blob);
+  } else {
+    src = canvas.toDataURL('image/png');
   }
-  img = new Image();
-  img.src = canvas.toDataURL('image/png');
-  return img;
+
+  return new Promise((resolve) => {
+    img.onload = () => {
+      resolve(img);
+    };
+    img.src = src;
+  });
 }

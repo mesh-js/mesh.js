@@ -1,9 +1,12 @@
 import vectorToRGBA from './vector-to-rgba';
+import parseFont from './parse-font';
 
 export function createCanvas(width, height) {
   let canvas;
   if(typeof OffscreenCanvas === 'function') {
     canvas = new OffscreenCanvas(width, height);
+  } if(typeof global.createCanvas === 'function') {
+    canvas = createCanvas(width, height);
   } else {
     canvas = document.createElement('canvas');
     canvas.width = width;
@@ -12,23 +15,11 @@ export function createCanvas(width, height) {
   return canvas;
 }
 
-let filterCanvas;
 export function applyFilter(context, filter) {
   const canvas = context.canvas;
-  let image = null;
-  if(canvas.transferToImageBitmap) {
-    image = canvas.transferToImageBitmap();
-  } else {
-    filterCanvas = filterCanvas || canvas.cloneNode();
-    const ctx = filterCanvas.getContext('2d');
-    ctx.clearRect(0, 0, filterCanvas.width, filterCanvas.height);
-    ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-    image = filterCanvas;
-  }
-  context.clearRect(0, 0, canvas.width, canvas.height);
   context.save();
   context.filter = filter;
-  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  context.drawImage(canvas, 0, 0, canvas.width, canvas.height);
   context.restore();
 }
 
@@ -101,15 +92,35 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
       if(i === count - 1 && mesh.texture) {
         const {image, options} = mesh.texture;
         if(options.repeat) console.warn('Context 2D not supported image repeat yet.');
-        let rect = options.rect;
-        const srcRect = options.srcRect;
-        if(options.scale) {
-          rect = [0, 0, context.canvas.width, context.canvas.height];
-        }
-        if(srcRect) {
-          context.drawImage(image, ...srcRect, ...rect);
+        if(image.font) {
+          if(options.scale) console.warn('Context 2D not supported text scale yet.');
+          if(options.srcRect) console.warn('Context 2D not supported text srcRect yet.');
+          let {font, fillColor, strokeColor, text} = image;
+          if(!fillColor && !strokeColor) fillColor = '#000';
+          context.font = font;
+          const {width} = context.measureText(text);
+          const fontInfo = parseFont(font);
+          const height = fontInfo.pxLineHeight;
+          context.textAlign = 'center';
+          context.textBaseline = 'middle';
+          if(fillColor) context.fillStyle = fillColor;
+          if(strokeColor) context.strokeStyle = strokeColor;
+          const rect = options.rect;
+          const top = rect[0] + height / 2;
+          const left = rect[1] + width / 2;
+          context.scale(rect[2] / width, rect[3] / height);
+          context.fillText(text, left, top);
         } else {
-          context.drawImage(image, ...rect);
+          let rect = options.rect;
+          const srcRect = options.srcRect;
+          if(options.scale) {
+            rect = [0, 0, context.canvas.width, context.canvas.height];
+          }
+          if(srcRect) {
+            context.drawImage(image, ...srcRect, ...rect);
+          } else {
+            context.drawImage(image, ...rect);
+          }
         }
       }
 

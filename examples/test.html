@@ -21,8 +21,8 @@
     const meshList = [];
 
     (async function () {
-      let texture = await renderer.loadTexture(textureURL, {useImageBitmap: false});
-      // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
+      let texture = await renderer.loadTexture(textureURL);
+      texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
 
       // console.log(texture);
       const NUM = 1;
@@ -56,8 +56,9 @@
         mesh.setTexture(texture, {
           scale: false,
           repeat: false,
-          rect: [60, 60],
-          // srcRect: [0, 0, 70, 70],
+          // rect: [60, 60],
+          rect: [60, 60, texture._img.width / 1, texture._img.height / 1],
+          // srcRect: [0, 0, 100, 50],
         });
         // }
 
@@ -80,11 +81,11 @@
         // mesh.blur(5);
         // mesh.dropShadow(10, 10, 10, 'blue');
         // mesh.dropShadow(-10, -10, 10, 'blue');
-        // mesh.contrast(0.5);
-        // mesh.opacity(0.2);
+        // // // mesh.contrast(0.5);
+        // // // mesh.opacity(0.2);
+        // // // mesh.hueRotate(130);
+        // // // mesh.clearFilter();
         mesh.hueRotate(130);
-        // mesh.clearFilter();
-        // mesh.hueRotate(130);
 
         meshList.push(mesh);
       }
