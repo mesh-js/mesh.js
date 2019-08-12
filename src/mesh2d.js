@@ -199,11 +199,16 @@ export default class Mesh2D {
     return this;
   }
 
+  clearFilter() {
+    this.setColorTransform(null);
+    this[_filter].length = 0;
+  }
+
   setColorTransform(...m) {
     if(m[0] === null) {
       this.setUniforms({
         u_filterFlag: 0,
-        u_colorMatrix: null,
+        u_colorMatrix: 0,
       });
     } else {
       this.setUniforms({
@@ -282,6 +287,11 @@ export default class Mesh2D {
     this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${color})`);
   }
 
+  url(svgFilter) {
+    this[_mesh] = null;
+    this[_filter].push(`url(${svgFilter})`);
+  }
+
   contrast(p = 1.0) {
     const d = 0.5 * (1 - p);
     const matrix = [
@@ -294,8 +304,60 @@ export default class Mesh2D {
     return this.transformColor(...matrix);
   }
 
+  invert(p = 1.0) {
+    const d = 1 - 2 * p;
+    const matrix = [
+      d, 0, 0, 0, p,
+      0, d, 0, 0, p,
+      0, 0, d, 0, p,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`invert(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  sepia(p = 1.0) {
+    const matrix = [
+      1 - 0.607 * p, 0.769 * p, 0.189 * p, 0, 0,
+      0.349 * p, 1 - 0.314 * p, 0.168 * p, 0, 0,
+      0.272 * p, 0.534 * p, 1 - 0.869 * p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`sepia(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  opacity(p = 1.0) {
+    const matrix = [
+      1, 0, 0, 0, 0,
+      0, 1, 0, 0, 0,
+      0, 0, 1, 0, 0,
+      0, 0, 0, p, 0,
+    ];
+    this[_filter].push(`opacity(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
+  hueRotate(deg = 0) {
+    const rotation = deg / 180 * Math.PI;
+    const cos = Math.cos(rotation),
+      sin = Math.sin(rotation),
+      lumR = 0.213,
+      lumG = 0.715,
+      lumB = 0.072;
+    const matrix = [
+      lumR + cos * (1 - lumR) + sin * (-lumR), lumG + cos * (-lumG) + sin * (-lumG), lumB + cos * (-lumB) + sin * (1 - lumB), 0, 0,
+      lumR + cos * (-lumR) + sin * (0.143), lumG + cos * (1 - lumG) + sin * (0.140), lumB + cos * (-lumB) + sin * (-0.283), 0, 0,
+      lumR + cos * (-lumR) + sin * (-(1 - lumR)), lumG + cos * (-lumG) + sin * (lumG), lumB + cos * (1 - lumB) + sin * (lumB), 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`hue-rotate(${deg}deg)`);
+    return this.transformColor(...matrix);
+  }
+
   get filterCanvas() {
-    return /blur|drop-shadow/.test(this.filter);
+    return /blur|drop-shadow|url/.test(this.filter);
   }
 
   get filter() {

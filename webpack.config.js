@@ -12,7 +12,7 @@ module.exports = function (env = {}) {
   }
 
   return {
-    mode: env.production ? 'production' : 'none',
+    mode: env.mode || 'none',
     entry: './src/index',
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -67,6 +67,9 @@ module.exports = function (env = {}) {
     },
 
     plugins: [
+      new webpack.DefinePlugin({
+        __DEV__: env.mode !== 'production',
+      }),
       new webpack.HotModuleReplacementPlugin({
         multiStep: true,
       }),

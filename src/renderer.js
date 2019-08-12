@@ -10,6 +10,7 @@ import Mesh2D from './mesh2d';
 
 const defaultOpts = {
   autoUpdate: false,
+  premultipliedAlpha: false,
 };
 
 const _glRenderer = Symbol('glRenderer');
