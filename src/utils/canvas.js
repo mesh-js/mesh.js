@@ -88,6 +88,7 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
       if(fill) {
         context.fill();
       }
+      context.clip();
 
       if(i === count - 1 && mesh.texture) {
         const {image, options} = mesh.texture;
