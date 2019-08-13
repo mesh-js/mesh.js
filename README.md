@@ -1,6 +1,13 @@
 # Mesh.js
 
-A super fast 2D renderer for modern browsers.
+A graphics system born for visualization 😘.
+
+## Why mesh.js
+
+- Blazing fast rendering massive nodes.
+- Cross platform. Both canvas 2d and webgl supported.
+- SVG Path supported.
+- Gradients and filters supported.
 
 ## Installation
 
