@@ -53,9 +53,13 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
     fill = true;
   }
   if(mesh.gradient && mesh.gradient.fill) {
-    const {vector, colors} = mesh.gradient.fill;
+    let {vector, colors} = mesh.gradient.fill;
     let gradient = null;
     if(vector.length === 6) {
+      const h = context.canvas.height;
+      vector = [...vector];
+      vector[1] = h - vector[1];
+      vector[4] = h - vector[4];
       gradient = context.createRadialGradient(...vector);
     } else {
       gradient = context.createLinearGradient(...vector);
