@@ -14,7 +14,7 @@ A graphics system born for visualization 😘.
 From CDN:
 
 ```html
-<script src="https://unpkg.com/browse/@mesh.js/core/dist/mesh.js"></script>
+<script src="https://unpkg.com/@mesh.js/core/dist/mesh.js"></script>
 ```
 
 Use NPM:

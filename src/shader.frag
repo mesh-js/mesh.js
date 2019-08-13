@@ -16,7 +16,7 @@ varying vec4 vColor;
 varying vec2 vTextureCoord;
 varying float flagBackground;
 
-vec4 radial_gradient(float[6] vector, float[40] colorSteps) {
+void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   // center circle
   float cx = vector[0];
   float cy = vector[1];
@@ -62,15 +62,12 @@ vec4 radial_gradient(float[6] vector, float[40] colorSteps) {
   steps[6] = colorSteps[30];
   steps[7] = colorSteps[35];
   
-  vec4 color = colors[0];
   for (int i = 1; i < 8; i++) {
     if (steps[i] <= 0.0 || steps[i] > 1.0) {
       break;
     }
     color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
   }
-
-  return color;
 }
 
 void transformColor(inout vec4 color) {
@@ -104,7 +101,7 @@ void main() {
 
   // r0 > 0 && r1 > 0
   if (u_radialGradientVector[2] > 0.0 && u_radialGradientVector[5] > 0.0) {
-    color = radial_gradient(u_radialGradientVector, u_colorSteps);
+    radial_gradient(color, u_radialGradientVector, u_colorSteps);
   }
 
   if(u_filterFlag > 0) {
