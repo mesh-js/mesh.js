@@ -531,6 +531,10 @@ export default class Mesh2D {
   }
 
   [_applyGradient](mesh, {vector, colors: gradientColors, type}) {
+    if(vector.length > 4) {
+      // radial gradient
+      return;
+    }
     let {positions, fillPointCount} = mesh;
     let colors = mesh.attributes.a_color;
 
@@ -620,7 +624,7 @@ export default class Mesh2D {
     this[_uniforms].u_radialGradientVector = vector;
     this[_uniforms].u_colorSteps = colorSteps;
   }
-  
+
   /**
     vector: [x0, y0, x1, y1],
     colors: [{offset:0, color}, {offset:1, color}, ...],
