@@ -109,7 +109,13 @@ export default class Mesh2D {
 
   // join: 'miter' or 'bevel'
   // cap: 'butt' or 'square'
-  setStroke({thickness = 1, cap = 'butt', join = 'miter', miterLimit = 10, color = [0, 0, 0, 0]} = {}) {
+  setStroke({
+    thickness = 1,
+    cap = 'butt',
+    join = 'miter',
+    miterLimit = 10,
+    color = [0, 0, 0, 0],
+  } = {}) {
     this[_mesh] = null;
     this[_stroke] = stroke({thickness, cap, join, miterLimit});
     this[_strokeColor] = color;
@@ -480,7 +486,8 @@ export default class Mesh2D {
       });
     } else {
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-        if(z > 0) { // fillTag
+        if(z > 0) {
+          // fillTag
           [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
           return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
         }
@@ -581,6 +588,40 @@ export default class Mesh2D {
   }
 
   /**
+    vector: [x0, y0, r0, x1, y1, r1],
+    colors: [{offset:0, color}, {offset:1, color}, ...],
+    type: 'fill|stroke
+   */
+  setRadialGradient({vector, colors: gradientColors, type = 'fill'}) {
+    // if r0 < 0 || r1 < 0 throw IndexSizeError DOMException
+    // if x0 == x1 && y0 == y1 && r0 == r1 draw Nothing
+    if(type === 'fill' && !this[_fill]) {
+      this.setFill();
+    }
+    if(type === 'stroke' && !this[_stroke]) {
+      this.setStroke();
+    }
+    this[_gradient] = this[_gradient] || {};
+    this[_gradient][type] = {vector, colors: gradientColors, type};
+
+    gradientColors.sort((a, b) => {
+      return a.offset - b.offset;
+    });
+
+    const colorSteps = [];
+    gradientColors.forEach(({offset, color}) => {
+      colorSteps.push(offset, ...color);
+    });
+
+    const [_, h] = this[_bound][1];
+    vector[1] = h - vector[1];
+    vector[4] = h - vector[4];
+
+    this[_uniforms].u_radialGradientVector = vector;
+    this[_uniforms].u_colorSteps = colorSteps;
+  }
+  
+  /**
     vector: [x0, y0, x1, y1],
     colors: [{offset:0, color}, {offset:1, color}, ...],
     type: 'fill|stroke',
@@ -594,6 +635,7 @@ export default class Mesh2D {
     }
     this[_gradient] = this[_gradient] || {};
     this[_gradient][type] = {vector, colors: gradientColors, type};
+
     if(this[_mesh]) this[_applyGradient](this[_mesh], this[_gradient][type]);
     return this;
   }
