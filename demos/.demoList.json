@@ -1,10 +1,33 @@
 [
   {
-    "label": "benchmark triangles meshjs",
+    "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },
   {
-    "label": "benchmark triangles spritejs",
+    "label": "triangles spritejs",
     "src": "benchmark/triangles_spritejs"
+  },
+  {
+    "label": "hue filter canvas 100",
+    "src": "benchmark/hue_filter_canvas"
+  },{
+    "label": "hue filter meshjs 2d 1000",
+    "src": "benchmark/hue_filter_mesh_2d"
+  },
+  {
+    "label": "hue filter meshjs gl 2000",
+    "src": "benchmark/hue_filter_mesh_gl"
+  },
+  {
+    "label": "blur filter canvas 20",
+    "src": "benchmark/blur_filter_canvas"
+  },
+  {
+    "label": "blur filter meshjs 2d 1000",
+    "src": "benchmark/blur_filter_mesh_2d"
+  },
+  {
+    "label": "blur filter meshjs gl 1000",
+    "src": "benchmark/blur_filter_mesh_gl"
   }
 ]

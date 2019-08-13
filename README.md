@@ -7,7 +7,7 @@ A super fast 2D renderer for modern browsers.
 From CDN:
 
 ```html
-<script src="https://s2.ssl.qhres.com/static/42cee46429efa138.js"></script>
+<script src="https://unpkg.com/browse/@mesh.js/core/dist/mesh.js"></script>
 ```
 
 Use NPM:

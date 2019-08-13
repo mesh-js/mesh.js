@@ -1,0 +1,10 @@
+body {
+  display: flex;
+}
+canvas {
+  width: 100%;
+  max-width: 512px;
+  display: inline-block;
+  margin: auto;
+  background: white;
+}

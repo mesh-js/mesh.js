@@ -5,14 +5,32 @@ import fragShader from './shader.frag';
 import compress from './utils/compress';
 import createText from './utils/create-text';
 import {normalize, denormalize} from './utils/positions';
+import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
+import Mesh2D from './mesh2d';
 
 const defaultOpts = {
   autoUpdate: false,
+  premultipliedAlpha: false,
 };
 
 const _glRenderer = Symbol('glRenderer');
 const _canvasRenderer = Symbol('canvasRenderer');
 const _options = Symbol('options');
+
+function drawFilterContext(renderer, filterContext, width, height) {
+  const filterTexture = renderer.createTexture(filterContext.canvas);
+
+  const contours = [[[0, 0], [width, 0], [width, height], [0, height], [0, 0]]];
+  contours.closed = true;
+  const filterMesh = new Mesh2D({contours}, {width, height});
+
+  filterMesh.setTexture(filterTexture);
+  renderer.setMeshData([filterMesh.meshData]);
+  renderer._draw();
+  filterTexture.delete();
+  filterContext.clearRect(0, 0, width, height);
+  delete filterContext._filter;
+}
 
 export default class Renderer {
   constructor(canvas, opts = {}) {
@@ -89,8 +107,11 @@ export default class Renderer {
   }
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
-    const img = await createText(text, {font, fillColor, strokeColor}, this[_options].contextType === 'webgl');
-    return this.createTexture(img);
+    if(this[_glRenderer]) {
+      const img = await createText(text, {font, fillColor, strokeColor}, this[_options].contextType === 'webgl');
+      return this.createTexture(img);
+    }
+    return {_img: {font, fillColor, strokeColor, text}};
   }
 
   createTexture(img) {
@@ -98,9 +119,9 @@ export default class Renderer {
     return renderer.createTexture(img);
   }
 
-  loadTexture(textureURL) {
+  loadTexture(textureURL, {useImageBitmap = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
-    return renderer.loadTexture(textureURL);
+    return renderer.loadTexture(textureURL, {useImageBitmap});
   }
 
   deleteTexture(texture) {
@@ -111,16 +132,60 @@ export default class Renderer {
   drawMeshes(meshes, clearBuffer = true) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
-      const meshData = compress(meshes);
-      renderer.setMeshData(meshData);
-      // renderer.setMeshData(meshes.map((mesh) => {
-      //   const data = mesh.meshData;
-      //   data.enableBlend = true;
-      //   return data;
-      // }));
-      if(!renderer.options.autoUpdate) renderer.render(clearBuffer);
+      const meshData = compress(this, meshes);
+      if(!renderer.options.autoUpdate) {
+        const gl = renderer.gl;
+        if(clearBuffer) gl.clear(gl.COLOR_BUFFER_BIT);
+        for(let i = 0; i < meshData.length; i++) {
+          const mesh = meshData[i];
+          if(mesh.filterCanvas) {
+            const {width, height} = this.canvas;
+            let filterContext = this.filterContext;
+            if(!filterContext) {
+              const canvas = createCanvas(width, height);
+              filterContext = canvas.getContext('2d');
+              this.filterContext = filterContext;
+            }
+            const originalMesh = meshes[mesh.packIndex];
+            const nextMesh = meshes[mesh.packIndex + 1];
+            if(nextMesh && nextMesh.filterCanvas) {
+              const currentFilter = originalMesh.filter;
+              const nextFilter = nextMesh.filter;
+              if(nextFilter === currentFilter) {
+                // 如果 filter 一样，可以合并绘制（这样的话比较节约性能）
+                if(filterContext._filter === 'combine') {
+                  // 之前已经 apply 过 filter
+                  drawFilterContext(renderer, filterContext, width, height);
+                }
+                filterContext._filter = currentFilter;
+                drawMesh2D(originalMesh, filterContext, false);
+              } else if(filterContext._filter === currentFilter) { // 把前面的filter合并一下
+                drawMesh2D(originalMesh, filterContext, false);
+                applyFilter(filterContext, currentFilter);
+                drawFilterContext(renderer, filterContext, width, height);
+              } else {
+                drawMesh2D(originalMesh, filterContext, true);
+                filterContext._filter = 'combine';
+              }
+            } else {
+              if(filterContext._filter && filterContext._filter !== 'combine') {
+                drawMesh2D(originalMesh, filterContext, false);
+                applyFilter(filterContext, filterContext._filter);
+              } else {
+                drawMesh2D(originalMesh, filterContext, true);
+              }
+              drawFilterContext(renderer, filterContext, width, height);
+            }
+          } else {
+            renderer.setMeshData([mesh]);
+            renderer._draw();
+          }
+        }
+      } else {
+        renderer.setMeshData(meshData);
+      }
     } else {
-      renderer.drawMeshes(meshes, clearBuffer);
+      renderer.drawMeshes(meshes, {clearBuffer});
     }
   }
 }

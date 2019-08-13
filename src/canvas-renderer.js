@@ -1,5 +1,5 @@
-import vectorToRGBA from './utils/vector-to-rgba';
 import loadImage from './utils/load-image';
+import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 
 export default class CanvasRenderer {
   constructor(canvas, options) {
@@ -21,79 +21,36 @@ export default class CanvasRenderer {
     return texture;
   }
 
-  drawMeshes(meshes, clearBuffer = true) {
+  drawMeshes(meshes, {clearBuffer = true} = {}) {
     const context = this.context;
     if(clearBuffer) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }
-    meshes.forEach((mesh) => {
-      context.save();
-      if(mesh.strokeStyle) {
-        context.strokeStyle = mesh.strokeStyle;
-        context.lineWidth = mesh.lineWidth;
-        context.lineJoin = mesh.lineJoin;
-        context.lineCap = mesh.lineCap;
-        context.miterLimit = mesh.miterLimit;
-        if(mesh.gradient && mesh.gradient.stroke) {
-          const {vector, colors} = mesh.gradient.stroke;
-          const gradient = context.createLinearGradient(...vector);
-          colors.forEach(({offset, color}) => {
-            const rgba = vectorToRGBA(color);
-            gradient.addColorStop(offset, rgba);
-          });
-          context.strokeStyle = gradient;
-        }
+    let lastFilter = null;
+    const {width, height} = context.canvas;
+    const len = meshes.length;
+    meshes.forEach((mesh, i) => {
+      // TODO: merge filter
+      const filter = mesh.filter;
+      if(lastFilter && lastFilter !== filter) {
+        applyFilter(this.filterBuffer, lastFilter);
+        context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
+        this.filterBuffer.clearRect(0, 0, width, height);
+        lastFilter = null;
       }
-      if(mesh.fillStyle) {
-        context.fillStyle = mesh.fillStyle;
-        if(mesh.gradient && mesh.gradient.fill) {
-          const {vector, colors} = mesh.gradient.fill;
-          const gradient = context.createLinearGradient(...vector);
-          colors.forEach(({offset, color}) => {
-            const rgba = vectorToRGBA(color);
-            gradient.addColorStop(offset, rgba);
-          });
-          context.fillStyle = gradient;
+      if(filter) {
+        this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
+        drawMesh2D(mesh, this.filterBuffer, false);
+        if(i === len - 1) {
+          applyFilter(this.filterBuffer, filter);
+          context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
+          this.filterBuffer.clearRect(0, 0, width, height);
+        } else {
+          lastFilter = filter;
         }
+      } else {
+        drawMesh2D(mesh, context);
       }
-      context.setTransform(...mesh.transformMatrix);
-      mesh.contours.forEach((points) => {
-        const closed = points.closed;
-        const len = points.length;
-        if(points && len > 0) {
-          context.beginPath();
-          context.moveTo(...points[0]);
-          for(let i = 1; i < len; i++) {
-            if(i === len - 1 && closed) {
-              context.closePath();
-            } else {
-              context.lineTo(...points[i]);
-            }
-          }
-          if(mesh.fillStyle) {
-            context.fill();
-          }
-          if(mesh.texture) {
-            const {image, options} = mesh.texture;
-            if(options.repeat) console.warn('Context 2D not supported image repeat yet.');
-            let rect = options.rect;
-            const srcRect = options.srcRect;
-            if(options.scale) {
-              rect = [0, 0, context.canvas.width, context.canvas.height];
-            }
-
-            if(srcRect) {
-              context.drawImage(image, ...srcRect, ...rect);
-            } else {
-              context.drawImage(image, ...rect);
-            }
-          }
-          if(mesh.strokeStyle) {
-            context.stroke();
-          }
-        }
-      });
-      context.restore();
     });
   }
 }

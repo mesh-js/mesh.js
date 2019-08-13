@@ -6,6 +6,8 @@ import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
 import {normalize, denormalize} from './utils/positions';
+import {multiply} from './utils/color-matrix';
+import {clamp} from './utils/math';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -15,12 +17,18 @@ const _bound = Symbol('bound');
 const _strokeColor = Symbol('strokeColor');
 const _fillColor = Symbol('fillColor');
 const _transform = Symbol('transform');
+const _colorTransform = Symbol('colorTransform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
+const _applyTexture = Symbol('applyTexture');
+const _applyGradient = Symbol('applyGradient');
 const _applyTransform = Symbol('applyTransform');
+const _applyColorTransform = Symbol('applyColorTransform');
 const _boundingBox = Symbol('boundingBox');
 const _gradient = Symbol('gradient');
+
+const _filter = Symbol('filter');
 
 function transformPoint(p, m, w, h, flipY) {
   const [x, y] = denormalize(p, w, h);
@@ -35,7 +43,6 @@ function isUnitTransform(m) {
 }
 
 function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
-  // console.log(imgWidth, imgHeight);
   if(!scale) {
     x /= w;
     y = 1 - (1 - y) / h;
@@ -60,6 +67,15 @@ export default class Mesh2D {
     this[_bound] = [[0, 0], [width, height]];
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
+    this[_filter] = [];
+  }
+
+  get width() {
+    return this[_bound][1][0];
+  }
+
+  get height() {
+    return this[_bound][1][1];
   }
 
   get contours() {
@@ -142,14 +158,14 @@ export default class Mesh2D {
   }
 
   get strokeStyle() {
-    if(this[_strokeColor]) {
+    if(this[_strokeColor] && this[_strokeColor][3] !== 0) {
       return vectorToRGBA(this[_strokeColor]);
     }
     return null;
   }
 
   get fillStyle() {
-    if(this[_fillColor]) {
+    if(this[_fillColor] && this[_fillColor][3] !== 0) {
       return vectorToRGBA(this[_fillColor]);
     }
     return null;
@@ -177,13 +193,180 @@ export default class Mesh2D {
     const transform = this[_transform];
     this[_transform] = m;
     m = mat2d(m) * mat2d.invert(transform);
-    return this[_applyTransform](m);
+    if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    return this;
   }
 
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(m) * mat2d(transform);
-    return this[_applyTransform](m);
+    if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    return this;
+  }
+
+  clearFilter() {
+    this.setColorTransform(null);
+    this[_filter].length = 0;
+  }
+
+  setColorTransform(...m) {
+    if(m[0] === null) {
+      this.setUniforms({
+        u_filterFlag: 0,
+        u_colorMatrix: 0,
+      });
+    } else {
+      this.setUniforms({
+        u_filterFlag: 1,
+        u_colorMatrix: m,
+      });
+    }
+    return this;
+  }
+
+  // apply linear color transform
+  transformColor(...m) {
+    let transform = this.uniforms.u_colorMatrix;
+    if(transform) {
+      transform = multiply(transform, m);
+    } else {
+      transform = m;
+    }
+    this.setUniforms({
+      u_filterFlag: 1,
+      u_colorMatrix: transform,
+    });
+    return this;
+  }
+
+  grayscale(p = 1.0) {
+    p = clamp(0, 1, p);
+    const r = 0.212 * p;
+    const g = 0.714 * p;
+    const b = 0.074 * p;
+
+    const matrix = [
+      r + 1 - p, g, b, 0, 0,
+      r, g + 1 - p, b, 0, 0,
+      r, g, b + 1 - p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+
+    this[_filter].push(`grayscale(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  brightness(p = 1.0) {
+    const matrix = [
+      p, 0, 0, 0, 0,
+      0, p, 0, 0, 0,
+      0, 0, p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`brightness(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  saturate(p = 1.0) {
+    p = clamp(0, 1, p);
+    const r = 0.212 * (1 - p);
+    const g = 0.714 * (1 - p);
+    const b = 0.074 * (1 - p);
+    const matrix = [
+      r + p, g, b, 0, 0,
+      r, g + p, b, 0, 0,
+      r, g, b + p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`saturate(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  blur(length) {
+    this[_mesh] = null;
+    this[_filter].push(`blur(${length}px)`);
+  }
+
+  dropShadow(offsetX, offsetY, blurRadius = 0, color = 'black') {
+    this[_mesh] = null;
+    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${color})`);
+  }
+
+  url(svgFilter) {
+    this[_mesh] = null;
+    this[_filter].push(`url(${svgFilter})`);
+  }
+
+  contrast(p = 1.0) {
+    const d = 0.5 * (1 - p);
+    const matrix = [
+      p, 0, 0, 0, d,
+      0, p, 0, 0, d,
+      0, 0, p, 0, d,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`contrast(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  invert(p = 1.0) {
+    const d = 1 - 2 * p;
+    const matrix = [
+      d, 0, 0, 0, p,
+      0, d, 0, 0, p,
+      0, 0, d, 0, p,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`invert(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  sepia(p = 1.0) {
+    const matrix = [
+      1 - 0.607 * p, 0.769 * p, 0.189 * p, 0, 0,
+      0.349 * p, 1 - 0.314 * p, 0.168 * p, 0, 0,
+      0.272 * p, 0.534 * p, 1 - 0.869 * p, 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`sepia(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  opacity(p = 1.0) {
+    const matrix = [
+      1, 0, 0, 0, 0,
+      0, 1, 0, 0, 0,
+      0, 0, 1, 0, 0,
+      0, 0, 0, p, 0,
+    ];
+    this[_filter].push(`opacity(${100 * p}%)`);
+    return this.transformColor(...matrix);
+  }
+
+  // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
+  hueRotate(deg = 0) {
+    const rotation = deg / 180 * Math.PI;
+    const cos = Math.cos(rotation),
+      sin = Math.sin(rotation),
+      lumR = 0.213,
+      lumG = 0.715,
+      lumB = 0.072;
+    const matrix = [
+      lumR + cos * (1 - lumR) + sin * (-lumR), lumG + cos * (-lumG) + sin * (-lumG), lumB + cos * (-lumB) + sin * (1 - lumB), 0, 0,
+      lumR + cos * (-lumR) + sin * (0.143), lumG + cos * (1 - lumG) + sin * (0.140), lumB + cos * (-lumB) + sin * (-0.283), 0, 0,
+      lumR + cos * (-lumR) + sin * (-(1 - lumR)), lumG + cos * (-lumG) + sin * (lumG), lumB + cos * (1 - lumB) + sin * (lumB), 0, 0,
+      0, 0, 0, 1, 0,
+    ];
+    this[_filter].push(`hue-rotate(${deg}deg)`);
+    return this.transformColor(...matrix);
+  }
+
+  get filterCanvas() {
+    return /blur|drop-shadow|url/.test(this.filter);
+  }
+
+  get filter() {
+    return this[_filter].join(' ');
   }
 
   translate(x, y) {
@@ -216,10 +399,8 @@ export default class Mesh2D {
     return this.transform(...m);
   }
 
-  [_applyTransform](m) {
-    if(!this[_mesh]) return;
-
-    const {positions} = this[_mesh];
+  [_applyTransform](mesh, m) {
+    const {positions} = mesh;
     const [w, h] = this[_bound][1];
 
     for(let i = 0; i < positions.length; i++) {
@@ -227,8 +408,6 @@ export default class Mesh2D {
       transformPoint(point, m, w, h, true);
     }
     normalizePoints(positions, this[_bound]);
-
-    return this;
   }
 
   isPointCollision(x, y, type = 'both') {
@@ -280,42 +459,28 @@ export default class Mesh2D {
     Object.assign(this[_uniforms], uniforms);
   }
 
-  /**
-    options: {
-      scale: false,
-      repeat: false,
-      rect: [10, 10],
-    }
-   */
-  setTexture(texture, options = {}) {
-    if(!this[_fill]) {
-      this.setFill();
-    }
-    this.setUniforms({
-      u_texFlag: 1,
-      u_texSampler: texture,
-    });
-    this[_texOptions] = options;
-    const mesh = this.meshData;
+  [_applyTexture](mesh, options, transformed) {
+    const texture = this[_uniforms].u_texSampler;
+    if(!texture) return;
+
+    const {width: imgWidth, height: imgHeight} = texture._img;
 
     const transform = this[_transform];
-    const {width: imgWidth, height: imgHeight} = texture._img;
+    const srcRect = options.srcRect;
     const rect = options.rect || [0, 0, imgWidth, imgHeight];
+
     if(rect[2] == null) rect[2] = imgWidth;
     if(rect[3] == null) rect[3] = imgHeight;
 
     const [w, h] = this[_bound][1];
-    if(!isUnitTransform(transform)) {
+
+    if(transformed && !isUnitTransform(transform)) {
       const m = mat2d.invert(transform);
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) {
           [x, y] = transformPoint([x, y], m, w, h, true);
           [x, y] = [x / w, y / h];
-          return getTexCoord(
-            [x, y],
-            [rect[0] / imgWidth, rect[1] / imgHeight, rect[2] / w, rect[3] / h],
-            this[_texOptions]
-          );
+          return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
         }
         return [0, 0];
       });
@@ -324,23 +489,14 @@ export default class Mesh2D {
         if(z > 0) {
           // fillTag
           [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
-          return getTexCoord(
-            [x, y],
-            [rect[0] / imgWidth, rect[1] / imgHeight, rect[2] / w, rect[3] / h],
-            this[_texOptions]
-          );
+          return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
         }
         return [0, 0];
       });
     }
-    const srcRect = options.srcRect;
+
     if(srcRect) {
-      const sRect = [
-        srcRect[0] / imgWidth,
-        srcRect[1] / imgHeight,
-        srcRect[2] / imgWidth,
-        srcRect[2] / imgHeight,
-      ];
+      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
       this[_uniforms].u_srcRect = sRect;
     }
     if(options.repeat) {
@@ -351,21 +507,32 @@ export default class Mesh2D {
   }
 
   /**
-    vector: [x0, y0, x1, y1],
-    colors: [{offset:0, color}, {offset:1, color}, ...],
-    type: 'fill|stroke',
+    options: {
+      scale: false,
+      repeat: false,
+      rect: [10, 10],
+      srcRect: [...],
+    }
    */
-  setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
-    if(type === 'fill' && !this[_fill]) {
+  setTexture(texture, options = {}) {
+    if(!this[_fill]) {
       this.setFill();
     }
-    if(type === 'stroke' && !this[_stroke]) {
-      this.setStroke();
+    this.setUniforms({
+      u_texFlag: 1,
+      u_texSampler: texture,
+    });
+
+    this[_texOptions] = options;
+
+    if(this[_mesh]) {
+      this[_applyTexture](this[_mesh], options, true);
     }
-    this[_gradient] = this[_gradient] || {};
-    this[_gradient][type] = {vector, colors: gradientColors, type};
-    let {positions, fillPointCount} = this.meshData;
-    let colors = this.meshData.attributes.a_color;
+  }
+
+  [_applyGradient](mesh, {vector, colors: gradientColors, type}) {
+    let {positions, fillPointCount} = mesh;
+    let colors = mesh.attributes.a_color;
 
     gradientColors.sort((a, b) => {
       return a.offset - b.offset;
@@ -453,6 +620,25 @@ export default class Mesh2D {
     this[_uniforms].u_radialGradientVector = vector;
     this[_uniforms].u_colorSteps = colorSteps;
   }
+  
+  /**
+    vector: [x0, y0, x1, y1],
+    colors: [{offset:0, color}, {offset:1, color}, ...],
+    type: 'fill|stroke',
+   */
+  setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
+    if(type === 'fill' && !this[_fill]) {
+      this.setFill();
+    }
+    if(type === 'stroke' && !this[_stroke]) {
+      this.setStroke();
+    }
+    this[_gradient] = this[_gradient] || {};
+    this[_gradient][type] = {vector, colors: gradientColors, type};
+
+    if(this[_mesh]) this[_applyGradient](this[_mesh], this[_gradient][type]);
+    return this;
+  }
 
   get uniforms() {
     return this[_uniforms];
@@ -516,14 +702,27 @@ export default class Mesh2D {
     normalizePoints(mesh.positions, this[_bound]);
     if(!this[_uniforms].u_texSampler) {
       mesh.textureCoord = mesh.positions.map(() => [0, 0]);
+    } else {
+      this[_applyTexture](mesh, this[_texOptions], false);
     }
     mesh.uniforms = this[_uniforms];
     if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
+    if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
     this[_mesh] = mesh;
 
     const transform = this[_transform];
     if(!isUnitTransform(transform)) {
-      this[_applyTransform](transform);
+      this[_applyTransform](mesh, transform);
+    }
+
+    if(this[_gradient] && this[_gradient].fill) {
+      this[_applyGradient](this[_mesh], this[_gradient].fill);
+    } else if(this[_gradient] && this[_gradient].stroke) {
+      this[_applyGradient](this[_mesh], this[_gradient].stroke);
+    }
+
+    if(this[_colorTransform]) {
+      this[_applyColorTransform](mesh.attributes.a_color, this[_colorTransform]);
     }
 
     return this[_mesh];
