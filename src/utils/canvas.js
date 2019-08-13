@@ -54,7 +54,12 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
   }
   if(mesh.gradient && mesh.gradient.fill) {
     const {vector, colors} = mesh.gradient.fill;
-    const gradient = context.createLinearGradient(...vector);
+    let gradient = null;
+    if(vector.length === 6) {
+      gradient = context.createRadialGradient(...vector);
+    } else {
+      gradient = context.createLinearGradient(...vector);
+    }
     colors.forEach(({offset, color}) => {
       const rgba = vectorToRGBA(color);
       gradient.addColorStop(offset, rgba);

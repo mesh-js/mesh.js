@@ -13,7 +13,9 @@
 			const { Renderer, Figure2D, Mesh2D } = meshjs
 
 			const canvas = document.querySelector('canvas')
-			const renderer = new Renderer(canvas)
+			const renderer = new Renderer(canvas, {
+				// contextType: '2d',
+			});
 
 			;(async function() {
 				const figure = new Figure2D()
