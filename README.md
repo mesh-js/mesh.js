@@ -60,6 +60,15 @@ function update(t) {
 update(0);
 ```
 
+## Roadmap
+
+- Documentations
+- Demos and benchmark.
+- Unit tests.
+- Figure3D and Mesh3D.
+- Optimize mesh compressor.
+- Work with Worker+OffscreenCanvas.
+
 ## LICENSE
 
 MIT
