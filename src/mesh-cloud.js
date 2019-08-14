@@ -1,3 +1,5 @@
+import {mat2d} from 'gl-matrix';
+
 const _mesh = Symbol('mesh');
 const _count = Symbol('count');
 const _transform0 = Symbol('transform');
@@ -10,10 +12,29 @@ export default class {
     this[_transform0] = [];
     this[_transform1] = [];
 
+    const {width, height} = mesh;
+
     for(let i = 0; i < amount; i++) {
-      this[_transform0].push([1, 0, 0]);
-      this[_transform1].push([1, 0, 0]);
+      this[_transform0].push([1, 0, 0, width]);
+      this[_transform1].push([1, 0, 0, height]);
     }
+  }
+
+  setTransform(idx, m) {
+    if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    this[_transform0][idx][0] = m[0];
+    this[_transform0][idx][1] = m[1];
+    this[_transform0][idx][2] = m[2];
+    this[_transform1][idx][0] = m[3];
+    this[_transform1][idx][1] = m[4];
+    this[_transform1][idx][2] = m[5];
+    return this;
+  }
+
+  getTransform(idx) {
+    if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    const m = [...this[_transform0][idx].slice(0, 3), ...this[_transform1][idx].slice(0, 3)];
+    return m;
   }
 
   get amount() {
@@ -38,12 +59,40 @@ export default class {
     return meshData;
   }
 
-  setTransform(idx, m) {
-    if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-    const {width, height} = this[_mesh];
-    m[4] /= 0.5 * width;
-    m[5] /= -0.5 * height;
-    this[_transform0][idx] = m.slice(0, 3);
-    this[_transform1][idx] = m.slice(3);
+  transform(idx, m) {
+    const transform = this.getTransform(idx);
+    m = mat2d(m) * mat2d(transform);
+    this.setTransform(idx, m);
+    return this;
+  }
+
+  translate(idx, [x, y]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [x, y]);
+    return this.transform(idx, m);
+  }
+
+  rotate(idx, rad, [ox, oy] = [0, 0]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [ox, oy]);
+    m = mat2d.rotate(m, rad);
+    m = mat2d.translate(m, [-ox, -oy]);
+    return this.transform(idx, m);
+  }
+
+  scale(idx, [x, y = x], [ox, oy] = [0, 0]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [ox, oy]);
+    m = mat2d.scale(m, [x, y]);
+    m = mat2d.translate(m, [-ox, -oy]);
+    return this.transform(idx, m);
+  }
+
+  skew(idx, [x, y = x], [ox, oy] = [0, 0]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [ox, oy]);
+    m = mat2d(m) * mat2d(1, Math.tan(y), Math.tan(x), 1, 0, 0);
+    m = mat2d.translate(m, [-ox, -oy]);
+    return this.transform(idx, m);
   }
 }

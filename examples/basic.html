@@ -38,6 +38,7 @@
         mesh.setTransform(1, 0, 0, 1, ...mesh.pos);
         mesh.rotate(t * 0.001 * Math.PI, [mesh.pos[0] + 75, mesh.pos[1] + 75]);
       });
+      renderer.clear();
       renderer.drawMeshes(meshList);
       requestAnimationFrame(update);
     }

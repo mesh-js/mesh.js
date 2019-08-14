@@ -57,6 +57,7 @@ const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
 
   function update() {
     const meshes = getData();
+    renderer.clear();
     renderer.drawMeshes(meshes);
     requestAnimationFrame(update);
   }

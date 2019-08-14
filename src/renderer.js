@@ -82,7 +82,7 @@ export default class Renderer {
       gl.bindTexture(gl.TEXTURE_2D, texture);
       // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
-
+      gl.clear(gl.COLOR_BUFFER_BIT);
       this[_glRenderer] = renderer;
     } else {
       this[_canvasRenderer] = new CanvasRenderer(canvas, this[_options]);
@@ -138,25 +138,34 @@ export default class Renderer {
     return renderer.deleteTexture(texture);
   }
 
-  drawMeshCloud(cloud, clearBuffer = true) {
+  clear(...rect) {
+    if(this[_glRenderer]) {
+      const gl = this[_glRenderer].gl;
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    } else {
+      this[_canvasRenderer].clear(...rect);
+    }
+  }
+
+  drawMeshCloud(cloud, {clear = false} = {}) {
     if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
     const renderer = this[_glRenderer];
     const gl = renderer.gl;
     const cloudProgram = renderer.programs[1];
     if(renderer.program !== cloudProgram) renderer.useProgram(cloudProgram);
-    if(clearBuffer) gl.clear(gl.COLOR_BUFFER_BIT);
+    if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
     renderer.setMeshData(cloud.meshData);
     renderer._draw();
     // console.log(cloud);
   }
 
-  drawMeshes(meshes, clearBuffer = true) {
+  drawMeshes(meshes, {clear = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const meshData = compress(this, meshes);
       if(!renderer.options.autoUpdate) {
         const gl = renderer.gl;
-        if(clearBuffer) gl.clear(gl.COLOR_BUFFER_BIT);
+        if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
         for(let i = 0; i < meshData.length; i++) {
           const mesh = meshData[i];
           if(mesh.filterCanvas) {
@@ -206,7 +215,7 @@ export default class Renderer {
         renderer.setMeshData(meshData);
       }
     } else {
-      renderer.drawMeshes(meshes, {clearBuffer});
+      renderer.drawMeshes(meshes, {clear});
     }
   }
 }

@@ -112,6 +112,7 @@
       window.getData = getData;
 
       function update() {
+        renderer.clear();
         const meshes = getData();
         renderer.drawMeshes(meshes);
         // requestAnimationFrame(update);

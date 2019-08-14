@@ -36,7 +36,7 @@
       });
       // mesh.setTransform(1, 0, 0, 1, 200, 200);
 
-      const cloud = new MeshCloud(mesh, 3000);
+      const cloud = new MeshCloud(mesh, 2);
       // cloud.setTransform(2, [1, 0, 0, 1, 50, 50]);
 
       function getData() {
@@ -45,14 +45,19 @@
 
       window.getData = getData;
 
-      function update() {
-        for(let i = 0; i < cloud.amount; i++) {
-          cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
-        }
+      function update(t) {
+        // for(let i = 0; i < cloud.amount; i++) {
+        // cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
+        // cloud.transform(i, [1, 0, 0, 1, 5, 5]);
+        cloud.setTransform(0, [1, 0, 0, 1, 0, 0]);
+        // cloud.translate(0, [50, 50]);
+        cloud.rotate(0, Math.PI / 4, [75, 75]);
+        // }
+        renderer.clear();
         renderer.drawMeshCloud(cloud);
-        requestAnimationFrame(update);
+        // requestAnimationFrame(update);
       }
-      update();
+      update(0);
 
       window.update = update;
     }());

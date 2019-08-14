@@ -34,6 +34,7 @@
     mesh2.translate(50, 50);
 
     function update(t) {
+      renderer.clear();
       renderer.drawMeshes([mesh1, mesh2]);
       // requestAnimationFrame(update);
     }

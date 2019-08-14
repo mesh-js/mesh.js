@@ -36,6 +36,7 @@
         mesh.setTransform(1, 0, 0, 1, 0, 0);
         mesh.rotate(t * 0.001 * Math.PI, mesh.boundingCenter);
       });
+      renderer.clear();
       renderer.drawMeshes(meshList);
       requestAnimationFrame(update);
     }

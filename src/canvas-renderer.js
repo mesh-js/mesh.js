@@ -21,9 +21,18 @@ export default class CanvasRenderer {
     return texture;
   }
 
-  drawMeshes(meshes, {clearBuffer = true} = {}) {
+  clear(x, y, w, h) {
     const context = this.context;
-    if(clearBuffer) {
+    x = x || 0;
+    y = y || 0;
+    w = w || context.canvas.width - x;
+    h = h || context.canvas.height - y;
+    context.clearRect(x, y, w, h);
+  }
+
+  drawMeshes(meshes, {clear = false} = {}) {
+    const context = this.context;
+    if(clear) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }
     let lastFilter = null;

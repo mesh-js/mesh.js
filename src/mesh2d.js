@@ -617,7 +617,7 @@ export default class Mesh2D {
       colorSteps.push(offset, ...color);
     });
 
-    const [_, h] = this[_bound][1];
+    const [, h] = this[_bound][1];
     vector[1] = h - vector[1];
     vector[4] = h - vector[4];
 

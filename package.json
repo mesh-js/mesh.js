@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A super fast 2D renderer for modern browsers.",
   "main": "dist/mesh.js",
   "scripts": {

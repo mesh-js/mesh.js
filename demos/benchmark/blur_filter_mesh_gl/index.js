@@ -45,6 +45,7 @@ const meshList = [];
 
   function update() {
     const meshes = getData();
+    renderer.clear();
     renderer.drawMeshes(meshes);
     requestAnimationFrame(update);
   }
