@@ -1,13 +1,20 @@
 # Mesh.js
 
-A super fast 2D renderer for modern browsers.
+A graphics system born for visualization 😘.
+
+## Why mesh.js
+
+- Blazing fast rendering massive nodes. See our [benchmark](https://mesh-js.github.io/mesh.js/demo/).
+- Cross platform. Both canvas 2d and webgl supported.
+- SVG Path supported.
+- Gradients and filters supported.
 
 ## Installation
 
 From CDN:
 
 ```html
-<script src="https://s2.ssl.qhres.com/static/42cee46429efa138.js"></script>
+<script src="https://unpkg.com/@mesh.js/core/dist/mesh.js"></script>
 ```
 
 Use NPM:
@@ -52,6 +59,15 @@ function update(t) {
 
 update(0);
 ```
+
+## Roadmap
+
+- Documentations
+- Demos and benchmark.
+- Unit tests.
+- Figure3D and Mesh3D.
+- Optimize mesh compressor.
+- Work with Worker+OffscreenCanvas.
 
 ## LICENSE
 

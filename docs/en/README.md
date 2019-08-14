@@ -1,1 +1,1 @@
-[readme](../../README.md ':include')
+[readme](../README.md ':include')

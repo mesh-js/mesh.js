@@ -10,41 +10,39 @@
 		<canvas width="600" height="600"></canvas>
 		<script src="/js/mesh.js"></script>
 		<script>
-			const { Renderer, Figure2D, Mesh2D } = meshjs
+			const {Renderer, Figure2D, Mesh2D} = meshjs;
 
-			const canvas = document.querySelector('canvas')
+			const canvas = document.querySelector('canvas');
 			const renderer = new Renderer(canvas, {
-				// contextType: '2d',
+			// contextType: '2d',
 			});
 
-			;(async function() {
-				const figure = new Figure2D()
-				figure.rect(0, 0, 600, 600)
+			const figure = new Figure2D();
+			figure.rect(0, 0, 600, 600);
 
-				const mesh = new Mesh2D(figure, { width: 600, height: 600 })
-				// mesh.setStroke({
-				// 	thickness: 100,
-				// 	color: [1, 0, 1, 1]
-				// })
+			const mesh = new Mesh2D(figure, {width: 600, height: 600});
+			mesh.setStroke({
+			  thickness: 100,
+			  color: [1, 0, 1, 1],
+			});
 
-				mesh.setFill({
-					color: [1, 0, 0, 1]
-				})
+			mesh.setFill({
+			  color: [1, 0, 0, 1],
+			});
 
-				// 1. 坐标变换
-				mesh.setRadialGradient({
-					vector: [250, 200, 70, 300, 225, 240],
-					colors: [
-						{ offset: 0, color: [1, 0, 0, 1] },
-						{ offset: 0.33, color: [1, 1, 0, 1] },
-						{ offset: 0.66, color: [0, 1, 0, 1] },
-						{ offset: 1.0, color: [0, 0, 1, 1] }
-					],
-					type: 'fill'
-				})
+			// 1. 坐标变换
+			mesh.setRadialGradient({
+			  vector: [250, 200, 70, 300, 225, 240],
+			  colors: [
+			    {offset: 0, color: [1, 0, 0, 1]},
+			    {offset: 0.33, color: [1, 1, 0, 1]},
+			    {offset: 0.66, color: [0, 1, 0, 1]},
+			    {offset: 1.0, color: [0, 0, 1, 1]},
+			  ],
+			  type: 'fill',
+			});
 
-				renderer.drawMeshes([mesh])
-			})()
+			renderer.drawMeshes([mesh]);
 		</script>
 	</body>
 </html>

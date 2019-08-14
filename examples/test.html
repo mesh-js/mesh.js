@@ -14,7 +14,7 @@
 
     const canvas = document.querySelector('canvas');
     const renderer = new Renderer(canvas, {
-      // contextType: '2d',
+      contextType: 'webgl2',
     });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
@@ -25,7 +25,7 @@
       // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
 
       // console.log(texture);
-      const NUM = 1500;
+      const NUM = 100;
       const size = 150;
 
       // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
@@ -56,8 +56,8 @@
         mesh.setTexture(texture, {
           scale: false,
           repeat: false,
-          // rect: [60, 60],
-          rect: [20, 20],
+          rect: [60, 60],
+          // rect: [20, 20],
           // srcRect: [0, 0, 100, 50],
         });
         // }
@@ -114,7 +114,7 @@
       function update() {
         const meshes = getData();
         renderer.drawMeshes(meshes);
-        requestAnimationFrame(update);
+        // requestAnimationFrame(update);
       }
       update();
 

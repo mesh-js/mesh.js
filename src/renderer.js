@@ -1,6 +1,7 @@
 import GlRenderer from 'gl-renderer';
 import CanvasRenderer from './canvas-renderer';
 import vertShader from './shader.vert';
+import vertShaderCloud from './shader-cloud.vert';
 import fragShader from './shader.frag';
 import compress from './utils/compress';
 import createText from './utils/create-text';
@@ -52,17 +53,21 @@ export default class Renderer {
     }
     this.canvas = canvas;
 
-    if(contextType !== 'webgl' && contextType !== '2d') {
+    if(contextType !== 'webgl' && contextType !== 'webgl2' && contextType !== '2d') {
       throw new Error(`Unknown context type ${contextType}`);
     }
     opts.contextType = contextType;
 
     this[_options] = Object.assign({}, defaultOpts, opts);
 
-    if(contextType === 'webgl') {
+    if(contextType === 'webgl' || contextType === 'webgl2') {
+      if(contextType === 'webgl2') this[_options].webgl2 = true;
       const renderer = new GlRenderer(canvas, this[_options]);
 
       const program = renderer.compileSync(fragShader, vertShader);
+      if(contextType === 'webgl2') {
+        renderer.compileSync(fragShader, vertShaderCloud);
+      }
       renderer.useProgram(program);
 
       // bind default Texture to eliminate warning
@@ -90,6 +95,10 @@ export default class Renderer {
 
   get glRenderer() {
     return this[_glRenderer];
+  }
+
+  get isWebGL2() {
+    return this[_glRenderer] && this[_glRenderer].isWebGL2;
   }
 
   get canvasRenderer() {
@@ -127,6 +136,18 @@ export default class Renderer {
   deleteTexture(texture) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     return renderer.deleteTexture(texture);
+  }
+
+  drawMeshCloud(cloud, clearBuffer = true) {
+    if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
+    const renderer = this[_glRenderer];
+    const gl = renderer.gl;
+    const cloudProgram = renderer.programs[1];
+    if(renderer.program !== cloudProgram) renderer.useProgram(cloudProgram);
+    if(clearBuffer) gl.clear(gl.COLOR_BUFFER_BIT);
+    renderer.setMeshData(cloud.meshData);
+    renderer._draw();
+    // console.log(cloud);
   }
 
   drawMeshes(meshes, clearBuffer = true) {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D, MeshCloud} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: 'webgl2',
+    });
+
+    const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
+
+    (async function () {
+      let texture = await renderer.loadTexture(textureURL);
+      // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
+      // console.log(texture);
+      const size = 50;
+
+      // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
+      // const d = 'M30 30A10 10 1 1 0 10 10z';
+      const figure = new Figure2D();
+      figure.rect(50, 50, size, size);
+
+      const mesh = new Mesh2D(figure, canvas);
+      mesh.setFill({
+        color: [1, 0, 0, 1],
+      });
+      // mesh.setTransform(1, 0, 0, 1, 200, 200);
+
+      const cloud = new MeshCloud(mesh, 3000);
+      // cloud.setTransform(2, [1, 0, 0, 1, 50, 50]);
+
+      function getData() {
+        return [mesh];
+      }
+
+      window.getData = getData;
+
+      function update() {
+        for(let i = 0; i < cloud.amount; i++) {
+          cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
+        }
+        renderer.drawMeshCloud(cloud);
+        requestAnimationFrame(update);
+      }
+      update();
+
+      window.update = update;
+    }());
+  </script>
+</body>
+</html>

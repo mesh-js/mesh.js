@@ -35,7 +35,7 @@ function packData(temp, ret, enableBlend) {
     if(temp[0].filterCanvas) {
       meshData.filterCanvas = true;
     }
-    meshData.attributes.a_color = {data: GlRenderer.FLOAT(meshData.attributes.a_color), size: 4};
+    meshData.attributes.a_color = {data: GlRenderer.FLOAT(meshData.attributes.a_color)};
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
     ret.push(meshData);
