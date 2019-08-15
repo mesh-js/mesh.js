@@ -144,6 +144,9 @@ export default class {
   }
 
   setTextureFrames(frames = [], options = {}) {
+    if(frames.length > 12) {
+      throw new Error('Max frames exceed. Allow 12 frames.');
+    }
     if(frames.length) {
       const mesh = this[_mesh];
       mesh.setTexture(frames[0], options);
