@@ -161,6 +161,8 @@ export default class Renderer {
 
   drawMeshes(meshes, {clear = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
+    const program = renderer.programs[0];
+    if(renderer.program !== program) renderer.useProgram(program);
     if(this[_glRenderer]) {
       const meshData = compress(this, meshes);
       if(!renderer.options.autoUpdate) {
