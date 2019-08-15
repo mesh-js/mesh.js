@@ -6,8 +6,9 @@ import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
 import {normalize, denormalize} from './utils/positions';
-import {multiply} from './utils/color-matrix';
-import {clamp} from './utils/math';
+import {multiply, grayscale, brightness,
+  saturate, contrast, invert,
+  sepia, opacity, hueRotate} from './utils/color-matrix';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -240,46 +241,18 @@ export default class Mesh2D {
   }
 
   grayscale(p = 1.0) {
-    p = clamp(0, 1, p);
-    const r = 0.212 * p;
-    const g = 0.714 * p;
-    const b = 0.074 * p;
-
-    const matrix = [
-      r + 1 - p, g, b, 0, 0,
-      r, g + 1 - p, b, 0, 0,
-      r, g, b + 1 - p, 0, 0,
-      0, 0, 0, 1, 0,
-    ];
-
     this[_filter].push(`grayscale(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...grayscale(p));
   }
 
   brightness(p = 1.0) {
-    const matrix = [
-      p, 0, 0, 0, 0,
-      0, p, 0, 0, 0,
-      0, 0, p, 0, 0,
-      0, 0, 0, 1, 0,
-    ];
     this[_filter].push(`brightness(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...brightness(p));
   }
 
   saturate(p = 1.0) {
-    p = clamp(0, 1, p);
-    const r = 0.212 * (1 - p);
-    const g = 0.714 * (1 - p);
-    const b = 0.074 * (1 - p);
-    const matrix = [
-      r + p, g, b, 0, 0,
-      r, g + p, b, 0, 0,
-      r, g, b + p, 0, 0,
-      0, 0, 0, 1, 0,
-    ];
     this[_filter].push(`saturate(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...saturate(p));
   }
 
   blur(length) {
@@ -298,67 +271,29 @@ export default class Mesh2D {
   }
 
   contrast(p = 1.0) {
-    const d = 0.5 * (1 - p);
-    const matrix = [
-      p, 0, 0, 0, d,
-      0, p, 0, 0, d,
-      0, 0, p, 0, d,
-      0, 0, 0, 1, 0,
-    ];
     this[_filter].push(`contrast(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...contrast(p));
   }
 
   invert(p = 1.0) {
-    const d = 1 - 2 * p;
-    const matrix = [
-      d, 0, 0, 0, p,
-      0, d, 0, 0, p,
-      0, 0, d, 0, p,
-      0, 0, 0, 1, 0,
-    ];
     this[_filter].push(`invert(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...invert(p));
   }
 
   sepia(p = 1.0) {
-    const matrix = [
-      1 - 0.607 * p, 0.769 * p, 0.189 * p, 0, 0,
-      0.349 * p, 1 - 0.314 * p, 0.168 * p, 0, 0,
-      0.272 * p, 0.534 * p, 1 - 0.869 * p, 0, 0,
-      0, 0, 0, 1, 0,
-    ];
     this[_filter].push(`sepia(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...sepia(p));
   }
 
   opacity(p = 1.0) {
-    const matrix = [
-      1, 0, 0, 0, 0,
-      0, 1, 0, 0, 0,
-      0, 0, 1, 0, 0,
-      0, 0, 0, p, 0,
-    ];
     this[_filter].push(`opacity(${100 * p}%)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...opacity(p));
   }
 
   // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
   hueRotate(deg = 0) {
-    const rotation = deg / 180 * Math.PI;
-    const cos = Math.cos(rotation),
-      sin = Math.sin(rotation),
-      lumR = 0.213,
-      lumG = 0.715,
-      lumB = 0.072;
-    const matrix = [
-      lumR + cos * (1 - lumR) + sin * (-lumR), lumG + cos * (-lumG) + sin * (-lumG), lumB + cos * (-lumB) + sin * (1 - lumB), 0, 0,
-      lumR + cos * (-lumR) + sin * (0.143), lumG + cos * (1 - lumG) + sin * (0.140), lumB + cos * (-lumB) + sin * (-0.283), 0, 0,
-      lumR + cos * (-lumR) + sin * (-(1 - lumR)), lumG + cos * (-lumG) + sin * (lumG), lumB + cos * (1 - lumB) + sin * (lumB), 0, 0,
-      0, 0, 0, 1, 0,
-    ];
     this[_filter].push(`hue-rotate(${deg}deg)`);
-    return this.transformColor(...matrix);
+    return this.transformColor(...hueRotate(deg));
   }
 
   get filterCanvas() {

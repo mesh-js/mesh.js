@@ -18,12 +18,13 @@
     });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
+    const textureURL2 = 'https://p4.ssl.qhimg.com/t01bfdd008c49606368.png';
 
     (async function () {
       let texture = await renderer.loadTexture(textureURL);
-      // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
+      let texture2 = await renderer.loadTexture(textureURL2);
       // console.log(texture);
-      const size = 50;
+      const size = 150;
 
       // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
       // const d = 'M30 30A10 10 1 1 0 10 10z';
@@ -32,32 +33,39 @@
 
       const mesh = new Mesh2D(figure, canvas);
       mesh.setFill({
-        color: [1, 0, 0, 1],
+        color: [1, 0, 0, 0.5],
       });
+      // mesh.setTexture(texture, {
+      //   // scale: false,
+      //   // repeat: false,
+      //   rect: [60, 60],
+      // });
       // mesh.setTransform(1, 0, 0, 1, 200, 200);
 
       const cloud = new MeshCloud(mesh, 2);
       // cloud.setTransform(2, [1, 0, 0, 1, 50, 50]);
 
-      function getData() {
-        return [mesh];
-      }
-
-      window.getData = getData;
+      cloud.setTextureFrames([texture, texture2], {
+        rect: [60, 60],
+      });
 
       function update(t) {
-        // for(let i = 0; i < cloud.amount; i++) {
-        // cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
-        // cloud.transform(i, [1, 0, 0, 1, 5, 5]);
-        cloud.setTransform(0, [1, 0, 0, 1, 0, 0]);
-        // cloud.translate(0, [50, 50]);
-        cloud.rotate(0, Math.PI / 4, [75, 75]);
-        // }
+        for(let i = 0; i < cloud.amount; i++) {
+          // cloud.setColor(i, [Math.random(), 0, Math.random(), 1]);
+          cloud.setFrameIndex(i, i);
+          cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
+        }
         renderer.clear();
         renderer.drawMeshCloud(cloud);
+        // renderer.drawMeshes([mesh]);
         // requestAnimationFrame(update);
       }
       update(0);
+
+      canvas.addEventListener('mousemove', (e) => {
+        console.log([cloud.isPointInPath(0, [e.offsetX, e.offsetY]), cloud.isPointInStroke(0, [e.offsetX, e.offsetY])]);
+      });
+      window.cloud = cloud;
 
       window.update = update;
     }());

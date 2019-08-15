@@ -3,6 +3,7 @@ import CanvasRenderer from './canvas-renderer';
 import vertShader from './shader.vert';
 import vertShaderCloud from './shader-cloud.vert';
 import fragShader from './shader.frag';
+import vfragShaderCloud from './shader-cloud.frag';
 import compress from './utils/compress';
 import createText from './utils/create-text';
 import {normalize, denormalize} from './utils/positions';
@@ -66,7 +67,7 @@ export default class Renderer {
 
       const program = renderer.compileSync(fragShader, vertShader);
       if(contextType === 'webgl2') {
-        renderer.compileSync(fragShader, vertShaderCloud);
+        renderer.compileSync(vfragShaderCloud, vertShaderCloud);
       }
       renderer.useProgram(program);
 
