@@ -76,13 +76,18 @@ export default class {
   }
 
   setColorTransform(idx, m) {
-    if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-    this[_color0][idx] = [m[0], m[5], m[10], m[15]];
-    this[_color1][idx] = [m[1], m[6], m[11], m[16]];
-    this[_color2][idx] = [m[2], m[7], m[12], m[17]];
-    this[_color3][idx] = [m[3], m[8], m[13], m[18]];
-    this[_color4][idx] = [m[4], m[9], m[14], m[19]];
-    this[_blend] = m[18] < 1.0;
+    if(m != null) {
+      if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+      this[_color0][idx] = [m[0], m[5], m[10], m[15]];
+      this[_color1][idx] = [m[1], m[6], m[11], m[16]];
+      this[_color2][idx] = [m[2], m[7], m[12], m[17]];
+      this[_color3][idx] = [m[3], m[8], m[13], m[18]];
+      this[_color4][idx] = [m[4], m[9], m[14], m[19]];
+      this[_blend] = m[18] < 1.0;
+      this[_mesh].setUniforms({u_cloudFilterFlag: 1});
+    } else {
+      this[_mesh].setUniforms({u_cloudFilterFlag: 0});
+    }
     return this;
   }
 

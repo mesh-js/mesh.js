@@ -68,12 +68,12 @@ void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   }
 }
 
-void transformColor(inout vec4 color) {
+void transformColor(inout vec4 color, in float colorMatrix[20]) {
   float r = color.r, g = color.g, b = color.b, a = color.a;
-  color[0] = u_colorMatrix[0] * r + u_colorMatrix[1] * g + u_colorMatrix[2] * b + u_colorMatrix[3] * a + u_colorMatrix[4];
-  color[1] = u_colorMatrix[5] * r + u_colorMatrix[6] * g + u_colorMatrix[7] * b + u_colorMatrix[8] * a + u_colorMatrix[9];
-  color[2] = u_colorMatrix[10] * r + u_colorMatrix[11] * g + u_colorMatrix[12] * b + u_colorMatrix[13] * a + u_colorMatrix[14];
-  color[3] = u_colorMatrix[15] * r + u_colorMatrix[16] * g + u_colorMatrix[17] * b + u_colorMatrix[18] * a + u_colorMatrix[19];
+  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];
+  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];
+  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];
+  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];
 }
 
 void main() {
@@ -97,14 +97,9 @@ void main() {
     }
   }
 
-  // r0 > 0 && r1 > 0
-  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
-    radial_gradient(color, u_radialGradientVector, u_colorSteps);
-  }
+/* gradient branch */
 
-  if(u_filterFlag > 0) {
-    transformColor(color);
-  }
+/* filter branch */
 
   gl_FragColor = color;
 }

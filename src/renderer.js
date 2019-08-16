@@ -1,14 +1,36 @@
 import GlRenderer from 'gl-renderer';
 import CanvasRenderer from './canvas-renderer';
-import vertShader from './shader.vert';
-import vertShaderCloud from './shader-cloud.vert';
-import fragShader from './shader.frag';
-import vfragShaderCloud from './shader-cloud.frag';
 import compress from './utils/compress';
 import createText from './utils/create-text';
 import {normalize, denormalize} from './utils/positions';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 import Mesh2D from './mesh2d';
+
+import vertShader from './shader.vert';
+import vertShaderCloud from './shader-cloud.vert';
+import fragShader from './shader.frag';
+import fragShaderCloud from './shader-cloud.frag';
+
+const gradientBranch = `
+// r0 > 0 && r1 > 0
+if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
+  radial_gradient(color, u_radialGradientVector, u_colorSteps);
+}
+`;
+
+const filterBranch = `
+if(u_filterFlag > 0) {
+  transformColor(color, u_colorMatrix);
+}
+`;
+
+const fragShaderWithGradient = fragShader.replace('/* gradient branch */', gradientBranch);
+const fragShaderWithFilter = fragShader.replace('/* filter branch */', filterBranch);
+const fragShaderWithBoth = fragShaderWithGradient.replace('/* filter branch */', filterBranch);
+
+const fragShaderCloudWithGradient = fragShaderCloud.replace('/* gradient branch */', gradientBranch);
+const fragShaderCloudWithFilter = fragShaderCloud.replace('/* filter branch */', filterBranch);
+const fragShaderCloudWithBoth = fragShaderCloudWithGradient.replace('/* filter branch */', filterBranch);
 
 const defaultOpts = {
   autoUpdate: false,
@@ -41,6 +63,18 @@ const programOptions = {
   },
 };
 
+const cloudProgramOptions = {
+  ...programOptions,
+  a_fillCloudColor: {
+    type: 'UNSIGNED_BYTE',
+    normalize: true,
+  },
+  a_strokeCloudColor: {
+    type: 'UNSIGNED_BYTE',
+    normalize: true,
+  },
+};
+
 export default class Renderer {
   constructor(canvas, opts = {}) {
     let contextType = opts.contextType || 'webgl';
@@ -67,13 +101,24 @@ export default class Renderer {
     opts.contextType = contextType;
 
     this[_options] = Object.assign({}, defaultOpts, opts);
+    this.programs = {};
 
     if(contextType === 'webgl' || contextType === 'webgl2') {
       if(contextType === 'webgl2') this[_options].webgl2 = true;
       const renderer = new GlRenderer(canvas, this[_options]);
 
       const program = renderer.compileSync(fragShader, vertShader);
-      renderer.compileSync(vfragShaderCloud, vertShaderCloud);
+      this.programs.basic = program;
+      this.programs.basicWithFilter = renderer.compileSync(fragShaderWithFilter, vertShader);
+      this.programs.basicWithGradient = renderer.compileSync(fragShaderWithGradient, vertShader);
+      this.programs.basicWithBoth = renderer.compileSync(fragShaderWithBoth, vertShader);
+
+      this.programs.cloud = renderer.compileSync(fragShaderCloud, vertShaderCloud);
+      this.programs.cloudWithFilter = renderer.compileSync(fragShaderCloudWithFilter, vertShaderCloud);
+      this.programs.cloudWithGradient = renderer.compileSync(fragShaderCloudWithGradient, vertShaderCloud);
+      this.programs.cloudWithBoth = renderer.compileSync(fragShaderCloudWithBoth, vertShaderCloud);
+
+      // renderer.compileSync(fragShaderCloud, vertShaderCloud);
 
       renderer.useProgram(program, programOptions);
 
@@ -159,47 +204,43 @@ export default class Renderer {
     // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
     if(this[_glRenderer]) {
       const gl = renderer.gl;
-      const cloudProgram = renderer.programs[1];
-      if(renderer.program !== cloudProgram) {
-        renderer.useProgram(cloudProgram, {
-          ...programOptions,
-          a_fillCloudColor: {
-            type: 'UNSIGNED_BYTE',
-            normalize: true,
-          },
-          a_strokeCloudColor: {
-            type: 'UNSIGNED_BYTE',
-            normalize: true,
-          },
-        });
+      const mesh = cloud.mesh.meshData;
+      let program = this.programs.cloud;
+      const hasFilter = !!mesh.uniforms.u_filterFlag;
+      const vector = mesh.uniforms.u_radialGradientVector;
+      const hasGradient = vector[2] > 0 || vector[5] > 0;
+      if(hasFilter && hasGradient) {
+        program = this.programs.basicWithBoth;
+      } else if(hasFilter) {
+        program = this.programs.basicWithFilter;
+      } else if(hasGradient) {
+        program = this.programs.basicWithGradient;
+      }
+      if(renderer.program !== program) {
+        renderer.useProgram(program, cloudProgramOptions);
       }
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
       renderer.setMeshData(cloud.meshData);
       renderer._draw();
     } else {
+      const cloudMeshes = [];
       for(let i = 0; i < cloud.amount; i++) {
         const transform = cloud.getTransform(i);
-        const frame = cloud.getTextureFrame(i)._img;
+        let frame = cloud.getTextureFrame(i);
+        if(frame) frame = frame._img;
         const filter = cloud.getFilter(i);
-        if(filter) {
-          cloud.mesh._cloudFilter = filter;
-        }
         const {fill, stroke} = cloud.getCloudRGBA(i);
-        const context = renderer.context;
-        context.save();
-        context.setTransform(...transform);
-        renderer.drawMeshes([cloud.mesh], {clear, fill, stroke, frame});
-        context.restore();
-        cloud.mesh._cloudFilter = '';
+        cloudMeshes.push({mesh: cloud.mesh, _cloudOptions: [fill, stroke, frame, transform, filter]});
         // console.log(transform, colorTransform, frame);
       }
+      renderer.drawMeshes(cloudMeshes, {clear});
     }
   }
 
   drawMeshes(meshes, {clear = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
-      const program = renderer.programs[0];
+      const program = this.programs.basic;
       if(renderer.program !== program) renderer.useProgram(program, programOptions);
       const meshData = compress(this, meshes);
       if(!renderer.options.autoUpdate) {
@@ -246,6 +287,20 @@ export default class Renderer {
               drawFilterContext(renderer, filterContext, width, height);
             }
           } else {
+            const hasFilter = !!mesh.uniforms.u_filterFlag;
+            const vector = mesh.uniforms.u_radialGradientVector;
+            const hasGradient = vector[2] > 0 || vector[5] > 0;
+            let program = this.programs.basic;
+            if(hasFilter && hasGradient) {
+              program = this.programs.basicWithBoth;
+            } else if(hasFilter) {
+              program = this.programs.basicWithFilter;
+            } else if(hasGradient) {
+              program = this.programs.basicWithGradient;
+            }
+            if(renderer.program !== program) {
+              renderer.useProgram(program, programOptions);
+            }
             renderer.setMeshData([mesh]);
             renderer._draw();
           }

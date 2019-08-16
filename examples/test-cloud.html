@@ -14,7 +14,7 @@
 
     const canvas = document.querySelector('canvas');
     const renderer = new Renderer(canvas, {
-      contextType: 'webgl2',
+      contextType: '2d',
     });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
@@ -42,7 +42,7 @@
       });
       // mesh.setTransform(1, 0, 0, 1, 200, 200);
 
-      const cloud = new MeshCloud(mesh, 200);
+      const cloud = new MeshCloud(mesh, 10);
       // cloud.setTransform(2, [1, 0, 0, 1, 50, 50]);
 
       // cloud.setTextureFrames([texture, texture2], {
@@ -52,7 +52,7 @@
       function update(t) {
         for(let i = 0; i < cloud.amount; i++) {
           cloud.setFillColor(i, [Math.random(), 0, Math.random(), 1]);
-          // cloud.grayscale(i, 1);
+          cloud.grayscale(i, 1);
           // cloud.setFrameIndex(i, i);
           cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
         }

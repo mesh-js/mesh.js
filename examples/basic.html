@@ -30,6 +30,9 @@
         // thickness: 6,
         color: [1, 0, 0, 1],
       });
+      if(i > 500) {
+        mesh.saturate(0.5);
+      }
       meshList.push(mesh);
     }
 

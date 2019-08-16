@@ -30,7 +30,7 @@ export default class CanvasRenderer {
     context.clearRect(x, y, w, h);
   }
 
-  drawMeshes(meshes, {clear = false, fill, stroke, frame} = {}) {
+  drawMeshes(meshes, {clear = false} = {}) {
     const context = this.context;
     if(clear) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -39,8 +39,18 @@ export default class CanvasRenderer {
     const {width, height} = context.canvas;
     const len = meshes.length;
     meshes.forEach((mesh, i) => {
-      // TODO: merge filter
-      const filter = mesh.filter;
+      let fill,
+        stroke,
+        frame,
+        transform,
+        cloudFilter;
+
+      if(mesh._cloudOptions) {
+        [fill, stroke, frame, transform, cloudFilter] = mesh._cloudOptions;
+        mesh = mesh.mesh;
+      }
+      let filter = mesh.filter;
+      if(cloudFilter) filter = filter ? `${filter} ${cloudFilter}` : cloudFilter;
       if(lastFilter && lastFilter !== filter) {
         applyFilter(this.filterBuffer, lastFilter);
         context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
@@ -49,7 +59,7 @@ export default class CanvasRenderer {
       }
       if(filter) {
         this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
-        drawMesh2D(mesh, this.filterBuffer, false);
+        drawMesh2D(mesh, this.filterBuffer, false, fill, stroke, frame, transform);
         if(i === len - 1) {
           applyFilter(this.filterBuffer, filter);
           context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
@@ -58,7 +68,7 @@ export default class CanvasRenderer {
           lastFilter = filter;
         }
       } else {
-        drawMesh2D(mesh, context, false, fill, stroke, frame);
+        drawMesh2D(mesh, context, false, fill, stroke, frame, transform);
       }
     });
   }

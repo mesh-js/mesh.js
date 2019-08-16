@@ -67,7 +67,6 @@ export default class Mesh2D {
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
     this[_filter] = [];
-    this._cloudFilter = ''; // add 2d filter from mesh-cloud.
   }
 
   get width() {
@@ -300,9 +299,7 @@ export default class Mesh2D {
   }
 
   get filter() {
-    const filter = this[_filter].join(' ');
-    if(this._cloudFilter) return `${filter} ${this._cloudFilter}`;
-    return filter;
+    return this[_filter].join(' ');
   }
 
   translate(x, y) {

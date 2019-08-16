@@ -1,6 +1,4 @@
-#ifdef GL_ES
 precision mediump float;
-#endif
 
 uniform sampler2D u_texSampler;
 uniform int u_texFlag;
@@ -10,6 +8,8 @@ uniform float u_colorSteps[40];
 uniform float u_radialGradientVector[6];
 
 uniform int u_filterFlag;
+
+uniform int u_cloudFilterFlag;
 
 varying vec4 vColor;
 varying vec2 vTextureCoord;
@@ -165,19 +165,15 @@ void main() {
     }
   }
 
-  // r0 > 0 && r1 > 0
-  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
-    radial_gradient(color, u_radialGradientVector, u_colorSteps);
+/* gradient branch */
+
+/* filter branch */
+
+  if(u_cloudFilterFlag > 0) {
+    float colorCloudMatrix[20];
+    buildCloudColor(colorCloudMatrix);
+    transformColor(color, colorCloudMatrix);
   }
-
-  if(u_filterFlag > 0) {
-    transformColor(color, u_colorMatrix);
-  }
-
-  float colorCloudMatrix[20];
-  buildCloudColor(colorCloudMatrix);
-
-  transformColor(color, colorCloudMatrix);
 
   gl_FragColor = color;
 }

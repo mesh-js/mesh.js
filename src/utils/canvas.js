@@ -36,7 +36,8 @@ function mixRGBA(a, b) {
   return `rgba(${c.join()})`;
 }
 
-export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null, cloudStroke = null, cloudFrame = null) {
+export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
+  cloudStroke = null, cloudFrame = null, cloudTransform = null) {
   context.save();
   let stroke = false;
   let fill = false;
@@ -108,6 +109,9 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   //     context.filter = filter;
   //   }
   // }
+  if(cloudTransform) {
+    context.transform(...cloudTransform);
+  }
   context.transform(...mesh.transformMatrix);
   const count = mesh.contours.length;
   mesh.contours.forEach((points, i) => {
