@@ -34,6 +34,13 @@ function drawFilterContext(renderer, filterContext, width, height) {
   delete filterContext._filter;
 }
 
+const programOptions = {
+  a_color: {
+    type: 'UNSIGNED_BYTE',
+    normalize: true,
+  },
+};
+
 export default class Renderer {
   constructor(canvas, opts = {}) {
     let contextType = opts.contextType || 'webgl';
@@ -69,7 +76,7 @@ export default class Renderer {
       if(contextType === 'webgl2') {
         renderer.compileSync(vfragShaderCloud, vertShaderCloud);
       }
-      renderer.useProgram(program);
+      renderer.useProgram(program, programOptions);
 
       // bind default Texture to eliminate warning
       const img = document.createElement('canvas');
@@ -153,7 +160,7 @@ export default class Renderer {
     const renderer = this[_glRenderer];
     const gl = renderer.gl;
     const cloudProgram = renderer.programs[1];
-    if(renderer.program !== cloudProgram) renderer.useProgram(cloudProgram);
+    if(renderer.program !== cloudProgram) renderer.useProgram(cloudProgram, programOptions);
     if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
     renderer.setMeshData(cloud.meshData);
     renderer._draw();
@@ -162,9 +169,9 @@ export default class Renderer {
 
   drawMeshes(meshes, {clear = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
-    const program = renderer.programs[0];
-    if(renderer.program !== program) renderer.useProgram(program);
     if(this[_glRenderer]) {
+      const program = renderer.programs[0];
+      if(renderer.program !== program) renderer.useProgram(program, programOptions);
       const meshData = compress(this, meshes);
       if(!renderer.options.autoUpdate) {
         const gl = renderer.gl;

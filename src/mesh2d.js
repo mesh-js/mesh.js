@@ -18,14 +18,12 @@ const _bound = Symbol('bound');
 const _strokeColor = Symbol('strokeColor');
 const _fillColor = Symbol('fillColor');
 const _transform = Symbol('transform');
-const _colorTransform = Symbol('colorTransform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _enableBlend = Symbol('enableBlend');
 const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
 const _applyTransform = Symbol('applyTransform');
-const _applyColorTransform = Symbol('applyColorTransform');
 const _boundingBox = Symbol('boundingBox');
 const _gradient = Symbol('gradient');
 
@@ -490,10 +488,10 @@ export default class Mesh2D {
 
     function mixColor(out, startColor, stopColor, p) {
       const s = 1 - p;
-      out[0] = startColor[0] * s + stopColor[0] * p;
-      out[1] = startColor[1] * s + stopColor[1] * p;
-      out[2] = startColor[2] * s + stopColor[2] * p;
-      out[3] = startColor[3] * s + stopColor[3] * p;
+      out[0] = Math.round(255 * (startColor[0] * s + stopColor[0] * p));
+      out[1] = Math.round(255 * (startColor[1] * s + stopColor[1] * p));
+      out[2] = Math.round(255 * (startColor[2] * s + stopColor[2] * p));
+      out[3] = Math.round(255 * (startColor[3] * s + stopColor[3] * p));
       return out;
     }
 
@@ -608,7 +606,7 @@ export default class Mesh2D {
           return p;
         });
         mesh.attributes = {
-          a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_fillColor]]),
+          a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
         };
         meshes.fill = mesh;
       }
@@ -629,7 +627,7 @@ export default class Mesh2D {
             return p;
           });
           mesh.attributes = {
-            a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_strokeColor]]),
+            a_color: Array.from({length: mesh.positions.length}).map(() => this[_strokeColor].map(c => Math.round(255 * c))),
           };
         });
         meshes.stroke = flattenMeshes(_meshes);
@@ -658,10 +656,6 @@ export default class Mesh2D {
       this[_applyGradient](this[_mesh], this[_gradient].fill);
     } else if(this[_gradient] && this[_gradient].stroke) {
       this[_applyGradient](this[_mesh], this[_gradient].stroke);
-    }
-
-    if(this[_colorTransform]) {
-      this[_applyColorTransform](mesh.attributes.a_color, this[_colorTransform]);
     }
 
     return this[_mesh];

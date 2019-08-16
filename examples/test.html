@@ -25,7 +25,7 @@
       // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
 
       // console.log(texture);
-      const NUM = 100;
+      const NUM = 1;
       const size = 150;
 
       // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
@@ -62,14 +62,14 @@
         });
         // }
 
-        // mesh.setLinearGradient({
-        //   vector: [50, 50, 50, 200],
-        //   colors: [
-        //     {offset: 0, color: [1, 1, 0, 1]},
-        //     {offset: 1, color: [0, 1, 0, 1]},
-        //   ],
-        //   type: 'stroke',
-        // });
+        mesh.setLinearGradient({
+          vector: [50, 50, 50, 200],
+          colors: [
+            {offset: 0, color: [1, 0, 0, 1]},
+            {offset: 1, color: [0, 1, 0, 1]},
+          ],
+          type: 'fill',
+        });
 
         // mesh.setFill({
         //   color: [1, 0, 0, 1],
