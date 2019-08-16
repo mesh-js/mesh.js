@@ -258,9 +258,9 @@ export default class Mesh2D {
     this[_filter].push(`blur(${length}px)`);
   }
 
-  dropShadow(offsetX, offsetY, blurRadius = 0, color = 'black') {
+  dropShadow(offsetX, offsetY, blurRadius = 0, color = [0, 0, 0, 1]) {
     this[_mesh] = null;
-    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${color})`);
+    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${vectorToRGBA(color)})`);
   }
 
   url(svgFilter) {
