@@ -73,9 +73,8 @@ export default class Renderer {
       const renderer = new GlRenderer(canvas, this[_options]);
 
       const program = renderer.compileSync(fragShader, vertShader);
-      if(contextType === 'webgl2') {
-        renderer.compileSync(vfragShaderCloud, vertShaderCloud);
-      }
+      renderer.compileSync(vfragShaderCloud, vertShaderCloud);
+
       renderer.useProgram(program, programOptions);
 
       // bind default Texture to eliminate warning
@@ -156,15 +155,45 @@ export default class Renderer {
   }
 
   drawMeshCloud(cloud, {clear = false} = {}) {
-    if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
-    const renderer = this[_glRenderer];
-    const gl = renderer.gl;
-    const cloudProgram = renderer.programs[1];
-    if(renderer.program !== cloudProgram) renderer.useProgram(cloudProgram, programOptions);
-    if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
-    renderer.setMeshData(cloud.meshData);
-    renderer._draw();
-    // console.log(cloud);
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
+    if(this[_glRenderer]) {
+      const gl = renderer.gl;
+      const cloudProgram = renderer.programs[1];
+      if(renderer.program !== cloudProgram) {
+        renderer.useProgram(cloudProgram, {
+          ...programOptions,
+          a_fillCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+          a_strokeCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+        });
+      }
+      if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
+      renderer.setMeshData(cloud.meshData);
+      renderer._draw();
+    } else {
+      for(let i = 0; i < cloud.amount; i++) {
+        const transform = cloud.getTransform(i);
+        const frame = cloud.getTextureFrame(i)._img;
+        const filter = cloud.getFilter(i);
+        if(filter) {
+          cloud.mesh._cloudFilter = filter;
+        }
+        const {fill, stroke} = cloud.getCloudRGBA(i);
+        const context = renderer.context;
+        context.save();
+        context.setTransform(...transform);
+        renderer.drawMeshes([cloud.mesh], {clear, fill, stroke, frame});
+        context.restore();
+        cloud.mesh._cloudFilter = '';
+        // console.log(transform, colorTransform, frame);
+      }
+    }
   }
 
   drawMeshes(meshes, {clear = false} = {}) {

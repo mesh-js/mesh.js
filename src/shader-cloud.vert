@@ -26,6 +26,9 @@ varying vec4 colorCloud4;
 attribute float a_frameIndex;
 varying float frameIndex;
 
+attribute vec4 a_fillCloudColor;
+attribute vec4 a_strokeCloudColor;
+
 void transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {
   float x = p.x;
   float y = p.y;
@@ -48,7 +51,12 @@ void main() {
   gl_Position = vec4(xy, 1.0, 1.0);
   
   flagBackground = a_vertexPosition.z;
-  vColor = a_color;
+  if(flagBackground > 0.0) {
+    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);
+  } else {
+    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);
+  }
+
   vTextureCoord = a_vertexTextureCoord;
 
   colorCloud0 = a_colorCloud0;

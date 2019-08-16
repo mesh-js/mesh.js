@@ -16,9 +16,13 @@ const _color3 = Symbol('color');
 const _color4 = Symbol('color');
 
 const _blend = Symbol('blend');
+const _filters = Symbol('filter');
 
 const _textures = Symbol('textures');
 const _frameIndex = Symbol('frameIndex');
+
+const _fillColor = Symbol('fillColor');
+const _strokeColor = Symbol('strokeColor');
 
 export default class {
   constructor(mesh, amount = 1) {
@@ -33,6 +37,9 @@ export default class {
     this[_color4] = [];
     this[_textures] = [];
     this[_frameIndex] = [];
+    this[_filters] = [];
+    this[_fillColor] = [];
+    this[_strokeColor] = [];
 
     this[_blend] = false;
 
@@ -49,8 +56,19 @@ export default class {
       this[_transform0].push([1, 0, 0, width]);
       this[_transform1].push([1, 0, 0, height]);
       this[_frameIndex].push([-1]);
+      this[_filters].push([]);
+      this[_fillColor].push([0, 0, 0, 0]);
+      this[_strokeColor].push([0, 0, 0, 0]);
       this.setColorTransform(i, colorMatrix);
     }
+  }
+
+  get mesh() {
+    return this[_mesh];
+  }
+
+  getFilter(idx) {
+    return this[_filters][idx].join(' ');
   }
 
   get enableBlend() {
@@ -85,45 +103,64 @@ export default class {
     return this;
   }
 
-  setColor(idx, color) {
-    return this.setColorTransform(idx, [
-      0, 0, 0, 0, color[0],
-      0, 0, 0, 0, color[1],
-      0, 0, 0, 0, color[2],
-      0, 0, 0, 0, color[3],
-    ]);
+  setFillColor(idx, color) {
+    this[_fillColor][idx] = color.map(c => Math.round(255 * c));
+  }
+
+  getCloudRGBA(idx) {
+    const fillColor = [...this[_fillColor][idx]];
+    const strokeColor = [...this[_strokeColor][idx]];
+    fillColor[3] /= 255;
+    strokeColor[3] /= 255;
+
+    return {
+      fill: `rgba(${fillColor.join()})`,
+      stroke: `rgba(${strokeColor.join()})`,
+    };
+  }
+
+  setStrokeColor(idx, color) {
+    this[_strokeColor][idx] = color.map(c => Math.round(255 * c));
   }
 
   grayscale(idx, p) {
     this.setColorTransform(idx, grayscale(p));
+    this[_filters][idx].push(`grayscale(${100 * p}%)`);
   }
 
   brightness(idx, p) {
     this.setColorTransform(idx, brightness(p));
+    this[_filters][idx].push(`brightness(${100 * p}%)`);
   }
 
   saturate(idx, p) {
     this.setColorTransform(idx, saturate(p));
+    this[_filters][idx].push(`saturate(${100 * p}%)`);
   }
 
   contrast(idx, p) {
     this.setColorTransform(idx, contrast(p));
+    this[_filters][idx].push(`contrast(${100 * p}%)`);
   }
 
   invert(idx, p) {
     this.setColorTransform(idx, invert(p));
+    this[_filters][idx].push(`invert(${100 * p}%)`);
   }
 
   sepia(idx, p) {
     this.setColorTransform(idx, sepia(p));
+    this[_filters][idx].push(`sepia(${100 * p}%)`);
   }
 
   opacity(idx, p) {
     this.setColorTransform(idx, opacity(p));
+    this[_filters][idx].push(`opacity(${100 * p}%)`);
   }
 
   hueRotate(idx, deg) {
     this.setColorTransform(idx, hueRotate(deg));
+    this[_filters][idx].push(`hue-rotate(${deg}deg)`);
   }
 
   setTransform(idx, m) {
@@ -141,6 +178,10 @@ export default class {
     if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
     const m = [...this[_transform0][idx].slice(0, 3), ...this[_transform1][idx].slice(0, 3)];
     return m;
+  }
+
+  getTextureFrame(idx) {
+    return this[_textures][this[_frameIndex][idx]];
   }
 
   setTextureFrames(frames = [], options = {}) {
@@ -174,7 +215,7 @@ export default class {
       cells,
       positions,
       textureCoord,
-      uniforms,
+      uniforms: {...uniforms},
       instanceCount: this[_count],
       enableBlend: true,
     };
@@ -194,6 +235,9 @@ export default class {
     meshData.attributes.a_colorCloud2 = {data: this[_color2], divisor: 1};
     meshData.attributes.a_colorCloud3 = {data: this[_color3], divisor: 1};
     meshData.attributes.a_colorCloud4 = {data: this[_color4], divisor: 1};
+
+    meshData.attributes.a_fillCloudColor = {data: this[_fillColor], divisor: 1};
+    meshData.attributes.a_strokeCloudColor = {data: this[_strokeColor], divisor: 1};
 
     return meshData;
   }

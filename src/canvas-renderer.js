@@ -30,7 +30,7 @@ export default class CanvasRenderer {
     context.clearRect(x, y, w, h);
   }
 
-  drawMeshes(meshes, {clear = false} = {}) {
+  drawMeshes(meshes, {clear = false, fill, stroke, frame} = {}) {
     const context = this.context;
     if(clear) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -58,7 +58,7 @@ export default class CanvasRenderer {
           lastFilter = filter;
         }
       } else {
-        drawMesh2D(mesh, context);
+        drawMesh2D(mesh, context, false, fill, stroke, frame);
       }
     });
   }

@@ -1,5 +1,6 @@
 import vectorToRGBA from './vector-to-rgba';
 import parseFont from './parse-font';
+import {mix} from './math';
 
 export function createCanvas(width, height) {
   let canvas;
@@ -23,22 +24,48 @@ export function applyFilter(context, filter) {
   context.restore();
 }
 
-export function drawMesh2D(mesh, context, enableFilter = true) {
+function mixRGBA(a, b) {
+  const pattern = /rgba\((\d+),(\d+),(\d+),(\d+)\)/;
+  a = a.match(pattern).slice(1, 5).map(Number);
+  b = b.match(pattern).slice(1, 5).map(Number);
+  const c = [];
+  const alpha = b[3];
+  for(let i = 0; i < 4; i++) {
+    c[i] = mix(a[i], b[i], alpha);
+  }
+  return `rgba(${c.join()})`;
+}
+
+export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null, cloudStroke = null, cloudFrame = null) {
   context.save();
   let stroke = false;
   let fill = false;
-  if(mesh.strokeStyle) {
-    context.strokeStyle = mesh.strokeStyle;
-    stroke = true;
-  }
+
   if(mesh.gradient && mesh.gradient.stroke) {
-    const {vector, colors} = mesh.gradient.stroke;
-    const gradient = context.createLinearGradient(...vector);
+    let {vector, colors} = mesh.gradient.stroke;
+    let gradient = null;
+    if(vector.length === 6) {
+      const h = context.canvas.height;
+      vector = [...vector];
+      vector[1] = h - vector[1];
+      vector[4] = h - vector[4];
+      gradient = context.createRadialGradient(...vector);
+    } else {
+      gradient = context.createLinearGradient(...vector);
+    }
     colors.forEach(({offset, color}) => {
-      const rgba = vectorToRGBA(color);
+      let rgba = vectorToRGBA(color);
+      if(cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
       gradient.addColorStop(offset, rgba);
     });
     context.strokeStyle = gradient;
+    stroke = true;
+  } else if(mesh.strokeStyle) {
+    if(cloudStroke) {
+      context.strokeStyle = mixRGBA(mesh.strokeStyle, cloudStroke);
+    } else {
+      context.strokeStyle = mesh.strokeStyle;
+    }
     stroke = true;
   }
   if(stroke) {
@@ -48,10 +75,6 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
     context.miterLimit = mesh.miterLimit;
   }
 
-  if(mesh.fillStyle) {
-    context.fillStyle = mesh.fillStyle;
-    fill = true;
-  }
   if(mesh.gradient && mesh.gradient.fill) {
     let {vector, colors} = mesh.gradient.fill;
     let gradient = null;
@@ -65,10 +88,18 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
       gradient = context.createLinearGradient(...vector);
     }
     colors.forEach(({offset, color}) => {
-      const rgba = vectorToRGBA(color);
+      let rgba = vectorToRGBA(color);
+      if(cloudFill) rgba = mixRGBA(rgba, cloudFill);
       gradient.addColorStop(offset, rgba);
     });
     context.fillStyle = gradient;
+    fill = true;
+  } else if(mesh.fillStyle) {
+    if(cloudFill) {
+      context.fillStyle = mixRGBA(mesh.fillStyle, cloudFill);
+    } else {
+      context.fillStyle = mesh.fillStyle;
+    }
     fill = true;
   }
   // if(enableFilter) {
@@ -77,7 +108,7 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
   //     context.filter = filter;
   //   }
   // }
-  context.setTransform(...mesh.transformMatrix);
+  context.transform(...mesh.transformMatrix);
   const count = mesh.contours.length;
   mesh.contours.forEach((points, i) => {
     const closed = points.closed;
@@ -100,7 +131,8 @@ export function drawMesh2D(mesh, context, enableFilter = true) {
       context.clip();
 
       if(i === count - 1 && mesh.texture) {
-        const {image, options} = mesh.texture;
+        let {image, options} = mesh.texture;
+        if(cloudFrame) image = cloudFrame;
         if(options.repeat) console.warn('Context 2D not supported image repeat yet.');
         if(image.font) {
           if(options.scale) console.warn('Context 2D not supported text scale yet.');

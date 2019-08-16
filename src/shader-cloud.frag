@@ -149,24 +149,24 @@ void main() {
         int index = int(floor(clamp(0.0, 11.0, frameIndex)));
         vec4 texColor;
         if(index == 0) texColor = texture2D(u_texFrame0, texCoord);
-        if(index == 1) texColor = texture2D(u_texFrame1, texCoord);
-        if(index == 2) texColor = texture2D(u_texFrame2, texCoord);
-        if(index == 3) texColor = texture2D(u_texFrame3, texCoord);
-        if(index == 4) texColor = texture2D(u_texFrame4, texCoord);
-        if(index == 5) texColor = texture2D(u_texFrame5, texCoord);
-        if(index == 6) texColor = texture2D(u_texFrame6, texCoord);
-        if(index == 7) texColor = texture2D(u_texFrame7, texCoord);
-        if(index == 8) texColor = texture2D(u_texFrame8, texCoord);
-        if(index == 9) texColor = texture2D(u_texFrame9, texCoord);
-        if(index == 10) texColor = texture2D(u_texFrame10, texCoord);
-        if(index == 11) texColor = texture2D(u_texFrame11, texCoord);
+        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord);
+        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord);
+        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord);
+        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord);
+        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord);
+        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord);
+        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord);
+        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord);
+        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord);
+        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord);
+        else texColor = texture2D(u_texFrame11, texCoord);
         color = mix(color, texColor, texColor.a);
       }
     }
   }
 
   // r0 > 0 && r1 > 0
-  if (u_radialGradientVector[2] > 0.0 && u_radialGradientVector[5] > 0.0) {
+  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
     radial_gradient(color, u_radialGradientVector, u_colorSteps);
   }
 

@@ -1,6 +1,4 @@
-#ifdef GL_ES
 precision mediump float;
-#endif
 
 uniform sampler2D u_texSampler;
 uniform int u_texFlag;
@@ -100,7 +98,7 @@ void main() {
   }
 
   // r0 > 0 && r1 > 0
-  if (u_radialGradientVector[2] > 0.0 && u_radialGradientVector[5] > 0.0) {
+  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
     radial_gradient(color, u_radialGradientVector, u_colorSteps);
   }
 

@@ -67,6 +67,7 @@ export default class Mesh2D {
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
     this[_filter] = [];
+    this._cloudFilter = ''; // add 2d filter from mesh-cloud.
   }
 
   get width() {
@@ -299,7 +300,9 @@ export default class Mesh2D {
   }
 
   get filter() {
-    return this[_filter].join(' ');
+    const filter = this[_filter].join(' ');
+    if(this._cloudFilter) return `${filter} ${this._cloudFilter}`;
+    return filter;
   }
 
   translate(x, y) {
@@ -645,6 +648,7 @@ export default class Mesh2D {
     mesh.uniforms = this[_uniforms];
     if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
     if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
+    if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
     this[_mesh] = mesh;
 
     const transform = this[_transform];

@@ -14,7 +14,7 @@
 
     const canvas = document.querySelector('canvas');
     const renderer = new Renderer(canvas, {
-      contextType: 'webgl2',
+      contextType: '2d',
     });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
@@ -77,11 +77,11 @@
 
         // mesh.brightness(3);
         // mesh.grayscale(1);
-        // mesh.saturate(1);
+        mesh.saturate(0.5);
         // mesh.blur(5);
-        mesh.dropShadow(10, 10, 10, [0, 0, 1, 1]);
-        mesh.dropShadow(-10, -10, 10, [0, 1, 0, 1]);
-        // // // mesh.contrast(0.5);
+        // mesh.dropShadow(10, 10, 10, [0, 0, 1, 1]);
+        // mesh.dropShadow(-10, -10, 10, [0, 1, 0, 1]);
+        mesh.contrast(0.5);
         // // // mesh.opacity(0.2);
         // // // mesh.hueRotate(130);
         // // // mesh.clearFilter();
