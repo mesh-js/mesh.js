@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Birds Flying</title>
+  <style>
+    canvas {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div>sprites: <span id="spriteCount">1</span></div>
+  <canvas id="bgcanvas" width="800" height="800"></canvas>
+  <canvas id="fgcanvas" width="800" height="800"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const fgcanvas = document.getElementById('fgcanvas');
+    const bgcanvas = document.getElementById('bgcanvas');
+    const bgcontext = bgcanvas.getContext('2d');
+    const axisZero = [400, 400];
+    function drawCircle() {
+      bgcontext.fillStyle = 'rgba(17,51,153,0.5)';
+      bgcontext.arc(...axisZero, 400, 0, 360, false);
+      bgcontext.fill();
+    }
+    drawCircle();
+
+    const textureURL = 'https://p.ssl.qhimg.com/d/inn/c886d09f/birds.png';
+    (async function () {
+      const {Renderer, Figure2D, Mesh2D} = meshjs;
+      const renderer = new Renderer(fgcanvas, {
+        contextType: 'webgl2',
+      });
+      const figure = new Figure2D();
+      figure.rect(0, 0, 86, 60);
+
+      const meshList = [];
+
+      const mesh = new Mesh2D(figure, fgcanvas);
+      mesh.setFill({
+        color: [1, 0, 0, 0.8],
+      });
+      // const texture = await renderer.loadTexture(textureURL);
+      // mesh.setTexture(texture, {
+      //   scale: false,
+      //   repeat: false,
+      //   rect: [0, 0, 86, 60],
+      //   srcRect: [2, 2, 86, 60],
+      // });
+
+      meshList.push(mesh);
+      // renderer.clear();
+      renderer.drawMeshes(meshList);
+    }());
+  </script>
+</body>
+</html>

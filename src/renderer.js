@@ -10,7 +10,7 @@ import {createShaders, applyShader, createCloudShaders, applyCloudShader} from '
 
 const defaultOpts = {
   autoUpdate: false,
-  premultipliedAlpha: false,
+  premultipliedAlpha: true,
   preserveDrawingBuffer: false,
   // depth: false,
   antialias: false,
@@ -72,8 +72,10 @@ export default class Renderer {
       createCloudShaders(renderer);
 
       const gl = renderer.gl;
-      gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
-      gl.clear(gl.COLOR_BUFFER_BIT);
+      // gl.clearColor(1.0, 1.0, 1.0, 1.0);
+      // gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
+      gl.clearColor(0.0, 0.0, 0.0, 0.0);
+      gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       this[_glRenderer] = renderer;
     } else {
       this[_canvasRenderer] = new CanvasRenderer(canvas, this[_options]);
