@@ -14,7 +14,7 @@
 
     const canvas = document.querySelector('canvas');
     const renderer = new Renderer(canvas, {
-      contextType: 'webgl',
+      contextType: 'webgl2',
     });
 
     const figure = new Figure2D();
@@ -28,7 +28,7 @@
       mesh.pos = pos;
       mesh.setFill({
         // thickness: 6,
-        color: [1, 0, 0, 1],
+        color: [1, 0, 0, 0.5],
       });
       // if(i > 500) {
       //   mesh.saturate(0.5);

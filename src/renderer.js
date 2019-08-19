@@ -12,6 +12,8 @@ const defaultOpts = {
   autoUpdate: false,
   premultipliedAlpha: false,
   preserveDrawingBuffer: false,
+  // depth: false,
+  // antialias: false,
 };
 
 const _glRenderer = Symbol('glRenderer');
