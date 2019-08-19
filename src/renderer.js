@@ -13,7 +13,7 @@ const defaultOpts = {
   premultipliedAlpha: false,
   preserveDrawingBuffer: false,
   // depth: false,
-  // antialias: false,
+  antialias: false,
 };
 
 const _glRenderer = Symbol('glRenderer');
