@@ -30,6 +30,10 @@ attribute vec4 a_fillCloudColor;
 attribute vec4 a_strokeCloudColor;
 #endif
 
+#ifdef GLOBALTRANSFORM
+uniform float u_globalTransform[8];
+#endif
+
 void transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {
   float x = p.x;
   float y = p.y;
@@ -50,6 +54,15 @@ void main() {
   vec2 xy = a_vertexPosition.xy;
   transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);
   gl_Position = vec4(xy, 1.0, 1.0);
+
+#ifdef GLOBALTRANSFORM
+  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);
+  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);
+  float width = u_globalTransform[3];
+  float height = u_globalTransform[7];
+  transformPoint(xy, m3, m4, width, height);
+  gl_Position = vec4(xy, 1.0, 1.0);
+#endif
   
   flagBackground = a_vertexPosition.z;
 

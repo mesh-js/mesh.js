@@ -40,7 +40,7 @@
     "bound-points": "^1.0.0",
     "extrude-polyline": "^1.0.6",
     "gl-matrix": "^3.0.0",
-    "gl-renderer": "^0.7.3",
+    "gl-renderer": "^0.7.4",
     "normalize-path-scale": "^2.0.0",
     "parse-svg-path": "^0.1.2",
     "simplify-path": "^1.1.0",

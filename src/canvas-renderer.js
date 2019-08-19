@@ -1,10 +1,13 @@
 import loadImage from './utils/load-image';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 
+const _transform = Symbol('transform');
+
 export default class CanvasRenderer {
   constructor(canvas, options) {
     this.context = canvas.getContext('2d');
     this.options = options;
+    this[_transform] = [1, 0, 0, 1, 0, 0];
   }
 
   createTexture(img) {
@@ -38,6 +41,7 @@ export default class CanvasRenderer {
     let lastFilter = null;
     const {width, height} = context.canvas;
     const len = meshes.length;
+
     meshes.forEach((mesh, i) => {
       let fill,
         stroke,
@@ -59,7 +63,10 @@ export default class CanvasRenderer {
       }
       if(filter) {
         this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
+        context.save();
+        context.transform(...this[_transform]);
         drawMesh2D(mesh, this.filterBuffer, false, fill, stroke, frame, transform);
+        context.restore();
         if(i === len - 1) {
           applyFilter(this.filterBuffer, filter);
           context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
@@ -68,8 +75,15 @@ export default class CanvasRenderer {
           lastFilter = filter;
         }
       } else {
+        context.save();
+        context.transform(...this[_transform]);
         drawMesh2D(mesh, context, false, fill, stroke, frame, transform);
+        context.restore();
       }
     });
+  }
+
+  setTransform(transform) {
+    this[_transform] = transform;
   }
 }
