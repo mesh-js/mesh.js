@@ -14,7 +14,7 @@
 
     const canvas = document.querySelector('canvas');
     const renderer = new Renderer(canvas, {
-      contextType: '2d',
+      // contextType: '2d',
     });
 
     const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
@@ -59,7 +59,7 @@
         renderer.clear();
         renderer.drawMeshCloud(cloud);
         // renderer.drawMeshes([mesh]);
-        requestAnimationFrame(update);
+        // requestAnimationFrame(update);
       }
       update(0);
 

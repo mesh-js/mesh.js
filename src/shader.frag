@@ -1,18 +1,23 @@
 precision mediump float;
 
-uniform sampler2D u_texSampler;
+varying vec4 vColor;
+varying float flagBackground;
+
+#ifdef TEXTURE
 uniform int u_texFlag;
 uniform int u_repeat;
 uniform vec4 u_srcRect;
-uniform float u_colorSteps[40];
-uniform float u_radialGradientVector[6];
+varying vec2 vTextureCoord;
+#endif
 
+#ifdef FILTER
 uniform int u_filterFlag;
 uniform float u_colorMatrix[20];
+#endif
 
-varying vec4 vColor;
-varying vec2 vTextureCoord;
-varying float flagBackground;
+#ifdef GRADIENT
+uniform float u_colorSteps[40];
+uniform float u_radialGradientVector[6];
 
 void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   // center circle
@@ -67,7 +72,9 @@ void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
     color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
   }
 }
+#endif
 
+#ifdef FILTER
 void transformColor(inout vec4 color, in float colorMatrix[20]) {
   float r = color.r, g = color.g, b = color.b, a = color.a;
   color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];
@@ -75,10 +82,12 @@ void transformColor(inout vec4 color, in float colorMatrix[20]) {
   color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];
   color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];
 }
+#endif
 
 void main() {
   vec4 color = vColor;
 
+#ifdef TEXTURE
   if(u_texFlag > 0 && flagBackground > 0.0) {
     vec2 texCoord = vTextureCoord;
 
@@ -96,10 +105,19 @@ void main() {
       color = mix(color, texColor, texColor.a);
     }
   }
+#endif
 
-/* gradient branch */
+#ifdef GRADIENT
+  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
+    radial_gradient(color, u_radialGradientVector, u_colorSteps);
+  }
+#endif
 
-/* filter branch */
+#ifdef FILTER
+  if(u_filterFlag > 0) {
+    transformColor(color, u_colorMatrix);
+  }
+#endif
 
   gl_FragColor = color;
 }

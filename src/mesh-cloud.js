@@ -23,6 +23,7 @@ const _frameIndex = Symbol('frameIndex');
 
 const _fillColor = Symbol('fillColor');
 const _strokeColor = Symbol('strokeColor');
+const _hasCloudColor = Symbol('cloudColor');
 
 export default class {
   constructor(mesh, amount = 1) {
@@ -40,17 +41,11 @@ export default class {
     this[_filters] = [];
     this[_fillColor] = [];
     this[_strokeColor] = [];
+    this[_hasCloudColor] = false;
 
     this[_blend] = false;
 
     const {width, height} = mesh;
-
-    const colorMatrix = [
-      1, 0, 0, 0, 0,
-      0, 1, 0, 0, 0,
-      0, 0, 1, 0, 0,
-      0, 0, 0, 1, 0,
-    ];
 
     for(let i = 0; i < amount; i++) {
       this[_transform0].push([1, 0, 0, width]);
@@ -59,12 +54,20 @@ export default class {
       this[_filters].push([]);
       this[_fillColor].push([0, 0, 0, 0]);
       this[_strokeColor].push([0, 0, 0, 0]);
-      this.setColorTransform(i, colorMatrix);
+      this.setColorTransform(i, null);
     }
   }
 
   get mesh() {
     return this[_mesh];
+  }
+
+  get hasCloudColor() {
+    return this[_hasCloudColor];
+  }
+
+  get hasCloudFilter() {
+    return !!this[_mesh].uniforms.u_cloudFilterFlag;
   }
 
   getFilter(idx) {
@@ -83,9 +86,14 @@ export default class {
       this[_color2][idx] = [m[2], m[7], m[12], m[17]];
       this[_color3][idx] = [m[3], m[8], m[13], m[18]];
       this[_color4][idx] = [m[4], m[9], m[14], m[19]];
-      this[_blend] = m[18] < 1.0;
+      this[_blend] = this[_blend] || m[18] < 1.0;
       this[_mesh].setUniforms({u_cloudFilterFlag: 1});
     } else {
+      this[_color0][idx] = [1, 0, 0, 0];
+      this[_color1][idx] = [0, 1, 0, 0];
+      this[_color2][idx] = [0, 0, 1, 0];
+      this[_color3][idx] = [0, 0, 0, 1];
+      this[_color4][idx] = [0, 0, 0, 0];
       this[_mesh].setUniforms({u_cloudFilterFlag: 0});
     }
     return this;
@@ -109,7 +117,13 @@ export default class {
   }
 
   setFillColor(idx, color) {
+    if(color[3] > 0.0) this[_hasCloudColor] = true;
     this[_fillColor][idx] = color.map(c => Math.round(255 * c));
+  }
+
+  setStrokeColor(idx, color) {
+    if(color[3] > 0.0) this[_hasCloudColor] = true;
+    this[_strokeColor][idx] = color.map(c => Math.round(255 * c));
   }
 
   getCloudRGBA(idx) {
@@ -122,10 +136,6 @@ export default class {
       fill: `rgba(${fillColor.join()})`,
       stroke: `rgba(${strokeColor.join()})`,
     };
-  }
-
-  setStrokeColor(idx, color) {
-    this[_strokeColor][idx] = color.map(c => Math.round(255 * c));
   }
 
   grayscale(idx, p) {

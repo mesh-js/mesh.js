@@ -1,42 +1,33 @@
 precision mediump float;
 
-uniform sampler2D u_texSampler;
+varying vec4 vColor;
+varying float flagBackground;
+
+#ifdef TEXTURE
+varying float frameIndex;
+varying vec2 vTextureCoord;
 uniform int u_texFlag;
 uniform int u_repeat;
 uniform vec4 u_srcRect;
-uniform float u_colorSteps[40];
-uniform float u_radialGradientVector[6];
+#endif
 
+#ifdef FILTER
 uniform int u_filterFlag;
-
-uniform int u_cloudFilterFlag;
-
-varying vec4 vColor;
-varying vec2 vTextureCoord;
-varying float flagBackground;
-
 uniform float u_colorMatrix[20];
+#endif
 
+#ifdef CLOUDFILTER
+uniform int u_cloudFilterFlag;
 varying vec4 colorCloud0;
 varying vec4 colorCloud1;
 varying vec4 colorCloud2;
 varying vec4 colorCloud3;
 varying vec4 colorCloud4;
+#endif
 
-varying float frameIndex;
-
-uniform sampler2D u_texFrame0;
-uniform sampler2D u_texFrame1;
-uniform sampler2D u_texFrame2;
-uniform sampler2D u_texFrame3;
-uniform sampler2D u_texFrame4;
-uniform sampler2D u_texFrame5;
-uniform sampler2D u_texFrame6;
-uniform sampler2D u_texFrame7;
-uniform sampler2D u_texFrame8;
-uniform sampler2D u_texFrame9;
-uniform sampler2D u_texFrame10;
-uniform sampler2D u_texFrame11;
+#ifdef GRADIENT
+uniform float u_colorSteps[40];
+uniform float u_radialGradientVector[6];
 
 void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   // center circle
@@ -91,6 +82,7 @@ void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
     color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
   }
 }
+#endif
 
 void transformColor(inout vec4 color, in float colorMatrix[20]) {
   float r = color.r, g = color.g, b = color.b, a = color.a;
@@ -100,6 +92,7 @@ void transformColor(inout vec4 color, in float colorMatrix[20]) {
   color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];
 }
 
+#ifdef CLOUDFILTER
 void buildCloudColor(inout float colorCloudMatrix[20]) {
   colorCloudMatrix[0] = colorCloud0[0];
   colorCloudMatrix[1] = colorCloud1[0];
@@ -125,10 +118,12 @@ void buildCloudColor(inout float colorCloudMatrix[20]) {
   colorCloudMatrix[18] = colorCloud3[3];
   colorCloudMatrix[19] = colorCloud4[3];
 }
+#endif
 
 void main() {
   vec4 color = vColor;
 
+#ifdef TEXTURE
   if(u_texFlag > 0 && flagBackground > 0.0) {
     vec2 texCoord = vTextureCoord;
 
@@ -164,16 +159,31 @@ void main() {
       }
     }
   }
+#endif
 
+#ifdef GRADIENT
+// r0 > 0 && r1 > 0
+  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
+    radial_gradient(color, u_radialGradientVector, u_colorSteps);
+  }
+#endif
 /* gradient branch */
 
 /* filter branch */
 
+#ifdef FILTER
+  if(u_filterFlag > 0) {
+    transformColor(color, u_colorMatrix);
+  }
+#endif
+
+#ifdef CLOUDFILTER
   if(u_cloudFilterFlag > 0) {
     float colorCloudMatrix[20];
     buildCloudColor(colorCloudMatrix);
     transformColor(color, colorCloudMatrix);
   }
+#endif
 
   gl_FragColor = color;
 }

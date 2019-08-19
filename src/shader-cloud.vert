@@ -1,33 +1,34 @@
 attribute vec3 a_vertexPosition;
-
 attribute vec4 a_color;
 varying vec4 vColor;
-
-attribute vec2 a_vertexTextureCoord;
-
+varying float flagBackground;
 attribute vec4 a_transform0;
 attribute vec4 a_transform1;
 
+#ifdef TEXTURE
+attribute vec2 a_vertexTextureCoord;
+varying vec2 vTextureCoord;
+attribute float a_frameIndex;
+varying float frameIndex;
+#endif
+
+#ifdef CLOUDFILTER
 attribute vec4 a_colorCloud0;
 attribute vec4 a_colorCloud1;
 attribute vec4 a_colorCloud2;
 attribute vec4 a_colorCloud3;
 attribute vec4 a_colorCloud4;
-
-varying vec2 vTextureCoord;
-varying float flagBackground;
-
 varying vec4 colorCloud0;
 varying vec4 colorCloud1;
 varying vec4 colorCloud2;
 varying vec4 colorCloud3;
 varying vec4 colorCloud4;
+#endif
 
-attribute float a_frameIndex;
-varying float frameIndex;
-
+#ifdef CLOUDCOLOR
 attribute vec4 a_fillCloudColor;
 attribute vec4 a_strokeCloudColor;
+#endif
 
 void transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {
   float x = p.x;
@@ -51,19 +52,27 @@ void main() {
   gl_Position = vec4(xy, 1.0, 1.0);
   
   flagBackground = a_vertexPosition.z;
+
+#ifdef CLOUDCOLOR
   if(flagBackground > 0.0) {
     vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);
   } else {
     vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);
   }
+#else
+  vColor = a_color;
+#endif
 
+#ifdef TEXTURE
   vTextureCoord = a_vertexTextureCoord;
+  frameIndex = a_frameIndex;
+#endif
 
+#ifdef CLOUDFILTER
   colorCloud0 = a_colorCloud0;
   colorCloud1 = a_colorCloud1;
   colorCloud2 = a_colorCloud2;
   colorCloud3 = a_colorCloud3;
   colorCloud4 = a_colorCloud4;
-
-  frameIndex = a_frameIndex;
+#endif
 }

@@ -25,7 +25,7 @@
       // texture = await renderer.createText('abcdefg', {font: 'normal 24px arial'});
 
       // console.log(texture);
-      const NUM = 100;
+      const NUM = 1;
       const size = 150;
 
       // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
@@ -93,7 +93,7 @@
       function getData() {
         return meshList.map((mesh) => {
           // mesh.setTransform(1, 0, 0, 1, 200, 200);
-          mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
+          // mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
           // mesh.transform([1, 0, 0, 1, -25, -25]);
           // mesh.translate(-25, -25);
           // const ang = Math.PI / 6;
@@ -115,7 +115,7 @@
         renderer.clear();
         const meshes = getData();
         renderer.drawMeshes(meshes);
-        requestAnimationFrame(update);
+        // requestAnimationFrame(update);
       }
       update();
 

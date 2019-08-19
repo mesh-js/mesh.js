@@ -6,35 +6,12 @@ import {normalize, denormalize} from './utils/positions';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 import Mesh2D from './mesh2d';
 
-import vertShader from './shader.vert';
-import vertShaderCloud from './shader-cloud.vert';
-import fragShader from './shader.frag';
-import fragShaderCloud from './shader-cloud.frag';
-
-const gradientBranch = `
-// r0 > 0 && r1 > 0
-if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
-  radial_gradient(color, u_radialGradientVector, u_colorSteps);
-}
-`;
-
-const filterBranch = `
-if(u_filterFlag > 0) {
-  transformColor(color, u_colorMatrix);
-}
-`;
-
-const fragShaderWithGradient = fragShader.replace('/* gradient branch */', gradientBranch);
-const fragShaderWithFilter = fragShader.replace('/* filter branch */', filterBranch);
-const fragShaderWithBoth = fragShaderWithGradient.replace('/* filter branch */', filterBranch);
-
-const fragShaderCloudWithGradient = fragShaderCloud.replace('/* gradient branch */', gradientBranch);
-const fragShaderCloudWithFilter = fragShaderCloud.replace('/* filter branch */', filterBranch);
-const fragShaderCloudWithBoth = fragShaderCloudWithGradient.replace('/* filter branch */', filterBranch);
+import {createShaders, applyShader, createCloudShaders, applyCloudShader} from './utils/shader-creator';
 
 const defaultOpts = {
   autoUpdate: false,
   premultipliedAlpha: false,
+  preserveDrawingBuffer: false,
 };
 
 const _glRenderer = Symbol('glRenderer');
@@ -55,25 +32,6 @@ function drawFilterContext(renderer, filterContext, width, height) {
   filterContext.clearRect(0, 0, width, height);
   delete filterContext._filter;
 }
-
-const programOptions = {
-  a_color: {
-    type: 'UNSIGNED_BYTE',
-    normalize: true,
-  },
-};
-
-const cloudProgramOptions = {
-  ...programOptions,
-  a_fillCloudColor: {
-    type: 'UNSIGNED_BYTE',
-    normalize: true,
-  },
-  a_strokeCloudColor: {
-    type: 'UNSIGNED_BYTE',
-    normalize: true,
-  },
-};
 
 export default class Renderer {
   constructor(canvas, opts = {}) {
@@ -107,38 +65,21 @@ export default class Renderer {
       if(contextType === 'webgl2') this[_options].webgl2 = true;
       const renderer = new GlRenderer(canvas, this[_options]);
 
-      const program = renderer.compileSync(fragShader, vertShader);
-      this.programs.basic = program;
-      this.programs.basicWithFilter = renderer.compileSync(fragShaderWithFilter, vertShader);
-      this.programs.basicWithGradient = renderer.compileSync(fragShaderWithGradient, vertShader);
-      this.programs.basicWithBoth = renderer.compileSync(fragShaderWithBoth, vertShader);
+      createShaders(renderer);
+      applyShader(renderer);
+      createCloudShaders(renderer);
 
-      this.programs.cloud = renderer.compileSync(fragShaderCloud, vertShaderCloud);
-      this.programs.cloudWithFilter = renderer.compileSync(fragShaderCloudWithFilter, vertShaderCloud);
-      this.programs.cloudWithGradient = renderer.compileSync(fragShaderCloudWithGradient, vertShaderCloud);
-      this.programs.cloudWithBoth = renderer.compileSync(fragShaderCloudWithBoth, vertShaderCloud);
-
-      // renderer.compileSync(fragShaderCloud, vertShaderCloud);
-
-      renderer.useProgram(program, programOptions);
-
-      // bind default Texture to eliminate warning
-      const img = document.createElement('canvas');
-      img.width = 1;
-      img.height = 1;
-      const texture = renderer.createTexture(img);
       const gl = renderer.gl;
-      // gl.enable(gl.BLEND);
-      // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
       gl.clear(gl.COLOR_BUFFER_BIT);
       this[_glRenderer] = renderer;
     } else {
       this[_canvasRenderer] = new CanvasRenderer(canvas, this[_options]);
     }
+  }
+
+  get textureEnabled() {
+    return this[_glRenderer] && this[_glRenderer].textures.length > 0;
   }
 
   get options() {
@@ -205,20 +146,15 @@ export default class Renderer {
     if(this[_glRenderer]) {
       const gl = renderer.gl;
       const mesh = cloud.mesh.meshData;
-      let program = this.programs.cloud;
+
+      const hasTexture = this.textureEnabled;
       const hasFilter = !!mesh.uniforms.u_filterFlag;
       const vector = mesh.uniforms.u_radialGradientVector;
       const hasGradient = vector[2] > 0 || vector[5] > 0;
-      if(hasFilter && hasGradient) {
-        program = this.programs.basicWithBoth;
-      } else if(hasFilter) {
-        program = this.programs.basicWithFilter;
-      } else if(hasGradient) {
-        program = this.programs.basicWithGradient;
-      }
-      if(renderer.program !== program) {
-        renderer.useProgram(program, cloudProgramOptions);
-      }
+      const hasGlobalTransform = false;
+      const hasCloudColor = cloud.hasCloudColor;
+      const hasCloudFilter = true;
+      applyCloudShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform, hasCloudColor, hasCloudFilter});
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
       renderer.setMeshData(cloud.meshData);
       renderer._draw();
@@ -240,8 +176,6 @@ export default class Renderer {
   drawMeshes(meshes, {clear = false} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
-      const program = this.programs.basic;
-      if(renderer.program !== program) renderer.useProgram(program, programOptions);
       const meshData = compress(this, meshes);
       if(!renderer.options.autoUpdate) {
         const gl = renderer.gl;
@@ -249,6 +183,7 @@ export default class Renderer {
         for(let i = 0; i < meshData.length; i++) {
           const mesh = meshData[i];
           if(mesh.filterCanvas) {
+            applyShader(renderer, {hasTexture: true});
             const {width, height} = this.canvas;
             let filterContext = this.filterContext;
             if(!filterContext) {
@@ -287,20 +222,12 @@ export default class Renderer {
               drawFilterContext(renderer, filterContext, width, height);
             }
           } else {
+            const hasTexture = this.textureEnabled;
             const hasFilter = !!mesh.uniforms.u_filterFlag;
             const vector = mesh.uniforms.u_radialGradientVector;
             const hasGradient = vector[2] > 0 || vector[5] > 0;
-            let program = this.programs.basic;
-            if(hasFilter && hasGradient) {
-              program = this.programs.basicWithBoth;
-            } else if(hasFilter) {
-              program = this.programs.basicWithFilter;
-            } else if(hasGradient) {
-              program = this.programs.basicWithGradient;
-            }
-            if(renderer.program !== program) {
-              renderer.useProgram(program, programOptions);
-            }
+            const hasGlobalTransform = false;
+            applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
             renderer.setMeshData([mesh]);
             renderer._draw();
           }
