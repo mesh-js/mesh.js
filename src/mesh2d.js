@@ -69,6 +69,12 @@ export default class Mesh2D {
     this[_filter] = [];
   }
 
+  setResolution(width, height) {
+    this[_mesh] = null;
+    this[_bound][1][0] = width;
+    this[_bound][1][1] = height;
+  }
+
   get width() {
     return this[_bound][1][0];
   }
