@@ -74,7 +74,6 @@ export default class Renderer {
     opts.contextType = contextType;
 
     this[_options] = Object.assign({}, defaultOpts, opts);
-    this.programs = {};
 
     if(contextType === 'webgl' || contextType === 'webgl2') {
       if(contextType === 'webgl2') this[_options].webgl2 = true;
