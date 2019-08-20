@@ -15,6 +15,7 @@ export default async () => {
       js: [
         './mesh.js',
         './proton.js',
+        './proton-renderer.js',
       ],
     },
   };

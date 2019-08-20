@@ -100,16 +100,20 @@ export default class Renderer {
     return this[_options];
   }
 
-  get glRenderer() {
+  get glContext() {
     return this[_glRenderer];
+  }
+
+  get canvasContext() {
+    return this[_canvasRenderer];
+  }
+
+  get context() {
+    return this[_glRenderer] || this[_canvasRenderer];
   }
 
   get isWebGL2() {
     return this[_glRenderer] && this[_glRenderer].isWebGL2;
-  }
-
-  get canvasRenderer() {
-    return this[_canvasRenderer];
   }
 
   normalize(x, y) {
