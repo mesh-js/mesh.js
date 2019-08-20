@@ -49,9 +49,13 @@ function isUnitTransform(m) {
 
 export default class Renderer {
   constructor(canvas, opts = {}) {
-    let contextType = opts.contextType || 'webgl';
-    if(typeof WebGLRenderingContext !== 'function') {
-      contextType = '2d';
+    let contextType = opts.contextType;
+    if(!contextType) {
+      if(typeof WebGLRenderingContext !== 'function') {
+        contextType = '2d';
+      } else {
+        contextType = 'webgl';
+      }
     }
     if(!canvas.getContext) {
       // 小程序
@@ -130,8 +134,7 @@ export default class Renderer {
     if(this[_glRenderer]) {
       const img = await createText(
         text,
-        {font, fillColor, strokeColor},
-        this[_options].contextType === 'webgl'
+        {font, fillColor, strokeColor}
       );
       return this.createTexture(img);
     }
@@ -168,7 +171,7 @@ export default class Renderer {
     if(this[_glRenderer]) {
       const gl = renderer.gl;
       const mesh = cloud.mesh.meshData;
-      const hasTexture = mesh.uniforms.u_texSampler;
+      const hasTexture = !!mesh.uniforms.u_texSampler;
       const hasFilter = !!mesh.uniforms.u_filterFlag;
       const vector = mesh.uniforms.u_radialGradientVector;
       const hasGradient = vector[2] > 0 || vector[5] > 0;

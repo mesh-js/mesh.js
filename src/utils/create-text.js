@@ -3,7 +3,7 @@ import {createCanvas} from './canvas';
 
 let textContext = null;
 
-export default async function createText(text, {font, fillColor, strokeColor}, flipY = true) {
+export default async function createText(text, {font, fillColor, strokeColor}) {
   if(!textContext) {
     // textContext = document.createElement('canvas').getContext('2d');
     textContext = createCanvas(1, 1).getContext('2d');
