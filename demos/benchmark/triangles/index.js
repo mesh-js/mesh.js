@@ -62,5 +62,4 @@ const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
     requestAnimationFrame(update);
   }
   update();
-  renderer.render();
 }());

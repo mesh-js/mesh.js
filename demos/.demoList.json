@@ -29,5 +29,9 @@
   {
     "label": "blur filter meshjs gl 1000",
     "src": "benchmark/blur_filter_mesh_gl"
+  },
+  {
+    "label": "particle basic",
+    "src": "protonjs/basic"
   }
 ]

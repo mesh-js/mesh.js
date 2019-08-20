@@ -96,10 +96,6 @@ export default class Renderer {
     this[_globalTransform] = [1, 0, 0, 1, 0, 0];
   }
 
-  get textureEnabled() {
-    return this[_glRenderer] && this[_glRenderer].textures.length > 0;
-  }
-
   get options() {
     return this[_options];
   }
@@ -168,8 +164,7 @@ export default class Renderer {
     if(this[_glRenderer]) {
       const gl = renderer.gl;
       const mesh = cloud.mesh.meshData;
-
-      const hasTexture = this.textureEnabled;
+      const hasTexture = mesh.uniforms.u_texSampler;
       const hasFilter = !!mesh.uniforms.u_filterFlag;
       const vector = mesh.uniforms.u_radialGradientVector;
       const hasGradient = vector[2] > 0 || vector[5] > 0;
@@ -257,7 +252,7 @@ export default class Renderer {
               drawFilterContext(renderer, filterContext, width, height);
             }
           } else {
-            const hasTexture = this.textureEnabled;
+            const hasTexture = !!mesh.uniforms.u_texSampler;
             const hasFilter = !!mesh.uniforms.u_filterFlag;
             const vector = mesh.uniforms.u_radialGradientVector;
             const hasGradient = vector[2] > 0 || vector[5] > 0;
