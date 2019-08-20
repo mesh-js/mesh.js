@@ -400,10 +400,10 @@ export default class Mesh2D {
 
     const transform = this[_transform];
     const srcRect = options.srcRect;
-    const rect = options.rect || [0, 0, imgWidth, imgHeight];
+    const rect = options.rect || [0, 0];
 
-    if(rect[2] == null) rect[2] = imgWidth;
-    if(rect[3] == null) rect[3] = imgHeight;
+    if(rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
+    if(rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
 
     const [w, h] = this[_bound][1];
 

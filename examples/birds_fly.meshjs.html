@@ -42,16 +42,16 @@
       const meshList = [];
 
       const mesh = new Mesh2D(figure, fgcanvas);
-      mesh.setFill({
-        color: [1, 0, 0, 0.8],
-      });
-      // const texture = await renderer.loadTexture(textureURL);
-      // mesh.setTexture(texture, {
-      //   scale: false,
-      //   repeat: false,
-      //   rect: [0, 0, 86, 60],
-      //   srcRect: [2, 2, 86, 60],
+      // mesh.setFill({
+      //   color: [1, 0, 0, 0.8],
       // });
+      const texture = await renderer.loadTexture(textureURL);
+      mesh.setTexture(texture, {
+        scale: false,
+        repeat: false,
+        // rect: [0, 0, 86, 60],
+        srcRect: [2, 2, 86, 60],
+      });
 
       meshList.push(mesh);
       // renderer.clear();
