@@ -1,4 +1,5 @@
 import GlRenderer from 'gl-renderer';
+import {mat2d} from 'gl-matrix';
 import CanvasRenderer from './canvas-renderer';
 import compress from './utils/compress';
 import createText from './utils/create-text';
@@ -6,7 +7,12 @@ import {normalize, denormalize} from './utils/positions';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 import Mesh2D from './mesh2d';
 
-import {createShaders, applyShader, createCloudShaders, applyCloudShader} from './utils/shader-creator';
+import {
+  createShaders,
+  applyShader,
+  createCloudShaders,
+  applyCloudShader,
+} from './utils/shader-creator';
 
 const defaultOpts = {
   autoUpdate: false,
@@ -19,6 +25,8 @@ const defaultOpts = {
 const _glRenderer = Symbol('glRenderer');
 const _canvasRenderer = Symbol('canvasRenderer');
 const _options = Symbol('options');
+const _globalTransform = Symbol('globalTransform');
+const _applyGlobalTransform = Symbol('applyGlobalTransform');
 
 function drawFilterContext(renderer, filterContext, width, height) {
   const filterTexture = renderer.createTexture(filterContext.canvas);
@@ -35,13 +43,18 @@ function drawFilterContext(renderer, filterContext, width, height) {
   delete filterContext._filter;
 }
 
+function isUnitTransform(m) {
+  return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
+}
+
 export default class Renderer {
   constructor(canvas, opts = {}) {
     let contextType = opts.contextType || 'webgl';
     if(typeof WebGLRenderingContext !== 'function') {
       contextType = '2d';
     }
-    if(!canvas.getContext) { // 小程序
+    if(!canvas.getContext) {
+      // 小程序
       const context = canvas;
       canvas = {
         getContext() {
@@ -80,6 +93,8 @@ export default class Renderer {
     } else {
       this[_canvasRenderer] = new CanvasRenderer(canvas, this[_options]);
     }
+
+    this[_globalTransform] = [1, 0, 0, 1, 0, 0];
   }
 
   get textureEnabled() {
@@ -114,7 +129,11 @@ export default class Renderer {
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
     if(this[_glRenderer]) {
-      const img = await createText(text, {font, fillColor, strokeColor}, this[_options].contextType === 'webgl');
+      const img = await createText(
+        text,
+        {font, fillColor, strokeColor},
+        this[_options].contextType === 'webgl'
+      );
       return this.createTexture(img);
     }
     return {_img: {font, fillColor, strokeColor, text}};
@@ -155,11 +174,19 @@ export default class Renderer {
       const hasFilter = !!mesh.uniforms.u_filterFlag;
       const vector = mesh.uniforms.u_radialGradientVector;
       const hasGradient = vector[2] > 0 || vector[5] > 0;
-      const hasGlobalTransform = false;
+      const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
       const hasCloudColor = cloud.hasCloudColor;
       const hasCloudFilter = true;
-      applyCloudShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform, hasCloudColor, hasCloudFilter});
+      applyCloudShader(renderer, {
+        hasTexture,
+        hasFilter,
+        hasGradient,
+        hasGlobalTransform,
+        hasCloudColor,
+        hasCloudFilter,
+      });
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
+      this[_applyGlobalTransform](this[_globalTransform]);
       renderer.setMeshData(cloud.meshData);
       renderer._draw();
     } else {
@@ -170,9 +197,13 @@ export default class Renderer {
         if(frame) frame = frame._img;
         const filter = cloud.getFilter(i);
         const {fill, stroke} = cloud.getCloudRGBA(i);
-        cloudMeshes.push({mesh: cloud.mesh, _cloudOptions: [fill, stroke, frame, transform, filter]});
+        cloudMeshes.push({
+          mesh: cloud.mesh,
+          _cloudOptions: [fill, stroke, frame, transform, filter],
+        });
         // console.log(transform, colorTransform, frame);
       }
+      renderer.setTransform(this[_globalTransform]);
       renderer.drawMeshes(cloudMeshes, {clear});
     }
   }
@@ -208,7 +239,8 @@ export default class Renderer {
                 }
                 filterContext._filter = currentFilter;
                 drawMesh2D(originalMesh, filterContext, false);
-              } else if(filterContext._filter === currentFilter) { // 把前面的filter合并一下
+              } else if(filterContext._filter === currentFilter) {
+                // 把前面的filter合并一下
                 drawMesh2D(originalMesh, filterContext, false);
                 applyFilter(filterContext, currentFilter);
                 drawFilterContext(renderer, filterContext, width, height);
@@ -230,8 +262,9 @@ export default class Renderer {
             const hasFilter = !!mesh.uniforms.u_filterFlag;
             const vector = mesh.uniforms.u_radialGradientVector;
             const hasGradient = vector[2] > 0 || vector[5] > 0;
-            const hasGlobalTransform = false;
+            const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
             applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
+            this[_applyGlobalTransform](this[_globalTransform]);
             renderer.setMeshData([mesh]);
             renderer._draw();
           }
@@ -240,7 +273,72 @@ export default class Renderer {
         renderer.setMeshData(meshData);
       }
     } else {
+      renderer.setTransform(this[_globalTransform]);
       renderer.drawMeshes(meshes, {clear});
     }
+  }
+
+  [_applyGlobalTransform](m) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    if(this[_glRenderer]) {
+      const {width, height} = this.canvas;
+      renderer.uniforms.u_globalTransform = [...m.slice(0, 3), width, ...m.slice(3), height];
+    } else {
+      renderer.setTransform(m);
+    }
+  }
+
+  setGlobalTransform(...m) {
+    const transform = this[_globalTransform];
+    this[_globalTransform] = m;
+    m = mat2d(m) * mat2d.invert(transform);
+    this[_applyGlobalTransform](m);
+    return this;
+  }
+
+  globalTransform(...m) {
+    const transform = this[_globalTransform];
+    this[_globalTransform] = mat2d(m) * mat2d(transform);
+    this[_applyGlobalTransform](m);
+    return this;
+  }
+
+  globalTranslate(x, y) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [x, y]);
+    return this.globalTransform(...m);
+  }
+
+  globalRotate(rad, [ox, oy] = [0, 0]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [ox, oy]);
+    m = mat2d.rotate(m, rad);
+    m = mat2d.translate(m, [-ox, -oy]);
+    return this.globalTransform(...m);
+  }
+
+  globalScale(x, y = x, [ox, oy] = [0, 0]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [ox, oy]);
+    m = mat2d.scale(m, [x, y]);
+    m = mat2d.translate(m, [-ox, -oy]);
+    return this.globalTransform(...m);
+  }
+
+  globalSkew(x, y = x, [ox, oy] = [0, 0]) {
+    let m = mat2d.create();
+    m = mat2d.translate(m, [ox, oy]);
+    m = mat2d(m) * mat2d(1, Math.tan(y), Math.tan(x), 1, 0, 0);
+    m = mat2d.translate(m, [-ox, -oy]);
+    return this.globalTransform(...m);
+  }
+
+  transformPoint(x, y) {
+    const m = this[_globalTransform];
+    const {width: w, height: h} = this.canvas;
+    const newX = x * m[0] + y * m[2] + m[4];
+    const newY = x * m[1] + y * m[3] + m[5];
+    const p = normalize([newX, newY], w, h);
+    return p;
   }
 }
