@@ -37,16 +37,17 @@ class MeshRenderer extends Proton.CustomRenderer {
     mesh.setFill({
       color: getColorParticle(particle),
     });
-    mesh.setTransform(1, 0, 0, 1, particle.p.x, particle.p.y);
-    if(particle.rotation) {
-      if(Number.isFinite(particle.rotation)) {
-        mesh.rotate(Math.PI * particle.rotation / 180, [particle.p.x, particle.p.y]);
-      }
+    const {x, y} = particle.p;
+    mesh.setTransform(1, 0, 0, 1, x, y);
+    if(Number.isFinite(particle.radius)) {
+      const r = particle.radius * 2;
+      mesh.scale(r, r, [x, y]);
     }
-    if(particle.scale) {
-      if(Number.isFinite(particle.scale)) {
-        mesh.scale(particle.scale, particle.scale, [particle.p.x, particle.p.y]);
-      }
+    if(Number.isFinite(particle.rotation)) {
+      mesh.rotate(Math.PI * particle.rotation / 180, [x, y]);
+    }
+    if(Number.isFinite(particle.scale)) {
+      mesh.scale(particle.scale, particle.scale, [x, y]);
     }
   }
 
