@@ -87,6 +87,11 @@ export default class Mesh2D {
     return this[_contours];
   }
 
+  set contours(contours) {
+    this[_mesh] = null;
+    this[_contours] = contours;
+  }
+
   get boundingBox() {
     if(this[_mesh] && this[_boundingBox]) return this[_boundingBox];
 

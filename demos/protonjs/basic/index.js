@@ -29,7 +29,7 @@ proton.addEmitter(emitter);
 // add renderer
 const renderer = new Renderer(canvas);
 const figure = new Figure2D();
-figure.rect(-5, -5, 10, 10);
+figure.rect(-0.5, -0.5, 1, 1);
 emitter.addInitialize(new Proton.Body(figure));
 const meshRenderer = new MeshRenderer(renderer);
 proton.addRenderer(meshRenderer);
