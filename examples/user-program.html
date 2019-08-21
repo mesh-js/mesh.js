@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: 'webgl2',
+    });
+
+    const vertShader = `
+      attribute vec3 a_vertexPosition;
+      // attribute vec4 a_color;
+      // varying vec4 vColor;
+
+      void main() {
+        gl_PointSize = 1.0;
+        gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);
+        // vColor = a_color;
+      }
+    `;
+
+    const fragShader = `
+      precision mediump float;
+      // varying vec4 vColor;
+      uniform vec4 u_color;
+      uniform vec2 u_resolution;
+
+      void main() {
+        vec2 st = gl_FragCoord.xy / u_resolution;
+        gl_FragColor = st.x * u_color;
+      }
+    `;
+
+    const program = renderer.glRenderer.compileSync(fragShader, vertShader);
+
+    const figure = new Figure2D();
+    figure.rect(0, 0, canvas.width, canvas.height);
+
+    const mesh = new Mesh2D(figure, canvas);
+    mesh.setUniforms({
+      u_color: [1, 0, 1, 1],
+      u_resolution: [canvas.width, canvas.height],
+    });
+
+    function update(t) {
+      renderer.clear();
+      renderer.drawMeshes([mesh], {program});
+      // requestAnimationFrame(update);
+    }
+    update(0);
+  </script>
+</body>
+</html>

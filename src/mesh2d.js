@@ -602,7 +602,7 @@ export default class Mesh2D {
       return this[_mesh];
     }
     if(!this[_fill] && !this[_stroke]) {
-      return null;
+      this.setFill();
     }
 
     const contours = this[_contours];

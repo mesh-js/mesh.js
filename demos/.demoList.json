@@ -33,5 +33,9 @@
   {
     "label": "particle basic",
     "src": "protonjs/basic"
+  },
+  {
+    "label": "particle fire",
+    "src": "protonjs/fire"
   }
 ]

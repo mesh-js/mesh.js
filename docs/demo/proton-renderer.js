@@ -1,6 +1,4 @@
 /* globals Proton */
-const {Mesh2D} = meshjs;
-
 function parseColor(hex) {
   return hex.match(/#(\w\w)(\w\w)(\w\w)/im).slice(1, 6).map(s => parseInt(s, 16) / 255);
 }
@@ -11,7 +9,7 @@ function getColorParticle(particle) {
     rgb = particle.transform.rgb;
     rgb = [rgb.r / 255, rgb.g / 255, rgb.b / 255];
   } else {
-    rgb = parseColor(particle.color || '#ff0000');
+    rgb = parseColor(particle.color);
   }
   return [...rgb, particle.alpha];
 }
@@ -25,21 +23,24 @@ class MeshRenderer extends Proton.CustomRenderer {
 
   resize(width, height) {
     super.resize(width, height);
-    if(this.element.context) {
-      const canvas = this.element.context.canvas;
-      canvas.width = width;
-      canvas.height = height;
-    }
+    const canvas = this.element.canvas;
+    canvas.width = width;
+    canvas.height = height;
+    this.meshes.forEach((mesh) => {
+      mesh.setResolution(width, height);
+    });
   }
 
   drawMesh(particle) {
     const mesh = particle.body;
-    mesh.setFill({
-      color: getColorParticle(particle),
-    });
+    if(particle.color) {
+      mesh.setFill({
+        color: getColorParticle(particle),
+      });
+    }
     const {x, y} = particle.p;
     mesh.setTransform(1, 0, 0, 1, x, y);
-    if(Number.isFinite(particle.radius)) {
+    if(!mesh.uniforms.u_texSampler && Number.isFinite(particle.radius)) {
       const r = particle.radius * 2;
       mesh.scale(r, r, [x, y]);
     }
@@ -53,11 +54,26 @@ class MeshRenderer extends Proton.CustomRenderer {
 
   onParticleCreated(particle) {
     // console.log(particle);
-    const figure = particle.body;
-    const mesh = new Mesh2D(figure, this.element.context.canvas);
-    particle.body = mesh;
-    this.meshes.push(mesh);
-    this.drawMesh(particle);
+    if(particle.body instanceof meshjs.Figure2D) {
+      const figure = particle.body;
+      const mesh = new meshjs.Mesh2D(figure, this.element.canvas);
+      particle.body = mesh;
+      this.meshes.push(mesh);
+      this.drawMesh(particle);
+    } else { // textures
+      const figure = new meshjs.Figure2D();
+      const texture = particle.body;
+      const {width, height} = texture._img;
+      figure.rect(-width / 2, -height / 2, width, height);
+      const mesh = new meshjs.Mesh2D(figure, this.element.canvas);
+      particle.body = mesh;
+      this.meshes.push(mesh);
+      mesh.setTexture(texture, {
+        rect: [-width / 2, -height / 2],
+      });
+      this.drawMesh(particle);
+      // console.log(texture);
+    }
   }
 
   onParticleDead(particle) {

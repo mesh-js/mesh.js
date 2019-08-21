@@ -27,6 +27,7 @@ const _canvasRenderer = Symbol('canvasRenderer');
 const _options = Symbol('options');
 const _globalTransform = Symbol('globalTransform');
 const _applyGlobalTransform = Symbol('applyGlobalTransform');
+const _canvas = Symbol('canvas');
 
 function drawFilterContext(renderer, filterContext, width, height) {
   const filterTexture = renderer.createTexture(filterContext.canvas);
@@ -70,7 +71,7 @@ export default class Renderer {
       context.canvas = canvas;
       contextType = '2d';
     }
-    this.canvas = canvas;
+    this[_canvas] = canvas;
 
     if(contextType !== 'webgl' && contextType !== 'webgl2' && contextType !== '2d') {
       throw new Error(`Unknown context type ${contextType}`);
@@ -104,16 +105,16 @@ export default class Renderer {
     return this[_options];
   }
 
-  get glContext() {
+  get canvas() {
+    return this[_canvas];
+  }
+
+  get glRenderer() {
     return this[_glRenderer];
   }
 
-  get canvasContext() {
+  get canvasRenderer() {
     return this[_canvasRenderer];
-  }
-
-  get context() {
-    return this[_glRenderer] || this[_canvasRenderer];
   }
 
   get isWebGL2() {
@@ -165,28 +166,45 @@ export default class Renderer {
     }
   }
 
-  drawMeshCloud(cloud, {clear = false} = {}) {
+  drawMeshCloud(cloud, {clear = false, program = null, attributeOptions = {}} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
     if(this[_glRenderer]) {
       const gl = renderer.gl;
-      const mesh = cloud.mesh.meshData;
-      const hasTexture = !!mesh.uniforms.u_texSampler;
-      const hasFilter = !!mesh.uniforms.u_filterFlag;
-      const vector = mesh.uniforms.u_radialGradientVector;
-      const hasGradient = vector[2] > 0 || vector[5] > 0;
-      const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
-      const hasCloudColor = cloud.hasCloudColor;
-      const hasCloudFilter = true;
-      applyCloudShader(renderer, {
-        hasTexture,
-        hasFilter,
-        hasGradient,
-        hasGlobalTransform,
-        hasCloudColor,
-        hasCloudFilter,
-      });
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
+      if(!program) {
+        const mesh = cloud.mesh.meshData;
+        const hasTexture = !!mesh.uniforms.u_texSampler;
+        const hasFilter = !!mesh.uniforms.u_filterFlag;
+        const vector = mesh.uniforms.u_radialGradientVector;
+        const hasGradient = vector[2] > 0 || vector[5] > 0;
+        const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
+        const hasCloudColor = cloud.hasCloudColor;
+        const hasCloudFilter = true;
+        applyCloudShader(renderer, {
+          hasTexture,
+          hasFilter,
+          hasGradient,
+          hasGlobalTransform,
+          hasCloudColor,
+          hasCloudFilter,
+        });
+      } else if(this.program !== program) {
+        renderer.useProgram(program, Object.assign({
+          a_color: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+          a_fillCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+          a_strokeCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+        }, attributeOptions));
+      }
       this[_applyGlobalTransform](this[_globalTransform]);
       renderer.setMeshData(cloud.meshData);
       renderer._draw();
@@ -209,69 +227,77 @@ export default class Renderer {
     }
   }
 
-  drawMeshes(meshes, {clear = false} = {}) {
+  drawMeshes(meshes, {clear = false, program = null, attributeOptions = {}} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const meshData = compress(this, meshes);
-      if(!renderer.options.autoUpdate) {
-        const gl = renderer.gl;
-        if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
-        for(let i = 0; i < meshData.length; i++) {
-          const mesh = meshData[i];
-          if(mesh.filterCanvas) {
-            applyShader(renderer, {hasTexture: true});
-            const {width, height} = this.canvas;
-            let filterContext = this.filterContext;
-            if(!filterContext) {
-              const canvas = createCanvas(width, height);
-              filterContext = canvas.getContext('2d');
-              this.filterContext = filterContext;
-            }
-            const originalMesh = meshes[mesh.packIndex];
-            const nextMesh = meshes[mesh.packIndex + 1];
-            if(nextMesh && nextMesh.filterCanvas) {
-              const currentFilter = originalMesh.filter;
-              const nextFilter = nextMesh.filter;
-              if(nextFilter === currentFilter) {
-                // 如果 filter 一样，可以合并绘制（这样的话比较节约性能）
-                if(filterContext._filter === 'combine') {
-                  // 之前已经 apply 过 filter
-                  drawFilterContext(renderer, filterContext, width, height);
-                }
-                filterContext._filter = currentFilter;
-                drawMesh2D(originalMesh, filterContext, false);
-              } else if(filterContext._filter === currentFilter) {
-                // 把前面的filter合并一下
-                drawMesh2D(originalMesh, filterContext, false);
-                applyFilter(filterContext, currentFilter);
+      const gl = renderer.gl;
+      if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
+      for(let i = 0; i < meshData.length; i++) {
+        const mesh = meshData[i];
+        if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
+          applyShader(renderer, {hasTexture: true});
+          const {width, height} = this.canvas;
+          let filterContext = this.filterContext;
+          if(!filterContext) {
+            const canvas = createCanvas(width, height);
+            filterContext = canvas.getContext('2d');
+            this.filterContext = filterContext;
+          }
+          const originalMesh = meshes[mesh.packIndex];
+          const nextMesh = meshes[mesh.packIndex + 1];
+          if(nextMesh && nextMesh.filterCanvas) {
+            const currentFilter = originalMesh.filter;
+            const nextFilter = nextMesh.filter;
+            if(nextFilter === currentFilter) {
+              // 如果 filter 一样，可以合并绘制（这样的话比较节约性能）
+              if(filterContext._filter === 'combine') {
+                // 之前已经 apply 过 filter
                 drawFilterContext(renderer, filterContext, width, height);
-              } else {
-                drawMesh2D(originalMesh, filterContext, true);
-                filterContext._filter = 'combine';
               }
-            } else {
-              if(filterContext._filter && filterContext._filter !== 'combine') {
-                drawMesh2D(originalMesh, filterContext, false);
-                applyFilter(filterContext, filterContext._filter);
-              } else {
-                drawMesh2D(originalMesh, filterContext, true);
-              }
+              filterContext._filter = currentFilter;
+              drawMesh2D(originalMesh, filterContext, false);
+            } else if(filterContext._filter === currentFilter) {
+              // 把前面的filter合并一下
+              drawMesh2D(originalMesh, filterContext, false);
+              applyFilter(filterContext, currentFilter);
               drawFilterContext(renderer, filterContext, width, height);
+            } else {
+              drawMesh2D(originalMesh, filterContext, true);
+              filterContext._filter = 'combine';
             }
           } else {
+            if(filterContext._filter && filterContext._filter !== 'combine') {
+              drawMesh2D(originalMesh, filterContext, false);
+              applyFilter(filterContext, filterContext._filter);
+            } else {
+              drawMesh2D(originalMesh, filterContext, true);
+            }
+            drawFilterContext(renderer, filterContext, width, height);
+          }
+        } else {
+          if(!program) {
             const hasTexture = !!mesh.uniforms.u_texSampler;
             const hasFilter = !!mesh.uniforms.u_filterFlag;
             const vector = mesh.uniforms.u_radialGradientVector;
             const hasGradient = vector[2] > 0 || vector[5] > 0;
             const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
             applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
-            this[_applyGlobalTransform](this[_globalTransform]);
-            renderer.setMeshData([mesh]);
-            renderer._draw();
+          } else if(this.program !== program) {
+            renderer.useProgram(program, Object.assign({
+              a_color: {
+                type: 'UNSIGNED_BYTE',
+                normalize: true,
+              },
+            }, attributeOptions));
           }
+          if(mesh.filterCanvas) {
+            console.warn('User program ignored some filter effects.');
+          }
+          this[_applyGlobalTransform](this[_globalTransform]);
+          renderer.setMeshData([mesh]);
+          renderer._draw();
         }
-      } else {
-        renderer.setMeshData(meshData);
       }
     } else {
       renderer.setTransform(this[_globalTransform]);
