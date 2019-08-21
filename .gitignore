@@ -45,3 +45,6 @@ sftp-config.json
 .vscode
 jsconfig.json
 esconfig.json
+
+dist/proton.js
+dist/proton-renderer.js
