@@ -121,16 +121,6 @@ export default class Renderer {
     return this[_glRenderer] && this[_glRenderer].isWebGL2;
   }
 
-  normalize(x, y) {
-    const {width, height} = this.canvas;
-    return normalize([x, y], width, height);
-  }
-
-  denormalize(x, y) {
-    const {width, height} = this.canvas;
-    return denormalize([x, y], width, height);
-  }
-
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
     if(this[_glRenderer]) {
       const img = await createText(

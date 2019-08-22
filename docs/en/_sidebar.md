@@ -4,8 +4,8 @@
 
 * Reference
   * [Overview](/en/api/)
-  * [Figure](/en/api/figure)
-  * [Mesh](/en/api/mesh)
+  * [Figure2D](/en/api/figure2D)
+  * [Mesh2D](/en/api/mesh2D)
   * [Renderer](/en/api/renderer)
 
 * Resources
