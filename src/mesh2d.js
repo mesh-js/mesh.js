@@ -20,6 +20,7 @@ const _fillColor = Symbol('fillColor');
 const _transform = Symbol('transform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
+const _blend = Symbol('blend');
 const _enableBlend = Symbol('enableBlend');
 const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
@@ -66,6 +67,7 @@ export default class Mesh2D {
     this[_transform] = [1, 0, 0, 1, 0, 0];
     this[_uniforms] = {};
     this[_filter] = [];
+    this[_blend] = null;
   }
 
   setResolution(width, height) {
@@ -89,6 +91,14 @@ export default class Mesh2D {
   set contours(contours) {
     this[_mesh] = null;
     this[_contours] = contours;
+  }
+
+  get blend() {
+    return this[_blend] == null ? 'auto' : this[_blend];
+  }
+
+  set blend(blend) {
+    this[_blend] = blend;
   }
 
   get boundingBox() {
@@ -173,6 +183,7 @@ export default class Mesh2D {
   }
 
   get enableBlend() {
+    if(this[_blend] === true || this[_blend] === false) return this[_blend];
     return this[_enableBlend];
   }
 
