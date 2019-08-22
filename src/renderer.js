@@ -3,7 +3,7 @@ import {mat2d} from 'gl-matrix';
 import CanvasRenderer from './canvas-renderer';
 import compress from './utils/compress';
 import createText from './utils/create-text';
-import {normalize, denormalize} from './utils/positions';
+import {normalize} from './utils/positions';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 import Mesh2D from './mesh2d';
 
@@ -16,7 +16,7 @@ import {
 
 const defaultOpts = {
   autoUpdate: false,
-  premultipliedAlpha: true,
+  // premultipliedAlpha: true,
   preserveDrawingBuffer: false,
   // depth: false,
   antialias: false,
@@ -101,24 +101,44 @@ export default class Renderer {
     this[_globalTransform] = [1, 0, 0, 1, 0, 0];
   }
 
-  get options() {
-    return this[_options];
-  }
-
   get canvas() {
     return this[_canvas];
-  }
-
-  get glRenderer() {
-    return this[_glRenderer];
   }
 
   get canvasRenderer() {
     return this[_canvasRenderer];
   }
 
+  get glRenderer() {
+    return this[_glRenderer];
+  }
+
   get isWebGL2() {
     return this[_glRenderer] && this[_glRenderer].isWebGL2;
+  }
+
+  get options() {
+    return this[_options];
+  }
+
+  [_applyGlobalTransform](m) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    if(this[_glRenderer]) {
+      const {width, height} = this.canvas;
+      renderer.uniforms.u_globalTransform = [...m.slice(0, 3), width, ...m.slice(3), height];
+    } else {
+      renderer.setTransform(m);
+    }
+  }
+
+  createTexture(img) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.createTexture(img);
+  }
+
+  /* async */ loadTexture(textureURL, {useImageBitmap = false} = {}) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.loadTexture(textureURL, {useImageBitmap});
   }
 
   async createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
@@ -130,16 +150,6 @@ export default class Renderer {
       return this.createTexture(img);
     }
     return {_img: {font, fillColor, strokeColor, text}};
-  }
-
-  createTexture(img) {
-    const renderer = this[_glRenderer] || this[_canvasRenderer];
-    return renderer.createTexture(img);
-  }
-
-  loadTexture(textureURL, {useImageBitmap = false} = {}) {
-    const renderer = this[_glRenderer] || this[_canvasRenderer];
-    return renderer.loadTexture(textureURL, {useImageBitmap});
   }
 
   deleteTexture(texture) {
@@ -292,16 +302,6 @@ export default class Renderer {
     } else {
       renderer.setTransform(this[_globalTransform]);
       renderer.drawMeshes(meshes, {clear});
-    }
-  }
-
-  [_applyGlobalTransform](m) {
-    const renderer = this[_glRenderer] || this[_canvasRenderer];
-    if(this[_glRenderer]) {
-      const {width, height} = this.canvas;
-      renderer.uniforms.u_globalTransform = [...m.slice(0, 3), width, ...m.slice(3), height];
-    } else {
-      renderer.setTransform(m);
     }
   }
 
