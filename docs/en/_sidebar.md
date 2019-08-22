@@ -1,6 +1,10 @@
 * Manual
   * [Getting Started](/en/)
   * [Drawing Meshes](/en/drawing)
+  * [Transforms](/en/transform)
+  * [Filters](/en/filter)
+  * [Gradients](/en/gradient)
+  * [Examples](/en/examples)
 
 * Reference
   * [Overview](/en/api/)
