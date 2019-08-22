@@ -9,6 +9,8 @@ A graphics system born for visualization 😘.
 - SVG Path supported.
 - Gradients and filters supported.
 
+Learn more at [meshjs.webgl.group](http://meshjs.webgl.group).
+
 ## Installation
 
 From CDN:
