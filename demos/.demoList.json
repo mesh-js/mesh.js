@@ -1,5 +1,14 @@
 [
   {
+    "label": "basic",
+    "src": "docs/basic"
+  },{
+    "label": "circles",
+    "src": "docs/circles"
+  },{
+    "label": "path",
+    "src": "docs/path"
+  },{
     "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },

@@ -1,4 +1,3 @@
-import normalizePoints from 'normalize-path-scale';
 import triangulate from 'triangulate-contours';
 import {mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
@@ -28,6 +27,15 @@ const _applyTransform = Symbol('applyTransform');
 const _gradient = Symbol('gradient');
 
 const _filter = Symbol('filter');
+
+function normalizePoints(points, bound) {
+  const [w, h] = bound[1];
+  for(let i = 0; i < points.length; i++) {
+    const point = points[i];
+    point[0] = 2 * point[0] / w - 1;
+    point[1] = 2 * point[1] / h - 1;
+  }
+}
 
 function transformPoint(p, m, w, h, flipY) {
   const [x, y] = denormalize(p, w, h);
@@ -412,6 +420,7 @@ export default class Mesh2D {
     this[_stroke] = stroke({thickness, cap, join, miterLimit});
     this[_strokeColor] = color;
     this[_enableBlend] = color[3] < 1.0;
+    return this;
   }
 
   setFill({delaunay = true, clean = true, randomization = 0, color = [0, 0, 0, 0]} = {}) {
@@ -419,6 +428,7 @@ export default class Mesh2D {
     this[_fill] = {delaunay, clean, randomization};
     this[_fillColor] = color;
     this[_enableBlend] = color[3] < 1.0;
+    return this;
   }
 
   /**
@@ -443,6 +453,7 @@ export default class Mesh2D {
     if(this[_mesh]) {
       this[_applyTexture](this[_mesh], options, true);
     }
+    return this;
   }
 
   /**
@@ -496,10 +507,13 @@ export default class Mesh2D {
 
     this[_uniforms].u_radialGradientVector = vector;
     this[_uniforms].u_colorSteps = colorSteps;
+
+    return this;
   }
 
   setUniforms(uniforms = {}) {
     Object.assign(this[_uniforms], uniforms);
+    return this;
   }
 
   setTransform(...m) {
@@ -550,6 +564,7 @@ export default class Mesh2D {
   clearFilter() {
     this.setColorTransform(null);
     this[_filter].length = 0;
+    return this;
   }
 
   setColorTransform(...m) {
@@ -585,6 +600,7 @@ export default class Mesh2D {
   blur(length) {
     this[_mesh] = null;
     this[_filter].push(`blur(${length}px)`);
+    return this;
   }
 
   brightness(p = 1.0) {
@@ -600,6 +616,7 @@ export default class Mesh2D {
   dropShadow(offsetX, offsetY, blurRadius = 0, color = [0, 0, 0, 1]) {
     this[_mesh] = null;
     this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${vectorToRGBA(color)})`);
+    return this;
   }
 
   grayscale(p = 1.0) {
@@ -636,6 +653,7 @@ export default class Mesh2D {
   url(svgFilter) {
     this[_mesh] = null;
     this[_filter].push(`url(${svgFilter})`);
+    return this;
   }
 
   isPointCollision(x, y, type = 'both') {
