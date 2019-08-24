@@ -35,7 +35,7 @@ const renderer = new Renderer(canvas);
 renderer.drawMeshes([mesh1, mesh2]);
 ```
 
-<iframe src="http://meshjs.webgl.group/demo/#/docs/basic" height="400"></iframe>
+<iframe src="/demo/#/docs/basic" height="400"></iframe>
 
 ### Different shapes
 
@@ -78,7 +78,7 @@ const renderer = new Renderer(canvas, {
 renderer.drawMeshes([mesh1, mesh2, mesh3]);
 ```
 
-<iframe src="http://meshjs.webgl.group/demo/#/docs/circles" height="400"></iframe>
+<iframe src="/demo/#/docs/circles" height="400"></iframe>
 
 We can use svg-path as well.
 
@@ -103,4 +103,4 @@ const renderer = new Renderer(canvas);
 renderer.drawMeshes([mesh1]);
 ```
 
-<iframe src="http://meshjs.webgl.group/demo/#/docs/path" height="400"></iframe>
+<iframe src="/demo/#/docs/path" height="400"></iframe>
