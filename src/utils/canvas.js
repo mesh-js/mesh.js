@@ -91,6 +91,7 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
     colors.forEach(({offset, color}) => {
       let rgba = vectorToRGBA(color);
       if(cloudFill) rgba = mixRGBA(rgba, cloudFill);
+      console.log(rgba);
       gradient.addColorStop(offset, rgba);
     });
     context.fillStyle = gradient;

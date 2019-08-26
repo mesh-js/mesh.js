@@ -297,6 +297,17 @@ export default class Mesh2D {
       const point = positions[i];
       transformPoint(point, m, w, h, true);
     }
+    const vector = this[_uniforms].u_radialGradientVector;
+    if(vector) {
+      let [x1, y1, , x2, y2] = vector;
+      y1 = h - y1;
+      y2 = h - y2;
+      vector[0] = x1 * m[0] + y1 * m[2] + m[4];
+      vector[1] = h - (x1 * m[1] + y1 * m[3] + m[5]);
+      vector[3] = x2 * m[0] + y2 * m[2] + m[4];
+      vector[4] = h - (x2 * m[1] + y2 * m[3] + m[5]);
+      this[_uniforms].u_radialGradientVector = vector;
+    }
     normalizePoints(positions, this[_bound]);
   }
 

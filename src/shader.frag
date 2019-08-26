@@ -65,6 +65,7 @@ void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   steps[6] = colorSteps[30];
   steps[7] = colorSteps[35];
   
+  color = colors[0];
   for (int i = 1; i < 8; i++) {
     if (steps[i] <= 0.0 || steps[i] > 1.0) {
       break;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>radial gradient</title>
+	</head>
+	<body>
+		<canvas width="600" height="600"></canvas>
+		<script src="/js/mesh.js"></script>
+		<script>
+      const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+      const canvas = document.querySelector('canvas');
+      const renderer = new Renderer(canvas, {
+        // contextType: '2d',
+      });
+
+      const figure = new Figure2D();
+      figure.rect(0, 0, 200, 200);
+
+      const mesh = new Mesh2D(figure, canvas);
+      mesh.setLinearGradient({
+        vector: [0, 0, 200, 200],
+        colors: [
+          {offset: 0, color: [1, 0, 0, 1]},
+          {offset: 0.5, color: [0, 1, 0, 1]},
+          {offset: 1, color: [0, 0, 1, 1]},
+        ],
+      });
+
+      mesh.translate(200, 50);
+
+      const figure2 = new Figure2D();
+      figure2.arc(0, 0, 50, 0, 2 * Math.PI);
+
+      const mesh2 = new Mesh2D(figure2, canvas);
+      mesh2.setRadialGradient({
+        vector: [0, 0, 0, 0, 0, 50],
+        colors: [
+          {offset: 0, color: [1, 0, 0, 1]},
+          {offset: 0.5, color: [0, 1, 0, 1]},
+          {offset: 1, color: [0, 0, 1, 1]},
+        ],
+      });
+      mesh2.translate(300, 150);
+
+      renderer.drawMeshes([mesh, mesh2]);
+		</script>
+	</body>
+</html>

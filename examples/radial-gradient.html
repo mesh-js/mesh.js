@@ -14,17 +14,17 @@
 
 			const canvas = document.querySelector('canvas');
 			const renderer = new Renderer(canvas, {
-			// contextType: '2d',
+			  contextType: 'webgl',
 			});
 
 			const figure = new Figure2D();
 			figure.rect(0, 0, 600, 600);
 
 			const mesh = new Mesh2D(figure, {width: 600, height: 600});
-			mesh.setStroke({
-			  thickness: 100,
-			  color: [1, 0, 1, 1],
-			});
+			// mesh.setStroke({
+			//   thickness: 100,
+			//   color: [1, 0, 1, 1],
+			// });
 
 			mesh.setFill({
 			  color: [1, 0, 0, 1],
@@ -41,6 +41,9 @@
 			  ],
 			  type: 'fill',
 			});
+
+			// mesh.translate(100, 100);
+			mesh.rotate(Math.PI / 4, [300, 300]);
 
 			renderer.drawMeshes([mesh]);
 		</script>

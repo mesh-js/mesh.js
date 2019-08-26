@@ -24,6 +24,9 @@
     "label": "filter",
     "src": "docs/filter"
   },{
+    "label": "gradient",
+    "src": "docs/gradient"
+  },{
     "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },
