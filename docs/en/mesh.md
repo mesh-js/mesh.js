@@ -1,4 +1,4 @@
-## Drawing meshes
+# Drawing meshes
 
 Drawing a graph using mesh.js is usually divided into three steps:
 

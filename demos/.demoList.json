@@ -12,6 +12,12 @@
     "label": "path",
     "src": "docs/path"
   },{
+    "label": "texture",
+    "src": "docs/texture"
+  },{
+    "label": "texture_rect",
+    "src": "docs/texture_rect"
+  },{
     "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },
