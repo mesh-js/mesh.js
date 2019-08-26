@@ -4,7 +4,7 @@ A graphics system born for visualization 😘.
 
 ## Why mesh.js
 
-- Blazing fast rendering massive nodes. See our [benchmark](http://meshjs.org/demo/#/benchmark/triangles).
+- Blazing fast rendering massive sprites. See our [benchmark](http://meshjs.org/demo/#/benchmark/triangles).
 - Cross platform. Support both canvas2d and webgl.
 - Support SVG Path.
 - Support gradients and filters.
