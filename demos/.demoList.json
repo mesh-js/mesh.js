@@ -1,5 +1,8 @@
 [
   {
+    "label": "index",
+    "src": "docs/index"
+  },{
     "label": "basic",
     "src": "docs/basic"
   },{
