@@ -77,7 +77,7 @@ export default function compress(renderer, meshes, maxSize = 1500) {
       }
 
       temp.push(mesh);
-      enableBlend = enableBlend || meshes[i].enableBlend;
+      enableBlend = enableBlend || mesh.enableBlend;
     }
 
     if(i === meshes.length - 1) {

@@ -262,6 +262,7 @@ export default class Mesh2D {
 
     const mesh = flattenMeshes([meshes.fill, meshes.stroke]);
     mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
+    mesh.enableBlend = this.enableBlend;
     normalizePoints(mesh.positions, this[_bound]);
     if(!this[_uniforms].u_texSampler) {
       mesh.textureCoord = mesh.positions.map(() => [0, 0]);

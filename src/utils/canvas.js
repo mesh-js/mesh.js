@@ -117,8 +117,10 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   mesh.contours.forEach((points, i) => {
     const closed = points.closed;
     const len = points.length;
+    const drawTexture = i === count - 1 && mesh.texture;
+
     if(points && len > 0) {
-      if(fill || stroke) {
+      if(fill || stroke || drawTexture) {
         context.beginPath();
         context.moveTo(...points[0]);
         for(let i = 1; i < len; i++) {
@@ -132,9 +134,9 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
       if(fill) {
         context.fill();
       }
-      context.clip();
 
-      if(i === count - 1 && mesh.texture) {
+      if(drawTexture) {
+        context.clip();
         let {image, options} = mesh.texture;
         if(cloudFrame) image = cloudFrame;
         if(options.repeat) console.warn('Context 2D not supported image repeat yet.');

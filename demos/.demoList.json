@@ -21,6 +21,9 @@
     "label": "transform",
     "src": "docs/transform"
   },{
+    "label": "filter",
+    "src": "docs/filter"
+  },{
     "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },
