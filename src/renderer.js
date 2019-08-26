@@ -245,35 +245,20 @@ export default class Renderer {
             this.filterContext = filterContext;
           }
           const originalMesh = meshes[mesh.packIndex];
+          const currentFilter = originalMesh.filter;
           const nextMesh = meshes[mesh.packIndex + 1];
-          if(nextMesh && nextMesh.filterCanvas) {
-            const currentFilter = originalMesh.filter;
-            const nextFilter = nextMesh.filter;
-            if(nextFilter === currentFilter) {
-              // 如果 filter 一样，可以合并绘制（这样的话比较节约性能）
-              if(filterContext._filter === 'combine') {
-                // 之前已经 apply 过 filter
-                drawFilterContext(renderer, filterContext, width, height);
-              }
-              filterContext._filter = currentFilter;
-              drawMesh2D(originalMesh, filterContext, false);
-            } else if(filterContext._filter === currentFilter) {
-              // 把前面的filter合并一下
-              drawMesh2D(originalMesh, filterContext, false);
+          const previousMesh = meshes[mesh.packIndex - 1];
+          if((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter)
+            && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
+            drawMesh2D(originalMesh, filterContext, true);
+            drawFilterContext(renderer, filterContext, width, height);
+          } else {
+            drawMesh2D(originalMesh, filterContext, false);
+
+            if(!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
               applyFilter(filterContext, currentFilter);
               drawFilterContext(renderer, filterContext, width, height);
-            } else {
-              drawMesh2D(originalMesh, filterContext, true);
-              filterContext._filter = 'combine';
             }
-          } else {
-            if(filterContext._filter && filterContext._filter !== 'combine') {
-              drawMesh2D(originalMesh, filterContext, false);
-              applyFilter(filterContext, filterContext._filter);
-            } else {
-              drawMesh2D(originalMesh, filterContext, true);
-            }
-            drawFilterContext(renderer, filterContext, width, height);
           }
         } else {
           if(!program) {

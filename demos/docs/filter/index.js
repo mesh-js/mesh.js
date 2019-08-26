@@ -12,10 +12,20 @@ const filters1 = [
   null,
   ['brightness', 1.5],
   ['grayscale', 0.5],
-  ['blur', '12px'],
+  ['blur', 12],
   ['dropShadow', 15, 15, 5, [0, 0, 1, 1]],
   ['hueRotate', 45],
 ];
+
+const filters2 = [
+  null,
+  ['invert', 1],
+  ['opacity', 0.7],
+  ['saturate', 0.2],
+  ['sepia', 1],
+  ['hueRotate', 135],
+];
+
 
 (async function () {
   const textures = await Promise.all([
@@ -34,11 +44,20 @@ const filters1 = [
       rect: [0, 0, 64, 64],
     });
     mesh.translate(32 + 96 * i, 68);
-    // if(filters1[i]) {
-    //   mesh[filters1[i][0]].call(mesh, ...filters1[i].slice(1));
-    // }
-    mesh.dropShadow(15, 15, 5, [0, 0, 1, 1]);
-    meshList.push(mesh);
+    if(filters1[i]) {
+      mesh[filters1[i][0]].call(mesh, ...filters1[i].slice(1));
+    }
+
+    const mesh2 = new Mesh2D(figure, canvas);
+    mesh2.setTexture(textures[1], {
+      rect: [0, 0, 64, 64],
+    });
+    mesh2.translate(32 + 96 * i, 164);
+    if(filters2[i]) {
+      mesh2[filters2[i][0]].call(mesh2, ...filters2[i].slice(1));
+    }
+
+    meshList.push(mesh, mesh2);
   }
 
   renderer.drawMeshes(meshList);

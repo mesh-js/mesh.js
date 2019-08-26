@@ -4,10 +4,10 @@ import {mix} from './math';
 
 export function createCanvas(width, height) {
   let canvas;
-  if(typeof OffscreenCanvas === 'function') {
-    canvas = new OffscreenCanvas(width, height);
-  } if(typeof global.createCanvas === 'function') {
+  if(typeof global.createCanvas === 'function') {
     canvas = createCanvas(width, height);
+  } else if(typeof OffscreenCanvas === 'function') {
+    canvas = new OffscreenCanvas(width, height);
   } else {
     canvas = document.createElement('canvas');
     canvas.width = width;
