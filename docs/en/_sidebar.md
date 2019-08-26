@@ -2,11 +2,11 @@
   * [Getting Started](/en/)
   * [Drawing Meshes](/en/mesh)
   * [Textrues and Text](/en/texture)
-  * [Transforms](/en/transform)
+  * [Transform](/en/transform)
   * [Filters](/en/filter)
   * [Gradients](/en/gradient)
   * [User Program](/en/program)
-  * [Examples](/en/examples)
+  * [More Examples](/en/examples)
 
 * Reference
   * [Overview](/en/api/)

@@ -1,10 +1,3 @@
-# Transform
-
-We can transform a mesh-object using `.translate, .rotate, .scale, .skew` methods or calling `.transform` method with transform matrix directly. It is similar to css3 transform or canvas transform.
-
-And we can use `.setTransform` method to reset current transform matrix settings.
-
-```js
 /* globals dat */
 const config = {
   originX: 300,
@@ -79,6 +72,3 @@ const initGui = () => {
 initGui();
 
 updateSprite();
-```
-
-<iframe src="/demo/#/docs/transform" height="400"></iframe>

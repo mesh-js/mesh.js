@@ -18,6 +18,9 @@
     "label": "texture_rect",
     "src": "docs/texture_rect"
   },{
+    "label": "transform",
+    "src": "docs/transform"
+  },{
     "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },
