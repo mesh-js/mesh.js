@@ -7,6 +7,7 @@ new Renderer(canvas, options = {})
 | Name | Type | Attributes | Default | Description |
 | --- | --- | --- | --- | --- |
 | contextType | String | _optional, '2d' or 'webgl' or 'webgl2'_ | undefined | |
+| bufferSize | Number | _optional | 1500 | |
 | alpha | Boolean | _optional_ | true | |
 | antialias | Boolean | _optional_ | false | |
 | depth | Boolean | _optional_ | true | |

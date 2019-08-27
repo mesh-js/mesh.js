@@ -43,7 +43,7 @@ function packData(temp, ret, enableBlend) {
   }
 }
 
-export default function compress(renderer, meshes, maxSize = 1500) {
+export default function compress(renderer, meshes, maxSize = renderer.options.bufferSize) {
   const ret = [];
   const temp = [];
 

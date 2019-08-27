@@ -270,9 +270,9 @@ export default class Mesh2D {
       this[_applyTexture](mesh, this[_texOptions], false);
     }
     mesh.uniforms = this[_uniforms];
-    if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
-    if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
-    if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
+    // if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
+    // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
+    // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
     this[_mesh] = mesh;
 
     const transform = this[_transform];

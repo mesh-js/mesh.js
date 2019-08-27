@@ -20,6 +20,7 @@ const defaultOpts = {
   preserveDrawingBuffer: false,
   // depth: false,
   antialias: false,
+  bufferSize: 1500,
 };
 
 const _glRenderer = Symbol('glRenderer');
@@ -176,8 +177,7 @@ export default class Renderer {
         const mesh = cloud.mesh.meshData;
         const hasTexture = !!mesh.uniforms.u_texSampler;
         const hasFilter = !!mesh.uniforms.u_filterFlag;
-        const vector = mesh.uniforms.u_radialGradientVector;
-        const hasGradient = vector[2] > 0 || vector[5] > 0;
+        const hasGradient = !!mesh.uniforms.u_radialGradientVector;
         const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
         const hasCloudColor = cloud.hasCloudColor;
         const hasCloudFilter = true;
@@ -264,8 +264,7 @@ export default class Renderer {
           if(!program) {
             const hasTexture = !!mesh.uniforms.u_texSampler;
             const hasFilter = !!mesh.uniforms.u_filterFlag;
-            const vector = mesh.uniforms.u_radialGradientVector;
-            const hasGradient = vector[2] > 0 || vector[5] > 0;
+            const hasGradient = !!mesh.uniforms.u_radialGradientVector;
             const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
             applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
           } else if(this.program !== program) {
