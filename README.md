@@ -4,7 +4,7 @@ A graphics system born for visualization 😘.
 
 As simple as Canvas2D and as FAST as WebGL/WebGPU.
 
-![](https://p0.ssl.qhimg.com/t0163b529ed2a8d3501.jpg)
+![](https://p2.ssl.qhimg.com/t01300899f9a1c796df.jpg)
 
 ## Why mesh.js
 
