@@ -1,7 +1,7 @@
 {
   "name": "@mesh.js/core",
   "version": "0.0.12",
-  "description": "A super fast 2D renderer for modern browsers.",
+  "description": "A graphics system born for visualization.",
   "main": "dist/mesh.js",
   "scripts": {
     "lint": "eslint src --fix",

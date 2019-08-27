@@ -5,6 +5,9 @@ export default {
   output: {
     dir: 'docs/demo',
     publicUrl: '.',
+    html: {
+      title: 'Mesh.js - A graphics system born for visualization.'
+    },
   },
   // themeFile: 'demos/theme.scss',
   staticFolder: 'dist',

@@ -2,6 +2,10 @@
 
 A graphics system born for visualization 😘.
 
+As simple as Canvas2D and as FAST as WebGL/WebGPU.
+
+![](https://p0.ssl.qhimg.com/t01bf2a3d7324766e8e.jpg)
+
 ## Why mesh.js
 
 - Blazing fast rendering massive sprites. See our [benchmark](http://meshjs.org/demo/#/benchmark/triangles).
