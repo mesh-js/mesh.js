@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    // function createWorker() {
+    //   const script = document.querySelector('script[type="text/worker"]');
+    //   const code = script.textContent.trim();
+    //   if(code) {
+    //     const blob = new Blob([code], {type: 'text/javascript'});
+    //     return new Worker(URL.createObjectURL(blob));
+    //   }
+    //   return null;
+    // }
+
+    const worker = new Worker('./basic2.worker.js');
+    worker.onmessage = function (event) {
+      const bitmapContext = document.querySelector('canvas').getContext('bitmaprenderer');
+      bitmapContext.transferFromImageBitmap(event.data.buffer);
+    };
+  </script>
+</body>
+</html>

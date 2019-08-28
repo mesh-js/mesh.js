@@ -64,5 +64,17 @@
   {
     "label": "particle fire",
     "src": "protonjs/fire"
+  },
+  {
+    "label": "worker basic",
+    "src": "worker/basic"
+  },
+  {
+    "label": "worker texture",
+    "src": "worker/texture"
+  },
+  {
+    "label": "worker flappy bird",
+    "src": "worker/flappy_bird"
   }
 ]

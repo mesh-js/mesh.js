@@ -20,6 +20,7 @@ module.exports = function (env = {}) {
       publicPath: '/js/',
       library: 'meshjs',
       libraryTarget: 'umd',
+      globalObject: 'this',
       // libraryExport: 'default',
     },
     resolve: {
