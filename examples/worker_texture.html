@@ -10,21 +10,10 @@
   <canvas width="512" height="512"></canvas>
   <script src="/js/mesh.js"></script>
   <script>
-    // function createWorker() {
-    //   const script = document.querySelector('script[type="text/worker"]');
-    //   const code = script.textContent.trim();
-    //   if(code) {
-    //     const blob = new Blob([code], {type: 'text/javascript'});
-    //     return new Worker(URL.createObjectURL(blob));
-    //   }
-    //   return null;
-    // }
-
     const worker = new Worker('./texture.worker.js');
-    worker.onmessage = function (event) {
-      const bitmapContext = document.querySelector('canvas').getContext('bitmaprenderer');
-      bitmapContext.transferFromImageBitmap(event.data.buffer);
-    };
+    const canvas = document.querySelector('canvas');
+    const offscreenCanvas = canvas.transferControlToOffscreen();
+    worker.postMessage({type: 'created', canvas: offscreenCanvas}, [offscreenCanvas]);
   </script>
 </body>
 </html>

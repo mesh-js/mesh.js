@@ -1,13 +1,4 @@
 const worker = new Worker('./worker.js');
-
-worker.onmessage = function (event) {
-  const bitmap = event.data.buffer;
-  const canvas = document.querySelector('canvas');
-  const bitmapContext = canvas.getContext('bitmaprenderer');
-  if(bitmapContext) {
-    bitmapContext.transferFromImageBitmap(bitmap);
-  } else {
-    const context = canvas.getContext('2d');
-    context.drawImage(bitmap, 0, 0);
-  }
-};
+const canvas = document.querySelector('canvas');
+const offscreenCanvas = canvas.transferControlToOffscreen();
+worker.postMessage({type: 'created', canvas: offscreenCanvas}, [offscreenCanvas]);
