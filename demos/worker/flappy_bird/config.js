@@ -19,7 +19,7 @@ export default async () => {
       transform(code) {
         // eslint-disable-next-line quotes
         const prefix = `(function() {let code = document.querySelector('script[type="text/x-rawdata"]').textContent;
-          code = code.replace(/importScripts\\(['"]mesh.js['"]\\)/img, "importScripts('http://${location.host}/mesh.js')");
+          code = code.replace(/importScripts\\(['"]mesh.js['"]\\)/img, "importScripts('http://${location.host}${location.pathname}mesh.js')");
           const blob = new Blob([code], {type: 'text/javascript'});      
           return new Worker(URL.createObjectURL(blob));
         }());`;

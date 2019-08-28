@@ -1,4 +1,4 @@
-const worker = new Worker('./basic.worker.js');
+const worker = new Worker('./worker.js');
 
 worker.onmessage = function (event) {
   const bitmap = event.data.buffer;
