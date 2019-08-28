@@ -12,6 +12,7 @@ As simple as Canvas2D and as FAST as WebGL/WebGPU.
 - Cross platform. Support both canvas2d and webgl.
 - Support SVG Path.
 - Support gradients and filters.
+- Support Worker and OffscreenCanvas.
 
 Learn more at [meshjs.org](http://meshjs.org).
 
@@ -68,12 +69,13 @@ update(0);
 
 ## Roadmap
 
-- Documentations
-- Demos and benchmark.
-- Unit tests.
-- Figure3D and Mesh3D.
-- Optimize mesh compressor.
-- Work with Worker+OffscreenCanvas.
+- [ ] Complete documentations
+- [ ] More demos and benchmark.
+- [ ] Unit tests.
+- [ ] Figure3D and Mesh3D.
+- [ ] Optimize mesh compressor.
+- [ ] WebGPU.
+- [x] Work with Worker+OffscreenCanvas.
 
 ## LICENSE
 

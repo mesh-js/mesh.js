@@ -5,9 +5,10 @@ A graphics system born for visualization 😘.
 ## Why mesh.js
 
 - Blazing fast rendering massive sprites. See our [benchmark](http://meshjs.org/demo/#/benchmark/triangles).
-- Cross platform. Both canvas 2d and webgl supported.
-- SVG Path supported.
-- Gradients and filters supported.
+- Cross platform. Support both canvas2d and webgl.
+- Support SVG Path.
+- Support gradients and filters.
+- Support Worker and OffscreenCanvas.
 
 ## Installation
 
@@ -65,12 +66,13 @@ update(0);
 
 ## Roadmap
 
-- Documentations
-- Demos and benchmark.
-- Unit tests.
-- Figure3D and Mesh3D.
-- Optimize mesh compressor.
-- Work with Worker+OffscreenCanvas.
+- [ ] Complete documentations
+- [ ] More demos and benchmark.
+- [ ] Unit tests.
+- [ ] Figure3D and Mesh3D.
+- [ ] Optimize mesh compressor.
+- [ ] WebGPU.
+- [x] Work with Worker+OffscreenCanvas.
 
 ## LICENSE
 
