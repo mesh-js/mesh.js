@@ -4,14 +4,14 @@ import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
-import {normalize, denormalize, distance} from './utils/positions';
+import {normalize, denormalize} from './utils/positions';
 import {multiply, grayscale, brightness,
   saturate, contrast, invert,
   sepia, opacity, hueRotate} from './utils/color-matrix';
+import {isUnitTransform} from './utils/transform';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
-const _contoursLength = Symbol('contoursLength');
 const _stroke = Symbol('stroke');
 const _fill = Symbol('fill');
 const _bound = Symbol('bound');
@@ -46,10 +46,6 @@ function transformPoint(p, m, w, h, flipY) {
   return p;
 }
 
-function isUnitTransform(m) {
-  return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
-}
-
 function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
   if(!scale) {
     x /= w;
@@ -59,19 +55,6 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
   }
 
   return [x, y];
-}
-
-function contoursLength(contours) {
-  let length = 0;
-  contours.forEach((points) => {
-    let s = points[0];
-    for(let i = 1; i < points.length; i++) {
-      const p = points[i];
-      length += distance(s, p);
-      s = p;
-    }
-  });
-  return length;
 }
 
 export default class Mesh2D {
@@ -98,14 +81,9 @@ export default class Mesh2D {
     return this[_contours];
   }
 
-  get contoursLength() {
-    return this[_contoursLength];
-  }
-
   set contours(contours) {
     this[_mesh] = null;
     this[_contours] = contours;
-    this[_contoursLength] = contoursLength(contours);
   }
 
   get blend() {
@@ -422,58 +400,6 @@ export default class Mesh2D {
         } else if(j === len - 1) {
           mixColor(color, gradientColor, gradientColor, 1);
         }
-      }
-    }
-  }
-
-  getPointAtLength(length) {
-    length = Number(length);
-    if(!Number.isFinite(length)) {
-      throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
-    }
-
-    const contours = this[_contours];
-
-    if(length < 0) {
-      const p0 = contours[0][0];
-      const p1 = contours[0][1];
-      const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
-      return {
-        x: p0[0],
-        y: p0[1],
-        angle,
-      };
-    }
-
-    if(length > this[_contoursLength]) {
-      const points = contours[contours.length - 1];
-      const p0 = points[points.length - 2];
-      const p1 = points[points.length - 1];
-      const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
-      return {
-        x: p1[0],
-        y: p1[1],
-        angle,
-      };
-    }
-
-    for(let i = 0; i < contours.length; i++) {
-      const points = contours[i];
-      let p0 = points[0];
-      for(let j = 1; j < points.length; j++) {
-        const p1 = points[j];
-        const d = distance(p0, p1);
-        if(length < d) {
-          const p = d / length;
-          const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
-          return {
-            x: p0[0] * (1 - p) + p1[0] * p,
-            y: p0[1] * (1 - p) + p1[1] * p,
-            angle,
-          };
-        }
-        length -= d;
-        p0 = p1;
       }
     }
   }

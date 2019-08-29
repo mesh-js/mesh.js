@@ -3,9 +3,9 @@ import {mat2d} from 'gl-matrix';
 import CanvasRenderer from './canvas-renderer';
 import compress from './utils/compress';
 import createText from './utils/create-text';
-import {normalize} from './utils/positions';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 import Mesh2D from './mesh2d';
+import {isUnitTransform} from './utils/transform';
 
 import {
   createShaders,
@@ -43,10 +43,6 @@ function drawFilterContext(renderer, filterContext, width, height) {
   filterTexture.delete();
   filterContext.clearRect(0, 0, width, height);
   delete filterContext._filter;
-}
-
-function isUnitTransform(m) {
-  return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
 }
 
 export default class Renderer {
@@ -334,12 +330,11 @@ export default class Renderer {
     return this.globalTransform(...m);
   }
 
-  transformPoint(x, y) {
-    const m = this[_globalTransform];
-    const {width: w, height: h} = this.canvas;
+  transformPoint(x, y, matrix) {
+    let m = this[_globalTransform];
+    if(matrix) m = mat2d(m) * mat2d(matrix);
     const newX = x * m[0] + y * m[2] + m[4];
     const newY = x * m[1] + y * m[3] + m[5];
-    const p = normalize([newX, newY], w, h);
-    return p;
+    return [newX, newY];
   }
 }

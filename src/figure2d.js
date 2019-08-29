@@ -2,9 +2,23 @@ import parse from 'parse-svg-path';
 import simplify from 'simplify-path';
 import contours from 'svg-path-contours';
 import arc from 'arc-to';
+import {distance} from './utils/positions';
 
 function buildCommand(key, args) {
   return `${key}${args.join(' ')}`;
+}
+
+function getLength(contours) {
+  let length = 0;
+  contours.forEach((points) => {
+    let s = points[0];
+    for(let i = 1; i < points.length; i++) {
+      const p = points[i];
+      length += distance(s, p);
+      s = p;
+    }
+  });
+  return length;
 }
 
 const _contours = Symbol('contours');
@@ -21,19 +35,79 @@ export default class Figure2D {
 
   get contours() {
     let ret = null;
-    if(this[_contours]) return this[_contours].map(c => [...c]);
-    if(this[_path]) {
+    if(!this[_contours] && this[_path]) {
       this[_contours] = contours(parse(this[_path])).map((path) => {
         return simplify(path, this[_simplify]);
       });
-      ret = this[_contours].map(c => [...c]);
+      this[_contours].totalLength = getLength(this[_contours]);
+      this[_contours].closed = /Z$/ig.test(this[_path]);
     }
-    if(/Z$/ig.test(this[_path])) ret.closed = true;
+    if(this[_contours]) {
+      ret = this[_contours].map(c => [...c]);
+      ret.totalLength = this[_contours].totalLength;
+      ret.closed = this[_contours].closed;
+    }
     return ret;
+  }
+
+  get contoursLength() {
+    return this.contours.totalLength;
   }
 
   get simplify() {
     return this[_simplify];
+  }
+
+  getPointAtLength(length) {
+    length = Number(length);
+    if(!Number.isFinite(length)) {
+      throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
+    }
+
+    const contours = this.contours;
+
+    if(length <= 0) {
+      const p0 = contours[0][0];
+      const p1 = contours[0][1];
+      const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+      return {
+        x: p0[0],
+        y: p0[1],
+        angle,
+      };
+    }
+
+    if(length > this.contoursLength) {
+      const points = contours[contours.length - 1];
+      const p0 = points[points.length - 2];
+      const p1 = points[points.length - 1];
+      const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+      return {
+        x: p1[0],
+        y: p1[1],
+        angle,
+      };
+    }
+
+    for(let i = 0; i < contours.length; i++) {
+      const points = contours[i];
+      let p0 = points[0];
+      for(let j = 1; j < points.length; j++) {
+        const p1 = points[j];
+        const d = distance(p0, p1);
+        if(length < d) {
+          const p = length / d;
+          const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+          return {
+            x: p0[0] * (1 - p) + p1[0] * p,
+            y: p0[1] * (1 - p) + p1[1] * p,
+            angle,
+          };
+        }
+        length -= d;
+        p0 = p1;
+      }
+    }
   }
 
   addPath(path) {
