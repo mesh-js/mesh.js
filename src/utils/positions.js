@@ -17,3 +17,7 @@ export function denormalize([x, y, z], w, h, d) {
   }
   return [x, y];
 }
+
+export function distance([x1, y1, z1 = 0], [x2, y2, z2 = 0]) {
+  return Math.hypot(x2 - x1, y2 - y1, z2 - z1);
+}
