@@ -42,6 +42,8 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   let stroke = false;
   let fill = false;
 
+  context.globalAlpha = mesh.uniforms.u_opacity;
+
   if(mesh.gradient && mesh.gradient.stroke) {
     let {vector, colors} = mesh.gradient.stroke;
     let gradient = null;
@@ -91,7 +93,6 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
     colors.forEach(({offset, color}) => {
       let rgba = vectorToRGBA(color);
       if(cloudFill) rgba = mixRGBA(rgba, cloudFill);
-      console.log(rgba);
       gradient.addColorStop(offset, rgba);
     });
     context.fillStyle = gradient;
