@@ -23,8 +23,12 @@
 
     const mesh = new Mesh2D(figure, canvas);
     mesh.setStroke({
-      thickness: 5,
-      color: [0, 0, 0, 1],
+      thickness: 10,
+      color: [0, 0, 0, 0.5],
+    });
+
+    mesh.setFill({
+      color: [1, 0, 0, 1],
     });
 
     mesh.uniforms.u_opacity = 0.5;
