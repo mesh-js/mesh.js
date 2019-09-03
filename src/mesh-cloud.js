@@ -75,7 +75,7 @@ export default class {
   }
 
   get enableBlend() {
-    return this[_mesh].enableBlend && this[_blend];
+    return this[_mesh].enableBlend || this[_blend];
   }
 
   setColorTransform(idx, m) {
@@ -139,42 +139,42 @@ export default class {
   }
 
   grayscale(idx, p) {
-    this.setColorTransform(idx, grayscale(p));
+    this.transformColor(idx, grayscale(p));
     this[_filters][idx].push(`grayscale(${100 * p}%)`);
   }
 
   brightness(idx, p) {
-    this.setColorTransform(idx, brightness(p));
+    this.transformColor(idx, brightness(p));
     this[_filters][idx].push(`brightness(${100 * p}%)`);
   }
 
   saturate(idx, p) {
-    this.setColorTransform(idx, saturate(p));
+    this.transformColor(idx, saturate(p));
     this[_filters][idx].push(`saturate(${100 * p}%)`);
   }
 
   contrast(idx, p) {
-    this.setColorTransform(idx, contrast(p));
+    this.transformColor(idx, contrast(p));
     this[_filters][idx].push(`contrast(${100 * p}%)`);
   }
 
   invert(idx, p) {
-    this.setColorTransform(idx, invert(p));
+    this.transformColor(idx, invert(p));
     this[_filters][idx].push(`invert(${100 * p}%)`);
   }
 
   sepia(idx, p) {
-    this.setColorTransform(idx, sepia(p));
+    this.transformColor(idx, sepia(p));
     this[_filters][idx].push(`sepia(${100 * p}%)`);
   }
 
   opacity(idx, p) {
-    this.setColorTransform(idx, opacity(p));
+    this.transformColor(idx, opacity(p));
     this[_filters][idx].push(`opacity(${100 * p}%)`);
   }
 
   hueRotate(idx, deg) {
-    this.setColorTransform(idx, hueRotate(deg));
+    this.transformColor(idx, hueRotate(deg));
     this[_filters][idx].push(`hue-rotate(${deg}deg)`);
   }
 
@@ -232,7 +232,7 @@ export default class {
       textureCoord,
       uniforms: {...uniforms},
       instanceCount: this[_count],
-      enableBlend: true,
+      enableBlend: this.enableBlend,
     };
 
     if(frames.length) {

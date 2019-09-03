@@ -46,20 +46,20 @@
 
         // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
 
-        // mesh.setFill({
-        //   color: [1, 0, 0, 1],
-        // });
+        mesh.setFill({
+          color: [1, 0, 0, 1],
+        });
         mesh.setTransform(1, 0, 0, 1, 200, 200);
         // console.log(mesh.meshData);
 
         // if(i > NUM / 2) {
-        mesh.setTexture(texture, {
-          scale: false,
-          repeat: false,
-          rect: [60, 60],
-          // rect: [20, 20],
-          // srcRect: [0, 0, 100, 50],
-        });
+        // mesh.setTexture(texture, {
+        //   scale: false,
+        //   repeat: false,
+        //   rect: [60, 60],
+        //   // rect: [20, 20],
+        //   // srcRect: [0, 0, 100, 50],
+        // });
         // }
 
         mesh.setLinearGradient({
@@ -82,7 +82,7 @@
         // mesh.dropShadow(10, 10, 10, [0, 0, 1, 1]);
         // mesh.dropShadow(-10, -10, 10, [0, 1, 0, 1]);
         // mesh.contrast(0.5);
-        // // // mesh.opacity(0.2);
+        mesh.opacity(0.2);
         // // // mesh.hueRotate(130);
         // // // mesh.clearFilter();
         // mesh.hueRotate(130);

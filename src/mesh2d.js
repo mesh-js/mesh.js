@@ -21,7 +21,6 @@ const _transform = Symbol('transform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _blend = Symbol('blend');
-const _enableBlend = Symbol('enableBlend');
 const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
 const _applyTransform = Symbol('applyTransform');
@@ -177,7 +176,9 @@ export default class Mesh2D {
 
   get enableBlend() {
     if(this[_blend] === true || this[_blend] === false) return this[_blend];
-    return this[_enableBlend];
+    return this[_strokeColor] != null && this[_strokeColor][3] < 1.0
+      || this[_fillColor] != null && this[_fillColor][3] < 1.0
+      || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0;
   }
 
   get filterCanvas() {
@@ -422,7 +423,6 @@ export default class Mesh2D {
     this[_mesh] = null;
     this[_stroke] = stroke({thickness, cap, join, miterLimit});
     this[_strokeColor] = color;
-    this[_enableBlend] = color[3] < 1.0;
     return this;
   }
 
@@ -430,7 +430,6 @@ export default class Mesh2D {
     this[_mesh] = null;
     this[_fill] = {delaunay, clean, randomization};
     this[_fillColor] = color;
-    this[_enableBlend] = color[3] < 1.0;
     return this;
   }
 
@@ -593,10 +592,7 @@ export default class Mesh2D {
     } else {
       transform = m;
     }
-    this.setUniforms({
-      u_filterFlag: 1,
-      u_colorMatrix: transform,
-    });
+    this.setColorTransform(...transform);
     return this;
   }
 

@@ -53,6 +53,7 @@
           for(let i = 0; i < cloud.amount; i++) {
             cloud.setFillColor(i, [Math.random(), 0, Math.random(), 1]);
             cloud.grayscale(i, 1);
+            cloud.opacity(i, 0.3);
             // cloud.setFrameIndex(i, i);
             cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
           }
