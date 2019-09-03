@@ -63,7 +63,7 @@ export default class Mesh2D {
     this[_fill] = null;
     this[_bound] = [[0, 0], [width, height]];
     this[_transform] = [1, 0, 0, 1, 0, 0];
-    this[_uniforms] = {};
+    this[_uniforms] = {u_opacity: 1.0};
     this[_filter] = [];
     this[_blend] = null;
   }
@@ -176,7 +176,8 @@ export default class Mesh2D {
 
   get enableBlend() {
     if(this[_blend] === true || this[_blend] === false) return this[_blend];
-    return this[_strokeColor] != null && this[_strokeColor][3] < 1.0
+    return this[_uniforms].u_opacity < 1.0
+      || this[_strokeColor] != null && this[_strokeColor][3] < 1.0
       || this[_fillColor] != null && this[_fillColor][3] < 1.0
       || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0;
   }

@@ -2,6 +2,7 @@ precision mediump float;
 
 varying vec4 vColor;
 varying float flagBackground;
+uniform float u_opacity;
 
 #ifdef TEXTURE
 uniform int u_texFlag;
@@ -119,6 +120,10 @@ void main() {
     transformColor(color, u_colorMatrix);
   }
 #endif
+
+  if(u_opacity < 1.0) {
+    color = vec4(color.rgb, color.a * u_opacity);
+  }
 
   gl_FragColor = color;
 }
