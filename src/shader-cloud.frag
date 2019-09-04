@@ -2,6 +2,7 @@ precision mediump float;
 
 varying vec4 vColor;
 varying float flagBackground;
+uniform float u_opacity;
 
 #ifdef TEXTURE
 varying float frameIndex;
@@ -156,7 +157,9 @@ void main() {
         else if(index == 9) texColor = texture2D(u_texFrame9, texCoord);
         else if(index == 10) texColor = texture2D(u_texFrame10, texCoord);
         else texColor = texture2D(u_texFrame11, texCoord);
-        color = mix(color, texColor, texColor.a);
+        // color = mix(color, texColor, texColor.a);
+        color.rgb = mix(texColor.rgb, color.rgb, 1.0 - texColor.a);
+        color.a = texColor.a + (1.0 - texColor.a) * color.a;
       }
     }
   }
@@ -185,6 +188,10 @@ void main() {
     transformColor(color, colorCloudMatrix);
   }
 #endif
+
+  if(u_opacity < 1.0) {
+    color = vec4(color.rgb, color.a * u_opacity);
+  }
 
   gl_FragColor = color;
 }

@@ -104,7 +104,9 @@ void main() {
         texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
       }
       vec4 texColor = texture2D(u_texSampler, texCoord);
-      color = mix(color, texColor, texColor.a);
+      // color = mix(color, texColor, texColor.a);
+      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - texColor.a);
+      color.a = texColor.a + (1.0 - texColor.a) * color.a;
     }
   }
 #endif
