@@ -89,6 +89,16 @@ void transformColor(inout vec4 color, in float colorMatrix[20]) {
 void main() {
   vec4 color = vColor;
 
+#ifdef GRADIENT
+  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
+    radial_gradient(color, u_radialGradientVector, u_colorSteps);
+  }
+#endif
+
+  if(u_opacity < 1.0) {
+    color.a *= u_opacity;
+  }
+
 #ifdef TEXTURE
   if(u_texFlag > 0 && flagBackground > 0.0) {
     vec2 texCoord = vTextureCoord;
@@ -104,16 +114,15 @@ void main() {
         texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
       }
       vec4 texColor = texture2D(u_texSampler, texCoord);
+      float alpha = texColor.a;
+      if(u_opacity < 1.0) {
+        texColor.a *= u_opacity;
+        alpha *= mix(0.7, 1.0, u_opacity);
+      }
       // color = mix(color, texColor, texColor.a);
-      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - texColor.a);
+      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);
       color.a = texColor.a + (1.0 - texColor.a) * color.a;
     }
-  }
-#endif
-
-#ifdef GRADIENT
-  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
-    radial_gradient(color, u_radialGradientVector, u_colorSteps);
   }
 #endif
 
@@ -122,10 +131,6 @@ void main() {
     transformColor(color, u_colorMatrix);
   }
 #endif
-
-  if(u_opacity < 1.0) {
-    color = vec4(color.rgb, color.a * u_opacity);
-  }
 
   gl_FragColor = color;
 }
