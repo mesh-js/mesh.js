@@ -17,7 +17,8 @@
       contextType: 'webgl',
     });
 
-    const textureURL = 'https://p2.ssl.qhimg.com/t0130f95e9db5a228bd.png';
+    // const textureURL = 'https://p2.ssl.qhimg.com/t0130f95e9db5a228bd.png';
+    const textureURL = 'https://p0.ssl.qhimg.com/t01a72262146b87165f.png';
     const meshList = [];
 
     (async function () {
@@ -47,11 +48,11 @@
         // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
 
         mesh.setFill({
-          color: [1, 0, 0, 1],
+          color: [1, 0, 1, 1],
         });
         mesh.setTransform(1, 0, 0, 1, 200, 200);
         // console.log(mesh.meshData);
-        mesh.uniforms.u_opacity = 0.1;
+        mesh.uniforms.u_opacity = 0.3;
 
         // if(i > NUM / 2) {
         mesh.setTexture(texture, {

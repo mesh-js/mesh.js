@@ -117,7 +117,7 @@ void main() {
       float alpha = texColor.a;
       if(u_opacity < 1.0) {
         texColor.a *= u_opacity;
-        alpha *= mix(0.7, 1.0, u_opacity);
+        alpha *= mix(0.465, 1.0, u_opacity);
       }
       // color = mix(color, texColor, texColor.a);
       color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);
