@@ -185,7 +185,7 @@ export default class Renderer {
           hasCloudColor,
           hasCloudFilter,
         });
-      } else if(this.program !== program) {
+      } else if(renderer.program !== program) {
         renderer.useProgram(program, Object.assign({
           a_color: {
             type: 'UNSIGNED_BYTE',
@@ -263,7 +263,7 @@ export default class Renderer {
             const hasGradient = !!mesh.uniforms.u_radialGradientVector;
             const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
             applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
-          } else if(this.program !== program) {
+          } else if(renderer.program !== program) {
             renderer.useProgram(program, Object.assign({
               a_color: {
                 type: 'UNSIGNED_BYTE',

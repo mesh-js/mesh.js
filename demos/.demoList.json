@@ -27,6 +27,9 @@
     "label": "gradient",
     "src": "docs/gradient"
   },{
+    "label": "user_program",
+    "src": "docs/user_program"
+  },{
     "label": "triangles meshjs",
     "src": "benchmark/triangles"
   },

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[102],{528:function(n,a,i){"use strict";i.r(a),a.default="body {\n  display: flex;\n}\ncanvas {\n  width: 100%;\n  max-width: 512px;\n  display: inline-block;\n  margin: auto;\n  background: black;\n}"}}]);

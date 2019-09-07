@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "A graphics system born for visualization.",
   "main": "dist/mesh.js",
   "scripts": {
@@ -41,7 +41,7 @@
     "bound-points": "^1.0.0",
     "extrude-polyline": "^1.0.6",
     "gl-matrix": "^3.0.0",
-    "gl-renderer": "^0.7.10",
+    "gl-renderer": "^0.7.11",
     "parse-svg-path": "^0.1.2",
     "simplify-path": "^1.1.0",
     "svg-path-contours": "^2.0.0",
