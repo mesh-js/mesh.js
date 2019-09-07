@@ -14,7 +14,7 @@ self.addEventListener('message', (evt) => {
     const center = [256, 256];
 
     const figure = new Figure2D();
-    figure.rect(0, 0, 86, 60);
+    figure.rect(0, 0, 43, 30);
 
     const meshList = [];
 
@@ -64,7 +64,7 @@ self.addEventListener('message', (evt) => {
         bird.setTexture(texture, {
           scale: false,
           repeat: false,
-          // rect: [0, 0, 86, 60],
+          rect: [0, 0, 43, 30],
           srcRect: wings[i % 3],
         });
       }
