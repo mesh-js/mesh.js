@@ -19,7 +19,7 @@ const defaultOpts = {
   // premultipliedAlpha: true,
   preserveDrawingBuffer: false,
   // depth: false,
-  antialias: false,
+  // antialias: false,
   bufferSize: 1500,
 };
 
