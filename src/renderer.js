@@ -229,8 +229,7 @@ export default class Renderer {
       const meshData = compress(this, meshes);
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
-      for(let i = 0; i < meshData.length; i++) {
-        const mesh = meshData[i];
+      for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
         if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
           applyShader(renderer, {hasTexture: true});
           const {width, height} = this.canvas;

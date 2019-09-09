@@ -25,26 +25,51 @@ function compareUniform(a, b) {
   });
 }
 
-function packData(temp, ret, enableBlend) {
+const bufferCache = {
+
+};
+
+function packData(temp, enableBlend) {
   if(temp.length) {
     const meshData = flattenMeshes(temp);
-    meshData.positions = GlRenderer.FLOAT(meshData.positions);
-    meshData.cells = GlRenderer.USHORT(meshData.cells);
-    if(meshData.textureCoord) meshData.textureCoord = GlRenderer.FLOAT(meshData.textureCoord);
+    if(!bufferCache.positions || bufferCache.positions.length < meshData.positions.length) {
+      bufferCache.positions = GlRenderer.FLOAT(meshData.positions);
+      meshData.positions = bufferCache.positions;
+    } else {
+      meshData.positions = GlRenderer.FLOAT(meshData.positions, bufferCache.positions);
+    }
+    if(!bufferCache.cells || bufferCache.cells.length < meshData.cells.length) {
+      bufferCache.cells = GlRenderer.USHORT(meshData.cells);
+      meshData.cells = bufferCache.cells;
+    } else {
+      meshData.cells = GlRenderer.USHORT(meshData.cells, bufferCache.cells);
+    }
+    if(meshData.textureCoord) {
+      if(!bufferCache.textureCoord || bufferCache.textureCoord.length < meshData.textureCoord.length) {
+        bufferCache.textureCoord = GlRenderer.FLOAT(meshData.textureCoord);
+        meshData.textureCoord = bufferCache.textureCoord;
+      } else {
+        meshData.textureCoord = GlRenderer.FLOAT(meshData.textureCoord, bufferCache.textureCoord);
+      }
+    }
     meshData.enableBlend = enableBlend;
     if(temp[0].filterCanvas) {
       meshData.filterCanvas = true;
     }
-    meshData.attributes.a_color = {data: GlRenderer.UBYTE(meshData.attributes.a_color)};
+    if(!bufferCache.a_color || bufferCache.a_color.length < meshData.attributes.a_color.length) {
+      bufferCache.a_color = GlRenderer.UBYTE(meshData.attributes.a_color);
+      meshData.attributes.a_color = {data: bufferCache.a_color};
+    } else {
+      meshData.attributes.a_color = {data: GlRenderer.UBYTE(meshData.attributes.a_color, bufferCache.a_color)};
+    }
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
-    ret.push(meshData);
     temp.length = 0;
+    return meshData;
   }
 }
 
-export default function compress(renderer, meshes, maxSize = renderer.options.bufferSize) {
-  const ret = [];
+export default function* compress(renderer, meshes, maxSize = renderer.options.bufferSize) {
   const temp = [];
 
   let size = 0;
@@ -64,13 +89,13 @@ export default function compress(renderer, meshes, maxSize = renderer.options.bu
       len = mesh.positions.length;
 
       if(filterCanvas || size + len > maxSize) { // cannot merge
-        packData(temp, ret, enableBlend);
+        if(temp.length) yield packData(temp, enableBlend);
         size = 0;
         enableBlend = false;
       } else if(size) {
         const lastMesh = meshes[i - 1].meshData;
         if(meshes[i - 1].filterCanvas || !compareUniform(lastMesh, mesh)) {
-          packData(temp, ret, enableBlend);
+          if(temp.length) yield packData(temp, enableBlend);
           size = 0;
           enableBlend = false;
         }
@@ -81,10 +106,9 @@ export default function compress(renderer, meshes, maxSize = renderer.options.bu
     }
 
     if(i === meshes.length - 1) {
-      packData(temp, ret, enableBlend);
+      if(temp.length) yield packData(temp, enableBlend);
     } else {
       size += len;
     }
   }
-  return ret;
 }
