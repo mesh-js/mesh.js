@@ -59,7 +59,7 @@ function packData(temp, enableBlend) {
         meshData.textureCoord = GlRenderer.FLOAT(meshData.textureCoord, bufferCache.textureCoord);
       }
     }
-    
+
     meshData.enableBlend = enableBlend;
     if(temp[0].filterCanvas) {
       meshData.filterCanvas = true;
