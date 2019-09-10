@@ -1,4 +1,3 @@
-import triangulate from 'triangulate-contours';
 import {mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
@@ -9,6 +8,7 @@ import {multiply, grayscale, brightness,
   saturate, contrast, invert,
   sepia, opacity, hueRotate} from './utils/color-matrix';
 import {isUnitTransform} from './utils/transform';
+import triangulate from './triangulate-contours';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');

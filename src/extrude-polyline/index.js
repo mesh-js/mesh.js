@@ -39,11 +39,12 @@ Stroke.prototype.build = function (points, closed = false) {
 
   if(points.length <= 1) return complex;
 
+  let closeNext = null;
   if(closed) {
     const [a, b] = points;
     const v = [b[0] - a[0], b[1] - a[1]];
-    const v2 = vec.scaleAndAdd(vec.create(), a, v, 1e-7);
-    points.push(v2);
+    closeNext = vec.scaleAndAdd(vec.create(), a, v, 1e-7);
+    points.unshift([...points[points.length - 2]]);
   }
 
   const total = points.length;
@@ -59,13 +60,17 @@ Stroke.prototype.build = function (points, closed = false) {
     const cur = points[i];
     const next = i < points.length - 1 ? points[i + 1] : null;
     const thickness = this.mapThickness(cur, i, points);
-    const amt = this._seg(complex, count, last, cur, next, thickness / 2);
+    const amt = this._seg(complex, count, last, cur, next, thickness / 2, closed, closeNext);
     count += amt;
+  }
+  if(closed) {
+    complex.positions = complex.positions.slice(2);
+    complex.cells = complex.cells.slice(2).map(([a, b, c]) => [a - 2, b - 2, c - 2]);
   }
   return complex;
 };
 
-Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick) {
+Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, closed, closeNext) {
   let count = 0;
   const cells = complex.cells;
   const positions = complex.positions;
@@ -91,7 +96,6 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick) {
       vec.scaleAndAdd(capEnd, last, lineA, -halfThick);
       last = capEnd;
     }
-
     extrusions(positions, last, this._normal, halfThick);
   }
 
@@ -106,7 +110,7 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick) {
     - none (i.e. no next segment, use normal)
      */
 
-  if(!next) { // no next segment, simple extrusion
+  if(!closed && !next) { // no next segment, simple extrusion
     // now reset normal to finish cap
     normal(this._normal, lineA);
 
@@ -122,7 +126,8 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick) {
     count += 2;
   } else { // we have a next segment, start with miter
     // get unit dir of next line
-    direction(lineB, next, cur);
+    if(!next) direction(lineB, closeNext, cur);
+    else direction(lineB, next, cur);
 
     // stores tangent & miter
     let miterLen = computeMiter(tangent, miter, lineA, lineB, halfThick);
@@ -151,17 +156,18 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick) {
         ? [index, index + 2, index + 3]
         : [index + 2, index + 1, index + 3]);
 
-      // now add the bevel triangle
-      cells.push([index + 2, index + 3, index + 4]);
-
-      normal(tmp, lineB);
-      vec.copy(this._normal, tmp); // store normal for next round
-
-      vec.scaleAndAdd(tmp, cur, tmp, -halfThick * flip);
-      positions.push(vec.clone(tmp));
+      if(next) {
+        normal(tmp, lineB);
+        vec.copy(this._normal, tmp); // store normal for next round
+        vec.scaleAndAdd(tmp, cur, tmp, -halfThick * flip);
+        positions.push(vec.clone(tmp));
+        // now add the bevel triangle
+        cells.push([index + 2, index + 3, index + 4]);
+        count++;
+      }
 
       // //the miter is now the normal for our next join
-      count += 3;
+      count += 2;
     } else { // miter
       // next two points for our miter join
       extrusions(positions, cur, miter, miterLen);

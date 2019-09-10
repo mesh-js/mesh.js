@@ -136,7 +136,7 @@ export default class Figure2D {
     if(ang < 2 * Math.PI) {
       this[_path] += `M${x} ${y}L${path}Z`;
     } else {
-      this[_path] += `M${path}`;
+      this[_path] += `M${path}Z`;
     }
   }
 

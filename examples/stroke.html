@@ -19,12 +19,14 @@
     });
 
     const figure = new Figure2D();
-    figure.rect(50, 50, 150, 150);
+    // figure.rect(50, 50, 150, 150);
+    figure.addPath('M50 50L50 100');
 
     const mesh = new Mesh2D(figure, canvas);
     mesh.setStroke({
       thickness: 10,
       color: [0, 0, 0, 0.5],
+      join: 'bevel',
     });
 
     mesh.setFill({

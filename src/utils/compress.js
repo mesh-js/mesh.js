@@ -88,15 +88,15 @@ export default function* compress(renderer, meshes, maxSize = renderer.options.b
 
   for(let i = 0; i < meshes.length; i++) {
     const mesh = meshes[i].meshData;
-    mesh.packIndex = i;
-    const filterCanvas = meshes[i].filterCanvas;
-    if(filterCanvas) {
-      mesh.filterCanvas = true;
-    }
-
     let len = 0;
 
-    if(mesh) {
+    if(mesh && mesh.positions.length) {
+      mesh.packIndex = i;
+      const filterCanvas = meshes[i].filterCanvas;
+      if(filterCanvas) {
+        mesh.filterCanvas = true;
+      }
+
       len = mesh.positions.length;
 
       if(filterCanvas || size + len > maxSize) { // cannot merge
