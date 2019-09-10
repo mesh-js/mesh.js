@@ -54,6 +54,10 @@ export default class Figure2D {
     return this.contours.totalLength;
   }
 
+  get path() {
+    return this[_path];
+  }
+
   get simplify() {
     return this[_simplify];
   }
