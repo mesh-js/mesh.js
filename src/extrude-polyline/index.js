@@ -37,8 +37,6 @@ Stroke.prototype.build = function (points, closed = false) {
   const complex = {
     positions: [],
     cells: [],
-    inners: [],
-    outers: [],
   };
 
   if(points.length <= 1) return complex;
@@ -70,8 +68,6 @@ Stroke.prototype.build = function (points, closed = false) {
   if(closed) {
     complex.positions = complex.positions.slice(2);
     complex.cells = complex.cells.slice(2).map(([a, b, c]) => [a - 2, b - 2, c - 2]);
-    complex.inners = complex.inners.slice(2);
-    complex.outers = complex.outers.slice(2);
   }
   return complex;
 };
@@ -155,11 +151,9 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
       // next two points in our first segment
       vec.scaleAndAdd(tmp, cur, this._normal, -halfThick * flip);
       positions.push(vec.clone(tmp));
-      complex.outers.push(vec.clone(tmp));
 
       vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
       positions.push(vec.clone(tmp));
-      complex.inners.push(vec.clone(tmp));
 
       cells.push(this._lastFlip !== -flip
         ? [index, index + 2, index + 3]
@@ -200,11 +194,9 @@ function extrusions(complex, point, normal, scale) {
   // next two points to end our segment
   vec.scaleAndAdd(tmp, point, normal, -scale);
   positions.push(vec.clone(tmp));
-  complex.outers.push(vec.clone(tmp));
 
   vec.scaleAndAdd(tmp, point, normal, scale);
   positions.push(vec.clone(tmp));
-  complex.inners.push(vec.clone(tmp));
 }
 
 export default Stroke;

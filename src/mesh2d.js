@@ -211,15 +211,23 @@ export default class Mesh2D {
     const meshes = {};
 
     if(contours && contours.length) {
-      let innerContours = null;
+      if(this[_fill]) {
+        const mesh = triangulate(contours);
+        mesh.positions = mesh.positions.map((p) => {
+          p[1] = this[_bound][1][1] - p[1];
+          p.push(1);
+          return p;
+        });
+        mesh.attributes = {
+          a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
+        };
+        meshes.fill = mesh;
+      }
 
       if(this[_stroke]) {
-        innerContours = [];
         const _meshes = contours.map((lines, i) => {
           const closed = lines.length > 1 && vec2.equals(lines[0], lines[lines.length - 1]);
-          const res = this[_stroke].build(lines, closed);
-          innerContours.push(res.inners);
-          return res;
+          return this[_stroke].build(lines, closed);
         });
         _meshes.forEach((mesh) => {
           mesh.positions = mesh.positions.map((p) => {
@@ -232,19 +240,6 @@ export default class Mesh2D {
           };
         });
         meshes.stroke = flattenMeshes(_meshes);
-      }
-
-      if(this[_fill]) {
-        const mesh = triangulate(innerContours || contours);
-        mesh.positions = mesh.positions.map((p) => {
-          p[1] = this[_bound][1][1] - p[1];
-          p.push(1);
-          return p;
-        });
-        mesh.attributes = {
-          a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
-        };
-        meshes.fill = mesh;
       }
     }
 
@@ -599,7 +594,6 @@ export default class Mesh2D {
   }
 
   blur(length) {
-    this[_mesh] = null;
     this[_filter].push(`blur(${length}px)`);
     return this;
   }
@@ -615,7 +609,6 @@ export default class Mesh2D {
   }
 
   dropShadow(offsetX, offsetY, blurRadius = 0, color = [0, 0, 0, 1]) {
-    this[_mesh] = null;
     this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${vectorToRGBA(color)})`);
     return this;
   }
@@ -652,7 +645,6 @@ export default class Mesh2D {
   }
 
   url(svgFilter) {
-    this[_mesh] = null;
     this[_filter].push(`url(${svgFilter})`);
     return this;
   }
