@@ -1,4 +1,4 @@
-import {mat2d} from 'gl-matrix';
+import {vec2, mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
@@ -211,27 +211,15 @@ export default class Mesh2D {
     const meshes = {};
 
     if(contours && contours.length) {
-      if(this[_fill]) {
-        const mesh = triangulate(contours);
-        mesh.positions = mesh.positions.map((p) => {
-          p[1] = this[_bound][1][1] - p[1];
-          p.push(1);
-          return p;
-        });
-        mesh.attributes = {
-          a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
-        };
-        meshes.fill = mesh;
-      }
+      let innerContours = null;
 
       if(this[_stroke]) {
-        const closed = contours.closed;
-        const len = contours.length;
+        innerContours = [];
         const _meshes = contours.map((lines, i) => {
-          if(closed && i === len - 1) {
-            return this[_stroke].build([...lines], true);
-          }
-          return this[_stroke].build(lines);
+          const closed = lines.length > 1 && vec2.equals(lines[0], lines[lines.length - 1]);
+          const res = this[_stroke].build(lines, closed);
+          innerContours.push(res.inners);
+          return res;
         });
         _meshes.forEach((mesh) => {
           mesh.positions = mesh.positions.map((p) => {
@@ -244,6 +232,19 @@ export default class Mesh2D {
           };
         });
         meshes.stroke = flattenMeshes(_meshes);
+      }
+
+      if(this[_fill]) {
+        const mesh = triangulate(innerContours || contours);
+        mesh.positions = mesh.positions.map((p) => {
+          p[1] = this[_bound][1][1] - p[1];
+          p.push(1);
+          return p;
+        });
+        mesh.attributes = {
+          a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
+        };
+        meshes.fill = mesh;
       }
     }
 

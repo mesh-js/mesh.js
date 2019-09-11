@@ -40,12 +40,10 @@ export default class Figure2D {
         return simplify(path, this[_simplify]);
       });
       this[_contours].totalLength = getLength(this[_contours]);
-      this[_contours].closed = /Z$/ig.test(this[_path]);
     }
     if(this[_contours]) {
       ret = this[_contours].map(c => [...c]);
       ret.totalLength = this[_contours].totalLength;
-      ret.closed = this[_contours].closed;
     }
     return ret;
   }
