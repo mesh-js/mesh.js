@@ -93,6 +93,8 @@ export default function parseFont(str, defaultHeight) {
 
   if(!sizeFamily) return; // invalid
 
+  const lineHeight = parseFloat(sizeFamily[3]);
+
   // Default values and required properties
   const font = {
     weight: 'normal',
@@ -101,8 +103,8 @@ export default function parseFont(str, defaultHeight) {
     variant: 'normal',
     size: parseFloat(sizeFamily[1]),
     unit: sizeFamily[2],
-    lineHeight: parseFloat(sizeFamily[3]) || parseFloat(sizeFamily[1]) * 1.2,
-    lineHeightUnit: sizeFamily[4] || sizeFamily[2],
+    lineHeight: Number.isFinite(lineHeight) ? lineHeight : undefined,
+    lineHeightUnit: sizeFamily[4],
     family: sizeFamily[5].replace(/ *, */g, ','),
   };
 
@@ -121,7 +123,9 @@ export default function parseFont(str, defaultHeight) {
   if(stretch) font.stretch = stretch[1];
 
   font.pxHeight = sizeToPixel({size: font.size, unit: font.unit}, defaultHeight);
-  font.pxLineHeight = sizeToPixel({size: font.lineHeight, unit: font.lineHeightUnit}, defaultHeight);
+  font.pxLineHeight = sizeToPixel({size: font.lineHeight || font.size, unit: font.lineHeightUnit || font.unit}, defaultHeight);
 
   return font;
 }
+
+window.parseFont = parseFont;
