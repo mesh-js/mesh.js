@@ -4,8 +4,10 @@ import fragShader from '../shader.frag';
 import vertShaderCloud from '../shader-cloud.vert';
 import fragShaderCloud from '../shader-cloud.frag';
 
-const shaders = [];
+const _shaders = Symbol('shaders');
+
 export function createShaders(renderer) {
+  renderer[_shaders] = [];
   for(let i = 0; i < 16; i++) {
     const defines = [];
     const hasTexture = !!(i & 0x1);
@@ -22,16 +24,16 @@ export function createShaders(renderer) {
       samplerDef.push('uniform sampler2D u_texSampler;');
     }
     // renderer.createProgram(prefix + samplerDef.join('\n') + fragShader, prefix + vertShader);
-    shaders[i] = [prefix + samplerDef.join('\n') + fragShader, prefix + vertShader];
+    renderer[_shaders][i] = [prefix + samplerDef.join('\n') + fragShader, prefix + vertShader];
   }
 }
 
 export function applyShader(renderer, {hasTexture = false, hasFilter = false, hasGradient = false, hasGlobalTransform = false} = {}) {
   const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2) | (hasGlobalTransform << 3);
-  let program = shaders[idx];
+  let program = renderer[_shaders][idx];
   if(Array.isArray(program)) {
     program = renderer.createProgram(...program);
-    shaders[idx] = program;
+    renderer[_shaders][idx] = program;
   }
 
   if(renderer.program !== program) {
