@@ -212,16 +212,20 @@ export default class Mesh2D {
 
     if(contours && contours.length) {
       if(this[_fill]) {
-        const mesh = triangulate(contours);
-        mesh.positions = mesh.positions.map((p) => {
-          p[1] = this[_bound][1][1] - p[1];
-          p.push(1);
-          return p;
-        });
-        mesh.attributes = {
-          a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
-        };
-        meshes.fill = mesh;
+        try {
+          const mesh = triangulate(contours);
+          mesh.positions = mesh.positions.map((p) => {
+            p[1] = this[_bound][1][1] - p[1];
+            p.push(1);
+            return p;
+          });
+          mesh.attributes = {
+            a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
+          };
+          meshes.fill = mesh;
+        } catch (ex) {
+          // ignore this[_fill]
+        }
       }
 
       if(this[_stroke]) {

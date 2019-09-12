@@ -143,8 +143,11 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
 
     let bevel = joinBevel;
     if(!bevel && this.join === 'miter') {
-      const limit = miterLen / (halfThick);
-      if(limit > this.miterLimit) bevel = true;
+      const limit = miterLen / halfThick;
+      if(limit > this.miterLimit) {
+        miterLen = this.miterLimit * halfThick;
+        bevel = true;
+      }
     }
 
     if(bevel) {
