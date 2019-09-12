@@ -116,7 +116,7 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   }
   context.transform(...mesh.transformMatrix);
   const count = mesh.contours.length;
-  mesh.contours.forEach((points, i) => {
+  mesh.contours.forEach((points, i) => { // eslint-disable-line complexity
     const closed = points.closed;
     const len = points.length;
     const drawTexture = i === count - 1 && mesh.texture;
@@ -167,9 +167,12 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
             rect = [0, 0, context.canvas.width, context.canvas.height];
           }
           if(srcRect) {
+            rect = rect || [0, 0, srcRect[2], srcRect[3]];
             context.drawImage(image, ...srcRect, ...rect);
-          } else {
+          } else if(rect) {
             context.drawImage(image, ...rect);
+          } else {
+            context.drawImage(image, 0, 0);
           }
         }
       }
