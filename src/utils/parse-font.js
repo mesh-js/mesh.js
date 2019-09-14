@@ -127,5 +127,3 @@ export default function parseFont(str, defaultHeight) {
 
   return font;
 }
-
-window.parseFont = parseFont;
