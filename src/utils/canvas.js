@@ -2,11 +2,11 @@ import vectorToRGBA from './vector-to-rgba';
 import parseFont from './parse-font';
 import {mix} from './math';
 
-export function createCanvas(width, height) {
+export function createCanvas(width, height, {offscreen = true} = {}) {
   let canvas;
   if(typeof global.createCanvas === 'function') {
-    canvas = createCanvas(width, height);
-  } else if(typeof OffscreenCanvas === 'function') {
+    canvas = global.createCanvas(width, height, offscreen);
+  } else if(offscreen && typeof OffscreenCanvas === 'function') {
     canvas = new OffscreenCanvas(width, height);
   } else {
     canvas = document.createElement('canvas');
