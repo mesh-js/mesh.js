@@ -286,9 +286,11 @@ export default class Renderer {
 
   setGlobalTransform(...m) {
     const transform = this[_globalTransform];
-    this[_globalTransform] = m;
-    m = mat2d(m) * mat2d.invert(transform);
-    this[_applyGlobalTransform](m);
+    if(!mat2d.equals(m, transform)) {
+      this[_globalTransform] = m;
+      m = mat2d(m) * mat2d.invert(transform);
+      this[_applyGlobalTransform](m);
+    }
     return this;
   }
 

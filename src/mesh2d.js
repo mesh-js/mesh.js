@@ -8,6 +8,7 @@ import {multiply, grayscale, brightness,
   saturate, contrast, invert,
   sepia, opacity, hueRotate} from './utils/color-matrix';
 import {isUnitTransform} from './utils/transform';
+import {getDashContours} from './utils/contours';
 import triangulate from './triangulate-contours';
 
 const _mesh = Symbol('mesh');
@@ -153,6 +154,20 @@ export default class Mesh2D {
     return '';
   }
 
+  get lineDash() {
+    if(this[_stroke]) {
+      return this[_stroke].lineDash;
+    }
+    return null;
+  }
+
+  get lineDashOffset() {
+    if(this[_stroke]) {
+      return this[_stroke].lineDashOffset;
+    }
+    return 0;
+  }
+
   get fillStyle() {
     if(this[_fillColor] && this[_fillColor][3] !== 0) {
       return vectorToRGBA(this[_fillColor]);
@@ -229,7 +244,13 @@ export default class Mesh2D {
       }
 
       if(this[_stroke]) {
-        const _meshes = contours.map((lines, i) => {
+        const lineDash = this[_stroke].lineDash;
+        let strokeContours = contours;
+        if(lineDash) {
+          const lineDashOffset = this[_stroke].lineDashOffset;
+          strokeContours = getDashContours(contours, lineDash, lineDashOffset);
+        }
+        const _meshes = strokeContours.map((lines, i) => {
           const closed = lines.length > 1 && vec2.equals(lines[0], lines[lines.length - 1]);
           return this[_stroke].build(lines, closed);
         });
@@ -414,16 +435,22 @@ export default class Mesh2D {
 
   // join: 'miter' or 'bevel'
   // cap: 'butt' or 'square'
+  // lineDash: null
+  // lineDashOffset: 0
   setStroke({
     thickness = 1,
     cap = 'butt',
     join = 'miter',
     miterLimit = 10,
     color = [0, 0, 0, 0],
+    lineDash = null,
+    lineDashOffset = 0,
   } = {}) {
     this[_mesh] = null;
     this[_stroke] = stroke({thickness, cap, join, miterLimit});
     this[_strokeColor] = color;
+    this[_stroke].lineDash = lineDash;
+    this[_stroke].lineDashOffset = lineDashOffset;
     return this;
   }
 
@@ -521,9 +548,11 @@ export default class Mesh2D {
 
   setTransform(...m) {
     const transform = this[_transform];
-    this[_transform] = m;
-    m = mat2d(m) * mat2d.invert(transform);
-    if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    if(!mat2d.equals(m, transform)) {
+      this[_transform] = m;
+      m = mat2d(m) * mat2d.invert(transform);
+      if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    }
     return this;
   }
 

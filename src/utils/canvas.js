@@ -76,6 +76,12 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
     context.lineJoin = mesh.lineJoin;
     context.lineCap = mesh.lineCap;
     context.miterLimit = mesh.miterLimit;
+    if(mesh.lineDash) {
+      context.setLineDash(mesh.lineDash);
+      if(mesh.lineDashOffset) {
+        context.lineDashOffset = mesh.lineDashOffset;
+      }
+    }
   }
 
   if(mesh.gradient && mesh.gradient.fill) {

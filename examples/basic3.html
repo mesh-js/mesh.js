@@ -7,7 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <canvas width="600" height="300"></canvas>
+  <canvas width="600" height="600"></canvas>
   <script src="/js/mesh.js"></script>
   <script>
     const {Figure2D, Mesh2D, Renderer} = meshjs;
@@ -15,7 +15,8 @@
     const canvas = document.querySelector('canvas');
 
     const figure = new Figure2D();
-    figure.addPath('M100 100C0 0 0 0 0 0 67.90 66.047 67.904 66.047 67.904 66.047 100 100 100 100 100 100');
+    // figure.addPath('M100 100C0 0 0 0 0 0 67.90 66.047 67.904 66.047 67.904 66.047 100 100 100 100 100 100');
+    figure.rect(100, 100, 200, 200);
 
     const mesh1 = new Mesh2D(figure, canvas);
 
@@ -26,11 +27,15 @@
     mesh1.setStroke({
       thickness: 2,
       color: [1, 0, 0, 1],
+      lineDash: [5, 15, 5],
+      lineDashOffset: 10,
     });
 
     mesh1.translate(200, 200);
 
-    const renderer = new Renderer(canvas);
+    const renderer = new Renderer(canvas, {
+      // contextType: '2d',
+    });
 
     renderer.drawMeshes([mesh1]);
   </script>
