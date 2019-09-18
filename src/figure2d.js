@@ -2,24 +2,11 @@ import parse from 'parse-svg-path';
 import simplify from 'simplify-path';
 import contours from 'svg-path-contours';
 import arc from 'arc-to';
-import {distance} from './utils/positions';
+import getBounds from 'bound-points';
 import {getPointAtLength, getTotalLength, splitContours} from './utils/contours';
 
 function buildCommand(key, args) {
   return `${key}${args.join(' ')}`;
-}
-
-function getLength(contours) {
-  let length = 0;
-  contours.forEach((points) => {
-    let s = points[0];
-    for(let i = 1; i < points.length; i++) {
-      const p = points[i];
-      length += distance(s, p);
-      s = p;
-    }
-  });
-  return length;
 }
 
 const _contours = Symbol('contours');
@@ -53,6 +40,15 @@ export default class Figure2D {
 
   get simplify() {
     return this[_simplify];
+  }
+
+  get boundingBox() {
+    const contours = this.contours;
+    if(contours) {
+      const points = contours.reduce((a, b) => [...a, ...b]);
+      return getBounds(points);
+    }
+    return null;
   }
 
   splitContours(length, rest = true) {
