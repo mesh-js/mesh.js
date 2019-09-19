@@ -1,5 +1,6 @@
 import {vec2, mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
+import rgba from 'color-rgba';
 import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
@@ -57,6 +58,12 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
   }
 
   return [x, y];
+}
+
+function parseColor(colorStr) {
+  const ret = rgba(colorStr);
+  if(!ret || !ret.length) throw new TypeError('Invalid color value.');
+  return [ret[0] / 255, ret[1] / 255, ret[2] / 255, ret[3]];
 }
 
 export default class Mesh2D {
@@ -482,6 +489,7 @@ export default class Mesh2D {
   } = {}) {
     this[_mesh] = null;
     this[_stroke] = stroke({thickness, cap, join, miterLimit});
+    if(typeof color === 'string') color = parseColor(color);
     this[_strokeColor] = color;
     this[_stroke].lineDash = lineDash;
     this[_stroke].lineDashOffset = lineDashOffset;
@@ -491,6 +499,7 @@ export default class Mesh2D {
   setFill({delaunay = true, clean = true, randomization = 0, color = [0, 0, 0, 0]} = {}) {
     this[_mesh] = null;
     this[_fill] = {delaunay, clean, randomization};
+    if(typeof color === 'string') color = parseColor(color);
     this[_fillColor] = color;
     return this;
   }
@@ -688,7 +697,8 @@ export default class Mesh2D {
   }
 
   dropShadow(offsetX, offsetY, blurRadius = 0, color = [0, 0, 0, 1]) {
-    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${vectorToRGBA(color)})`);
+    if(Array.isArray(color)) color = vectorToRGBA(color);
+    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${color})`);
     return this;
   }
 

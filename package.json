@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "A graphics system born for visualization.",
   "main": "dist/mesh.js",
   "scripts": {
@@ -41,6 +41,7 @@
     "adaptive-bezier-curve": "^1.0.3",
     "as-number": "^1.0.0",
     "bound-points": "^1.0.0",
+    "color-rgba": "^2.1.1",
     "gl-matrix": "^3.0.0",
     "gl-renderer": "^0.7.14",
     "parse-svg-path": "^0.1.2",
