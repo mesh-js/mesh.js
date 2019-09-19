@@ -2,8 +2,6 @@
 /* eslint-disable */
 
 var bezier = require('adaptive-bezier-curve')
-var abs = require('abs-svg-path')
-var norm = require('./normalize-svg-path').default
 var vec2 = require('../extrude-polyline/vecutil')
 
 function set(out, x, y) {
@@ -28,7 +26,7 @@ module.exports = function contours(svg, scale) {
 
     var points = []
     var pen = [0, 0]
-    norm(abs(svg)).forEach(function(segment, i, self) {
+    svg.forEach(function(segment, i, self) {
         if (segment[0] === 'M') {
             vec2.copy(pen, segment.slice(1))
             if (points.length>0) {

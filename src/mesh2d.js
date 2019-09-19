@@ -10,6 +10,7 @@ import {multiply, grayscale, brightness,
 import {isUnitTransform} from './utils/transform';
 import {getDashContours} from './utils/contours';
 import triangulate from './triangulate-contours';
+import createContours from './svg-path-contours';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -26,6 +27,7 @@ const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
 const _applyTransform = Symbol('applyTransform');
 const _gradient = Symbol('gradient');
+const _accurateScale = Symbol('accurateScale');
 
 const _filter = Symbol('filter');
 
@@ -60,6 +62,7 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
 export default class Mesh2D {
   constructor(figure, {width, height} = {width: 300, height: 150}) {
     this.contours = figure.contours;
+    if(figure.path) this.path = figure.path;
     this[_stroke] = null;
     this[_fill] = null;
     this[_bound] = [[0, 0], [width, height]];
@@ -67,6 +70,7 @@ export default class Mesh2D {
     this[_uniforms] = {u_opacity: 1.0};
     this[_filter] = [];
     this[_blend] = null;
+    this[_accurateScale] = [1.0, 1.0];
   }
 
   get width() {
@@ -207,6 +211,11 @@ export default class Mesh2D {
 
   get transformMatrix() {
     return this[_transform];
+  }
+
+  get transformScale() {
+    const m = this[_transform];
+    return [Math.hypot(m[0], m[1]), Math.hypot(m[2], m[3])];
   }
 
   get uniforms() {
@@ -427,6 +436,31 @@ export default class Mesh2D {
     }
   }
 
+  accurate(scaleX, scaleY = scaleX) {
+    if(this.path) {
+      const accurated = this.path.map((c) => {
+        const [cmd, ...args] = c;
+        const transformed = [cmd];
+        for(let i = 0; i < args.length; i += 2) {
+          const x0 = args[i],
+            y0 = args[i + 1];
+          transformed.push(x0 * scaleX, y0 * scaleY);
+        }
+        return transformed;
+      });
+      const contours = createContours(accurated);
+      contours.forEach((points) => {
+        for(let i = 0; i < points.length; i++) {
+          const point = points[i];
+          point[0] /= scaleX;
+          point[1] /= scaleY;
+        }
+      });
+      this.contours = contours;
+      this[_accurateScale] = [scaleX, scaleY];
+    }
+  }
+
   setResolution({width, height}) {
     this[_mesh] = null;
     this[_bound][1][0] = width;
@@ -550,8 +584,15 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!mat2d.equals(m, transform)) {
       this[_transform] = m;
-      m = mat2d(m) * mat2d.invert(transform);
-      if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+      const [sx, sy] = this.transformScale;
+      const acc = Math.max(sx / this[_accurateScale][0], sy / this[_accurateScale][1]);
+      if(acc > 1.5 || acc < 0.67) {
+        this.accurate(sx, sy);
+      }
+      if(this[_mesh]) {
+        m = mat2d(m) * mat2d.invert(transform);
+        this[_applyTransform](this[_mesh], m);
+      }
     }
     return this;
   }
@@ -559,6 +600,11 @@ export default class Mesh2D {
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(m) * mat2d(transform);
+    const [sx, sy] = this.transformScale;
+    const acc = Math.max(sx / this[_accurateScale][0], sy / this[_accurateScale][1]);
+    if(acc > 1.5 || acc < 0.67) {
+      this.accurate(sx, sy);
+    }
     if(this[_mesh]) this[_applyTransform](this[_mesh], m);
     return this;
   }

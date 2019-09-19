@@ -1,12 +1,10 @@
 import parse from 'parse-svg-path';
 import simplify from 'simplify-path';
 import getBounds from 'bound-points';
-import contours from './svg-path-contours';
+import abs from 'abs-svg-path';
+import normalize from './normalize-svg-path';
+import createContours from './svg-path-contours';
 import {getPointAtLength, getTotalLength, splitContours} from './utils/contours';
-
-function buildCommand(key, args) {
-  return `${key}${args.join(' ')}`;
-}
 
 const _contours = Symbol('contours');
 const _path = Symbol('path');
@@ -15,7 +13,8 @@ const _simplify = Symbol('simplify');
 export default class Figure2D {
   constructor(options = {}) {
     if(typeof options === 'string') options = {path: options};
-    this[_path] = options.path || '';
+    if(options.path) this[_path] = normalize(abs(parse(options.path)));
+    else this[_path] = [];
     this[_contours] = null;
     this[_simplify] = options.simplify || 0;
   }
@@ -23,7 +22,7 @@ export default class Figure2D {
   get contours() {
     let ret = null;
     if(!this[_contours] && this[_path]) {
-      this[_contours] = contours(parse(this[_path])).map((path) => {
+      this[_contours] = createContours(this[_path]).map((path) => {
         return simplify(path, this[_simplify]);
       });
     }
@@ -72,16 +71,16 @@ export default class Figure2D {
 
   addPath(path) {
     this[_contours] = null;
-    this[_path] += path;
+    this[_path].push(...normalize(abs(parse(path))));
   }
 
   beginPath() {
-    this[_path] = '';
+    this[_path] = [];
     this.moveTo(0, 0);
   }
 
   clear() {
-    this[_path] = '';
+    this[_path] = [];
     this[_contours] = null;
   }
 
@@ -111,41 +110,41 @@ export default class Figure2D {
     if(endAngle >= PI2) {
       path += 'Z';
     }
-    this[_path] += path;
+    this.addPath(path);
   }
 
   arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
     this[_contours] = null;
-    this[_path] += buildCommand('A', [rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
+    this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
   }
 
   moveTo(x, y) {
     this[_contours] = null;
-    this[_path] += buildCommand('M', [x, y]);
+    this[_path].push(['M', x, y]);
   }
 
   lineTo(x, y) {
     this[_contours] = null;
-    this[_path] += buildCommand('L', [x, y]);
+    this[_path].push(['L', x, y]);
   }
 
   bezierCurveTo(x1, y1, x2, y2, x, y) {
     this[_contours] = null;
-    this[_path] += buildCommand('C', [x1, y1, x2, y2, x, y]);
+    this[_path].push(['C', x1, y1, x2, y2, x, y]);
   }
 
   quadraticCurveTo(x1, y1, x, y) {
     this[_contours] = null;
-    this[_path] += buildCommand('Q', [x1, y1, x, y]);
+    this[_path].push(['Q', x1, y1, x, y]);
   }
 
   rect(x, y, width, height) {
-    this[_contours] = null;
-    this[_path] += `M${x} ${y}L${x + width} ${y}L${x + width} ${y + height}L${x} ${y + height}Z`;
+    const path = `M${x} ${y}L${x + width} ${y}L${x + width} ${y + height}L${x} ${y + height}Z`;
+    this.addPath(path);
   }
 
   closePath() {
     this[_contours] = null;
-    this[_path] += 'Z';
+    this[_path].push('Z');
   }
 }
