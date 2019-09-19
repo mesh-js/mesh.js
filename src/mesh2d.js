@@ -390,10 +390,6 @@ export default class Mesh2D {
     let {positions, fillPointCount} = mesh;
     let colors = mesh.attributes.a_color;
 
-    gradientColors.sort((a, b) => {
-      return a.offset - b.offset;
-    });
-
     if(type === 'fill') {
       positions = positions.slice(0, fillPointCount);
       colors = colors.slice(0, fillPointCount);
@@ -541,6 +537,15 @@ export default class Mesh2D {
     if(type === 'stroke' && !this[_stroke]) {
       this.setStroke();
     }
+
+    gradientColors = gradientColors.map(({offset, color}) => {
+      if(typeof color === 'string') color = parseColor(color);
+      return {offset, color};
+    });
+    gradientColors.sort((a, b) => {
+      return a.offset - b.offset;
+    });
+
     this[_gradient] = this[_gradient] || {};
     this[_gradient][type] = {vector, colors: gradientColors, type};
 
@@ -565,6 +570,10 @@ export default class Mesh2D {
     this[_gradient] = this[_gradient] || {};
     this[_gradient][type] = {vector, colors: gradientColors, type};
 
+    gradientColors = gradientColors.map(({offset, color}) => {
+      if(typeof color === 'string') color = parseColor(color);
+      return {offset, color};
+    });
     gradientColors.sort((a, b) => {
       return a.offset - b.offset;
     });
