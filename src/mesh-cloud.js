@@ -3,6 +3,7 @@ import {multiply, grayscale, brightness,
   saturate, contrast, invert,
   sepia, opacity, hueRotate} from './utils/color-matrix';
 import {transformPoint} from './utils/math';
+import parseColor from './utils/parse-color';
 
 const _mesh = Symbol('mesh');
 const _count = Symbol('count');
@@ -117,11 +118,13 @@ export default class {
   }
 
   setFillColor(idx, color) {
+    if(typeof color === 'string') color = parseColor(color);
     if(color[3] > 0.0) this[_hasCloudColor] = true;
     this[_fillColor][idx] = color.map(c => Math.round(255 * c));
   }
 
   setStrokeColor(idx, color) {
+    if(typeof color === 'string') color = parseColor(color);
     if(color[3] > 0.0) this[_hasCloudColor] = true;
     this[_strokeColor][idx] = color.map(c => Math.round(255 * c));
   }

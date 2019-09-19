@@ -1,6 +1,5 @@
 import {vec2, mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
-import rgba from 'color-rgba';
 import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
@@ -12,6 +11,7 @@ import {isUnitTransform} from './utils/transform';
 import {getDashContours} from './utils/contours';
 import triangulate from './triangulate-contours';
 import createContours from './svg-path-contours';
+import parseColor from './utils/parse-color';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -58,12 +58,6 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
   }
 
   return [x, y];
-}
-
-function parseColor(colorStr) {
-  const ret = rgba(colorStr);
-  if(!ret || !ret.length) throw new TypeError('Invalid color value.');
-  return [ret[0] / 255, ret[1] / 255, ret[2] / 255, ret[3]];
 }
 
 export default class Mesh2D {
