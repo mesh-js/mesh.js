@@ -1,3 +1,4 @@
+// https://github.com/mattdesl/triangulate-contours
 /* eslint-disable */
 var Tess2 = require('tess2')
 var xtend = require('xtend')

@@ -1,8 +1,7 @@
 import parse from 'parse-svg-path';
 import simplify from 'simplify-path';
-import contours from 'svg-path-contours';
-import arc from 'arc-to';
 import getBounds from 'bound-points';
+import contours from './svg-path-contours';
 import {getPointAtLength, getTotalLength, splitContours} from './utils/contours';
 
 function buildCommand(key, args) {
@@ -87,14 +86,32 @@ export default class Figure2D {
   }
 
   arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
-    const points = arc(x, y, radius, startAngle, endAngle, anticlockwise);
-    const ang = Math.abs(endAngle - startAngle);
-    const path = `${points.map(([x, y]) => `${x} ${y}`).join('L')}`;
-    if(ang < 2 * Math.PI) {
-      this[_path] += `M${x} ${y}L${path}Z`;
+    const PI2 = 2 * Math.PI;
+    if(endAngle === startAngle) return;
+    endAngle = (endAngle - startAngle) % PI2;
+    if(endAngle <= 0) endAngle += PI2;
+
+    let path = '';
+
+    const startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
+    const direction = anticlockwise ? -1 : 1;
+    const endPoint = [x + radius * Math.cos(endAngle), y + direction * radius * Math.sin(endAngle)];
+
+    const largeArcFlag = endAngle > Math.PI ? 1 : 0;
+    const sweepFlag = Number(!anticlockwise);
+
+    if(endAngle < PI2) {
+      path += `M${x} ${y}L${startPoint.join(' ')}`;
     } else {
-      this[_path] += `M${path}Z`;
+      endPoint[1] += direction * 1e-2;
+      path += `M${startPoint.join(' ')}`;
     }
+
+    path += `A${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
+    if(endAngle >= PI2) {
+      path += 'Z';
+    }
+    this[_path] += path;
   }
 
   arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
@@ -123,6 +140,7 @@ export default class Figure2D {
   }
 
   rect(x, y, width, height) {
+    this[_contours] = null;
     this[_path] += `M${x} ${y}L${x + width} ${y}L${x + width} ${y + height}L${x} ${y + height}Z`;
   }
 
