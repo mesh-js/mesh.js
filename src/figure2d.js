@@ -1,5 +1,4 @@
 import parse from 'parse-svg-path';
-import simplify from 'simplify-path';
 import getBounds from 'bound-points';
 import abs from 'abs-svg-path';
 import normalize from './normalize-svg-path';
@@ -23,14 +22,14 @@ export default class Figure2D {
     let ret = null;
     if(!this[_contours] && this[_path]) {
       const path = normalize(abs(this[_path]));
-      this[_contours] = createContours(path).map((points) => {
-        return simplify(points, this[_simplify]);
-      });
+      this[_contours] = createContours(path, 1, this[_simplify]);
       this[_contours].path = path;
+      this[_contours].simplify = this[_simplify];
     }
     if(this[_contours]) {
       ret = this[_contours].map(c => [...c]);
       ret.path = this[_contours].path;
+      ret.simplify = this[_contours].simplify;
     }
     return ret;
   }

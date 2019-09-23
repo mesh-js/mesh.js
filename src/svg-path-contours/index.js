@@ -3,6 +3,7 @@
 
 var bezier = require('adaptive-bezier-curve')
 var vec2 = require('../extrude-polyline/vecutil')
+var simplify = require('simplify-path')
 
 function set(out, x, y) {
     out[0] = x
@@ -21,7 +22,7 @@ function bezierTo(points, scale, start, seg) {
         set(tmp3, seg[5], seg[6]), scale, points)
 }
 
-module.exports = function contours(svg, scale) {
+module.exports = function contours(svg, scale, simp) {
     var paths = []
 
     var points = []
@@ -42,5 +43,8 @@ module.exports = function contours(svg, scale) {
     })
     if (points.length>0)
         paths.push(points)
-    return paths
+
+    return paths.map(function (points) {
+        return simplify(points, simp || 0);
+    })
 }

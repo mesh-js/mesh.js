@@ -70,7 +70,7 @@ export default class Mesh2D {
     this[_uniforms] = {u_opacity: 1.0};
     this[_filter] = [];
     this[_blend] = null;
-    this[_accurateScale] = [1.0, 1.0];
+    this[_accurateScale] = 1;
   }
 
   get width() {
@@ -215,7 +215,7 @@ export default class Mesh2D {
 
   get transformScale() {
     const m = this[_transform];
-    return [Math.hypot(m[0], m[1]), Math.hypot(m[2], m[3])];
+    return Math.max(Math.hypot(m[0], m[1]), Math.hypot(m[2], m[3]));
   }
 
   get uniforms() {
@@ -432,31 +432,16 @@ export default class Mesh2D {
     }
   }
 
-  accurate(scaleX, scaleY = scaleX) {
+  accurate(scale) {
     if(!this.contours) return;
     const path = this.contours.path;
     if(path) {
-      const accurated = path.map((c) => {
-        const [cmd, ...args] = c;
-        const transformed = [cmd];
-        for(let i = 0; i < args.length; i += 2) {
-          const x0 = args[i],
-            y0 = args[i + 1];
-          transformed.push(x0 * scaleX, y0 * scaleY);
-        }
-        return transformed;
-      });
-      const contours = createContours(accurated);
-      contours.forEach((points) => {
-        for(let i = 0; i < points.length; i++) {
-          const point = points[i];
-          point[0] /= scaleX;
-          point[1] /= scaleY;
-        }
-      });
+      const simplify = this.contours.simplify;
+      const contours = createContours(this.contours.path, scale, this.contours.simplify);
       contours.path = path;
+      contours.simplify = simplify;
       this.contours = contours;
-      this[_accurateScale] = [scaleX, scaleY];
+      this[_accurateScale] = scale;
     }
   }
 
@@ -598,10 +583,9 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!mat2d.equals(m, transform)) {
       this[_transform] = m;
-      const [sx, sy] = this.transformScale;
-      const acc = Math.max(sx / this[_accurateScale][0], sy / this[_accurateScale][1]);
+      const acc = this.transformScale / this[_accurateScale];
       if(acc > 1.5 || acc < 0.67) {
-        this.accurate(sx, sy);
+        this.accurate(this.transformScale);
       }
       if(this[_mesh]) {
         m = mat2d(m) * mat2d.invert(transform);
@@ -614,10 +598,9 @@ export default class Mesh2D {
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(m) * mat2d(transform);
-    const [sx, sy] = this.transformScale;
-    const acc = Math.max(sx / this[_accurateScale][0], sy / this[_accurateScale][1]);
+    const acc = this.transformScale / this[_accurateScale];
     if(acc > 1.5 || acc < 0.67) {
-      this.accurate(sx, sy);
+      this.accurate(this.transformScale);
     }
     if(this[_mesh]) this[_applyTransform](this[_mesh], m);
     return this;
