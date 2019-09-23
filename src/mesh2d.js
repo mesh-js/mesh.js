@@ -63,7 +63,6 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
 export default class Mesh2D {
   constructor(figure, {width, height} = {width: 300, height: 150}) {
     this.contours = figure.contours;
-    if(figure.path) this.path = figure.path;
     this[_stroke] = null;
     this[_fill] = null;
     this[_bound] = [[0, 0], [width, height]];
@@ -434,8 +433,10 @@ export default class Mesh2D {
   }
 
   accurate(scaleX, scaleY = scaleX) {
-    if(this.path) {
-      const accurated = this.path.map((c) => {
+    if(!this.contours) return;
+    const path = this.contours.path;
+    if(path) {
+      const accurated = path.map((c) => {
         const [cmd, ...args] = c;
         const transformed = [cmd];
         for(let i = 0; i < args.length; i += 2) {
@@ -453,6 +454,7 @@ export default class Mesh2D {
           point[1] /= scaleY;
         }
       });
+      contours.path = path;
       this.contours = contours;
       this[_accurateScale] = [scaleX, scaleY];
     }

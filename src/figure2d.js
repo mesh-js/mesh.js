@@ -13,7 +13,7 @@ const _simplify = Symbol('simplify');
 export default class Figure2D {
   constructor(options = {}) {
     if(typeof options === 'string') options = {path: options};
-    if(options.path) this[_path] = normalize(abs(parse(options.path)));
+    if(options.path) this[_path] = parse(options.path);
     else this[_path] = [];
     this[_contours] = null;
     this[_simplify] = options.simplify || 0;
@@ -22,12 +22,15 @@ export default class Figure2D {
   get contours() {
     let ret = null;
     if(!this[_contours] && this[_path]) {
-      this[_contours] = createContours(this[_path]).map((path) => {
-        return simplify(path, this[_simplify]);
+      const path = normalize(abs(this[_path]));
+      this[_contours] = createContours(path).map((points) => {
+        return simplify(points, this[_simplify]);
       });
+      this[_contours].path = path;
     }
     if(this[_contours]) {
       ret = this[_contours].map(c => [...c]);
+      ret.path = this[_contours].path;
     }
     return ret;
   }
@@ -71,7 +74,7 @@ export default class Figure2D {
 
   addPath(path) {
     this[_contours] = null;
-    this[_path].push(...normalize(abs(parse(path))));
+    this[_path].push(...parse(path));
   }
 
   beginPath() {
@@ -115,7 +118,7 @@ export default class Figure2D {
 
   arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
     this[_contours] = null;
-    this[_path].push(normalize([['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]]));
+    this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
   }
 
   moveTo(x, y) {
@@ -125,7 +128,7 @@ export default class Figure2D {
 
   lineTo(x, y) {
     this[_contours] = null;
-    this[_path].push(normalize([['L', x, y]]));
+    this[_path].push(['L', x, y]);
   }
 
   bezierCurveTo(x1, y1, x2, y2, x, y) {
@@ -135,7 +138,7 @@ export default class Figure2D {
 
   quadraticCurveTo(x1, y1, x, y) {
     this[_contours] = null;
-    this[_path].push(normalize([['Q', x1, y1, x, y]]));
+    this[_path].push(['Q', x1, y1, x, y]);
   }
 
   rect(x, y, width, height) {
@@ -146,6 +149,5 @@ export default class Figure2D {
   closePath() {
     this[_contours] = null;
     this[_path].push('Z');
-    this[_path] = normalize(this[_path]);
   }
 }
