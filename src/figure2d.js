@@ -115,7 +115,7 @@ export default class Figure2D {
 
   arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
     this[_contours] = null;
-    this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
+    this[_path].push(normalize([['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]]));
   }
 
   moveTo(x, y) {
@@ -125,7 +125,7 @@ export default class Figure2D {
 
   lineTo(x, y) {
     this[_contours] = null;
-    this[_path].push(['L', x, y]);
+    this[_path].push(normalize([['L', x, y]]));
   }
 
   bezierCurveTo(x1, y1, x2, y2, x, y) {
@@ -135,7 +135,7 @@ export default class Figure2D {
 
   quadraticCurveTo(x1, y1, x, y) {
     this[_contours] = null;
-    this[_path].push(['Q', x1, y1, x, y]);
+    this[_path].push(normalize([['Q', x1, y1, x, y]]));
   }
 
   rect(x, y, width, height) {
@@ -146,5 +146,6 @@ export default class Figure2D {
   closePath() {
     this[_contours] = null;
     this[_path].push('Z');
+    this[_path] = normalize(this[_path]);
   }
 }
