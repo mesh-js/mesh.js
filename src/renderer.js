@@ -229,6 +229,7 @@ export default class Renderer {
       const meshData = compress(this, meshes);
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
+      const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
         if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
           applyShader(renderer, {hasTexture: true});
@@ -245,11 +246,25 @@ export default class Renderer {
           const previousMesh = meshes[mesh.packIndex - 1];
           if((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter)
             && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
-            drawMesh2D(originalMesh, filterContext, true);
+            if(hasGlobalTransform) {
+              filterContext.save();
+              filterContext.transform(...this[_globalTransform]);
+              drawMesh2D(originalMesh, filterContext, false);
+              filterContext.restore();
+              applyFilter(filterContext, currentFilter);
+            } else {
+              drawMesh2D(originalMesh, filterContext, true);
+            }
             drawFilterContext(renderer, filterContext, width, height);
           } else {
+            if(hasGlobalTransform) {
+              filterContext.save();
+              filterContext.transform(...this[_globalTransform]);
+            }
             drawMesh2D(originalMesh, filterContext, false);
-
+            if(hasGlobalTransform) {
+              filterContext.restore();
+            }
             if(!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
               applyFilter(filterContext, currentFilter);
               drawFilterContext(renderer, filterContext, width, height);
@@ -260,7 +275,6 @@ export default class Renderer {
             const hasTexture = !!mesh.uniforms.u_texSampler;
             const hasFilter = !!mesh.uniforms.u_filterFlag;
             const hasGradient = !!mesh.uniforms.u_radialGradientVector;
-            const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
             applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
           } else if(renderer.program !== program) {
             renderer.useProgram(program, Object.assign({

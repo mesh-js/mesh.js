@@ -63,10 +63,11 @@ export default class CanvasRenderer {
       }
       if(filter) {
         this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
-        context.save();
-        context.transform(...this[_transform]);
+        this.filterBuffer.save();
+        this.filterBuffer.transform(...this[_transform]);
+        // console.log(this[_transform]);
         drawMesh2D(mesh, this.filterBuffer, false, fill, stroke, frame, transform);
-        context.restore();
+        this.filterBuffer.restore();
         if(i === len - 1) {
           applyFilter(this.filterBuffer, filter);
           context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
