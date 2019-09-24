@@ -35,7 +35,7 @@ module.exports = function contours(svg, scale, simp) {
                 points = []
             }
         } else if (segment[0] === 'C') {
-            bezierTo(points, scale, pen, segment)
+            bezierTo(points, 5 * scale, pen, segment)
             set(pen, segment[5], segment[6])
         } else {
             throw new Error('illegal type in SVG: '+segment[0])

@@ -3,7 +3,7 @@ import getBounds from 'bound-points';
 import abs from 'abs-svg-path';
 import normalize from './normalize-svg-path';
 import createContours from './svg-path-contours';
-import {getPointAtLength, getTotalLength, splitContours} from './utils/contours';
+import {getPointAtLength, getTotalLength} from './utils/contours';
 
 const _contours = Symbol('contours');
 const _path = Symbol('path');
@@ -51,15 +51,9 @@ export default class Figure2D {
     return null;
   }
 
-  splitContours(length, rest = true) {
-    if(this.contours) {
-      return splitContours(this[_contours], length, rest);
-    }
-  }
-
   getPointAtLength(length) {
     if(this.contours) {
-      return getPointAtLength(this[_contours], length);
+      return getPointAtLength(this[_contours], length * this.getTotalLength());
     }
     return null;
   }

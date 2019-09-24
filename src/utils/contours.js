@@ -15,7 +15,7 @@ export function getTotalLength(contours) {
   return length;
 }
 
-export function splitContours(contours, length, rest = true) {
+function splitContours(contours, length, rest = true) {
   length = Number(length);
   if(!Number.isFinite(length)) {
     throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');

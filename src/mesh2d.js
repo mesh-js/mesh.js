@@ -8,7 +8,7 @@ import {multiply, grayscale, brightness,
   saturate, contrast, invert,
   sepia, opacity, hueRotate} from './utils/color-matrix';
 import {isUnitTransform} from './utils/transform';
-import {getDashContours} from './utils/contours';
+import {getPointAtLength, getTotalLength, getDashContours} from './utils/contours';
 import triangulate from './triangulate-contours';
 import createContours from './svg-path-contours';
 import parseColor from './utils/parse-color';
@@ -92,6 +92,20 @@ export default class Mesh2D {
     if(acc > 1.5 || acc < 0.67) {
       this.accurate(this.transformScale);
     }
+  }
+
+  getPointAtLength(length) {
+    if(this.contours) {
+      return getPointAtLength(this.contours, length * this.getTotalLength());
+    }
+    return null;
+  }
+
+  getTotalLength() {
+    if(this.contours) {
+      return getTotalLength(this.contours);
+    }
+    return 0;
   }
 
   get blend() {
