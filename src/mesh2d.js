@@ -62,7 +62,6 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
 
 export default class Mesh2D {
   constructor(figure, {width, height} = {width: 300, height: 150}) {
-    this.contours = figure.contours;
     this[_stroke] = null;
     this[_fill] = null;
     this[_bound] = [[0, 0], [width, height]];
@@ -70,7 +69,7 @@ export default class Mesh2D {
     this[_uniforms] = {u_opacity: 1.0};
     this[_filter] = [];
     this[_blend] = null;
-    this[_accurateScale] = 1;
+    this.contours = figure.contours;
   }
 
   get width() {
@@ -88,6 +87,11 @@ export default class Mesh2D {
   set contours(contours) {
     this[_mesh] = null;
     this[_contours] = contours;
+    this[_accurateScale] = 1;
+    const acc = this.transformScale / this[_accurateScale];
+    if(acc > 1.5 || acc < 0.67) {
+      this.accurate(this.transformScale);
+    }
   }
 
   get blend() {
@@ -440,7 +444,8 @@ export default class Mesh2D {
       const contours = createContours(this.contours.path, scale, this.contours.simplify);
       contours.path = path;
       contours.simplify = simplify;
-      this.contours = contours;
+      this[_mesh] = null;
+      this[_contours] = contours;
       this[_accurateScale] = scale;
     }
   }
