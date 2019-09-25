@@ -49,10 +49,12 @@ export default class Renderer {
   constructor(canvas, opts = {}) {
     let contextType = opts.contextType;
     if(!contextType) {
-      if(typeof WebGLRenderingContext !== 'function') {
-        contextType = '2d';
-      } else {
+      if(typeof WebGL2RenderingContext === 'function') {
+        contextType = 'webgl2';
+      } if(typeof WebGLRenderingContext === 'function') {
         contextType = 'webgl';
+      } else {
+        contextType = '2d';
       }
     }
     if(!canvas.getContext) {

@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "0.1.27",
+  "version": "0.2.0",
   "description": "A graphics system born for visualization.",
   "main": "dist/mesh.js",
   "scripts": {
