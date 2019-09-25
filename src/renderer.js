@@ -118,6 +118,10 @@ export default class Renderer {
     return this[_options];
   }
 
+  get globalTransformMatrix() {
+    return this[_globalTransform];
+  }
+
   [_applyGlobalTransform](m) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
