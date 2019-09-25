@@ -8,6 +8,7 @@ import {getPointAtLength, getTotalLength} from './utils/contours';
 const _contours = Symbol('contours');
 const _path = Symbol('path');
 const _simplify = Symbol('simplify');
+const _scale = Symbol('scale');
 
 export default class Figure2D {
   constructor(options = {}) {
@@ -16,20 +17,23 @@ export default class Figure2D {
     else this[_path] = [];
     this[_contours] = null;
     this[_simplify] = options.simplify || 0;
+    this[_scale] = options.scale || 1;
   }
 
   get contours() {
     let ret = null;
     if(!this[_contours] && this[_path]) {
       const path = normalize(abs(this[_path]));
-      this[_contours] = createContours(path, 1, this[_simplify]);
+      this[_contours] = createContours(path, this[_scale], this[_simplify]);
       this[_contours].path = path;
       this[_contours].simplify = this[_simplify];
+      this[_contours].scale = this[_scale];
     }
     if(this[_contours]) {
       ret = this[_contours].map(c => [...c]);
       ret.path = this[_contours].path;
       ret.simplify = this[_contours].simplify;
+      ret.scale = this[_contours].scale;
     }
     return ret;
   }

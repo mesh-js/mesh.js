@@ -28,9 +28,9 @@ const _applyTexture = Symbol('applyTexture');
 const _applyGradient = Symbol('applyGradient');
 const _applyTransform = Symbol('applyTransform');
 const _gradient = Symbol('gradient');
-const _accurateScale = Symbol('accurateScale');
 
 const _filter = Symbol('filter');
+const _pathContours = Symbol('pathContours');
 
 function normalizePoints(points, bound) {
   const [w, h] = bound[1];
@@ -60,6 +60,14 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
   return [x, y];
 }
 
+function accurate(path, scale, simplify) {
+  const contours = createContours(path, scale, simplify);
+  contours.path = path;
+  contours.simplify = simplify;
+  contours.scale = scale;
+  return contours;
+}
+
 export default class Mesh2D {
   constructor(figure, {width, height} = {width: 300, height: 150}) {
     this[_stroke] = null;
@@ -86,26 +94,29 @@ export default class Mesh2D {
 
   set contours(contours) {
     this[_mesh] = null;
+    this[_pathContours] = null;
     this[_contours] = contours;
-    this[_accurateScale] = 1;
-    const acc = this.transformScale / this[_accurateScale];
+    const scale = contours.scale;
+    const acc = this.transformScale / scale;
     if(acc > 1.5 || acc < 0.67) {
       this.accurate(this.transformScale);
     }
   }
 
   getPointAtLength(length) {
-    if(this.contours) {
-      return getPointAtLength(this.contours, length * this.getTotalLength());
+    if(!this[_pathContours] || this[_pathContours].scale < 4 * this.transformScale) {
+      const {path, scale, simplify} = this.contours;
+      this[_pathContours] = accurate(path, 5 * scale, simplify);
     }
-    return null;
+    return getPointAtLength(this[_pathContours], length * this.getTotalLength());
   }
 
   getTotalLength() {
-    if(this.contours) {
-      return getTotalLength(this.contours);
+    if(!this[_pathContours] || this[_pathContours].scale < 4 * this.contours.scale) {
+      const {path, scale, simplify} = this.contours;
+      this[_pathContours] = accurate(path, 5 * scale, simplify);
     }
-    return 0;
+    return getTotalLength(this[_pathContours]);
   }
 
   get blend() {
@@ -455,12 +466,9 @@ export default class Mesh2D {
     const path = this.contours.path;
     if(path) {
       const simplify = this.contours.simplify;
-      const contours = createContours(this.contours.path, scale, this.contours.simplify);
-      contours.path = path;
-      contours.simplify = simplify;
+      const contours = accurate(this.contours.path, scale, simplify);
       this[_mesh] = null;
       this[_contours] = contours;
-      this[_accurateScale] = scale;
     }
   }
 
@@ -602,7 +610,7 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!mat2d.equals(m, transform)) {
       this[_transform] = m;
-      const acc = this.transformScale / this[_accurateScale];
+      const acc = this.transformScale / this.contours.scale;
       if(acc > 1.5 || acc < 0.67) {
         this.accurate(this.transformScale);
       }
@@ -617,7 +625,7 @@ export default class Mesh2D {
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(m) * mat2d(transform);
-    const acc = this.transformScale / this[_accurateScale];
+    const acc = this.transformScale / this.contours.scale;
     if(acc > 1.5 || acc < 0.67) {
       this.accurate(this.transformScale);
     }
