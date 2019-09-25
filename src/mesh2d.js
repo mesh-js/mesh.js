@@ -776,7 +776,10 @@ export default class Mesh2D {
       if(s3 === 0 && projectionOn([x, y], [x3, y3], [x1, y1])) {
         return true;
       }
-      if(s1 === s2 && s1 === s3) return true;
+      if(s1 === 1 && s2 === 1 && s3 === 1
+        || s1 === -1 && s2 === -1 && s3 === -1) {
+        return true;
+      }
     }
 
     return false;
