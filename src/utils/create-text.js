@@ -2,13 +2,16 @@ import parseFont from './parse-font';
 import {createCanvas} from './canvas';
 import vectorToRGBA from './vector-to-rgba';
 
-let textContext = null;
+const cacheMap = {};
 
-export default async function createText(text, {font, fillColor, strokeColor}) {
-  if(!textContext) {
-    // textContext = document.createElement('canvas').getContext('2d');
-    textContext = createCanvas(1, 1).getContext('2d');
-  }
+export default function createText(text, {font, fillColor, strokeColor}) {
+  const key = [text, font, String(fillColor), String(strokeColor)].join('###');
+  let textCanvas = cacheMap[key];
+  if(textCanvas) return textCanvas;
+
+  textCanvas = createCanvas(1, 1);
+
+  const textContext = textCanvas.getContext('2d');
   textContext.save();
   textContext.font = font;
   const {width} = textContext.measureText(text);
@@ -69,25 +72,6 @@ export default async function createText(text, {font, fillColor, strokeColor}) {
   }
   textContext.restore();
 
-  const img = new Image();
-  let src = null;
-  // if(canvas.transferToImageBitmap) {
-  //   img = canvas.transferToImageBitmap();
-  //   if(flipY) return createImageBitmap(img, {imageOrientation: 'flipY'});
-  //   return createImageBitmap(img);
-  // }
-
-  if(canvas.convertToBlob) {
-    const blob = await canvas.convertToBlob();
-    src = URL.createObjectURL(blob);
-  } else {
-    src = canvas.toDataURL('image/png');
-  }
-
-  return new Promise((resolve) => {
-    img.onload = () => {
-      resolve(img);
-    };
-    img.src = src;
-  });
+  cacheMap[key] = textCanvas;
+  return textCanvas;
 }
