@@ -104,11 +104,11 @@ export default class Mesh2D {
   }
 
   getPointAtLength(length) {
-    if(!this[_pathContours] || this[_pathContours].scale < 4 * this.transformScale) {
+    if(!this[_pathContours] || this[_pathContours].scale < 5 * this.transformScale) {
       const {path, scale, simplify} = this.contours;
-      this[_pathContours] = accurate(path, 5 * scale, simplify);
+      this[_pathContours] = accurate(path, 6 * scale, simplify);
     }
-    return getPointAtLength(this[_pathContours], length * this.getTotalLength());
+    return getPointAtLength(this[_pathContours], length);
   }
 
   getTotalLength() {

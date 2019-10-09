@@ -57,7 +57,7 @@ export default class Figure2D {
 
   getPointAtLength(length) {
     if(this.contours) {
-      return getPointAtLength(this[_contours], length * this.getTotalLength());
+      return getPointAtLength(this[_contours], length);
     }
     return null;
   }
