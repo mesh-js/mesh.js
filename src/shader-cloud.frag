@@ -30,6 +30,47 @@ varying vec4 colorCloud4;
 uniform float u_colorSteps[40];
 uniform float u_radialGradientVector[6];
 
+void linear_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
+  float sx = vector[0];
+  float sy = vector[1];
+
+  float ex = vector[3];
+  float ey = vector[4];
+
+  vec2 v1 = gl_FragCoord.xy - vec2(sx, sy);
+  vec2 v2 = vec2(ex, ey) - vec2(sx, sy);
+
+  float t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);
+
+  vec4 colors[8];
+  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);
+  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);
+  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);
+  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);
+  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);
+  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);
+  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);
+  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);
+  
+  float steps[8];
+  steps[0] = colorSteps[0];
+  steps[1] = colorSteps[5];
+  steps[2] = colorSteps[10];
+  steps[3] = colorSteps[15];
+  steps[4] = colorSteps[20];
+  steps[5] = colorSteps[25];
+  steps[6] = colorSteps[30];
+  steps[7] = colorSteps[35];
+  
+  color = colors[0];
+  for (int i = 1; i < 8; i++) {
+    if (steps[i] <= 0.0 || steps[i] > 1.0) {
+      break;
+    }
+    color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
+  }
+}
+
 void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   // center circle
   float cx = vector[0];
@@ -128,6 +169,9 @@ void main() {
 #ifdef GRADIENT
   if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
     radial_gradient(color, u_radialGradientVector, u_colorSteps);
+  }
+  else {
+    linear_gradient(color, u_radialGradientVector, u_colorSteps);
   }
 #endif
 
