@@ -216,7 +216,8 @@ export default class Mesh2D {
     return this[_uniforms].u_opacity < 1.0
       || this[_strokeColor] != null && this[_strokeColor][3] < 1.0
       || this[_fillColor] != null && this[_fillColor][3] < 1.0
-      || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0;
+      || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0
+      || this[_gradient];
   }
 
   get filterCanvas() {
@@ -459,27 +460,29 @@ export default class Mesh2D {
     return this;
   }
 
-  setLinearGradient({vector, colors: gradientColors}) {
+  setLinearGradient({vector, colors: gradientColors, type = 'fill'} = {}) {
     if(vector.length !== 4) throw new TypeError('Invalid linearGradient.');
-    this.setGradient({vector, colors: gradientColors});
+    this.setGradient({vector, colors: gradientColors, type});
   }
 
-  setRadialGradient({vector, colors: gradientColors}) {
+  setRadialGradient({vector, colors: gradientColors, type = 'fill'} = {}) {
     if(vector.length !== 6) throw new TypeError('Invalid radialGradient.');
-    this.setGradient({vector, colors: gradientColors});
+    this.setGradient({vector, colors: gradientColors, type});
   }
 
   /**
     vector: [x0, y0, r0, x1, y1, r1],
     colors: [{offset:0, color}, {offset:1, color}, ...],
    */
-  setGradient({vector, colors: gradientColors}) {
-    this[_gradient] = {vector, colors: gradientColors};
-
+  setGradient({vector, colors: gradientColors, type = 'fill'} = {}) {
     gradientColors = gradientColors.map(({offset, color}) => {
       if(typeof color === 'string') color = parseColor(color);
       return {offset, color};
     });
+
+    this[_gradient] = this[_gradient] || {};
+    this[_gradient][type] = {vector, colors: gradientColors};
+
     gradientColors.sort((a, b) => {
       return a.offset - b.offset;
     });
@@ -503,6 +506,7 @@ export default class Mesh2D {
 
     this[_uniforms].u_radialGradientVector = _vector;
     this[_uniforms].u_colorSteps = colorSteps;
+    if(type === 'fill') this[_uniforms].u_gradientType = 1;
 
     return this;
   }

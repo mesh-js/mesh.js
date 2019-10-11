@@ -30,6 +30,7 @@ varying vec4 colorCloud4;
 varying vec3 vGradientVector1;
 varying vec3 vGradientVector2;
 uniform float u_colorSteps[40];
+uniform int u_gradientType;
 
 void linear_gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {
   vec2 v1 = gl_FragCoord.xy - gv1.xy;
@@ -59,10 +60,17 @@ void linear_gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40])
   
   color = colors[0];
   for (int i = 1; i < 8; i++) {
-    if (steps[i] <= 0.0 || steps[i] > 1.0) {
+    if (steps[i] > 1.0) {
       break;
     }
-    color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
+    if(steps[i] == steps[i - 1]) {
+      color = colors[i];
+    } else {
+      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
+    }
+    if (steps[i] >= t) {
+      break;
+    }
   }
 }
 
@@ -114,10 +122,17 @@ void radial_gradient(inout vec4 color, vec3 v1, vec3 v2, float colorSteps[40]) {
   
   color = colors[0];
   for (int i = 1; i < 8; i++) {
-    if (steps[i] <= 0.0 || steps[i] > 1.0) {
+    if (steps[i] > 1.0) {
       break;
     }
-    color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
+    if(steps[i] == steps[i - 1]) {
+      color = colors[i];
+    } else {
+      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
+    }
+    if (steps[i] >= t) {
+      break;
+    }
   }
 }
 #endif
@@ -162,11 +177,13 @@ void main() {
   vec4 color = vColor;
 
 #ifdef GRADIENT
-  if (vGradientVector1.z > 0.0 || vGradientVector2.z > 0.0) {
-    radial_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
-  } 
-  else {
-    linear_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
+  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {
+    if (vGradientVector1.z > 0.0 || vGradientVector2.z > 0.0) {
+      radial_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
+    } 
+    else {
+      linear_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
+    }
   }
 #endif
 

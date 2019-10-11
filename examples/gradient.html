@@ -15,7 +15,8 @@
     const f = new Figure2D();
     f.rect(50, 50, 100, 100);
     const m = new Mesh2D(f, canvas);
-    m.setFill({
+    m.setStroke({
+      thickness: 10,
       color: 'red',
     });
     m.setLinearGradient({
@@ -23,8 +24,9 @@
       colors: [
         {color: [1, 0, 0, 1], offset: 0},
         {color: [1, 1, 0, 1], offset: 0.1},
-        {color: [0, 0, 1, 1], offset: 1},
+        {color: [0, 0, 1, 0.1], offset: 1},
       ],
+      type: 'stroke',
     });
     const renderer = new Renderer(canvas, {
       // contextType: '2d',

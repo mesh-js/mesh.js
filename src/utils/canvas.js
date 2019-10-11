@@ -44,24 +44,21 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
 
   context.globalAlpha = mesh.uniforms.u_opacity;
 
-  let gradient = null;
-  if(mesh.gradient) {
-    let {vector, colors} = mesh.gradient;
-    if(vector.length === 6) {
-      vector = [...vector];
-      gradient = context.createRadialGradient(...vector);
-    } else {
-      gradient = context.createLinearGradient(...vector);
-    }
-    colors.forEach(({offset, color}) => {
-      let rgba = vectorToRGBA(color);
-      if(cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
-      gradient.addColorStop(offset, rgba);
-    });
-  }
-
   if(mesh.lineWidth) {
+    let gradient = mesh.gradient && mesh.gradient.stroke;
     if(gradient) {
+      let {vector, colors} = gradient;
+      if(vector.length === 6) {
+        vector = [...vector];
+        gradient = context.createRadialGradient(...vector);
+      } else {
+        gradient = context.createLinearGradient(...vector);
+      }
+      colors.forEach(({offset, color}) => {
+        let rgba = vectorToRGBA(color);
+        if(cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
+        gradient.addColorStop(offset, rgba);
+      });
       context.strokeStyle = gradient;
       stroke = true;
     } else if(mesh.strokeStyle) {
@@ -86,7 +83,20 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
     }
   }
 
+  let gradient = mesh.gradient && mesh.gradient.fill;
   if(gradient) {
+    let {vector, colors} = gradient;
+    if(vector.length === 6) {
+      vector = [...vector];
+      gradient = context.createRadialGradient(...vector);
+    } else {
+      gradient = context.createLinearGradient(...vector);
+    }
+    colors.forEach(({offset, color}) => {
+      let rgba = vectorToRGBA(color);
+      if(cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
+      gradient.addColorStop(offset, rgba);
+    });
     context.fillStyle = gradient;
     fill = true;
   } else if(mesh.fillStyle) {
