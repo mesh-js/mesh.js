@@ -76,12 +76,15 @@ void main() {
 #ifdef GRADIENT
   vec2 vg1 = vGradientVector1.xy;
   vec2 vg2 = vGradientVector2.xy;
+  float h = u_globalTransform[7];
+  float y1 = h - vg1.y;
+  float y2 = h - vg2.y;
 
-  vGradientVector1.x = vg1.x * u_globalTransform[0] + vg1.y * u_globalTransform[2] + u_globalTransform[5];
-  vGradientVector1.y = vg1.x * u_globalTransform[1] + vg1.y * u_globalTransform[4] + u_globalTransform[6];
+  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];
+  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);
 
-  vGradientVector2.x = vg2.x * u_globalTransform[0] + vg2.y * u_globalTransform[2] + u_globalTransform[5];
-  vGradientVector2.y = vg2.x * u_globalTransform[1] + vg2.y * u_globalTransform[4] + u_globalTransform[6];
+  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];
+  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);
 #endif
 #endif
   
