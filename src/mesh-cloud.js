@@ -4,6 +4,7 @@ import {multiply, grayscale, brightness,
   sepia, opacity, hueRotate} from './utils/color-matrix';
 import {transformPoint} from './utils/math';
 import parseColor from './utils/parse-color';
+import vectorToRGBA from './utils/vector-to-rgba';
 
 const _mesh = Symbol('mesh');
 const _count = Symbol('count');
@@ -120,24 +121,19 @@ export default class {
   setFillColor(idx, color) {
     if(typeof color === 'string') color = parseColor(color);
     if(color[3] > 0.0) this[_hasCloudColor] = true;
-    this[_fillColor][idx] = color.map(c => Math.round(255 * c));
+    this[_fillColor][idx] = [...color];
   }
 
   setStrokeColor(idx, color) {
     if(typeof color === 'string') color = parseColor(color);
     if(color[3] > 0.0) this[_hasCloudColor] = true;
-    this[_strokeColor][idx] = color.map(c => Math.round(255 * c));
+    this[_strokeColor][idx] = [...color];
   }
 
   getCloudRGBA(idx) {
-    const fillColor = [...this[_fillColor][idx]];
-    const strokeColor = [...this[_strokeColor][idx]];
-    fillColor[3] /= 255;
-    strokeColor[3] /= 255;
-
     return {
-      fill: `rgba(${fillColor.join()})`,
-      stroke: `rgba(${strokeColor.join()})`,
+      fill: vectorToRGBA(this[_fillColor[idx]]),
+      stroke: vectorToRGBA(this[_strokeColor[idx]]),
     };
   }
 

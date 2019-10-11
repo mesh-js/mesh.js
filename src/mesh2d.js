@@ -273,7 +273,7 @@ export default class Mesh2D {
             return p;
           });
           mesh.attributes = {
-            a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
+            a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_fillColor]]),
           };
           meshes.fill = mesh;
         } catch (ex) {
@@ -299,7 +299,7 @@ export default class Mesh2D {
             return p;
           });
           mesh.attributes = {
-            a_color: Array.from({length: mesh.positions.length}).map(() => this[_strokeColor].map(c => Math.round(255 * c))),
+            a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_strokeColor]]),
           };
         });
         meshes.stroke = flattenMeshes(_meshes);
@@ -425,10 +425,10 @@ export default class Mesh2D {
 
     function mixColor(out, startColor, stopColor, p) {
       const s = 1 - p;
-      out[0] = Math.round(255 * (startColor[0] * s + stopColor[0] * p));
-      out[1] = Math.round(255 * (startColor[1] * s + stopColor[1] * p));
-      out[2] = Math.round(255 * (startColor[2] * s + stopColor[2] * p));
-      out[3] = Math.round(255 * (startColor[3] * s + stopColor[3] * p));
+      out[0] = startColor[0] * s + stopColor[0] * p;
+      out[1] = startColor[1] * s + stopColor[1] * p;
+      out[2] = startColor[2] * s + stopColor[2] * p;
+      out[3] = startColor[3] * s + stopColor[3] * p;
       return out;
     }
 

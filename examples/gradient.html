@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const canvas = document.querySelector('canvas');
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+    const f = new Figure2D();
+    f.rect(50, 50, 100, 100);
+    const m = new Mesh2D(f, canvas);
+    m.setFill({
+      color: 'red',
+    });
+    m.setLinearGradient({
+      vector: [50, 50, 150, 150],
+      colors: [
+        {color: [1, 0, 0, 1], offset: 0},
+        {color: [1, 0, 0, 1], offset: 0.2},
+        {color: [-1, -1, -1, 1], offset: 1},
+      ],
+    });
+    const renderer = new Renderer(canvas);
+    renderer.drawMeshes([m]);
+  </script>
+</body>
+</html>

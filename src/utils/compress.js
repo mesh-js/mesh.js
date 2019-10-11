@@ -67,10 +67,10 @@ function packData(temp, enableBlend) {
 
     const colorCount = meshData.attributes.a_color.length * meshData.attributes.a_color[0].length;
     if(!bufferCache.a_color || bufferCache.a_color.length < colorCount) {
-      bufferCache.a_color = GlRenderer.UBYTE(meshData.attributes.a_color);
+      bufferCache.a_color = GlRenderer.FLOAT(meshData.attributes.a_color);
       meshData.attributes.a_color = {data: bufferCache.a_color};
     } else {
-      meshData.attributes.a_color = {data: GlRenderer.UBYTE(meshData.attributes.a_color, bufferCache.a_color)};
+      meshData.attributes.a_color = {data: GlRenderer.FLOAT(meshData.attributes.a_color, bufferCache.a_color)};
     }
 
     meshData.packIndex = temp[0].packIndex;
