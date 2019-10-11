@@ -27,18 +27,13 @@ varying vec4 colorCloud4;
 #endif
 
 #ifdef GRADIENT
+varying vec3 vGradientVector1;
+varying vec3 vGradientVector2;
 uniform float u_colorSteps[40];
-uniform float u_radialGradientVector[6];
 
-void linear_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
-  float sx = vector[0];
-  float sy = vector[1];
-
-  float ex = vector[3];
-  float ey = vector[4];
-
-  vec2 v1 = gl_FragCoord.xy - vec2(sx, sy);
-  vec2 v2 = vec2(ex, ey) - vec2(sx, sy);
+void linear_gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {
+  vec2 v1 = gl_FragCoord.xy - gv1.xy;
+  vec2 v2 = gv2.xy - gv1.xy;
 
   float t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);
 
@@ -71,16 +66,16 @@ void linear_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
   }
 }
 
-void radial_gradient(inout vec4 color, float vector[6], float colorSteps[40]) {
+void radial_gradient(inout vec4 color, vec3 v1, vec3 v2, float colorSteps[40]) {
   // center circle
-  float cx = vector[0];
-  float cy = vector[1];
-  float cr = vector[2];
+  float cx = v1.x;
+  float cy = v1.y;
+  float cr = v1.z;
   
   // focal circle
-  float fx = vector[3];
-  float fy = vector[4];
-  float fr = vector[5];
+  float fx = v2.x;
+  float fy = v2.y;
+  float fr = v2.z;
 
   vec2 center = vec2(cx, cy);
   vec2 focal = vec2(fx, fy);
@@ -167,11 +162,11 @@ void main() {
   vec4 color = vColor;
 
 #ifdef GRADIENT
-  if (u_radialGradientVector[2] > 0.0 || u_radialGradientVector[5] > 0.0) {
-    radial_gradient(color, u_radialGradientVector, u_colorSteps);
-  }
+  if (vGradientVector1.z > 0.0 || vGradientVector2.z > 0.0) {
+    radial_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
+  } 
   else {
-    linear_gradient(color, u_radialGradientVector, u_colorSteps);
+    linear_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
   }
 #endif
 

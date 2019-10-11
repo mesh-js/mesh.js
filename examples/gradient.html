@@ -23,12 +23,13 @@
       colors: [
         {color: [1, 0, 0, 1], offset: 0},
         {color: [1, 1, 0, 1], offset: 0.1},
-        {color: [0, 0, 0, 1], offset: 0.3},
+        {color: [0, 0, 1, 1], offset: 1},
       ],
     });
     const renderer = new Renderer(canvas, {
-      contextType: '2d',
+      // contextType: '2d',
     });
+    renderer.globalTranslate(100, 0);
     renderer.drawMeshes([m]);
   </script>
 </body>

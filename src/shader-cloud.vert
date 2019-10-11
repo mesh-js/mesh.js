@@ -30,6 +30,12 @@ attribute vec4 a_fillCloudColor;
 attribute vec4 a_strokeCloudColor;
 #endif
 
+#ifdef GRADIENT
+uniform float u_radialGradientVector[6];
+varying vec3 vGradientVector1;
+varying vec3 vGradientVector2;
+#endif
+
 #ifdef GLOBALTRANSFORM
 uniform float u_globalTransform[8];
 #endif
@@ -55,6 +61,11 @@ void main() {
   transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);
   gl_Position = vec4(xy, 1.0, 1.0);
 
+#ifdef GRADIENT
+  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);
+  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);
+#endif
+
 #ifdef GLOBALTRANSFORM
   vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);
   vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);
@@ -62,6 +73,16 @@ void main() {
   float height = u_globalTransform[7];
   transformPoint(xy, m3, m4, width, height);
   gl_Position = vec4(xy, 1.0, 1.0);
+#ifdef GRADIENT
+  vec2 vg1 = vGradientVector1.xy;
+  vec2 vg2 = vGradientVector2.xy;
+
+  vGradientVector1.x = vg1.x * u_globalTransform[0] + vg1.y * u_globalTransform[2] + u_globalTransform[5];
+  vGradientVector1.y = vg1.x * u_globalTransform[1] + vg1.y * u_globalTransform[4] + u_globalTransform[6];
+
+  vGradientVector2.x = vg2.x * u_globalTransform[0] + vg2.y * u_globalTransform[2] + u_globalTransform[5];
+  vGradientVector2.y = vg2.x * u_globalTransform[1] + vg2.y * u_globalTransform[4] + u_globalTransform[6];
+#endif
 #endif
   
   flagBackground = a_vertexPosition.z;
