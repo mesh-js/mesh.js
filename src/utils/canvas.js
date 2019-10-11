@@ -44,14 +44,11 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
 
   context.globalAlpha = mesh.uniforms.u_opacity;
 
-  if(mesh.gradient && mesh.gradient.stroke) {
-    let {vector, colors} = mesh.gradient.stroke;
-    let gradient = null;
+  let gradient = null;
+  if(mesh.gradient) {
+    let {vector, colors} = mesh.gradient;
     if(vector.length === 6) {
-      const h = context.canvas.height;
       vector = [...vector];
-      vector[1] = h - vector[1];
-      vector[4] = h - vector[4];
       gradient = context.createRadialGradient(...vector);
     } else {
       gradient = context.createLinearGradient(...vector);
@@ -61,15 +58,20 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
       if(cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
       gradient.addColorStop(offset, rgba);
     });
-    context.strokeStyle = gradient;
-    stroke = true;
-  } else if(mesh.strokeStyle) {
-    if(cloudStroke) {
-      context.strokeStyle = mixRGBA(mesh.strokeStyle, cloudStroke);
-    } else {
-      context.strokeStyle = mesh.strokeStyle;
+  }
+
+  if(mesh.lineWidth) {
+    if(gradient) {
+      context.strokeStyle = gradient;
+      stroke = true;
+    } else if(mesh.strokeStyle) {
+      if(cloudStroke) {
+        context.strokeStyle = mixRGBA(mesh.strokeStyle, cloudStroke);
+      } else {
+        context.strokeStyle = mesh.strokeStyle;
+      }
+      stroke = true;
     }
-    stroke = true;
   }
   if(stroke) {
     context.lineWidth = mesh.lineWidth;
@@ -84,23 +86,7 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
     }
   }
 
-  if(mesh.gradient && mesh.gradient.fill) {
-    let {vector, colors} = mesh.gradient.fill;
-    let gradient = null;
-    if(vector.length === 6) {
-      const h = context.canvas.height;
-      vector = [...vector];
-      vector[1] = h - vector[1];
-      vector[4] = h - vector[4];
-      gradient = context.createRadialGradient(...vector);
-    } else {
-      gradient = context.createLinearGradient(...vector);
-    }
-    colors.forEach(({offset, color}) => {
-      let rgba = vectorToRGBA(color);
-      if(cloudFill) rgba = mixRGBA(rgba, cloudFill);
-      gradient.addColorStop(offset, rgba);
-    });
+  if(gradient) {
     context.fillStyle = gradient;
     fill = true;
   } else if(mesh.fillStyle) {

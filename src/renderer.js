@@ -193,18 +193,18 @@ export default class Renderer {
         });
       } else if(renderer.program !== program) {
         renderer.useProgram(program, Object.assign({
-          // a_color: {
-          //   type: 'UNSIGNED_BYTE',
-          //   normalize: true,
-          // },
-          // a_fillCloudColor: {
-          //   type: 'UNSIGNED_BYTE',
-          //   normalize: true,
-          // },
-          // a_strokeCloudColor: {
-          //   type: 'UNSIGNED_BYTE',
-          //   normalize: true,
-          // },
+          a_color: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+          a_fillCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
+          a_strokeCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true,
+          },
         }, attributeOptions));
       }
       this[_applyGlobalTransform](this[_globalTransform]);
@@ -284,10 +284,10 @@ export default class Renderer {
             applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
           } else if(renderer.program !== program) {
             renderer.useProgram(program, Object.assign({
-              // a_color: {
-              //   type: 'UNSIGNED_BYTE',
-              //   normalize: true,
-              // },
+              a_color: {
+                type: 'UNSIGNED_BYTE',
+                normalize: true,
+              },
             }, attributeOptions));
           }
           if(mesh.filterCanvas) {

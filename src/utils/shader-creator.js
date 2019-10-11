@@ -38,10 +38,10 @@ export function applyShader(renderer, {hasTexture = false, hasFilter = false, ha
 
   if(renderer.program !== program) {
     renderer.useProgram(program, {
-      // a_color: {
-      //   type: 'UNSIGNED_BYTE',
-      //   normalize: true,
-      // },
+      a_color: {
+        type: 'UNSIGNED_BYTE',
+        normalize: true,
+      },
     });
   }
 }
@@ -89,18 +89,18 @@ export function applyCloudShader(renderer, {
 
   if(renderer.program !== program) {
     renderer.useProgram(program, {
-      // a_color: {
-      //   type: 'UNSIGNED_BYTE',
-      //   normalize: true,
-      // },
-      // a_fillCloudColor: {
-      //   type: 'UNSIGNED_BYTE',
-      //   normalize: true,
-      // },
-      // a_strokeCloudColor: {
-      //   type: 'UNSIGNED_BYTE',
-      //   normalize: true,
-      // },
+      a_color: {
+        type: 'UNSIGNED_BYTE',
+        normalize: true,
+      },
+      a_fillCloudColor: {
+        type: 'UNSIGNED_BYTE',
+        normalize: true,
+      },
+      a_strokeCloudColor: {
+        type: 'UNSIGNED_BYTE',
+        normalize: true,
+      },
     });
   }
 }

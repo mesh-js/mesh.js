@@ -25,12 +25,10 @@ const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _blend = Symbol('blend');
 const _applyTexture = Symbol('applyTexture');
-const _applyGradient = Symbol('applyGradient');
 const _applyTransform = Symbol('applyTransform');
 const _gradient = Symbol('gradient');
 
 const _filter = Symbol('filter');
-const _pathContours = Symbol('pathContours');
 
 function normalizePoints(points, bound) {
   const [w, h] = bound[1];
@@ -94,7 +92,6 @@ export default class Mesh2D {
 
   set contours(contours) {
     this[_mesh] = null;
-    this[_pathContours] = null;
     this[_contours] = contours;
     const scale = contours.scale;
     const acc = this.transformScale / scale;
@@ -104,19 +101,11 @@ export default class Mesh2D {
   }
 
   getPointAtLength(length) {
-    if(!this[_pathContours] || this[_pathContours].scale < 5 * this.transformScale) {
-      const {path, scale, simplify} = this.contours;
-      this[_pathContours] = accurate(path, 6 * scale, simplify);
-    }
-    return getPointAtLength(this[_pathContours], length);
+    return getPointAtLength(this[_contours], length);
   }
 
   getTotalLength() {
-    if(!this[_pathContours] || this[_pathContours].scale < 4 * this.contours.scale) {
-      const {path, scale, simplify} = this.contours;
-      this[_pathContours] = accurate(path, 5 * scale, simplify);
-    }
-    return getTotalLength(this[_pathContours]);
+    return getTotalLength(this[_contours]);
   }
 
   get blend() {
@@ -273,7 +262,7 @@ export default class Mesh2D {
             return p;
           });
           mesh.attributes = {
-            a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_fillColor]]),
+            a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
           };
           meshes.fill = mesh;
         } catch (ex) {
@@ -299,7 +288,7 @@ export default class Mesh2D {
             return p;
           });
           mesh.attributes = {
-            a_color: Array.from({length: mesh.positions.length}).map(() => [...this[_strokeColor]]),
+            a_color: Array.from({length: mesh.positions.length}).map(() => this[_strokeColor].map(c => Math.round(255 * c))),
           };
         });
         meshes.stroke = flattenMeshes(_meshes);
@@ -324,12 +313,6 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!isUnitTransform(transform)) {
       this[_applyTransform](mesh, transform);
-    }
-
-    if(this[_gradient] && this[_gradient].fill) {
-      this[_applyGradient](this[_mesh], this[_gradient].fill);
-    } else if(this[_gradient] && this[_gradient].stroke) {
-      this[_applyGradient](this[_mesh], this[_gradient].stroke);
     }
 
     return this[_mesh];
@@ -401,63 +384,6 @@ export default class Mesh2D {
       this[_uniforms].u_repeat = 1;
     } else {
       this[_uniforms].u_repeat = 0;
-    }
-  }
-
-  [_applyGradient](mesh, {vector, colors: gradientColors, type}) {
-    if(vector.length > 4) {
-      // radial gradient
-      return;
-    }
-    let {positions, fillPointCount} = mesh;
-    let colors = mesh.attributes.a_color;
-
-    if(type === 'fill') {
-      positions = positions.slice(0, fillPointCount);
-      colors = colors.slice(0, fillPointCount);
-    } else {
-      positions = positions.slice(fillPointCount);
-      colors = colors.slice(fillPointCount);
-    }
-
-    const [w, h] = this[_bound][1];
-    const m = mat2d.invert(this[_transform]);
-
-    function mixColor(out, startColor, stopColor, p) {
-      const s = 1 - p;
-      out[0] = startColor[0] * s + stopColor[0] * p;
-      out[1] = startColor[1] * s + stopColor[1] * p;
-      out[2] = startColor[2] * s + stopColor[2] * p;
-      out[3] = startColor[3] * s + stopColor[3] * p;
-      return out;
-    }
-
-    for(let i = 0; i < positions.length; i++) {
-      const [x, y] = transformPoint(positions[i].slice(0, 2), m, w, h, false);
-      const color = colors[i];
-
-      const v1 = [x - vector[0], y - vector[1]];
-      const v2 = [vector[2] - vector[0], vector[3] - vector[1]];
-
-      const p = (v1[0] * v2[0] + v1[1] * v2[1]) / (v2[0] ** 2 + v2[1] ** 2);
-      const len = gradientColors.length;
-
-      for(let j = 0; j < len; j++) {
-        const {offset, color: gradientColor} = gradientColors[j];
-        if(p <= offset) {
-          if(j === 0) mixColor(color, gradientColor, gradientColor, 1);
-          else {
-            const {color: startColor, offset: startOffset} = gradientColors[j - 1];
-            const stopColor = gradientColor;
-            const stopOffset = offset;
-            const pp = (p - startOffset) / (stopOffset - startOffset);
-            mixColor(color, startColor, stopColor, pp);
-          }
-          break;
-        } else if(j === len - 1) {
-          mixColor(color, gradientColor, gradientColor, 1);
-        }
-      }
     }
   }
 
@@ -533,50 +459,22 @@ export default class Mesh2D {
     return this;
   }
 
-  /**
-    vector: [x0, y0, x1, y1],
-    colors: [{offset:0, color}, {offset:1, color}, ...],
-    type: 'fill|stroke',
-   */
-  setLinearGradient({vector, colors: gradientColors, type = 'fill'}) {
-    if(type === 'fill' && !this[_fill]) {
-      this.setFill();
-    }
-    if(type === 'stroke' && !this[_stroke]) {
-      this.setStroke();
-    }
+  setLinearGradient({vector, colors: gradientColors}) {
+    if(vector.length !== 4) throw new TypeError('Invalid linearGradient.');
+    this.setGradient({vector, colors: gradientColors});
+  }
 
-    gradientColors = gradientColors.map(({offset, color}) => {
-      if(typeof color === 'string') color = parseColor(color);
-      return {offset, color};
-    });
-    gradientColors.sort((a, b) => {
-      return a.offset - b.offset;
-    });
-
-    this[_gradient] = this[_gradient] || {};
-    this[_gradient][type] = {vector, colors: gradientColors, type};
-
-    if(this[_mesh]) this[_applyGradient](this[_mesh], this[_gradient][type]);
-    return this;
+  setRadialGradient({vector, colors: gradientColors}) {
+    if(vector.length !== 6) throw new TypeError('Invalid radialGradient.');
+    this.setGradient({vector, colors: gradientColors});
   }
 
   /**
     vector: [x0, y0, r0, x1, y1, r1],
     colors: [{offset:0, color}, {offset:1, color}, ...],
-    type: 'fill|stroke
    */
-  setRadialGradient({vector, colors: gradientColors, type = 'fill'}) {
-    // if r0 < 0 || r1 < 0 throw IndexSizeError DOMException
-    // if x0 == x1 && y0 == y1 && r0 == r1 draw Nothing
-    if(type === 'fill' && !this[_fill]) {
-      this.setFill();
-    }
-    if(type === 'stroke' && !this[_stroke]) {
-      this.setStroke();
-    }
-    this[_gradient] = this[_gradient] || {};
-    this[_gradient][type] = {vector, colors: gradientColors, type};
+  setGradient({vector, colors: gradientColors}) {
+    this[_gradient] = {vector, colors: gradientColors};
 
     gradientColors = gradientColors.map(({offset, color}) => {
       if(typeof color === 'string') color = parseColor(color);
@@ -591,11 +489,19 @@ export default class Mesh2D {
       colorSteps.push(offset, ...color);
     });
 
-    const [, h] = this[_bound][1];
-    vector[1] = h - vector[1];
-    vector[4] = h - vector[4];
+    let _vector;
+    if(vector.length === 4) {
+      // linear gradient;
+      _vector = [vector[0], vector[1], 0, vector[2], vector[3], 0];
+    } else {
+      _vector = [...vector];
+    }
 
-    this[_uniforms].u_radialGradientVector = vector;
+    const [, h] = this[_bound][1];
+    _vector[1] = h - _vector[1];
+    _vector[4] = h - _vector[4];
+
+    this[_uniforms].u_radialGradientVector = _vector;
     this[_uniforms].u_colorSteps = colorSteps;
 
     return this;

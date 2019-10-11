@@ -22,11 +22,13 @@
       vector: [50, 50, 150, 150],
       colors: [
         {color: [1, 0, 0, 1], offset: 0},
-        {color: [1, 0, 0, 1], offset: 0.2},
-        {color: [-1, -1, -1, 1], offset: 1},
+        {color: [1, 1, 0, 1], offset: 0.1},
+        {color: [0, 0, 0, 1], offset: 0.3},
       ],
     });
-    const renderer = new Renderer(canvas);
+    const renderer = new Renderer(canvas, {
+      contextType: '2d',
+    });
     renderer.drawMeshes([m]);
   </script>
 </body>
