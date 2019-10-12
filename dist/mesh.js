@@ -118,7 +118,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_create_text__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(41);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createText", function() { return _utils_create_text__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
+/* harmony import */ var _utils_parse_font__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseFont", function() { return _utils_parse_font__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(67);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseColor", function() { return _utils_parse_color__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
 
 
 
