@@ -21,7 +21,7 @@ module.exports = function (env = {}) {
   }
 
   plugins.push(new webpack.DefinePlugin({
-    __DEV__: env.mode !== 'production',
+    __DEV__: env.mode === 'development',
   }));
 
   return {
