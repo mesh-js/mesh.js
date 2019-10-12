@@ -504,6 +504,9 @@ export default class Mesh2D {
     _vector[1] = h - _vector[1];
     _vector[4] = h - _vector[4];
 
+    if(colorSteps.length < 40) colorSteps.push(-1);
+    if(colorSteps.length > 40) throw new Error('Too many colors, should be less than 8 colors');
+
     this[_uniforms].u_radialGradientVector = _vector;
     this[_uniforms].u_colorSteps = colorSteps;
     if(type === 'fill') this[_uniforms].u_gradientType = 1;

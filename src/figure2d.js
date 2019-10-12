@@ -76,21 +76,26 @@ export default class Figure2D {
 
   beginPath() {
     this[_path] = [];
-    this.moveTo(0, 0);
+    this[_contours] = null;
   }
 
   clear() {
-    this[_path] = [];
-    this[_contours] = null;
+    this.beginPath();
   }
 
   arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
     const PI2 = 2 * Math.PI;
     if(endAngle === startAngle) return;
-    endAngle = (endAngle - startAngle) % PI2;
-    if(endAngle <= 0) endAngle += PI2;
+    if(endAngle < startAngle) {
+      endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
+    }
+    if(endAngle - startAngle > PI2) {
+      endAngle = startAngle + PI2;
+    }
 
-    let path = '';
+    const delta = endAngle - startAngle;
+
+    let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
 
     const startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
     const direction = anticlockwise ? -1 : 1;
@@ -99,15 +104,14 @@ export default class Figure2D {
     const largeArcFlag = endAngle > Math.PI ? 1 : 0;
     const sweepFlag = Number(!anticlockwise);
 
-    if(endAngle < PI2) {
-      path += `M${x} ${y}L${startPoint.join(' ')}`;
-    } else {
-      endPoint[1] += direction * 1e-2;
-      path += `M${startPoint.join(' ')}`;
+    if(delta >= PI2) {
+      endPoint[1] -= direction * 1e-2;
     }
 
+    path += startPoint.join(' ');
+
     path += `A${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
-    if(endAngle >= PI2) {
+    if(delta >= PI2) {
       path += 'Z';
     }
     this.addPath(path);

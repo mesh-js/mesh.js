@@ -32,74 +32,33 @@ varying vec3 vGradientVector2;
 uniform float u_colorSteps[40];
 uniform int u_gradientType;
 
-void linear_gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {
-  vec2 v1 = gl_FragCoord.xy - gv1.xy;
-  vec2 v2 = gv2.xy - gv1.xy;
+void gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {
+  float t;
+  // center circle radius
+  float cr = gv1.z;
+  // focal circle radius
+  float fr = gv2.z;
 
-  float t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);
-
-  vec4 colors[8];
-  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);
-  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);
-  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);
-  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);
-  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);
-  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);
-  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);
-  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);
-  
-  float steps[8];
-  steps[0] = colorSteps[0];
-  steps[1] = colorSteps[5];
-  steps[2] = colorSteps[10];
-  steps[3] = colorSteps[15];
-  steps[4] = colorSteps[20];
-  steps[5] = colorSteps[25];
-  steps[6] = colorSteps[30];
-  steps[7] = colorSteps[35];
-  
-  color = colors[0];
-  for (int i = 1; i < 8; i++) {
-    if (steps[i] > 1.0) {
-      break;
-    }
-    if(steps[i] == steps[i - 1]) {
-      color = colors[i];
-    } else {
-      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));
-    }
-    if (steps[i] >= t) {
-      break;
-    }
+  if(cr > 0.0 || fr > 0.0) {
+    // radial gradient
+    vec2 center = gv1.xy;
+    vec2 focal = gv2.xy;
+    float x = focal.x - gl_FragCoord.x;
+    float y = focal.y - gl_FragCoord.y;
+    float dx = focal.x - center.x;
+    float dy = focal.y - center.y;
+    float dr = cr - fr;
+    float a = dx * dx + dy * dy - dr * dr;
+    float b = -2.0 * (y * dy + x * dx + fr * dr);
+    float c = x * x + y * y - fr * fr;
+    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));
+  } else {
+    // linear gradient
+    vec2 v1 = gl_FragCoord.xy - gv1.xy;
+    vec2 v2 = gv2.xy - gv1.xy;
+    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);
   }
-}
 
-void radial_gradient(inout vec4 color, vec3 v1, vec3 v2, float colorSteps[40]) {
-  // center circle
-  float cx = v1.x;
-  float cy = v1.y;
-  float cr = v1.z;
-  
-  // focal circle
-  float fx = v2.x;
-  float fy = v2.y;
-  float fr = v2.z;
-
-  vec2 center = vec2(cx, cy);
-  vec2 focal = vec2(fx, fy);
-
-  float x = focal.x - gl_FragCoord.x;
-  float y = focal.y - gl_FragCoord.y;
-  float dx = focal.x - center.x;
-  float dy = focal.y - center.y;
-  float dr = cr - fr;
-  
-  float a = dx * dx + dy * dy - dr * dr;
-  float b = -2.0 * (y * dy + x * dx + fr * dr);
-  float c = x * x + y * y - fr * fr;
-  float t = 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));
-  t = 1.0 - t;
-  
   vec4 colors[8];
   colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);
   colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);
@@ -119,10 +78,10 @@ void radial_gradient(inout vec4 color, vec3 v1, vec3 v2, float colorSteps[40]) {
   steps[5] = colorSteps[25];
   steps[6] = colorSteps[30];
   steps[7] = colorSteps[35];
-  
+
   color = colors[0];
   for (int i = 1; i < 8; i++) {
-    if (steps[i] > 1.0) {
+    if (steps[i] < 0.0 || steps[i] > 1.0) {
       break;
     }
     if(steps[i] == steps[i - 1]) {
@@ -178,12 +137,7 @@ void main() {
 
 #ifdef GRADIENT
   if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {
-    if (vGradientVector1.z > 0.0 || vGradientVector2.z > 0.0) {
-      radial_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
-    } 
-    else {
-      linear_gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
-    }
+    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);
   }
 #endif
 

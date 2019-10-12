@@ -29,17 +29,13 @@ addPath(path)
 
 Append a svg path to current Figure2D paths.
 
-#### beginPath
-
-beginPath()
-
-Clear all paths append before and move to position (0,0).
-
 #### clear
 
 clear()
 
 Clear all paths in the Figure2D.
+
+*alias: beginPath*
 
 #### arc
 
