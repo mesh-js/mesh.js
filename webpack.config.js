@@ -11,12 +11,25 @@ module.exports = function (env = {}) {
     babelConf.babelrc = false;
   }
 
+  const filename = env.mode === 'production' ? 'mesh.min.js' : 'mesh.js';
+  const plugins = [];
+
+  if(env.mode === 'development') {
+    plugins.push(new webpack.HotModuleReplacementPlugin({
+      multiStep: true,
+    }));
+  }
+
+  plugins.push(new webpack.DefinePlugin({
+    __DEV__: env.mode !== 'production',
+  }));
+
   return {
     mode: env.mode || 'none',
     entry: './src/index',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'mesh.js',
+      filename,
       publicPath: '/js/',
       library: 'meshjs',
       libraryTarget: 'umd',
@@ -67,14 +80,7 @@ module.exports = function (env = {}) {
       // ...
     },
 
-    plugins: [
-      new webpack.DefinePlugin({
-        __DEV__: env.mode !== 'production',
-      }),
-      new webpack.HotModuleReplacementPlugin({
-        multiStep: true,
-      }),
-    ],
+    plugins,
     // list of additional plugins
 
     /* Advanced configuration (click to show) */

@@ -1,4 +1,4 @@
-import {loadImage} from 'gl-renderer/src/helpers';
+import GlRenderer from 'gl-renderer';
 import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
 
 const _transform = Symbol('transform');
@@ -16,7 +16,7 @@ export default class CanvasRenderer {
   }
 
   async loadTexture(textureURL) {
-    const image = await loadImage(textureURL, false);
+    const image = await GlRenderer.loadImage(textureURL, false);
     return this.createTexture(image);
   }
 
