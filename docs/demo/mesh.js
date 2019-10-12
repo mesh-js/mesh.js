@@ -8860,7 +8860,7 @@ function () {
 
             if (!program._attribute[key]) {
               // throw new Error(`Invalid attribute ${key}.`);
-              if (true) console.warn("Ignored attribute ".concat(key, "."));
+              if (false) {}
               program._attribute[key] = 'ignored';
             } else if (program._attribute[key] !== 'ignored') {
               var _program$_attribute$k = program._attribute[key],
