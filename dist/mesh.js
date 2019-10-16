@@ -12514,7 +12514,7 @@ function () {
     key: "enableBlend",
     get: function get() {
       if (this[_blend] === true || this[_blend] === false) return this[_blend];
-      return this[_uniforms].u_opacity < 1.0 || this[_strokeColor] != null && this[_strokeColor][3] < 1.0 || this[_fillColor] != null && this[_fillColor][3] < 1.0 || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0 || this[_gradient];
+      return this[_uniforms].u_opacity < 1.0 || this[_strokeColor] != null && this[_strokeColor][3] < 1.0 || this[_fillColor] != null && this[_fillColor][3] < 1.0 || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0 || this[_gradient] || this.beforeRender || this.afterRender;
     }
   }, {
     key: "filterCanvas",

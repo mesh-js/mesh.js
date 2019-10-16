@@ -37,8 +37,7 @@
     });
 
     m2.translate(50, 50);
-    m2.beforeRender = (gl, mesh) => {
-      mesh.enableBlend = true;
+    m2.beforeRender = (gl) => {
       gl.blendColor(1, 0, 1, 1);
       // gl.blendEquation(gl.FUNC_ADD);
       // console.log(gl.getParameter(gl.BLEND_COLOR), gl.CONSTANT_COLOR);

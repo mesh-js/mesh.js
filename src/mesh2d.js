@@ -218,7 +218,9 @@ export default class Mesh2D {
       || this[_strokeColor] != null && this[_strokeColor][3] < 1.0
       || this[_fillColor] != null && this[_fillColor][3] < 1.0
       || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0
-      || this[_gradient];
+      || this[_gradient]
+      || this.beforeRender
+      || this.afterRender;
   }
 
   get filterCanvas() {
