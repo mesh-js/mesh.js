@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    canvas {
+      width: 512px;
+      height: 512px;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: 'webgl2',
+    });
+
+    const f = new Figure2D();
+    f.rect(100, 100, 100, 100);
+
+    const m1 = new Mesh2D(f, canvas);
+    m1.setFill({
+      color: [1, 0, 0, 1],
+    });
+
+    const m2 = new Mesh2D(f, canvas);
+    m2.setFill({
+      color: [0, 0, 1, 1],
+    });
+
+    m2.translate(50, 50);
+    m2.beforeRender = (gl, mesh) => {
+      mesh.enableBlend = true;
+      gl.blendColor(1, 0, 1, 1);
+      // gl.blendEquation(gl.FUNC_ADD);
+      // console.log(gl.getParameter(gl.BLEND_COLOR), gl.CONSTANT_COLOR);
+      gl.blendFuncSeparate(gl.CONSTANT_COLOR, gl.CONSTANT_COLOR, gl.ONE_MINUS_DST_ALPHA, gl.ZERO);
+      // gl.blendFunc(gl.DST_COLOR, gl.DST_COLOR);
+    };
+    renderer.drawMeshes([m1, m2]);
+  </script>
+</body>
+</html>

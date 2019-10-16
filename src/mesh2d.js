@@ -114,6 +114,7 @@ export default class Mesh2D {
 
   set blend(blend) {
     this[_blend] = blend;
+    if(this[_mesh]) this[_mesh].enableBlend = this.enableBlend;
   }
 
   get boundingBox() {

@@ -7990,11 +7990,11 @@ function () {
         this[_applyGlobalTransform](this[_globalTransform]);
 
         renderer.setMeshData(cloud.meshData);
-        if (cloud.beforeRender) cloud.beforeRender(gl);
+        if (cloud.beforeRender) cloud.beforeRender(gl, cloud);
 
         renderer._draw();
 
-        if (cloud.afterRender) cloud.afterRender(gl);
+        if (cloud.afterRender) cloud.afterRender(gl, cloud);
       } else {
         var cloudMeshes = [];
 
@@ -8015,12 +8015,12 @@ function () {
         }
 
         renderer.setTransform(this[_globalTransform]);
-        if (cloud.beforeRender) cloud.beforeRender(renderer.context);
+        if (cloud.beforeRender) cloud.beforeRender(renderer.context, cloud);
         renderer.drawMeshes(cloudMeshes, {
           clear: clear,
           hook: false
         });
-        if (cloud.afterRender) cloud.afterRender(renderer.context);
+        if (cloud.afterRender) cloud.afterRender(renderer.context, cloud);
       }
     }
   }, {
@@ -8049,7 +8049,7 @@ function () {
           for (var _iterator = meshData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var mesh = _step.value;
             // eslint-disable-line no-restricted-syntax
-            if (mesh.beforeRender) mesh.beforeRender(gl);
+            if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
 
             if (!program && mesh.filterCanvas) {
               // 有一些滤镜用shader不好实现：blur、drop-shadow、url
@@ -8108,8 +8108,6 @@ function () {
                   drawFilterContext(renderer, filterContext, width, height);
                 }
               }
-
-              if (mesh.afterRender) mesh.afterRender(gl);
             } else {
               if (!program) {
                 var hasTexture = !!mesh.uniforms.u_texSampler;
@@ -8140,6 +8138,8 @@ function () {
 
               renderer._draw();
             }
+
+            if (mesh.afterRender) mesh.afterRender(gl, mesh);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -10584,7 +10584,7 @@ function () {
       var len = meshes.length;
       meshes.forEach(function (mesh, i) {
         var fill, stroke, frame, transform, cloudFilter;
-        if (hook && mesh.beforeRender) mesh.beforeRender(context);
+        if (hook && mesh.beforeRender) mesh.beforeRender(context, mesh);
 
         if (mesh._cloudOptions) {
           var _mesh$_cloudOptions = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(mesh._cloudOptions, 5);
@@ -10638,7 +10638,7 @@ function () {
           context.restore();
         }
 
-        if (hook && mesh.afterRender) mesh.afterRender(context);
+        if (hook && mesh.afterRender) mesh.afterRender(context, mesh);
       });
     }
   }, {
@@ -12381,6 +12381,7 @@ function () {
     },
     set: function set(blend) {
       this[_blend] = blend;
+      if (this[_mesh]) this[_mesh].enableBlend = this.enableBlend;
     }
   }, {
     key: "boundingBox",

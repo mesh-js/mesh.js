@@ -49,7 +49,7 @@ export default class CanvasRenderer {
         transform,
         cloudFilter;
 
-      if(hook && mesh.beforeRender) mesh.beforeRender(context);
+      if(hook && mesh.beforeRender) mesh.beforeRender(context, mesh);
       if(mesh._cloudOptions) {
         [fill, stroke, frame, transform, cloudFilter] = mesh._cloudOptions;
         mesh = mesh.mesh;
@@ -82,7 +82,7 @@ export default class CanvasRenderer {
         drawMesh2D(mesh, context, false, fill, stroke, frame, transform);
         context.restore();
       }
-      if(hook && mesh.afterRender) mesh.afterRender(context);
+      if(hook && mesh.afterRender) mesh.afterRender(context, mesh);
     });
   }
 
