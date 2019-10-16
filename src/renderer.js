@@ -209,7 +209,9 @@ export default class Renderer {
       }
       this[_applyGlobalTransform](this[_globalTransform]);
       renderer.setMeshData(cloud.meshData);
+      if(cloud.beforeRender) cloud.beforeRender(gl);
       renderer._draw();
+      if(cloud.afterRender) cloud.afterRender(gl);
     } else {
       const cloudMeshes = [];
       for(let i = 0; i < cloud.amount; i++) {
@@ -225,7 +227,9 @@ export default class Renderer {
         // console.log(transform, colorTransform, frame);
       }
       renderer.setTransform(this[_globalTransform]);
-      renderer.drawMeshes(cloudMeshes, {clear});
+      if(cloud.beforeRender) cloud.beforeRender(renderer.context);
+      renderer.drawMeshes(cloudMeshes, {clear, hook: false});
+      if(cloud.afterRender) cloud.afterRender(renderer.context);
     }
   }
 
@@ -237,6 +241,7 @@ export default class Renderer {
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
       const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
+        if(mesh.beforeRender) mesh.beforeRender(gl);
         if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
           applyShader(renderer, {hasTexture: true});
           const {width, height} = this.canvas;
@@ -276,6 +281,7 @@ export default class Renderer {
               drawFilterContext(renderer, filterContext, width, height);
             }
           }
+          if(mesh.afterRender) mesh.afterRender(gl);
         } else {
           if(!program) {
             const hasTexture = !!mesh.uniforms.u_texSampler;

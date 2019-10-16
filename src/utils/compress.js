@@ -75,6 +75,8 @@ function packData(temp, enableBlend) {
 
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
+    meshData.beforeRender = temp[0].beforeRender;
+    meshData.afterRender = temp[temp.length - 1].afterRender;
     temp.length = 0;
     return meshData;
   }
@@ -87,25 +89,24 @@ export default function* compress(renderer, meshes, maxSize = renderer.options.b
   let enableBlend = false;
 
   for(let i = 0; i < meshes.length; i++) {
-    const mesh = meshes[i].meshData;
+    const mesh = meshes[i];
+    const meshData = mesh.meshData;
     let len = 0;
 
-    if(mesh && mesh.positions.length) {
+    if(meshData && meshData.positions.length) {
       mesh.packIndex = i;
-      const filterCanvas = meshes[i].filterCanvas;
-      if(filterCanvas) {
-        mesh.filterCanvas = true;
-      }
+      const filterCanvas = mesh.filterCanvas;
 
-      len = mesh.positions.length;
+      len = meshData.positions.length;
 
       if(filterCanvas || size + len > maxSize) { // cannot merge
         if(temp.length) yield packData(temp, enableBlend);
         size = 0;
         enableBlend = false;
       } else if(size) {
-        const lastMesh = meshes[i - 1].meshData;
-        if(meshes[i - 1].filterCanvas || !compareUniform(lastMesh, mesh)) {
+        const lastMesh = meshes[i - 1];
+        if(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh)
+          || lastMesh.afterRender || mesh.beforeRender) {
           if(temp.length) yield packData(temp, enableBlend);
           size = 0;
           enableBlend = false;

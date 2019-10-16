@@ -7990,8 +7990,11 @@ function () {
         this[_applyGlobalTransform](this[_globalTransform]);
 
         renderer.setMeshData(cloud.meshData);
+        if (cloud.beforeRender) cloud.beforeRender(gl);
 
         renderer._draw();
+
+        if (cloud.afterRender) cloud.afterRender(gl);
       } else {
         var cloudMeshes = [];
 
@@ -8012,9 +8015,12 @@ function () {
         }
 
         renderer.setTransform(this[_globalTransform]);
+        if (cloud.beforeRender) cloud.beforeRender(renderer.context);
         renderer.drawMeshes(cloudMeshes, {
-          clear: clear
+          clear: clear,
+          hook: false
         });
+        if (cloud.afterRender) cloud.afterRender(renderer.context);
       }
     }
   }, {
@@ -8042,8 +8048,9 @@ function () {
         try {
           for (var _iterator = meshData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var mesh = _step.value;
-
             // eslint-disable-line no-restricted-syntax
+            if (mesh.beforeRender) mesh.beforeRender(gl);
+
             if (!program && mesh.filterCanvas) {
               // 有一些滤镜用shader不好实现：blur、drop-shadow、url
               Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["applyShader"])(renderer, {
@@ -8101,6 +8108,8 @@ function () {
                   drawFilterContext(renderer, filterContext, width, height);
                 }
               }
+
+              if (mesh.afterRender) mesh.afterRender(gl);
             } else {
               if (!program) {
                 var hasTexture = !!mesh.uniforms.u_texSampler;
@@ -10558,7 +10567,9 @@ function () {
 
       var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
           _ref$clear = _ref.clear,
-          clear = _ref$clear === void 0 ? false : _ref$clear;
+          clear = _ref$clear === void 0 ? false : _ref$clear,
+          _ref$hook = _ref.hook,
+          hook = _ref$hook === void 0 ? true : _ref$hook;
 
       var context = this.context;
 
@@ -10573,6 +10584,7 @@ function () {
       var len = meshes.length;
       meshes.forEach(function (mesh, i) {
         var fill, stroke, frame, transform, cloudFilter;
+        if (hook && mesh.beforeRender) mesh.beforeRender(context);
 
         if (mesh._cloudOptions) {
           var _mesh$_cloudOptions = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(mesh._cloudOptions, 5);
@@ -10625,6 +10637,8 @@ function () {
           Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, context, false, fill, stroke, frame, transform);
           context.restore();
         }
+
+        if (hook && mesh.afterRender) mesh.afterRender(context);
       });
     }
   }, {
@@ -11226,6 +11240,8 @@ function packData(temp, enableBlend) {
 
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
+    meshData.beforeRender = temp[0].beforeRender;
+    meshData.afterRender = temp[temp.length - 1].afterRender;
     temp.length = 0;
     return meshData;
   }
@@ -11238,6 +11254,7 @@ function compress(renderer, meshes) {
       enableBlend,
       i,
       mesh,
+      meshData,
       len,
       filterCanvas,
       lastMesh,
@@ -11258,22 +11275,18 @@ function compress(renderer, meshes) {
             break;
           }
 
-          mesh = meshes[i].meshData;
+          mesh = meshes[i];
+          meshData = mesh.meshData;
           len = 0;
 
-          if (!(mesh && mesh.positions.length)) {
+          if (!(meshData && meshData.positions.length)) {
             _context.next = 31;
             break;
           }
 
           mesh.packIndex = i;
-          filterCanvas = meshes[i].filterCanvas;
-
-          if (filterCanvas) {
-            mesh.filterCanvas = true;
-          }
-
-          len = mesh.positions.length;
+          filterCanvas = mesh.filterCanvas;
+          len = meshData.positions.length;
 
           if (!(filterCanvas || size + len > maxSize)) {
             _context.next = 21;
@@ -11300,9 +11313,9 @@ function compress(renderer, meshes) {
             break;
           }
 
-          lastMesh = meshes[i - 1].meshData;
+          lastMesh = meshes[i - 1];
 
-          if (!(meshes[i - 1].filterCanvas || !compareUniform(lastMesh, mesh))) {
+          if (!(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh) || lastMesh.afterRender || mesh.beforeRender)) {
             _context.next = 29;
             break;
           }
@@ -11379,6 +11392,7 @@ function flattenMeshes(meshes) {
   var uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
   meshes.forEach(function (mesh) {
     if (mesh) {
+      if (mesh.meshData) mesh = mesh.meshData;
       positions.push.apply(positions, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.positions));
       cells.push.apply(cells, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.cells.map(function (cell) {
         return cell.map(function (c) {

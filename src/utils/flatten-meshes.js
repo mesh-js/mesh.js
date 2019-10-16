@@ -8,6 +8,7 @@ export default function flattenMeshes(meshes) {
 
   meshes.forEach((mesh) => {
     if(mesh) {
+      if(mesh.meshData) mesh = mesh.meshData;
       positions.push(...mesh.positions);
       cells.push(...mesh.cells.map(cell => cell.map(c => c + idx)));
       a_color.push(...mesh.attributes.a_color);

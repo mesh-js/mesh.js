@@ -33,7 +33,7 @@ export default class CanvasRenderer {
     context.clearRect(x, y, w, h);
   }
 
-  drawMeshes(meshes, {clear = false} = {}) {
+  drawMeshes(meshes, {clear = false, hook = true} = {}) {
     const context = this.context;
     if(clear) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -49,6 +49,7 @@ export default class CanvasRenderer {
         transform,
         cloudFilter;
 
+      if(hook && mesh.beforeRender) mesh.beforeRender(context);
       if(mesh._cloudOptions) {
         [fill, stroke, frame, transform, cloudFilter] = mesh._cloudOptions;
         mesh = mesh.mesh;
@@ -81,6 +82,7 @@ export default class CanvasRenderer {
         drawMesh2D(mesh, context, false, fill, stroke, frame, transform);
         context.restore();
       }
+      if(hook && mesh.afterRender) mesh.afterRender(context);
     });
   }
 
