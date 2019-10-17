@@ -4,6 +4,7 @@ import abs from 'abs-svg-path';
 import normalize from './normalize-svg-path';
 import createContours from './svg-path-contours';
 import {getPointAtLength, getTotalLength} from './utils/contours';
+import {getPoint} from './utils/ellipse';
 
 const _contours = Symbol('contours');
 const _path = Symbol('path');
@@ -83,7 +84,41 @@ export default class Figure2D {
     this.beginPath();
   }
 
-  arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
+  // arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
+  //   const PI2 = 2 * Math.PI;
+  //   if(endAngle === startAngle) return;
+  //   if(endAngle < startAngle) {
+  //     endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
+  //   }
+  //   if(endAngle - startAngle > PI2) {
+  //     endAngle = startAngle + PI2;
+  //   }
+
+  //   const delta = endAngle - startAngle;
+
+  //   let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
+
+  //   const startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
+  //   const direction = anticlockwise ? -1 : 1;
+  //   const endPoint = [x + radius * Math.cos(endAngle), y + direction * radius * Math.sin(endAngle)];
+
+  //   const largeArcFlag = endAngle > Math.PI ? 1 : 0;
+  //   const sweepFlag = Number(!anticlockwise);
+
+  //   if(delta >= PI2) {
+  //     endPoint[1] -= direction * 1e-2;
+  //   }
+
+  //   path += startPoint.join(' ');
+
+  //   path += `A${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
+  //   if(delta >= PI2) {
+  //     path += 'Z';
+  //   }
+  //   this.addPath(path);
+  // }
+
+  ellipse(x, y, radiusX, radiusY, startAngle, endAngle, anticlockwise = 0) {
     const PI2 = 2 * Math.PI;
     if(endAngle === startAngle) return;
     if(endAngle < startAngle) {
@@ -97,9 +132,9 @@ export default class Figure2D {
 
     let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
 
-    const startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
+    const startPoint = getPoint(x, y, radiusX, radiusY, startAngle);
     const direction = anticlockwise ? -1 : 1;
-    const endPoint = [x + radius * Math.cos(endAngle), y + direction * radius * Math.sin(endAngle)];
+    const endPoint = getPoint(x, y, radiusX, radiusY, endAngle);
 
     const largeArcFlag = endAngle > Math.PI ? 1 : 0;
     const sweepFlag = Number(!anticlockwise);
@@ -110,11 +145,16 @@ export default class Figure2D {
 
     path += startPoint.join(' ');
 
-    path += `A${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
+    path += `A${radiusX} ${radiusY} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
     if(delta >= PI2) {
       path += 'Z';
     }
+
     this.addPath(path);
+  }
+
+  arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
+    return this.ellipse(x, y, radius, radius, startAngle, endAngle, anticlockwise);
   }
 
   arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {

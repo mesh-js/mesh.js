@@ -109,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Mesh2D", function() { return _mesh2d__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(86);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MeshCloud", function() { return _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 /* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34);
@@ -18166,11 +18166,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(61);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(56);
+/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86);
 
 
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
 
 
 
@@ -18241,11 +18243,37 @@ function () {
     key: "clear",
     value: function clear() {
       this.beginPath();
-    }
+    } // arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
+    //   const PI2 = 2 * Math.PI;
+    //   if(endAngle === startAngle) return;
+    //   if(endAngle < startAngle) {
+    //     endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
+    //   }
+    //   if(endAngle - startAngle > PI2) {
+    //     endAngle = startAngle + PI2;
+    //   }
+    //   const delta = endAngle - startAngle;
+    //   let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
+    //   const startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
+    //   const direction = anticlockwise ? -1 : 1;
+    //   const endPoint = [x + radius * Math.cos(endAngle), y + direction * radius * Math.sin(endAngle)];
+    //   const largeArcFlag = endAngle > Math.PI ? 1 : 0;
+    //   const sweepFlag = Number(!anticlockwise);
+    //   if(delta >= PI2) {
+    //     endPoint[1] -= direction * 1e-2;
+    //   }
+    //   path += startPoint.join(' ');
+    //   path += `A${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
+    //   if(delta >= PI2) {
+    //     path += 'Z';
+    //   }
+    //   this.addPath(path);
+    // }
+
   }, {
-    key: "arc",
-    value: function arc(x, y, radius, startAngle, endAngle) {
-      var anticlockwise = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+    key: "ellipse",
+    value: function ellipse(x, y, radiusX, radiusY, startAngle, endAngle) {
+      var anticlockwise = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 0;
       var PI2 = 2 * Math.PI;
       if (endAngle === startAngle) return;
 
@@ -18259,9 +18287,9 @@ function () {
 
       var delta = endAngle - startAngle;
       var path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
-      var startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
+      var startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_9__["getPoint"])(x, y, radiusX, radiusY, startAngle);
       var direction = anticlockwise ? -1 : 1;
-      var endPoint = [x + radius * Math.cos(endAngle), y + direction * radius * Math.sin(endAngle)];
+      var endPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_9__["getPoint"])(x, y, radiusX, radiusY, endAngle);
       var largeArcFlag = endAngle > Math.PI ? 1 : 0;
       var sweepFlag = Number(!anticlockwise);
 
@@ -18270,13 +18298,19 @@ function () {
       }
 
       path += startPoint.join(' ');
-      path += "A".concat(radius, " ").concat(radius, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
+      path += "A".concat(radiusX, " ").concat(radiusY, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
 
       if (delta >= PI2) {
         path += 'Z';
       }
 
       this.addPath(path);
+    }
+  }, {
+    key: "arc",
+    value: function arc(x, y, radius, startAngle, endAngle) {
+      var anticlockwise = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+      return this.ellipse(x, y, radius, radius, startAngle, endAngle, anticlockwise);
     }
   }, {
     key: "arcTo",
@@ -18852,6 +18886,46 @@ function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
 
 /***/ }),
 /* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPoint", function() { return getPoint; });
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+// 根据椭圆旋转角度求椭圆上的点
+var PI2 = Math.PI * 2;
+function getPoint(x0, y0, a, b, theta) {
+  theta %= PI2;
+  if (theta < 0) theta += PI2;
+  var k = Math.tan(theta);
+
+  if (Number.isFinite(k)) {
+    // y - y0 = k (x - x0)
+    // y = k x + (y0 - k x0)
+    // x ** 2 / a ** 2 + y ** 2 / b ** 2 = 1
+    // x ** 2 / a ** 2 + (kx + (y0 - kx0)) ** 2 / b ** 2 - 1 = 0
+    var c = y0 - k * x0;
+    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2);
+    var p = 2 * c * k / Math.pow(b, 2);
+    var q = Math.pow(c, 2) / Math.pow(b, 2) - 1; // const fx = (x) => t * x ** 2 + p * x + q;
+
+    var d = -1;
+    if (theta <= Math.PI / 2 || theta > 3 * Math.PI / 2) d = 1;
+    var x = (-p + d * Math.sqrt(Math.pow(p, 2) - 4 * t * q)) / (2 * t);
+    var y = k * x + c;
+    return [x, y];
+  }
+
+  if (k === Infinity) {
+    return [x0, y0 + b];
+  }
+
+  return [x0, y0 - b];
+}
+
+/***/ }),
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
