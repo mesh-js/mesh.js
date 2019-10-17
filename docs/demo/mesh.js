@@ -18358,7 +18358,7 @@ function () {
     value: function closePath() {
       this[_contours] = null;
 
-      this[_path].push('Z');
+      this[_path].push(['Z']);
     }
   }, {
     key: "contours",

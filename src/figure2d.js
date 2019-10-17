@@ -189,6 +189,6 @@ export default class Figure2D {
 
   closePath() {
     this[_contours] = null;
-    this[_path].push('Z');
+    this[_path].push(['Z']);
   }
 }
