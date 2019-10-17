@@ -189,6 +189,13 @@ export default class Figure2D {
 
   closePath() {
     this[_contours] = null;
-    this[_path].push(['Z']);
+    let lastPath = [];
+    const len = this[_path].length;
+    if(len > 0) {
+      lastPath = this[_path][len - 1];
+    }
+    if(lastPath[0] !== 'Z' && lastPath[0] !== 'z') {
+      this[_path].push(['Z']);
+    }
   }
 }

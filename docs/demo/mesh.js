@@ -18357,8 +18357,16 @@ function () {
     key: "closePath",
     value: function closePath() {
       this[_contours] = null;
+      var lastPath = [];
+      var len = this[_path].length;
 
-      this[_path].push(['Z']);
+      if (len > 0) {
+        lastPath = this[_path][len - 1];
+      }
+
+      if (lastPath[0] !== 'Z' && lastPath[0] !== 'z') {
+        this[_path].push(['Z']);
+      }
     }
   }, {
     key: "contours",
