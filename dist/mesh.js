@@ -18297,7 +18297,6 @@ function () {
         endPoint[1] -= direction * 1e-2;
       }
 
-      console.log(x, y, radiusX, radiusY, startAngle, startPoint);
       path += startPoint.join(' ');
       path += "A".concat(radiusX, " ").concat(radiusY, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
 
