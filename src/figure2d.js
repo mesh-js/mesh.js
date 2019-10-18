@@ -142,7 +142,7 @@ export default class Figure2D {
     if(delta >= PI2) {
       endPoint[1] -= direction * 1e-2;
     }
-
+    console.log(x, y, radiusX, radiusY, startAngle, startPoint);
     path += startPoint.join(' ');
 
     path += `A${radiusX} ${radiusY} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;

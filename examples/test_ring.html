@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    canvas {
+      width: 512px;
+      height: 512px;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: 'webgl',
+    });
+
+    const figure = new Figure2D();
+    figure.arc(100, 100, 50, 0, Math.PI, false);
+    figure.arc(100, 100, 30, Math.PI, 0, true);
+
+    const m = new Mesh2D(figure, canvas);
+    m.setFill({color: 'red'});
+    // m.translate(100, 100);
+    renderer.drawMeshes([m]);
+  </script>
+</body>
+</html>

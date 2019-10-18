@@ -18297,6 +18297,7 @@ function () {
         endPoint[1] -= direction * 1e-2;
       }
 
+      console.log(x, y, radiusX, radiusY, startAngle, startPoint);
       path += startPoint.join(' ');
       path += "A".concat(radiusX, " ").concat(radiusY, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
 
@@ -18911,16 +18912,18 @@ function getPoint(x0, y0, a, b, theta) {
   if (Number.isFinite(k)) {
     // y - y0 = k (x - x0)
     // y = k x + (y0 - k x0)
-    // x ** 2 / a ** 2 + y ** 2 / b ** 2 = 1
-    // x ** 2 / a ** 2 + (kx + (y0 - kx0)) ** 2 / b ** 2 - 1 = 0
+    // (x - x0) ** 2 / a ** 2 + (y - y0) ** 2 / b ** 2 = 1
     var c = y0 - k * x0;
-    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2);
-    var p = 2 * c * k / Math.pow(b, 2);
-    var q = Math.pow(c, 2) / Math.pow(b, 2) - 1; // const fx = (x) => t * x ** 2 + p * x + q;
+    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2); // const p = 2 * c * k / b ** 2;
+
+    var p = 2 * x0 * Math.pow(k, 2) / Math.pow(b, 2) - 2 * x0 / Math.pow(a, 2); // const q = c ** 2 / b ** 2 - 1;
+
+    var q = Math.pow(x0, 2) / Math.pow(a, 2) + Math.pow(k, 2) * Math.pow(x0, 2) / Math.pow(b, 2) - 1; // const fx = (x) => t * x ** 2 + p * x + q;
 
     var d = -1;
     if (theta <= Math.PI / 2 || theta > 3 * Math.PI / 2) d = 1;
-    var x = (-p + d * Math.sqrt(Math.pow(p, 2) - 4 * t * q)) / (2 * t);
+    var delta = Math.max(0, Math.pow(p, 2) - 4 * t * q);
+    var x = (-p + d * Math.sqrt(delta)) / (2 * t);
     var y = k * x + c;
     return [x, y];
   }
