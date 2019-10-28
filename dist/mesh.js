@@ -18274,8 +18274,8 @@ function () {
     key: "ellipse",
     value: function ellipse(x, y, radiusX, radiusY, startAngle, endAngle) {
       var anticlockwise = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 0;
+      if (radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
       var PI2 = 2 * Math.PI;
-      if (endAngle === startAngle) return;
 
       if (endAngle < startAngle) {
         endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;

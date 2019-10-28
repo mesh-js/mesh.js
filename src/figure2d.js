@@ -119,8 +119,8 @@ export default class Figure2D {
   // }
 
   ellipse(x, y, radiusX, radiusY, startAngle, endAngle, anticlockwise = 0) {
+    if(radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
     const PI2 = 2 * Math.PI;
-    if(endAngle === startAngle) return;
     if(endAngle < startAngle) {
       endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
     }
