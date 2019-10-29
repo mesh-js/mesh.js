@@ -18272,8 +18272,10 @@ function () {
 
   }, {
     key: "ellipse",
-    value: function ellipse(x, y, radiusX, radiusY, startAngle, endAngle) {
-      var anticlockwise = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 0;
+    value: function ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle) {
+      var anticlockwise = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0;
+      startAngle += rotation;
+      endAngle += rotation;
       if (radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
       var PI2 = 2 * Math.PI;
 
@@ -18287,11 +18289,12 @@ function () {
 
       var delta = endAngle - startAngle;
       var path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
-      var startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_9__["getPoint"])(x, y, radiusX, radiusY, startAngle);
       var direction = anticlockwise ? -1 : 1;
+      var startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_9__["getPoint"])(x, y, radiusX, radiusY, startAngle);
       var endPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_9__["getPoint"])(x, y, radiusX, radiusY, endAngle);
-      var largeArcFlag = endAngle > Math.PI ? 1 : 0;
       var sweepFlag = Number(!anticlockwise);
+      var largeArcFlag = delta > Math.PI ? 1 : 0;
+      if (anticlockwise) largeArcFlag = 1 - largeArcFlag;
 
       if (delta >= PI2) {
         endPoint[1] -= direction * 1e-2;
@@ -18310,7 +18313,7 @@ function () {
     key: "arc",
     value: function arc(x, y, radius, startAngle, endAngle) {
       var anticlockwise = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-      return this.ellipse(x, y, radius, radius, startAngle, endAngle, anticlockwise);
+      return this.ellipse(x, y, radius, radius, 0, startAngle, endAngle, anticlockwise);
     }
   }, {
     key: "arcTo",
@@ -18908,26 +18911,20 @@ function getPoint(x0, y0, a, b, theta) {
   if (theta < 0) theta += PI2;
   var k = Math.tan(theta);
 
-  if (Number.isFinite(k)) {
+  if (Math.abs(k) < 1e5) {
     // y - y0 = k (x - x0)
     // y = k x + (y0 - k x0)
     // (x - x0) ** 2 / a ** 2 + (y - y0) ** 2 / b ** 2 = 1
     var c = y0 - k * x0;
-    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2); // const p = 2 * c * k / b ** 2;
-
-    var p = 2 * x0 * Math.pow(k, 2) / Math.pow(b, 2) - 2 * x0 / Math.pow(a, 2); // const q = c ** 2 / b ** 2 - 1;
-
-    var q = Math.pow(x0, 2) / Math.pow(a, 2) + Math.pow(k, 2) * Math.pow(x0, 2) / Math.pow(b, 2) - 1; // const fx = (x) => t * x ** 2 + p * x + q;
-
+    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2);
     var d = -1;
     if (theta <= Math.PI / 2 || theta > 3 * Math.PI / 2) d = 1;
-    var delta = Math.max(0, Math.pow(p, 2) - 4 * t * q);
-    var x = (-p + d * Math.sqrt(delta)) / (2 * t);
+    var x = d * Math.sqrt(1 / t) + x0;
     var y = k * x + c;
     return [x, y];
   }
 
-  if (k === Infinity) {
+  if (theta < Math.PI) {
     return [x0, y0 + b];
   }
 

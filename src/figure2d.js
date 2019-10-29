@@ -118,7 +118,9 @@ export default class Figure2D {
   //   this.addPath(path);
   // }
 
-  ellipse(x, y, radiusX, radiusY, startAngle, endAngle, anticlockwise = 0) {
+  ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise = 0) {
+    startAngle += rotation;
+    endAngle += rotation;
     if(radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
     const PI2 = 2 * Math.PI;
     if(endAngle < startAngle) {
@@ -132,12 +134,13 @@ export default class Figure2D {
 
     let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
 
-    const startPoint = getPoint(x, y, radiusX, radiusY, startAngle);
     const direction = anticlockwise ? -1 : 1;
+    const startPoint = getPoint(x, y, radiusX, radiusY, startAngle);
     const endPoint = getPoint(x, y, radiusX, radiusY, endAngle);
 
-    const largeArcFlag = endAngle > Math.PI ? 1 : 0;
     const sweepFlag = Number(!anticlockwise);
+    let largeArcFlag = delta > Math.PI ? 1 : 0;
+    if(anticlockwise) largeArcFlag = 1 - largeArcFlag;
 
     if(delta >= PI2) {
       endPoint[1] -= direction * 1e-2;
@@ -154,7 +157,7 @@ export default class Figure2D {
   }
 
   arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
-    return this.ellipse(x, y, radius, radius, startAngle, endAngle, anticlockwise);
+    return this.ellipse(x, y, radius, radius, 0, startAngle, endAngle, anticlockwise);
   }
 
   arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
