@@ -10664,12 +10664,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drawMesh2D", function() { return drawMesh2D; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36);
-/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37);
-/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38);
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36);
+/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37);
+/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
 
 
 
@@ -10709,7 +10711,7 @@ function mixRGBA(a, b) {
   var alpha = b[3];
 
   for (var i = 0; i < 4; i++) {
-    c[i] = Object(_math__WEBPACK_IMPORTED_MODULE_3__["mix"])(a[i], b[i], alpha);
+    c[i] = Object(_math__WEBPACK_IMPORTED_MODULE_4__["mix"])(a[i], b[i], alpha);
   }
 
   return "rgba(".concat(c.join(), ")");
@@ -10744,7 +10746,7 @@ function drawMesh2D(mesh, context) {
       colors.forEach(function (_ref2) {
         var offset = _ref2.offset,
             color = _ref2.color;
-        var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__["default"])(color);
+        var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(color);
         if (cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
 
         _gradient.addColorStop(offset, rgba);
@@ -10794,7 +10796,7 @@ function drawMesh2D(mesh, context) {
     _colors.forEach(function (_ref3) {
       var offset = _ref3.offset,
           color = _ref3.color;
-      var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__["default"])(color);
+      var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(color);
       if (cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
       gradient.addColorStop(offset, rgba);
     });
@@ -10825,8 +10827,8 @@ function drawMesh2D(mesh, context) {
   var count = mesh.contours.length;
   mesh.contours.forEach(function (points, i) {
     // eslint-disable-line complexity
-    var closed = points.closed;
     var len = points.length;
+    var closed = len > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec2"].equals(points[0], points[len - 1]);
     var drawTexture = i === count - 1 && mesh.texture;
 
     if (points && len > 0) {
@@ -10869,7 +10871,7 @@ function drawMesh2D(mesh, context) {
           var _context$measureText = context.measureText(text),
               width = _context$measureText.width;
 
-          var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_2__["default"])(font);
+          var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_3__["default"])(font);
           var height = fontInfo.pxLineHeight;
           context.textAlign = 'center';
           context.textBaseline = 'middle';
@@ -11601,6 +11603,8 @@ var _applyTexture = Symbol('applyTexture');
 
 var _applyTransform = Symbol('applyTransform');
 
+var _applyGradientTransform = Symbol('applyGradientTransform');
+
 var _gradient = Symbol('gradient');
 
 var _filter = Symbol('filter');
@@ -11710,6 +11714,12 @@ function () {
         transformPoint(point, m, w, h, true);
       }
 
+      normalizePoints(positions, this[_bound]);
+    }
+  }, {
+    key: _applyGradientTransform,
+    value: function value(m) {
+      var h = this[_bound][1][1];
       var vector = this[_uniforms].u_radialGradientVector;
 
       if (vector) {
@@ -11727,8 +11737,6 @@ function () {
         vector[4] = h - (x2 * m[1] + y2 * m[3] + m[5]);
         this[_uniforms].u_radialGradientVector = vector;
       }
-
-      normalizePoints(positions, this[_bound]);
     }
   }, {
     key: _applyTexture,
@@ -12005,6 +12013,9 @@ function () {
       this[_uniforms].u_radialGradientVector = _vector;
       this[_uniforms].u_colorSteps = colorSteps;
       if (type === 'fill') this[_uniforms].u_gradientType = 1;
+
+      this[_applyGradientTransform](this[_transform]);
+
       return this;
     }
   }, {
@@ -12031,10 +12042,16 @@ function () {
           this.accurate(this.transformScale);
         }
 
-        if (this[_mesh]) {
+        if (this[_mesh] || this[_uniforms].u_radialGradientVector) {
           m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform));
+        }
 
+        if (this[_mesh]) {
           this[_applyTransform](this[_mesh], m);
+        }
+
+        if (this[_uniforms].u_radialGradientVector) {
+          this[_applyGradientTransform](m);
         }
       }
 
@@ -12057,6 +12074,7 @@ function () {
       }
 
       if (this[_mesh]) this[_applyTransform](this[_mesh], m);
+      if (this[_uniforms].u_radialGradientVector) this[_applyGradientTransform](m);
       return this;
     }
   }, {

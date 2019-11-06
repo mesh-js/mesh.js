@@ -26,6 +26,7 @@ const _texOptions = Symbol('texOptions');
 const _blend = Symbol('blend');
 const _applyTexture = Symbol('applyTexture');
 const _applyTransform = Symbol('applyTransform');
+const _applyGradientTransform = Symbol('applyGradientTransform');
 const _gradient = Symbol('gradient');
 
 const _filter = Symbol('filter');
@@ -330,6 +331,11 @@ export default class Mesh2D {
       const point = positions[i];
       transformPoint(point, m, w, h, true);
     }
+    normalizePoints(positions, this[_bound]);
+  }
+
+  [_applyGradientTransform](m) {
+    const h = this[_bound][1][1];
     const vector = this[_uniforms].u_radialGradientVector;
     if(vector) {
       let [x1, y1, , x2, y2] = vector;
@@ -341,7 +347,6 @@ export default class Mesh2D {
       vector[4] = h - (x2 * m[1] + y2 * m[3] + m[5]);
       this[_uniforms].u_radialGradientVector = vector;
     }
-    normalizePoints(positions, this[_bound]);
   }
 
   [_applyTexture](mesh, options, transformed) {
@@ -514,6 +519,8 @@ export default class Mesh2D {
     this[_uniforms].u_colorSteps = colorSteps;
     if(type === 'fill') this[_uniforms].u_gradientType = 1;
 
+    this[_applyGradientTransform](this[_transform]);
+
     return this;
   }
 
@@ -530,9 +537,14 @@ export default class Mesh2D {
       if(acc > 1.5 || acc < 0.67) {
         this.accurate(this.transformScale);
       }
-      if(this[_mesh]) {
+      if(this[_mesh] || this[_uniforms].u_radialGradientVector) {
         m = mat2d(m) * mat2d.invert(transform);
+      }
+      if(this[_mesh]) {
         this[_applyTransform](this[_mesh], m);
+      }
+      if(this[_uniforms].u_radialGradientVector) {
+        this[_applyGradientTransform](m);
       }
     }
     return this;
@@ -546,6 +558,7 @@ export default class Mesh2D {
       this.accurate(this.transformScale);
     }
     if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform](m);
     return this;
   }
 

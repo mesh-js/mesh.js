@@ -1,3 +1,4 @@
+import {vec2} from 'gl-matrix';
 import vectorToRGBA from './vector-to-rgba';
 import parseFont from './parse-font';
 import {mix} from './math';
@@ -119,10 +120,9 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   context.transform(...mesh.transformMatrix);
   const count = mesh.contours.length;
   mesh.contours.forEach((points, i) => { // eslint-disable-line complexity
-    const closed = points.closed;
     const len = points.length;
+    const closed = len > 1 && vec2.equals(points[0], points[len - 1]);
     const drawTexture = i === count - 1 && mesh.texture;
-
     if(points && len > 0) {
       if(fill || stroke || drawTexture) {
         context.beginPath();
