@@ -7898,7 +7898,9 @@ function () {
           _ref2$fillColor = _ref2.fillColor,
           fillColor = _ref2$fillColor === void 0 ? null : _ref2$fillColor,
           _ref2$strokeColor = _ref2.strokeColor,
-          strokeColor = _ref2$strokeColor === void 0 ? null : _ref2$strokeColor;
+          strokeColor = _ref2$strokeColor === void 0 ? null : _ref2$strokeColor,
+          _ref2$strokeWidth = _ref2.strokeWidth,
+          strokeWidth = _ref2$strokeWidth === void 0 ? 1 : _ref2$strokeWidth;
 
       if (this[_glRenderer]) {
         var img = Object(_utils_create_text__WEBPACK_IMPORTED_MODULE_8__["default"])(text, {
@@ -11445,7 +11447,8 @@ var cacheMap = {};
 function createText(text, _ref) {
   var font = _ref.font,
       fillColor = _ref.fillColor,
-      strokeColor = _ref.strokeColor;
+      strokeColor = _ref.strokeColor,
+      strokeWidth = _ref.strokeWidth;
   var key = [text, font, String(fillColor), String(strokeColor)].join('###');
   var textCanvas = cacheMap[key];
   if (textCanvas) return textCanvas;
@@ -11456,6 +11459,10 @@ function createText(text, _ref) {
 
   var _textContext$measureT = textContext.measureText(text),
       width = _textContext$measureT.width;
+
+  if (/italic|oblique/.test(font)) {
+    width /= Math.cos(0.08333 * Math.PI);
+  }
 
   textContext.restore();
   var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_1__["default"])(font);
@@ -11496,6 +11503,7 @@ function createText(text, _ref) {
   }
 
   if (strokeColor) {
+    textContext.lineWidth = strokeWidth;
     if (Array.isArray(strokeColor)) strokeColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_3__["default"])(strokeColor);else if (strokeColor.vector) {
       var _gradient;
 

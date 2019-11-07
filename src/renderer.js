@@ -144,7 +144,7 @@ export default class Renderer {
     return renderer.loadTexture(textureURL, {useImageBitmap});
   }
 
-  createText(text, {font = '16px arial', fillColor = null, strokeColor = null} = {}) {
+  createText(text, {font = '16px arial', fillColor = null, strokeColor = null, strokeWidth = 1} = {}) {
     if(this[_glRenderer]) {
       const img = createText(
         text,

@@ -4,7 +4,7 @@ import vectorToRGBA from './vector-to-rgba';
 
 const cacheMap = {};
 
-export default function createText(text, {font, fillColor, strokeColor}) {
+export default function createText(text, {font, fillColor, strokeColor, strokeWidth}) {
   const key = [text, font, String(fillColor), String(strokeColor)].join('###');
   let textCanvas = cacheMap[key];
   if(textCanvas) return textCanvas;
@@ -14,7 +14,10 @@ export default function createText(text, {font, fillColor, strokeColor}) {
   const textContext = textCanvas.getContext('2d');
   textContext.save();
   textContext.font = font;
-  const {width} = textContext.measureText(text);
+  let {width} = textContext.measureText(text);
+  if(/italic|oblique/.test(font)) {
+    width /= Math.cos(0.08333 * Math.PI);
+  }
   textContext.restore();
 
   const fontInfo = parseFont(font);
@@ -53,6 +56,7 @@ export default function createText(text, {font, fillColor, strokeColor}) {
     textContext.fillText(text, left, top);
   }
   if(strokeColor) {
+    textContext.lineWidth = strokeWidth;
     if(Array.isArray(strokeColor)) strokeColor = vectorToRGBA(strokeColor);
     else if(strokeColor.vector) {
       let gradient;
