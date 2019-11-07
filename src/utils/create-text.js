@@ -15,13 +15,13 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   textContext.save();
   textContext.font = font;
   let {width} = textContext.measureText(text);
-  if(/italic|oblique/.test(font)) {
-    width /= Math.cos(0.08333 * Math.PI);
-  }
   textContext.restore();
 
   const fontInfo = parseFont(font);
   const height = fontInfo.pxLineHeight;
+  if(/italic|oblique/.test(font)) {
+    width += height * Math.tan(15 * Math.PI / 180);
+  }
 
   if(!fillColor && !strokeColor) fillColor = '#000';
 

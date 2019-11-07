@@ -11460,13 +11460,14 @@ function createText(text, _ref) {
   var _textContext$measureT = textContext.measureText(text),
       width = _textContext$measureT.width;
 
-  if (/italic|oblique/.test(font)) {
-    width /= Math.cos(0.08333 * Math.PI);
-  }
-
   textContext.restore();
   var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_1__["default"])(font);
   var height = fontInfo.pxLineHeight;
+
+  if (/italic|oblique/.test(font)) {
+    width += height * Math.tan(15 * Math.PI / 180);
+  }
+
   if (!fillColor && !strokeColor) fillColor = '#000';
   var canvas = textContext.canvas;
   canvas.width = Math.ceil(width);
