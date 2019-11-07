@@ -388,6 +388,8 @@ export default class Mesh2D {
     if(srcRect) {
       const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
       this[_uniforms].u_srcRect = sRect;
+    } else {
+      this[_uniforms].u_srcRect = [0, 0, 0, 0];
     }
     if(options.repeat) {
       this[_uniforms].u_repeat = 1;
