@@ -18447,7 +18447,7 @@ function () {
     get: function get() {
       var contours = this.contours;
 
-      if (contours) {
+      if (contours && contours.length) {
         var points = contours.reduce(function (a, b) {
           return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(a), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(b));
         });

@@ -49,7 +49,7 @@ export default class Figure2D {
 
   get boundingBox() {
     const contours = this.contours;
-    if(contours) {
+    if(contours && contours.length) {
       const points = contours.reduce((a, b) => [...a, ...b]);
       return getBounds(points);
     }
