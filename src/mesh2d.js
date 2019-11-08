@@ -132,7 +132,7 @@ export default class Mesh2D {
       meshData.boundingBox = getBounds(positions);
       return meshData.boundingBox;
     }
-    return null;
+    return [[0, 0], [0, 0]];
   }
 
   get boundingCenter() {
@@ -140,7 +140,7 @@ export default class Mesh2D {
     if(bound) {
       return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
     }
-    return null;
+    return [0, 0];
   }
 
   get lineWidth() {

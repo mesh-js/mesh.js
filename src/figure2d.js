@@ -53,7 +53,30 @@ export default class Figure2D {
       const points = contours.reduce((a, b) => [...a, ...b]);
       return getBounds(points);
     }
-    return null;
+    return [[0, 0], [0, 0]];
+  }
+
+  get boundingCenter() {
+    const bound = this.boundingBox;
+    if(bound) {
+      return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
+    }
+    return [0, 0];
+  }
+
+  normalize(x0 = 0, y0 = 0) {
+    const path = normalize(abs(this[_path])).map(([cmd, ...args]) => {
+      const transformed = [cmd];
+      for(let i = 0; i < args.length; i += 2) {
+        const x = args[i] - x0,
+          y = args[i + 1] - y0;
+        transformed.push(x, y);
+      }
+      return transformed;
+    });
+    this.beginPath();
+    this[_path].push(...path);
+    return this;
   }
 
   getPointAtLength(length) {
@@ -83,40 +106,6 @@ export default class Figure2D {
   clear() {
     this.beginPath();
   }
-
-  // arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
-  //   const PI2 = 2 * Math.PI;
-  //   if(endAngle === startAngle) return;
-  //   if(endAngle < startAngle) {
-  //     endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
-  //   }
-  //   if(endAngle - startAngle > PI2) {
-  //     endAngle = startAngle + PI2;
-  //   }
-
-  //   const delta = endAngle - startAngle;
-
-  //   let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
-
-  //   const startPoint = [x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle)];
-  //   const direction = anticlockwise ? -1 : 1;
-  //   const endPoint = [x + radius * Math.cos(endAngle), y + direction * radius * Math.sin(endAngle)];
-
-  //   const largeArcFlag = endAngle > Math.PI ? 1 : 0;
-  //   const sweepFlag = Number(!anticlockwise);
-
-  //   if(delta >= PI2) {
-  //     endPoint[1] -= direction * 1e-2;
-  //   }
-
-  //   path += startPoint.join(' ');
-
-  //   path += `A${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
-  //   if(delta >= PI2) {
-  //     path += 'Z';
-  //   }
-  //   this.addPath(path);
-  // }
 
   ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise = 0) {
     startAngle += rotation;

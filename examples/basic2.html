@@ -15,7 +15,8 @@
     const canvas = document.querySelector('canvas');
 
     const figure = new Figure2D();
-    figure.rect(-100, -100, 200, 200);
+    figure.rect(0, 0, 200, 200);
+    figure.normalize(...figure.boundingCenter);
 
     const mesh1 = new Mesh2D(figure, canvas);
     const mesh2 = new Mesh2D(figure, canvas);
