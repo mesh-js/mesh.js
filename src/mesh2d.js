@@ -129,7 +129,8 @@ export default class Mesh2D {
       positions = positions.map(([x, y]) => {
         return transformPoint([x, y], m, w, h, false);
       });
-      meshData.boundingBox = getBounds(positions);
+      if(positions.length) meshData.boundingBox = getBounds(positions);
+      else return [[0, 0], [0, 0]];
       return meshData.boundingBox;
     }
     return [[0, 0], [0, 0]];

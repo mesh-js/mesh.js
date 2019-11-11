@@ -12433,7 +12433,7 @@ function () {
 
           return transformPoint([x, y], m, w, h, false);
         });
-        meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_5___default()(positions);
+        if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_5___default()(positions);else return [[0, 0], [0, 0]];
         return meshData.boundingBox;
       }
 
