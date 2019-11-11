@@ -520,6 +520,7 @@ export default class Mesh2D {
     this[_uniforms].u_radialGradientVector = _vector;
     this[_uniforms].u_colorSteps = colorSteps;
     if(type === 'fill') this[_uniforms].u_gradientType = 1;
+    else this[_uniforms].u_gradientType = 0;
 
     this[_applyGradientTransform](this[_transform]);
 
