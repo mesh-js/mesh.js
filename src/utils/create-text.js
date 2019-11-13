@@ -18,7 +18,7 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   textContext.restore();
 
   const fontInfo = parseFont(font);
-  const height = fontInfo.pxLineHeight;
+  const height = Math.max(fontInfo.pxLineHeight, fontInfo.pxHeight * 1.13);
   if(/italic|oblique/.test(font)) {
     width += height * Math.tan(15 * Math.PI / 180);
   }

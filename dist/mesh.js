@@ -11462,7 +11462,7 @@ function createText(text, _ref) {
 
   textContext.restore();
   var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_1__["default"])(font);
-  var height = fontInfo.pxLineHeight;
+  var height = Math.max(fontInfo.pxLineHeight, fontInfo.pxHeight * 1.13);
 
   if (/italic|oblique/.test(font)) {
     width += height * Math.tan(15 * Math.PI / 180);
