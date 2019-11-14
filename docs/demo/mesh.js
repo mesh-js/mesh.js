@@ -8666,12 +8666,12 @@ function () {
     gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     this.programs = [];
     this._events = {};
-  } // WebGLRenderingContext.uniform[1234][fi][v]()
-  // WebGLRenderingContext.uniformMatrix[234]fv()
-
+  }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default()(Renderer, [{
     key: "_declareUniform",
+    // WebGLRenderingContext.uniform[1234][fi][v]()
+    // WebGLRenderingContext.uniformMatrix[234]fv()
     value: function _declareUniform(program, name) {
       var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '1f';
       var gl = this.gl;
@@ -9001,8 +9001,8 @@ function () {
       }
 
       var gl = this.gl;
-      gl.useProgram(program);
-      this.program = program;
+      gl.useProgram(program); // this.program = program;
+
       var dimension = program._dimension;
       gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
       var vPosition = gl.getAttribLocation(program, this.options.vertexPosition);
@@ -9432,6 +9432,12 @@ function () {
       if (this[_renderFrameID] == null) {
         this[_renderFrameID] = requestAnimationFrame(this.render.bind(this));
       }
+    }
+  }, {
+    key: "program",
+    get: function get() {
+      var gl = this.gl;
+      return gl.getParameter(gl.CURRENT_PROGRAM);
     }
   }, {
     key: "isWebGL2",
@@ -10363,10 +10369,7 @@ function pointsToBuffer(points) {
 
   if (points[0] == null || points[0].length == null) {
     if (buffer) {
-      for (var i = 0; i < points.length; i++) {
-        buffer[i] = points[i];
-      }
-
+      buffer.set(points, 0);
       return buffer;
     }
 
@@ -10382,9 +10385,9 @@ function pointsToBuffer(points) {
 
   var idx = 0;
 
-  for (var _i = 0; _i < len; _i++) {
+  for (var i = 0; i < len; i++) {
     for (var j = 0; j < deminsion; j++) {
-      buffer[idx++] = points[_i][j];
+      buffer[idx++] = points[i][j];
     }
   }
 
