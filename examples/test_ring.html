@@ -24,11 +24,11 @@
     });
 
     const figure = new Figure2D();
-    figure.moveTo(200, 200);
-    figure.ellipse(200, 200, 150, 50, 0.1, 0, 1.8 * Math.PI, false);
-    // const ang = 1.4 * Math.PI;
-    // figure.arc(100, 100, 50, 0, ang, false);
-    // figure.arc(100, 100, 30, ang, 0, true);
+    // figure.moveTo(200, 200);
+    // figure.ellipse(200, 200, 150, 50, 0.1, 0, 1.8 * Math.PI, false);
+    const ang = 2 * Math.PI;
+    figure.arc(100, 100, 50, 0, ang, false);
+    figure.arc(100, 100, 30, ang - 0.001, 0, true);
 
     const m = new Mesh2D(figure, canvas);
     m.setFill({color: 'red'});
