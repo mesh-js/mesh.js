@@ -11845,9 +11845,12 @@ function () {
     value: function setResolution(_ref13) {
       var width = _ref13.width,
           height = _ref13.height;
-      this[_mesh] = null;
-      this[_bound][1][0] = width;
-      this[_bound][1][1] = height;
+
+      if (this[_bound][1][0] !== width || this[_bound][1][1] !== height) {
+        this[_mesh] = null;
+        this[_bound][1][0] = width;
+        this[_bound][1][1] = height;
+      }
     } // join: 'miter' or 'bevel'
     // cap: 'butt' or 'square'
     // lineDash: null

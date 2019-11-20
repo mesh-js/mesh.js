@@ -411,9 +411,11 @@ export default class Mesh2D {
   }
 
   setResolution({width, height}) {
-    this[_mesh] = null;
-    this[_bound][1][0] = width;
-    this[_bound][1][1] = height;
+    if(this[_bound][1][0] !== width || this[_bound][1][1] !== height) {
+      this[_mesh] = null;
+      this[_bound][1][0] = width;
+      this[_bound][1][1] = height;
+    }
   }
 
   // join: 'miter' or 'bevel'
