@@ -93,7 +93,7 @@ export function getPointAtLength(contours, length) {
   if(!Number.isFinite(length)) {
     throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
   }
-
+  if(contours.length <= 0) return {x: 0, y: 0, angle: 0};
   if(length <= 0) {
     const p0 = contours[0][0];
     const p1 = contours[0][1];
