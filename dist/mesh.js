@@ -103,10 +103,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Renderer", function() { return _renderer__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(81);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Figure2D", function() { return _figure2d__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42);
+/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(59);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Mesh2D", function() { return _mesh2d__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
 /* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(88);
@@ -121,7 +121,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_parse_font__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseFont", function() { return _utils_parse_font__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(67);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(74);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseColor", function() { return _utils_parse_color__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -7731,15 +7731,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_compress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(39);
 /* harmony import */ var _utils_create_text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(41);
 /* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(34);
-/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(42);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(55);
-/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(76);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(42);
+/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(59);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(69);
+/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(83);
 
 
 
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
 
 
 
@@ -7775,7 +7777,7 @@ function drawFilterContext(renderer, filterContext, width, height) {
   var filterTexture = renderer.createTexture(filterContext.canvas);
   var contours = [[[0, 0], [width, 0], [width, height], [0, height], [0, 0]]];
   contours.closed = true;
-  var filterMesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_10__["default"]({
+  var filterMesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_11__["default"]({
     contours: contours
   }, {
     width: width,
@@ -7839,9 +7841,9 @@ function () {
     if (contextType === 'webgl' || contextType === 'webgl2') {
       if (contextType === 'webgl2') this[_options].webgl2 = true;
       var renderer = new gl_renderer__WEBPACK_IMPORTED_MODULE_4__["default"](canvas, this[_options]);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["createShaders"])(renderer);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["applyShader"])(renderer);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["createCloudShaders"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__["createShaders"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__["applyShader"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__["createCloudShaders"])(renderer);
       var gl = renderer.gl; // gl.clearColor(1.0, 1.0, 1.0, 1.0);
       // gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
 
@@ -7961,10 +7963,10 @@ function () {
           var hasTexture = !!mesh.uniforms.u_texSampler;
           var hasFilter = !!mesh.uniforms.u_filterFlag;
           var hasGradient = !!mesh.uniforms.u_radialGradientVector;
-          var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(this[_globalTransform]);
+          var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(this[_globalTransform]);
           var hasCloudColor = cloud.hasCloudColor;
           var hasCloudFilter = true;
-          Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["applyCloudShader"])(renderer, {
+          Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__["applyCloudShader"])(renderer, {
             hasTexture: hasTexture,
             hasFilter: hasFilter,
             hasGradient: hasGradient,
@@ -8042,7 +8044,7 @@ function () {
         var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(this, meshes);
         var gl = renderer.gl;
         if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
-        var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(this[_globalTransform]);
+        var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(this[_globalTransform]);
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -8055,7 +8057,7 @@ function () {
 
             if (!program && mesh.filterCanvas) {
               // 有一些滤镜用shader不好实现：blur、drop-shadow、url
-              Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["applyShader"])(renderer, {
+              Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__["applyShader"])(renderer, {
                 hasTexture: true
               });
               var _this$canvas2 = this.canvas,
@@ -8115,7 +8117,7 @@ function () {
                 var hasTexture = !!mesh.uniforms.u_texSampler;
                 var hasFilter = !!mesh.uniforms.u_filterFlag;
                 var hasGradient = !!mesh.uniforms.u_radialGradientVector;
-                Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_12__["applyShader"])(renderer, {
+                Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_13__["applyShader"])(renderer, {
                   hasTexture: hasTexture,
                   hasFilter: hasFilter,
                   hasGradient: hasGradient,
@@ -8165,10 +8167,64 @@ function () {
       }
     }
   }, {
+    key: "drawImage",
+    value: function drawImage(image) {
+      var texture = this.createTexture(image);
+      var _this$canvas3 = this.canvas,
+          width = _this$canvas3.width,
+          height = _this$canvas3.height;
+      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_10__["default"]();
+      figure.rect(0, 0, width, height);
+      var mesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_11__["default"](figure, {
+        width: width,
+        height: height
+      });
+
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var argLength = args.length;
+
+      if (argLength < 2) {
+        throw new TypeError("Failed to execute 'drawImage' on 'Renderer': 3 arguments required, but only ".concat(args.length + 1, " present."));
+      }
+
+      if (argLength !== 2 && argLength !== 4 && argLength !== 8) {
+        throw new TypeError("Failed to execute 'drawImage' on 'Renderer': Valid arities are: [3, 5, 9], but ".concat(args.length + 1, " arguments provided."));
+      }
+
+      if (argLength === 2) {
+        // drawImage(image, dx, dy)
+        var rect = [args[0], args[1], image.width, image.height];
+        mesh.setTexture(texture, {
+          rect: rect
+        });
+      } else if (argLength === 4) {
+        // drawImage(image, dx, dy, dWidth, dHeight)
+        mesh.setTexture(texture, {
+          rect: args
+        });
+      } else if (argLength === 8) {
+        // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+        var srcRect = args.slice(0, 4);
+
+        var _rect = args.slice(4);
+
+        mesh.setTexture(texture, {
+          rect: _rect,
+          srcRect: srcRect
+        });
+      }
+
+      this.drawMeshes([mesh]);
+      this.deleteTexture(texture);
+    }
+  }, {
     key: "setGlobalTransform",
     value: function setGlobalTransform() {
-      for (var _len = arguments.length, m = new Array(_len), _key = 0; _key < _len; _key++) {
-        m[_key] = arguments[_key];
+      for (var _len2 = arguments.length, m = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        m[_key2] = arguments[_key2];
       }
 
       var transform = this[_globalTransform];
@@ -8187,8 +8243,8 @@ function () {
     value: function globalTransform() {
       var transform = this[_globalTransform];
 
-      for (var _len2 = arguments.length, m = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        m[_key2] = arguments[_key2];
+      for (var _len3 = arguments.length, m = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        m[_key3] = arguments[_key3];
       }
 
       this[_globalTransform] = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, transform);
@@ -11545,6 +11601,1525 @@ function createText(text, _ref) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Figure2D; });
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(43);
+/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(44);
+/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(parse_svg_path__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(46);
+/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(abs_svg_path__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(47);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(49);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(56);
+/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(58);
+
+
+
+
+
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
+
+
+
+
+
+
+
+var _contours = Symbol('contours');
+
+var _path = Symbol('path');
+
+var _simplify = Symbol('simplify');
+
+var _scale = Symbol('scale');
+
+var Figure2D =
+/*#__PURE__*/
+function () {
+  function Figure2D() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Figure2D);
+
+    if (typeof options === 'string') options = {
+      path: options
+    };
+    if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(options.path);else this[_path] = [];
+    this[_contours] = null;
+    this[_simplify] = options.simplify || 0;
+    this[_scale] = options.scale || 1;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Figure2D, [{
+    key: "normalize",
+    value: function normalize() {
+      var _this$_path;
+
+      var x0 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var y0 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+      var path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default()(this[_path])).map(function (_ref) {
+        var _ref2 = _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref),
+            cmd = _ref2[0],
+            args = _ref2.slice(1);
+
+        var transformed = [cmd];
+
+        for (var i = 0; i < args.length; i += 2) {
+          var x = args[i] - x0,
+              y = args[i + 1] - y0;
+          transformed.push(x, y);
+        }
+
+        return transformed;
+      });
+
+      this.beginPath();
+
+      (_this$_path = this[_path]).push.apply(_this$_path, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(path));
+
+      return this;
+    }
+  }, {
+    key: "getPointAtLength",
+    value: function getPointAtLength(length) {
+      if (this.contours) {
+        return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_9__["getPointAtLength"])(this[_contours], length);
+      }
+
+      return null;
+    }
+  }, {
+    key: "getTotalLength",
+    value: function getTotalLength() {
+      if (this.contours) {
+        return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_9__["getTotalLength"])(this[_contours]);
+      }
+
+      return 0;
+    }
+  }, {
+    key: "addPath",
+    value: function addPath(path) {
+      var _this$_path2;
+
+      this[_contours] = null;
+
+      (_this$_path2 = this[_path]).push.apply(_this$_path2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(path)));
+    }
+  }, {
+    key: "beginPath",
+    value: function beginPath() {
+      this[_path] = [];
+      this[_contours] = null;
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.beginPath();
+    }
+  }, {
+    key: "ellipse",
+    value: function ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle) {
+      var anticlockwise = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0;
+      startAngle += rotation;
+      endAngle += rotation;
+      if (radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
+      var PI2 = 2 * Math.PI;
+
+      if (endAngle < startAngle) {
+        endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
+      }
+
+      if (endAngle - startAngle > PI2) {
+        endAngle = startAngle + PI2;
+      }
+
+      var delta = endAngle - startAngle;
+      var path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
+      var direction = anticlockwise ? -1 : 1;
+      var startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_10__["getPoint"])(x, y, radiusX, radiusY, startAngle);
+      var endPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_10__["getPoint"])(x, y, radiusX, radiusY, endAngle);
+      var sweepFlag = Number(!anticlockwise);
+      var largeArcFlag = delta > Math.PI ? 1 : 0;
+      if (anticlockwise) largeArcFlag = 1 - largeArcFlag;
+
+      if (delta >= PI2) {
+        endPoint[1] -= direction * 1e-2;
+      }
+
+      path += startPoint.join(' ');
+      path += "A".concat(radiusX, " ").concat(radiusY, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
+
+      if (delta >= PI2) {
+        path += 'Z';
+      }
+
+      this.addPath(path);
+    }
+  }, {
+    key: "arc",
+    value: function arc(x, y, radius, startAngle, endAngle) {
+      var anticlockwise = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+      return this.ellipse(x, y, radius, radius, 0, startAngle, endAngle, anticlockwise);
+    }
+  }, {
+    key: "arcTo",
+    value: function arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
+      this[_contours] = null;
+
+      this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
+    }
+  }, {
+    key: "moveTo",
+    value: function moveTo(x, y) {
+      this[_contours] = null;
+
+      this[_path].push(['M', x, y]);
+    }
+  }, {
+    key: "lineTo",
+    value: function lineTo(x, y) {
+      this[_contours] = null;
+
+      this[_path].push(['L', x, y]);
+    }
+  }, {
+    key: "bezierCurveTo",
+    value: function bezierCurveTo(x1, y1, x2, y2, x, y) {
+      this[_contours] = null;
+
+      this[_path].push(['C', x1, y1, x2, y2, x, y]);
+    }
+  }, {
+    key: "quadraticCurveTo",
+    value: function quadraticCurveTo(x1, y1, x, y) {
+      this[_contours] = null;
+
+      this[_path].push(['Q', x1, y1, x, y]);
+    }
+  }, {
+    key: "rect",
+    value: function rect(x, y, width, height) {
+      var path = "M".concat(x, " ").concat(y, "L").concat(x + width, " ").concat(y, "L").concat(x + width, " ").concat(y + height, "L").concat(x, " ").concat(y + height, "Z");
+      this.addPath(path);
+    }
+  }, {
+    key: "closePath",
+    value: function closePath() {
+      this[_contours] = null;
+      var lastPath = [];
+      var len = this[_path].length;
+
+      if (len > 0) {
+        lastPath = this[_path][len - 1];
+      }
+
+      if (lastPath[0] !== 'Z' && lastPath[0] !== 'z') {
+        this[_path].push(['Z']);
+      }
+    }
+  }, {
+    key: "contours",
+    get: function get() {
+      var ret = null;
+
+      if (!this[_contours] && this[_path]) {
+        var path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default()(this[_path]));
+
+        this[_contours] = _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default()(path, this[_scale], this[_simplify]);
+        this[_contours].path = path;
+        this[_contours].simplify = this[_simplify];
+        this[_contours].scale = this[_scale];
+      }
+
+      if (this[_contours]) {
+        ret = this[_contours].map(function (c) {
+          return _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(c);
+        });
+        ret.path = this[_contours].path;
+        ret.simplify = this[_contours].simplify;
+        ret.scale = this[_contours].scale;
+      }
+
+      return ret;
+    }
+  }, {
+    key: "path",
+    get: function get() {
+      return this[_path];
+    }
+  }, {
+    key: "simplify",
+    get: function get() {
+      return this[_simplify];
+    }
+  }, {
+    key: "boundingBox",
+    get: function get() {
+      var contours = this.contours;
+
+      if (contours && contours.length) {
+        var points = contours.reduce(function (a, b) {
+          return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(a), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(b));
+        });
+        return bound_points__WEBPACK_IMPORTED_MODULE_5___default()(points);
+      }
+
+      return [[0, 0], [0, 0]];
+    }
+  }, {
+    key: "boundingCenter",
+    get: function get() {
+      var bound = this.boundingBox;
+
+      if (bound) {
+        return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
+      }
+
+      return [0, 0];
+    }
+  }]);
+
+  return Figure2D;
+}();
+
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(14);
+
+var iterableToArray = __webpack_require__(19);
+
+var nonIterableRest = __webpack_require__(16);
+
+function _toArray(arr) {
+  return arrayWithHoles(arr) || iterableToArray(arr) || nonIterableRest();
+}
+
+module.exports = _toArray;
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+
+module.exports = parse
+
+/**
+ * expected argument lengths
+ * @type {Object}
+ */
+
+var length = {a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0}
+
+/**
+ * segment pattern
+ * @type {RegExp}
+ */
+
+var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig
+
+/**
+ * parse an svg path data string. Generates an Array
+ * of commands where each command is an Array of the
+ * form `[command, arg1, arg2, ...]`
+ *
+ * @param {String} path
+ * @return {Array}
+ */
+
+function parse(path) {
+	var data = []
+	path.replace(segment, function(_, command, args){
+		var type = command.toLowerCase()
+		args = parseValues(args)
+
+		// overloaded moveTo
+		if (type == 'm' && args.length > 2) {
+			data.push([command].concat(args.splice(0, 2)))
+			type = 'l'
+			command = command == 'm' ? 'l' : 'L'
+		}
+
+		while (true) {
+			if (args.length == length[type]) {
+				args.unshift(command)
+				return data.push(args)
+			}
+			if (args.length < length[type]) throw new Error('malformed path data')
+			data.push([command].concat(args.splice(0, length[type])))
+		}
+	})
+	return data
+}
+
+var number = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig
+
+function parseValues(args) {
+	var numbers = args.match(number)
+	return numbers ? numbers.map(Number) : []
+}
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = findBounds
+
+function findBounds(points) {
+  var n = points.length
+  if(n === 0) {
+    return [[], []]
+  }
+  var d = points[0].length
+  var lo = points[0].slice()
+  var hi = points[0].slice()
+  for(var i=1; i<n; ++i) {
+    var p = points[i]
+    for(var j=0; j<d; ++j) {
+      var x = p[j]
+      lo[j] = Math.min(lo[j], x)
+      hi[j] = Math.max(hi[j], x)
+    }
+  }
+  return [lo, hi]
+}
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports) {
+
+
+module.exports = absolutize
+
+/**
+ * redefine `path` with absolute coordinates
+ *
+ * @param {Array} path
+ * @return {Array}
+ */
+
+function absolutize(path){
+	var startX = 0
+	var startY = 0
+	var x = 0
+	var y = 0
+
+	return path.map(function(seg){
+		seg = seg.slice()
+		var type = seg[0]
+		var command = type.toUpperCase()
+
+		// is relative
+		if (type != command) {
+			seg[0] = command
+			switch (type) {
+				case 'a':
+					seg[6] += x
+					seg[7] += y
+					break
+				case 'v':
+					seg[1] += y
+					break
+				case 'h':
+					seg[1] += x
+					break
+				default:
+					for (var i = 1; i < seg.length;) {
+						seg[i++] += x
+						seg[i++] += y
+					}
+			}
+		}
+
+		// update cursor state
+		switch (command) {
+			case 'Z':
+				x = startX
+				y = startY
+				break
+			case 'H':
+				x = seg[1]
+				break
+			case 'V':
+				y = seg[1]
+				break
+			case 'M':
+				x = startX = seg[1]
+				y = startY = seg[2]
+				break
+			default:
+				x = seg[seg.length - 2]
+				y = seg[seg.length - 1]
+		}
+
+		return seg
+	})
+}
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalize; });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _a2c__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
+
+
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+// https://github.com/jkroso/normalize-svg-path
+
+/* eslint-disable */
+
+function normalize(path) {
+  // init state
+  var prev;
+  var result = [];
+  var bezierX = 0;
+  var bezierY = 0;
+  var startX = 0;
+  var startY = 0;
+  var quadX = null;
+  var quadY = null;
+  var x = 0;
+  var y = 0;
+
+  for (var i = 0, len = path.length; i < len; i++) {
+    var seg = path[i];
+    var command = seg[0];
+
+    switch (command) {
+      case 'M':
+        startX = seg[1];
+        startY = seg[2];
+        break;
+
+      case 'A':
+        var curves = Object(_a2c__WEBPACK_IMPORTED_MODULE_1__["default"])(x, y, seg[6], seg[7], seg[4], seg[5], seg[1], seg[2], seg[3]);
+        if (!curves.length) continue;
+        curves = curves.map(function (curve) {
+          var _curve = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(curve, 8),
+              x0 = _curve[0],
+              y0 = _curve[1],
+              x1 = _curve[2],
+              y1 = _curve[3],
+              x2 = _curve[4],
+              y2 = _curve[5],
+              x = _curve[6],
+              y = _curve[7];
+
+          return {
+            x1: x1,
+            y1: y1,
+            x2: x2,
+            y2: y2,
+            x: x,
+            y: y
+          };
+        });
+
+        for (var j = 0, c; j < curves.length; j++) {
+          c = curves[j];
+          seg = ['C', c.x1, c.y1, c.x2, c.y2, c.x, c.y];
+          if (j < curves.length - 1) result.push(seg);
+        }
+
+        break;
+
+      case 'S':
+        // default control point
+        var cx = x;
+        var cy = y;
+
+        if (prev == 'C' || prev == 'S') {
+          cx += cx - bezierX; // reflect the previous command's control
+
+          cy += cy - bezierY; // point relative to the current point
+        }
+
+        seg = ['C', cx, cy, seg[1], seg[2], seg[3], seg[4]];
+        break;
+
+      case 'T':
+        if (prev == 'Q' || prev == 'T') {
+          quadX = x * 2 - quadX; // as with 'S' reflect previous control point
+
+          quadY = y * 2 - quadY;
+        } else {
+          quadX = x;
+          quadY = y;
+        }
+
+        seg = quadratic(x, y, quadX, quadY, seg[1], seg[2]);
+        break;
+
+      case 'Q':
+        quadX = seg[1];
+        quadY = seg[2];
+        seg = quadratic(x, y, seg[1], seg[2], seg[3], seg[4]);
+        break;
+
+      case 'L':
+        seg = line(x, y, seg[1], seg[2]);
+        break;
+
+      case 'H':
+        seg = line(x, y, seg[1], y);
+        break;
+
+      case 'V':
+        seg = line(x, y, x, seg[1]);
+        break;
+
+      case 'Z':
+        seg = line(x, y, startX, startY);
+        break;
+    } // update state
+
+
+    prev = command;
+    x = seg[seg.length - 2];
+    y = seg[seg.length - 1];
+
+    if (seg.length > 4) {
+      bezierX = seg[seg.length - 4];
+      bezierY = seg[seg.length - 3];
+    } else {
+      bezierX = x;
+      bezierY = y;
+    }
+
+    result.push(seg);
+  }
+
+  return result;
+}
+
+function line(x1, y1, x2, y2) {
+  return ['C', x1, y1, x2, y2, x2, y2];
+}
+
+function quadratic(x1, y1, cx, cy, x2, y2) {
+  return ['C', x1 / 3 + 2 / 3 * cx, y1 / 3 + 2 / 3 * cy, x2 / 3 + 2 / 3 * cx, y2 / 3 + 2 / 3 * cy, x2, y2];
+}
+/* eslint-enable */
+
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return a2c; });
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+// https://github.com/colinmeinke/svg-arc-to-cubic-bezier
+//
+// Convert an arc to a sequence of cubic bézier curves
+//
+var TAU = Math.PI * 2;
+/* eslint-disable space-infix-ops */
+// Calculate an angle between two unit vectors
+//
+// Since we measure angle between radii of circular arcs,
+// we can use simplified math (without length normalization)
+//
+
+function unit_vector_angle(ux, uy, vx, vy) {
+  var sign = ux * vy - uy * vx < 0 ? -1 : 1;
+  var dot = ux * vx + uy * vy; // Add this to work with arbitrary vectors:
+  // dot /= Math.sqrt(ux * ux + uy * uy) * Math.sqrt(vx * vx + vy * vy);
+  // rounding errors, e.g. -1.0000000000000002 can screw up this
+
+  if (dot > 1.0) {
+    dot = 1.0;
+  }
+
+  if (dot < -1.0) {
+    dot = -1.0;
+  }
+
+  return sign * Math.acos(dot);
+} // Convert from endpoint to center parameterization,
+// see http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes
+//
+// Return [cx, cy, theta1, delta_theta]
+//
+
+
+function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
+  // Step 1.
+  //
+  // Moving an ellipse so origin will be the middlepoint between our two
+  // points. After that, rotate it to line up ellipse axes with coordinate
+  // axes.
+  //
+  var x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
+  var y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
+  var rx_sq = rx * rx;
+  var ry_sq = ry * ry;
+  var x1p_sq = x1p * x1p;
+  var y1p_sq = y1p * y1p; // Step 2.
+  //
+  // Compute coordinates of the centre of this ellipse (cx', cy')
+  // in the new coordinate system.
+  //
+
+  var radicant = rx_sq * ry_sq - rx_sq * y1p_sq - ry_sq * x1p_sq;
+
+  if (radicant < 0) {
+    // due to rounding errors it might be e.g. -1.3877787807814457e-17
+    radicant = 0;
+  }
+
+  radicant /= rx_sq * y1p_sq + ry_sq * x1p_sq;
+  radicant = Math.sqrt(radicant) * (fa === fs ? -1 : 1);
+  var cxp = radicant * rx / ry * y1p;
+  var cyp = radicant * -ry / rx * x1p; // Step 3.
+  //
+  // Transform back to get centre coordinates (cx, cy) in the original
+  // coordinate system.
+  //
+
+  var cx = cos_phi * cxp - sin_phi * cyp + (x1 + x2) / 2;
+  var cy = sin_phi * cxp + cos_phi * cyp + (y1 + y2) / 2; // Step 4.
+  //
+  // Compute angles (theta1, delta_theta).
+  //
+
+  var v1x = (x1p - cxp) / rx;
+  var v1y = (y1p - cyp) / ry;
+  var v2x = (-x1p - cxp) / rx;
+  var v2y = (-y1p - cyp) / ry;
+  var theta1 = unit_vector_angle(1, 0, v1x, v1y);
+  var delta_theta = unit_vector_angle(v1x, v1y, v2x, v2y);
+
+  if (fs === 0 && delta_theta > 0) {
+    delta_theta -= TAU;
+  }
+
+  if (fs === 1 && delta_theta < 0) {
+    delta_theta += TAU;
+  }
+
+  return [cx, cy, theta1, delta_theta];
+} //
+// Approximate one unit arc segment with bézier curves,
+// see http://math.stackexchange.com/questions/873224
+//
+
+
+function approximate_unit_arc(theta1, delta_theta) {
+  var alpha = 4 / 3 * Math.tan(delta_theta / 4);
+  var x1 = Math.cos(theta1);
+  var y1 = Math.sin(theta1);
+  var x2 = Math.cos(theta1 + delta_theta);
+  var y2 = Math.sin(theta1 + delta_theta);
+  return [x1, y1, x1 - y1 * alpha, y1 + x1 * alpha, x2 + y2 * alpha, y2 - x2 * alpha, x2, y2];
+}
+
+function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
+  var sin_phi = Math.sin(phi * TAU / 360);
+  var cos_phi = Math.cos(phi * TAU / 360); // Make sure radii are valid
+  //
+
+  var x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
+  var y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
+
+  if (x1p === 0 && y1p === 0) {
+    // we're asked to draw line to itself
+    return [];
+  }
+
+  if (rx === 0 || ry === 0) {
+    // one of the radii is zero
+    return [];
+  } // Compensate out-of-range radii
+  //
+
+
+  rx = Math.abs(rx);
+  ry = Math.abs(ry);
+  var lambda = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
+
+  if (lambda > 1) {
+    rx *= Math.sqrt(lambda);
+    ry *= Math.sqrt(lambda);
+  } // Get center parameters (cx, cy, theta1, delta_theta)
+  //
+
+
+  var cc = get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi);
+  var result = [];
+  var theta1 = cc[2];
+  var delta_theta = cc[3]; // Split an arc to multiple segments, so each segment
+  // will be less than τ/4 (= 90°)
+  //
+
+  var segments = Math.max(Math.ceil(Math.abs(delta_theta) / (TAU / 4)), 1);
+  delta_theta /= segments;
+
+  for (var i = 0; i < segments; i++) {
+    result.push(approximate_unit_arc(theta1, delta_theta));
+    theta1 += delta_theta;
+  } // We have a bezier approximation of a unit circle,
+  // now need to transform back to the original ellipse
+  //
+
+
+  return result.map(function (curve) {
+    for (var _i = 0; _i < curve.length; _i += 2) {
+      var x = curve[_i + 0];
+      var y = curve[_i + 1]; // scale
+
+      x *= rx;
+      y *= ry; // rotate
+
+      var xp = cos_phi * x - sin_phi * y;
+      var yp = sin_phi * x + cos_phi * y; // translate
+
+      curve[_i + 0] = xp + cc[0];
+      curve[_i + 1] = yp + cc[1];
+    }
+
+    return curve;
+  });
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+// https://github.com/mattdesl/svg-path-contours
+
+/* eslint-disable */
+var bezier = __webpack_require__(50);
+
+var vec2 = __webpack_require__(52);
+
+var simplify = __webpack_require__(53);
+
+function set(out, x, y) {
+  out[0] = x;
+  out[1] = y;
+  return out;
+}
+
+var tmp1 = [0, 0],
+    tmp2 = [0, 0],
+    tmp3 = [0, 0];
+
+function bezierTo(points, scale, start, seg) {
+  bezier(start, set(tmp1, seg[1], seg[2]), set(tmp2, seg[3], seg[4]), set(tmp3, seg[5], seg[6]), scale, points);
+}
+
+module.exports = function contours(svg, scale, simp) {
+  var paths = [];
+  var points = [];
+  var pen = [0, 0];
+  svg.forEach(function (segment, i, self) {
+    if (segment[0] === 'M') {
+      vec2.copy(pen, segment.slice(1));
+
+      if (points.length > 0) {
+        paths.push(points);
+        points = [];
+      }
+    } else if (segment[0] === 'C') {
+      bezierTo(points, scale, pen, segment);
+      set(pen, segment[5], segment[6]);
+    } else {
+      throw new Error('illegal type in SVG: ' + segment[0]);
+    }
+  });
+  if (points.length > 0) paths.push(points);
+  return paths.map(function (points) {
+    return simplify(points, simp || 0);
+  });
+};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(51)()
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+function clone(point) { //TODO: use gl-vec2 for this
+    return [point[0], point[1]]
+}
+
+function vec2(x, y) {
+    return [x, y]
+}
+
+module.exports = function createBezierBuilder(opt) {
+    opt = opt||{}
+
+    var RECURSION_LIMIT = typeof opt.recursion === 'number' ? opt.recursion : 8
+    var FLT_EPSILON = typeof opt.epsilon === 'number' ? opt.epsilon : 1.19209290e-7
+    var PATH_DISTANCE_EPSILON = typeof opt.pathEpsilon === 'number' ? opt.pathEpsilon : 1.0
+
+    var curve_angle_tolerance_epsilon = typeof opt.angleEpsilon === 'number' ? opt.angleEpsilon : 0.01
+    var m_angle_tolerance = opt.angleTolerance || 0
+    var m_cusp_limit = opt.cuspLimit || 0
+
+    return function bezierCurve(start, c1, c2, end, scale, points) {
+        if (!points)
+            points = []
+
+        scale = typeof scale === 'number' ? scale : 1.0
+        var distanceTolerance = PATH_DISTANCE_EPSILON / scale
+        distanceTolerance *= distanceTolerance
+        begin(start, c1, c2, end, points, distanceTolerance)
+        return points
+    }
+
+
+    ////// Based on:
+    ////// https://github.com/pelson/antigrain/blob/master/agg-2.4/src/agg_curves.cpp
+
+    function begin(start, c1, c2, end, points, distanceTolerance) {
+        points.push(clone(start))
+        var x1 = start[0],
+            y1 = start[1],
+            x2 = c1[0],
+            y2 = c1[1],
+            x3 = c2[0],
+            y3 = c2[1],
+            x4 = end[0],
+            y4 = end[1]
+        recursive(x1, y1, x2, y2, x3, y3, x4, y4, points, distanceTolerance, 0)
+        points.push(clone(end))
+    }
+
+    function recursive(x1, y1, x2, y2, x3, y3, x4, y4, points, distanceTolerance, level) {
+        if(level > RECURSION_LIMIT) 
+            return
+
+        var pi = Math.PI
+
+        // Calculate all the mid-points of the line segments
+        //----------------------
+        var x12   = (x1 + x2) / 2
+        var y12   = (y1 + y2) / 2
+        var x23   = (x2 + x3) / 2
+        var y23   = (y2 + y3) / 2
+        var x34   = (x3 + x4) / 2
+        var y34   = (y3 + y4) / 2
+        var x123  = (x12 + x23) / 2
+        var y123  = (y12 + y23) / 2
+        var x234  = (x23 + x34) / 2
+        var y234  = (y23 + y34) / 2
+        var x1234 = (x123 + x234) / 2
+        var y1234 = (y123 + y234) / 2
+
+        if(level > 0) { // Enforce subdivision first time
+            // Try to approximate the full cubic curve by a single straight line
+            //------------------
+            var dx = x4-x1
+            var dy = y4-y1
+
+            var d2 = Math.abs((x2 - x4) * dy - (y2 - y4) * dx)
+            var d3 = Math.abs((x3 - x4) * dy - (y3 - y4) * dx)
+
+            var da1, da2
+
+            if(d2 > FLT_EPSILON && d3 > FLT_EPSILON) {
+                // Regular care
+                //-----------------
+                if((d2 + d3)*(d2 + d3) <= distanceTolerance * (dx*dx + dy*dy)) {
+                    // If the curvature doesn't exceed the distanceTolerance value
+                    // we tend to finish subdivisions.
+                    //----------------------
+                    if(m_angle_tolerance < curve_angle_tolerance_epsilon) {
+                        points.push(vec2(x1234, y1234))
+                        return
+                    }
+
+                    // Angle & Cusp Condition
+                    //----------------------
+                    var a23 = Math.atan2(y3 - y2, x3 - x2)
+                    da1 = Math.abs(a23 - Math.atan2(y2 - y1, x2 - x1))
+                    da2 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - a23)
+                    if(da1 >= pi) da1 = 2*pi - da1
+                    if(da2 >= pi) da2 = 2*pi - da2
+
+                    if(da1 + da2 < m_angle_tolerance) {
+                        // Finally we can stop the recursion
+                        //----------------------
+                        points.push(vec2(x1234, y1234))
+                        return
+                    }
+
+                    if(m_cusp_limit !== 0.0) {
+                        if(da1 > m_cusp_limit) {
+                            points.push(vec2(x2, y2))
+                            return
+                        }
+
+                        if(da2 > m_cusp_limit) {
+                            points.push(vec2(x3, y3))
+                            return
+                        }
+                    }
+                }
+            }
+            else {
+                if(d2 > FLT_EPSILON) {
+                    // p1,p3,p4 are collinear, p2 is considerable
+                    //----------------------
+                    if(d2 * d2 <= distanceTolerance * (dx*dx + dy*dy)) {
+                        if(m_angle_tolerance < curve_angle_tolerance_epsilon) {
+                            points.push(vec2(x1234, y1234))
+                            return
+                        }
+
+                        // Angle Condition
+                        //----------------------
+                        da1 = Math.abs(Math.atan2(y3 - y2, x3 - x2) - Math.atan2(y2 - y1, x2 - x1))
+                        if(da1 >= pi) da1 = 2*pi - da1
+
+                        if(da1 < m_angle_tolerance) {
+                            points.push(vec2(x2, y2))
+                            points.push(vec2(x3, y3))
+                            return
+                        }
+
+                        if(m_cusp_limit !== 0.0) {
+                            if(da1 > m_cusp_limit) {
+                                points.push(vec2(x2, y2))
+                                return
+                            }
+                        }
+                    }
+                }
+                else if(d3 > FLT_EPSILON) {
+                    // p1,p2,p4 are collinear, p3 is considerable
+                    //----------------------
+                    if(d3 * d3 <= distanceTolerance * (dx*dx + dy*dy)) {
+                        if(m_angle_tolerance < curve_angle_tolerance_epsilon) {
+                            points.push(vec2(x1234, y1234))
+                            return
+                        }
+
+                        // Angle Condition
+                        //----------------------
+                        da1 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - Math.atan2(y3 - y2, x3 - x2))
+                        if(da1 >= pi) da1 = 2*pi - da1
+
+                        if(da1 < m_angle_tolerance) {
+                            points.push(vec2(x2, y2))
+                            points.push(vec2(x3, y3))
+                            return
+                        }
+
+                        if(m_cusp_limit !== 0.0) {
+                            if(da1 > m_cusp_limit)
+                            {
+                                points.push(vec2(x3, y3))
+                                return
+                            }
+                        }
+                    }
+                }
+                else {
+                    // Collinear case
+                    //-----------------
+                    dx = x1234 - (x1 + x4) / 2
+                    dy = y1234 - (y1 + y4) / 2
+                    if(dx*dx + dy*dy <= distanceTolerance) {
+                        points.push(vec2(x1234, y1234))
+                        return
+                    }
+                }
+            }
+        }
+
+        // Continue subdivision
+        //----------------------
+        recursive(x1, y1, x12, y12, x123, y123, x1234, y1234, points, distanceTolerance, level + 1) 
+        recursive(x1234, y1234, x234, y234, x34, y34, x4, y4, points, distanceTolerance, level + 1) 
+    }
+}
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "create", function() { return create; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clone", function() { return clone; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "copy", function() { return copy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scaleAndAdd", function() { return scaleAndAdd; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dot", function() { return dot; });
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
+
+function clone(arr) {
+  return [arr[0], arr[1]];
+}
+
+function create() {
+  return [0, 0];
+}
+
+var copy = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].copy;
+var scaleAndAdd = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].scaleAndAdd;
+var dot = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].dot;
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var simplifyRadialDist = __webpack_require__(54)
+var simplifyDouglasPeucker = __webpack_require__(55)
+
+//simplifies using both algorithms
+module.exports = function simplify(points, tolerance) {
+    points = simplifyRadialDist(points, tolerance);
+    points = simplifyDouglasPeucker(points, tolerance);
+    return points;
+}
+
+module.exports.radialDistance = simplifyRadialDist;
+module.exports.douglasPeucker = simplifyDouglasPeucker;
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+function getSqDist(p1, p2) {
+    var dx = p1[0] - p2[0],
+        dy = p1[1] - p2[1];
+
+    return dx * dx + dy * dy;
+}
+
+// basic distance-based simplification
+module.exports = function simplifyRadialDist(points, tolerance) {
+    if (points.length<=1)
+        return points;
+    tolerance = typeof tolerance === 'number' ? tolerance : 1;
+    var sqTolerance = tolerance * tolerance;
+    
+    var prevPoint = points[0],
+        newPoints = [prevPoint],
+        point;
+
+    for (var i = 1, len = points.length; i < len; i++) {
+        point = points[i];
+
+        if (getSqDist(point, prevPoint) > sqTolerance) {
+            newPoints.push(point);
+            prevPoint = point;
+        }
+    }
+
+    if (prevPoint !== point) newPoints.push(point);
+
+    return newPoints;
+}
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+// square distance from a point to a segment
+function getSqSegDist(p, p1, p2) {
+    var x = p1[0],
+        y = p1[1],
+        dx = p2[0] - x,
+        dy = p2[1] - y;
+
+    if (dx !== 0 || dy !== 0) {
+
+        var t = ((p[0] - x) * dx + (p[1] - y) * dy) / (dx * dx + dy * dy);
+
+        if (t > 1) {
+            x = p2[0];
+            y = p2[1];
+
+        } else if (t > 0) {
+            x += dx * t;
+            y += dy * t;
+        }
+    }
+
+    dx = p[0] - x;
+    dy = p[1] - y;
+
+    return dx * dx + dy * dy;
+}
+
+function simplifyDPStep(points, first, last, sqTolerance, simplified) {
+    var maxSqDist = sqTolerance,
+        index;
+
+    for (var i = first + 1; i < last; i++) {
+        var sqDist = getSqSegDist(points[i], points[first], points[last]);
+
+        if (sqDist > maxSqDist) {
+            index = i;
+            maxSqDist = sqDist;
+        }
+    }
+
+    if (maxSqDist > sqTolerance) {
+        if (index - first > 1) simplifyDPStep(points, first, index, sqTolerance, simplified);
+        simplified.push(points[index]);
+        if (last - index > 1) simplifyDPStep(points, index, last, sqTolerance, simplified);
+    }
+}
+
+// simplification using Ramer-Douglas-Peucker algorithm
+module.exports = function simplifyDouglasPeucker(points, tolerance) {
+    if (points.length<=1)
+        return points;
+    tolerance = typeof tolerance === 'number' ? tolerance : 1;
+    var sqTolerance = tolerance * tolerance;
+    
+    var last = points.length - 1;
+
+    var simplified = [points[0]];
+    simplifyDPStep(points, 0, last, sqTolerance, simplified);
+    simplified.push(points[last]);
+
+    return simplified;
+}
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTotalLength", function() { return getTotalLength; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPointAtLength", function() { return getPointAtLength; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDashContours", function() { return getDashContours; });
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _positions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57);
+
+
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
+function getTotalLength(contours) {
+  if (contours.totalLength != null) return contours.totalLength;
+  var length = 0;
+  contours.forEach(function (points) {
+    var s = points[0];
+
+    for (var i = 1; i < points.length; i++) {
+      var p = points[i];
+      length += Object(_positions__WEBPACK_IMPORTED_MODULE_1__["distance"])(s, p);
+      s = p;
+    }
+  });
+  contours.totalLength = length;
+  return length;
+}
+
+function splitContours(contours, length) {
+  var rest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  length = Number(length);
+
+  if (!Number.isFinite(length)) {
+    throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
+  }
+
+  if (length <= 0) {
+    throw new TypeError('Length must > 0');
+  }
+
+  var contoursLength = getTotalLength(contours);
+
+  if (length >= contoursLength) {
+    var points = contours[contours.length - 1];
+    var p0 = points[points.length - 2];
+    var p1 = points[points.length - 1];
+    var angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+    return {
+      current: contours.map(function (c) {
+        return _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(c);
+      }),
+      point: {
+        x: p1[0],
+        y: p1[1],
+        angle: angle
+      }
+    };
+  }
+
+  var current = [];
+
+  for (var i = 0; i < contours.length; i++) {
+    current[i] = [];
+    var _points = contours[i];
+    var _p = _points[0];
+
+    for (var j = 1; j < _points.length; j++) {
+      var _p2 = _points[j];
+      var d = Object(_positions__WEBPACK_IMPORTED_MODULE_1__["distance"])(_p, _p2);
+
+      if (length < d) {
+        var p = length / d;
+
+        var _angle = Math.atan2(_p2[1] - _p[1], _p2[0] - _p[0]);
+
+        var point = {
+          x: _p[0] * (1 - p) + _p2[0] * p,
+          y: _p[1] * (1 - p) + _p2[1] * p,
+          angle: _angle
+        };
+        current[i].push(_p);
+        if (length > 0) current[i].push([point.x, point.y]);
+
+        if (!rest) {
+          return {
+            current: current,
+            point: point
+          };
+        }
+
+        var restContours = [];
+        var o = i;
+
+        for (; i < contours.length; i++) {
+          restContours[i - o] = [];
+          if (i === o) restContours[0].push([point.x, point.y]);
+
+          for (; j < _points.length; j++) {
+            restContours[i - o].push(_points[j]);
+          }
+
+          j = 0;
+        }
+
+        return {
+          current: current,
+          point: point,
+          rest: restContours
+        };
+      }
+
+      length -= d;
+      current[i].push(_p);
+      _p = _p2;
+    }
+  }
+}
+
+function getPointAtLength(contours, length) {
+  length = Number(length);
+
+  if (!Number.isFinite(length)) {
+    throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
+  }
+
+  if (contours.length <= 0) return {
+    x: 0,
+    y: 0,
+    angle: 0
+  };
+
+  if (length <= 0) {
+    var p0 = contours[0][0];
+    var p1 = contours[0][1];
+    var angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+    return {
+      x: p0[0],
+      y: p0[1],
+      angle: angle
+    };
+  }
+
+  return splitContours(contours, length, false).point;
+}
+function getDashContours(contours, lineDash, lineDashOffset) {
+  var idx = 0;
+  var dash = lineDash[0];
+  var rest = contours;
+  var splitedContours = [];
+  var lineDashLen = lineDash.length;
+
+  if (lineDashOffset > 0) {
+    do {
+      lineDashOffset -= lineDash[idx % lineDashLen];
+      idx++;
+    } while (lineDashOffset > 0);
+
+    if (lineDashOffset < 0) {
+      dash = -lineDashOffset;
+      idx--;
+    }
+  } else if (lineDashOffset < 0) {
+    idx = -1;
+
+    do {
+      lineDashOffset += lineDash[idx % lineDashLen + lineDashLen];
+      idx--;
+    } while (lineDashOffset < 0);
+
+    if (lineDashOffset > 0) {
+      idx++;
+      dash = lineDash[idx % lineDashLen + lineDashLen] - lineDashOffset;
+    }
+  }
+
+  do {
+    var splited = splitContours(rest, dash);
+    rest = splited.rest;
+    if (++idx % 2) splitedContours.push.apply(splitedContours, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(splited.current));
+    var dashIndex = idx % lineDashLen;
+    if (dashIndex < 0) dashIndex += lineDashLen;
+    dash = lineDash[dashIndex];
+  } while (rest);
+
+  return splitedContours;
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "normalize", function() { return normalize; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "denormalize", function() { return denormalize; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "distance", function() { return distance; });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+
+
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+function normalize(_ref, w, h, d) {
+  var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 3),
+      x = _ref2[0],
+      y = _ref2[1],
+      z = _ref2[2];
+
+  x = x * 2 / w - 1;
+  y = 1 - y * 2 / h;
+
+  if (Number.isFinite(d)) {
+    z = z * 2 / d - 1;
+    return [x, y, z];
+  }
+
+  return [x, y];
+}
+function denormalize(_ref3, w, h, d) {
+  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 3),
+      x = _ref4[0],
+      y = _ref4[1],
+      z = _ref4[2];
+
+  x = (x + 1) * 0.5 * w;
+  y = (1 - y) * 0.5 * h;
+
+  if (Number.isFinite(d)) {
+    z = (z + 1) * 0.5 * d;
+    return [x, y, z];
+  }
+
+  return [x, y];
+}
+function distance(_ref5, _ref6) {
+  var _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 3),
+      x1 = _ref7[0],
+      y1 = _ref7[1],
+      _ref7$ = _ref7[2],
+      z1 = _ref7$ === void 0 ? 0 : _ref7$;
+
+  var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref6, 3),
+      x2 = _ref8[0],
+      y2 = _ref8[1],
+      _ref8$ = _ref8[2],
+      z2 = _ref8$ === void 0 ? 0 : _ref8$;
+
+  return Math.hypot(x2 - x1, y2 - y1, z2 - z1);
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPoint", function() { return getPoint; });
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+// 根据椭圆旋转角度求椭圆上的点
+var PI2 = Math.PI * 2;
+function getPoint(x0, y0, a, b, theta) {
+  theta %= PI2;
+  if (theta < 0) theta += PI2;
+  var k = Math.tan(theta);
+
+  if (Math.abs(k) < 1e5) {
+    // y - y0 = k (x - x0)
+    // y = k x + (y0 - k x0)
+    // (x - x0) ** 2 / a ** 2 + (y - y0) ** 2 / b ** 2 = 1
+    var c = y0 - k * x0;
+    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2);
+    var d = -1;
+    if (theta <= Math.PI / 2 || theta > 3 * Math.PI / 2) d = 1;
+    var x = d * Math.sqrt(1 / t) + x0;
+    var y = k * x + c;
+    return [x, y];
+  }
+
+  if (theta < Math.PI) {
+    return [x0, y0 + b];
+  }
+
+  return [x0, y0 - b];
+}
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Mesh2D; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
@@ -11555,20 +13130,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(43);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45);
 /* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(44);
+/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(60);
 /* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(40);
 /* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(36);
-/* harmony import */ var _utils_positions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(53);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(54);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(55);
+/* harmony import */ var _utils_positions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(57);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(68);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(69);
 /* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(56);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(57);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(70);
 /* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(61);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(49);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(67);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(74);
 
 
 
@@ -12687,35 +14262,7 @@ function () {
 
 
 /***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = findBounds
-
-function findBounds(points) {
-  var n = points.length
-  if(n === 0) {
-    return [[], []]
-  }
-  var d = points[0].length
-  var lo = points[0].slice()
-  var hi = points[0].slice()
-  for(var i=1; i<n; ++i) {
-    var p = points[i]
-    for(var j=0; j<d; ++j) {
-      var x = p[j]
-      lo[j] = Math.min(lo[j], x)
-      hi[j] = Math.max(hi[j], x)
-    }
-  }
-  return [lo, hi]
-}
-
-/***/ }),
-/* 44 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12724,9 +14271,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
+/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
 /* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(as_number__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _vecutil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46);
+/* harmony import */ var _vecutil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(52);
 
 
 
@@ -12741,7 +14288,7 @@ var lineB = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 var tangent = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 var miter = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 
-var util = __webpack_require__(47);
+var util = __webpack_require__(62);
 
 var computeMiter = util.computeMiter,
     normal = util.normal,
@@ -12938,7 +14485,7 @@ function extrusions(complex, point, normal, scale) {
 /* harmony default export */ __webpack_exports__["default"] = (Stroke);
 
 /***/ }),
-/* 45 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = function numtype(num, def) {
@@ -12948,43 +14495,14 @@ module.exports = function numtype(num, def) {
 }
 
 /***/ }),
-/* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "create", function() { return create; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clone", function() { return clone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "copy", function() { return copy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scaleAndAdd", function() { return scaleAndAdd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dot", function() { return dot; });
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-
-
-function clone(arr) {
-  return [arr[0], arr[1]];
-}
-
-function create() {
-  return [0, 0];
-}
-
-var copy = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].copy;
-var scaleAndAdd = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].scaleAndAdd;
-var dot = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].dot;
-
-
-/***/ }),
-/* 47 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var add = __webpack_require__(48)
-var set = __webpack_require__(49)
-var normalize = __webpack_require__(50)
-var subtract = __webpack_require__(51)
-var dot = __webpack_require__(52)
+var add = __webpack_require__(63)
+var set = __webpack_require__(64)
+var normalize = __webpack_require__(65)
+var subtract = __webpack_require__(66)
+var dot = __webpack_require__(67)
 
 var tmp = [0, 0]
 
@@ -13015,7 +14533,7 @@ module.exports.direction = function direction(out, a, b) {
 }
 
 /***/ }),
-/* 48 */
+/* 63 */
 /***/ (function(module, exports) {
 
 module.exports = add
@@ -13035,7 +14553,7 @@ function add(out, a, b) {
 }
 
 /***/ }),
-/* 49 */
+/* 64 */
 /***/ (function(module, exports) {
 
 module.exports = set
@@ -13055,7 +14573,7 @@ function set(out, x, y) {
 }
 
 /***/ }),
-/* 50 */
+/* 65 */
 /***/ (function(module, exports) {
 
 module.exports = normalize
@@ -13081,7 +14599,7 @@ function normalize(out, a) {
 }
 
 /***/ }),
-/* 51 */
+/* 66 */
 /***/ (function(module, exports) {
 
 module.exports = subtract
@@ -13101,7 +14619,7 @@ function subtract(out, a, b) {
 }
 
 /***/ }),
-/* 52 */
+/* 67 */
 /***/ (function(module, exports) {
 
 module.exports = dot
@@ -13118,70 +14636,7 @@ function dot(a, b) {
 }
 
 /***/ }),
-/* 53 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "normalize", function() { return normalize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "denormalize", function() { return denormalize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "distance", function() { return distance; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-
-
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-function normalize(_ref, w, h, d) {
-  var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 3),
-      x = _ref2[0],
-      y = _ref2[1],
-      z = _ref2[2];
-
-  x = x * 2 / w - 1;
-  y = 1 - y * 2 / h;
-
-  if (Number.isFinite(d)) {
-    z = z * 2 / d - 1;
-    return [x, y, z];
-  }
-
-  return [x, y];
-}
-function denormalize(_ref3, w, h, d) {
-  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 3),
-      x = _ref4[0],
-      y = _ref4[1],
-      z = _ref4[2];
-
-  x = (x + 1) * 0.5 * w;
-  y = (1 - y) * 0.5 * h;
-
-  if (Number.isFinite(d)) {
-    z = (z + 1) * 0.5 * d;
-    return [x, y, z];
-  }
-
-  return [x, y];
-}
-function distance(_ref5, _ref6) {
-  var _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 3),
-      x1 = _ref7[0],
-      y1 = _ref7[1],
-      _ref7$ = _ref7[2],
-      z1 = _ref7$ === void 0 ? 0 : _ref7$;
-
-  var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref6, 3),
-      x2 = _ref8[0],
-      y2 = _ref8[1],
-      _ref8$ = _ref8[2],
-      z2 = _ref8$ === void 0 ? 0 : _ref8$;
-
-  return Math.hypot(x2 - x1, y2 - y1, z2 - z1);
-}
-
-/***/ }),
-/* 54 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13319,7 +14774,7 @@ function hueRotate(deg) {
 }
 
 /***/ }),
-/* 55 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13332,199 +14787,7 @@ function isUnitTransform(m) {
 }
 
 /***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTotalLength", function() { return getTotalLength; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPointAtLength", function() { return getPointAtLength; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDashContours", function() { return getDashContours; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _positions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53);
-
-
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-
-function getTotalLength(contours) {
-  if (contours.totalLength != null) return contours.totalLength;
-  var length = 0;
-  contours.forEach(function (points) {
-    var s = points[0];
-
-    for (var i = 1; i < points.length; i++) {
-      var p = points[i];
-      length += Object(_positions__WEBPACK_IMPORTED_MODULE_1__["distance"])(s, p);
-      s = p;
-    }
-  });
-  contours.totalLength = length;
-  return length;
-}
-
-function splitContours(contours, length) {
-  var rest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  length = Number(length);
-
-  if (!Number.isFinite(length)) {
-    throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
-  }
-
-  if (length <= 0) {
-    throw new TypeError('Length must > 0');
-  }
-
-  var contoursLength = getTotalLength(contours);
-
-  if (length >= contoursLength) {
-    var points = contours[contours.length - 1];
-    var p0 = points[points.length - 2];
-    var p1 = points[points.length - 1];
-    var angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
-    return {
-      current: contours.map(function (c) {
-        return _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(c);
-      }),
-      point: {
-        x: p1[0],
-        y: p1[1],
-        angle: angle
-      }
-    };
-  }
-
-  var current = [];
-
-  for (var i = 0; i < contours.length; i++) {
-    current[i] = [];
-    var _points = contours[i];
-    var _p = _points[0];
-
-    for (var j = 1; j < _points.length; j++) {
-      var _p2 = _points[j];
-      var d = Object(_positions__WEBPACK_IMPORTED_MODULE_1__["distance"])(_p, _p2);
-
-      if (length < d) {
-        var p = length / d;
-
-        var _angle = Math.atan2(_p2[1] - _p[1], _p2[0] - _p[0]);
-
-        var point = {
-          x: _p[0] * (1 - p) + _p2[0] * p,
-          y: _p[1] * (1 - p) + _p2[1] * p,
-          angle: _angle
-        };
-        current[i].push(_p);
-        if (length > 0) current[i].push([point.x, point.y]);
-
-        if (!rest) {
-          return {
-            current: current,
-            point: point
-          };
-        }
-
-        var restContours = [];
-        var o = i;
-
-        for (; i < contours.length; i++) {
-          restContours[i - o] = [];
-          if (i === o) restContours[0].push([point.x, point.y]);
-
-          for (; j < _points.length; j++) {
-            restContours[i - o].push(_points[j]);
-          }
-
-          j = 0;
-        }
-
-        return {
-          current: current,
-          point: point,
-          rest: restContours
-        };
-      }
-
-      length -= d;
-      current[i].push(_p);
-      _p = _p2;
-    }
-  }
-}
-
-function getPointAtLength(contours, length) {
-  length = Number(length);
-
-  if (!Number.isFinite(length)) {
-    throw new TypeError('Failed to execute \'getPointAtLength\' on figure: The provided float value is non-finite.');
-  }
-
-  if (contours.length <= 0) return {
-    x: 0,
-    y: 0,
-    angle: 0
-  };
-
-  if (length <= 0) {
-    var p0 = contours[0][0];
-    var p1 = contours[0][1];
-    var angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
-    return {
-      x: p0[0],
-      y: p0[1],
-      angle: angle
-    };
-  }
-
-  return splitContours(contours, length, false).point;
-}
-function getDashContours(contours, lineDash, lineDashOffset) {
-  var idx = 0;
-  var dash = lineDash[0];
-  var rest = contours;
-  var splitedContours = [];
-  var lineDashLen = lineDash.length;
-
-  if (lineDashOffset > 0) {
-    do {
-      lineDashOffset -= lineDash[idx % lineDashLen];
-      idx++;
-    } while (lineDashOffset > 0);
-
-    if (lineDashOffset < 0) {
-      dash = -lineDashOffset;
-      idx--;
-    }
-  } else if (lineDashOffset < 0) {
-    idx = -1;
-
-    do {
-      lineDashOffset += lineDash[idx % lineDashLen + lineDashLen];
-      idx--;
-    } while (lineDashOffset < 0);
-
-    if (lineDashOffset > 0) {
-      idx++;
-      dash = lineDash[idx % lineDashLen + lineDashLen] - lineDashOffset;
-    }
-  }
-
-  do {
-    var splited = splitContours(rest, dash);
-    rest = splited.rest;
-    if (++idx % 2) splitedContours.push.apply(splitedContours, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(splited.current));
-    var dashIndex = idx % lineDashLen;
-    if (dashIndex < 0) dashIndex += lineDashLen;
-    dash = lineDash[dashIndex];
-  } while (rest);
-
-  return splitedContours;
-}
-
-/***/ }),
-/* 57 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -13532,9 +14795,9 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/triangulate-contours
 
 /* eslint-disable */
-var Tess2 = __webpack_require__(58);
+var Tess2 = __webpack_require__(71);
 
-var xtend = __webpack_require__(60);
+var xtend = __webpack_require__(73);
 
 module.exports = function (contours, opt) {
   opt = opt || {};
@@ -13588,13 +14851,13 @@ module.exports = function (contours, opt) {
 };
 
 /***/ }),
-/* 58 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(59);
+module.exports = __webpack_require__(72);
 
 /***/ }),
-/* 59 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17025,7 +18288,7 @@ module.exports = __webpack_require__(59);
 	};
 
 /***/ }),
-/* 60 */
+/* 73 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -17050,397 +18313,13 @@ function extend() {
 
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-// https://github.com/mattdesl/svg-path-contours
-
-/* eslint-disable */
-var bezier = __webpack_require__(62);
-
-var vec2 = __webpack_require__(46);
-
-var simplify = __webpack_require__(64);
-
-function set(out, x, y) {
-  out[0] = x;
-  out[1] = y;
-  return out;
-}
-
-var tmp1 = [0, 0],
-    tmp2 = [0, 0],
-    tmp3 = [0, 0];
-
-function bezierTo(points, scale, start, seg) {
-  bezier(start, set(tmp1, seg[1], seg[2]), set(tmp2, seg[3], seg[4]), set(tmp3, seg[5], seg[6]), scale, points);
-}
-
-module.exports = function contours(svg, scale, simp) {
-  var paths = [];
-  var points = [];
-  var pen = [0, 0];
-  svg.forEach(function (segment, i, self) {
-    if (segment[0] === 'M') {
-      vec2.copy(pen, segment.slice(1));
-
-      if (points.length > 0) {
-        paths.push(points);
-        points = [];
-      }
-    } else if (segment[0] === 'C') {
-      bezierTo(points, scale, pen, segment);
-      set(pen, segment[5], segment[6]);
-    } else {
-      throw new Error('illegal type in SVG: ' + segment[0]);
-    }
-  });
-  if (points.length > 0) paths.push(points);
-  return paths.map(function (points) {
-    return simplify(points, simp || 0);
-  });
-};
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(63)()
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports) {
-
-function clone(point) { //TODO: use gl-vec2 for this
-    return [point[0], point[1]]
-}
-
-function vec2(x, y) {
-    return [x, y]
-}
-
-module.exports = function createBezierBuilder(opt) {
-    opt = opt||{}
-
-    var RECURSION_LIMIT = typeof opt.recursion === 'number' ? opt.recursion : 8
-    var FLT_EPSILON = typeof opt.epsilon === 'number' ? opt.epsilon : 1.19209290e-7
-    var PATH_DISTANCE_EPSILON = typeof opt.pathEpsilon === 'number' ? opt.pathEpsilon : 1.0
-
-    var curve_angle_tolerance_epsilon = typeof opt.angleEpsilon === 'number' ? opt.angleEpsilon : 0.01
-    var m_angle_tolerance = opt.angleTolerance || 0
-    var m_cusp_limit = opt.cuspLimit || 0
-
-    return function bezierCurve(start, c1, c2, end, scale, points) {
-        if (!points)
-            points = []
-
-        scale = typeof scale === 'number' ? scale : 1.0
-        var distanceTolerance = PATH_DISTANCE_EPSILON / scale
-        distanceTolerance *= distanceTolerance
-        begin(start, c1, c2, end, points, distanceTolerance)
-        return points
-    }
-
-
-    ////// Based on:
-    ////// https://github.com/pelson/antigrain/blob/master/agg-2.4/src/agg_curves.cpp
-
-    function begin(start, c1, c2, end, points, distanceTolerance) {
-        points.push(clone(start))
-        var x1 = start[0],
-            y1 = start[1],
-            x2 = c1[0],
-            y2 = c1[1],
-            x3 = c2[0],
-            y3 = c2[1],
-            x4 = end[0],
-            y4 = end[1]
-        recursive(x1, y1, x2, y2, x3, y3, x4, y4, points, distanceTolerance, 0)
-        points.push(clone(end))
-    }
-
-    function recursive(x1, y1, x2, y2, x3, y3, x4, y4, points, distanceTolerance, level) {
-        if(level > RECURSION_LIMIT) 
-            return
-
-        var pi = Math.PI
-
-        // Calculate all the mid-points of the line segments
-        //----------------------
-        var x12   = (x1 + x2) / 2
-        var y12   = (y1 + y2) / 2
-        var x23   = (x2 + x3) / 2
-        var y23   = (y2 + y3) / 2
-        var x34   = (x3 + x4) / 2
-        var y34   = (y3 + y4) / 2
-        var x123  = (x12 + x23) / 2
-        var y123  = (y12 + y23) / 2
-        var x234  = (x23 + x34) / 2
-        var y234  = (y23 + y34) / 2
-        var x1234 = (x123 + x234) / 2
-        var y1234 = (y123 + y234) / 2
-
-        if(level > 0) { // Enforce subdivision first time
-            // Try to approximate the full cubic curve by a single straight line
-            //------------------
-            var dx = x4-x1
-            var dy = y4-y1
-
-            var d2 = Math.abs((x2 - x4) * dy - (y2 - y4) * dx)
-            var d3 = Math.abs((x3 - x4) * dy - (y3 - y4) * dx)
-
-            var da1, da2
-
-            if(d2 > FLT_EPSILON && d3 > FLT_EPSILON) {
-                // Regular care
-                //-----------------
-                if((d2 + d3)*(d2 + d3) <= distanceTolerance * (dx*dx + dy*dy)) {
-                    // If the curvature doesn't exceed the distanceTolerance value
-                    // we tend to finish subdivisions.
-                    //----------------------
-                    if(m_angle_tolerance < curve_angle_tolerance_epsilon) {
-                        points.push(vec2(x1234, y1234))
-                        return
-                    }
-
-                    // Angle & Cusp Condition
-                    //----------------------
-                    var a23 = Math.atan2(y3 - y2, x3 - x2)
-                    da1 = Math.abs(a23 - Math.atan2(y2 - y1, x2 - x1))
-                    da2 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - a23)
-                    if(da1 >= pi) da1 = 2*pi - da1
-                    if(da2 >= pi) da2 = 2*pi - da2
-
-                    if(da1 + da2 < m_angle_tolerance) {
-                        // Finally we can stop the recursion
-                        //----------------------
-                        points.push(vec2(x1234, y1234))
-                        return
-                    }
-
-                    if(m_cusp_limit !== 0.0) {
-                        if(da1 > m_cusp_limit) {
-                            points.push(vec2(x2, y2))
-                            return
-                        }
-
-                        if(da2 > m_cusp_limit) {
-                            points.push(vec2(x3, y3))
-                            return
-                        }
-                    }
-                }
-            }
-            else {
-                if(d2 > FLT_EPSILON) {
-                    // p1,p3,p4 are collinear, p2 is considerable
-                    //----------------------
-                    if(d2 * d2 <= distanceTolerance * (dx*dx + dy*dy)) {
-                        if(m_angle_tolerance < curve_angle_tolerance_epsilon) {
-                            points.push(vec2(x1234, y1234))
-                            return
-                        }
-
-                        // Angle Condition
-                        //----------------------
-                        da1 = Math.abs(Math.atan2(y3 - y2, x3 - x2) - Math.atan2(y2 - y1, x2 - x1))
-                        if(da1 >= pi) da1 = 2*pi - da1
-
-                        if(da1 < m_angle_tolerance) {
-                            points.push(vec2(x2, y2))
-                            points.push(vec2(x3, y3))
-                            return
-                        }
-
-                        if(m_cusp_limit !== 0.0) {
-                            if(da1 > m_cusp_limit) {
-                                points.push(vec2(x2, y2))
-                                return
-                            }
-                        }
-                    }
-                }
-                else if(d3 > FLT_EPSILON) {
-                    // p1,p2,p4 are collinear, p3 is considerable
-                    //----------------------
-                    if(d3 * d3 <= distanceTolerance * (dx*dx + dy*dy)) {
-                        if(m_angle_tolerance < curve_angle_tolerance_epsilon) {
-                            points.push(vec2(x1234, y1234))
-                            return
-                        }
-
-                        // Angle Condition
-                        //----------------------
-                        da1 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - Math.atan2(y3 - y2, x3 - x2))
-                        if(da1 >= pi) da1 = 2*pi - da1
-
-                        if(da1 < m_angle_tolerance) {
-                            points.push(vec2(x2, y2))
-                            points.push(vec2(x3, y3))
-                            return
-                        }
-
-                        if(m_cusp_limit !== 0.0) {
-                            if(da1 > m_cusp_limit)
-                            {
-                                points.push(vec2(x3, y3))
-                                return
-                            }
-                        }
-                    }
-                }
-                else {
-                    // Collinear case
-                    //-----------------
-                    dx = x1234 - (x1 + x4) / 2
-                    dy = y1234 - (y1 + y4) / 2
-                    if(dx*dx + dy*dy <= distanceTolerance) {
-                        points.push(vec2(x1234, y1234))
-                        return
-                    }
-                }
-            }
-        }
-
-        // Continue subdivision
-        //----------------------
-        recursive(x1, y1, x12, y12, x123, y123, x1234, y1234, points, distanceTolerance, level + 1) 
-        recursive(x1234, y1234, x234, y234, x34, y34, x4, y4, points, distanceTolerance, level + 1) 
-    }
-}
-
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var simplifyRadialDist = __webpack_require__(65)
-var simplifyDouglasPeucker = __webpack_require__(66)
-
-//simplifies using both algorithms
-module.exports = function simplify(points, tolerance) {
-    points = simplifyRadialDist(points, tolerance);
-    points = simplifyDouglasPeucker(points, tolerance);
-    return points;
-}
-
-module.exports.radialDistance = simplifyRadialDist;
-module.exports.douglasPeucker = simplifyDouglasPeucker;
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports) {
-
-function getSqDist(p1, p2) {
-    var dx = p1[0] - p2[0],
-        dy = p1[1] - p2[1];
-
-    return dx * dx + dy * dy;
-}
-
-// basic distance-based simplification
-module.exports = function simplifyRadialDist(points, tolerance) {
-    if (points.length<=1)
-        return points;
-    tolerance = typeof tolerance === 'number' ? tolerance : 1;
-    var sqTolerance = tolerance * tolerance;
-    
-    var prevPoint = points[0],
-        newPoints = [prevPoint],
-        point;
-
-    for (var i = 1, len = points.length; i < len; i++) {
-        point = points[i];
-
-        if (getSqDist(point, prevPoint) > sqTolerance) {
-            newPoints.push(point);
-            prevPoint = point;
-        }
-    }
-
-    if (prevPoint !== point) newPoints.push(point);
-
-    return newPoints;
-}
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports) {
-
-// square distance from a point to a segment
-function getSqSegDist(p, p1, p2) {
-    var x = p1[0],
-        y = p1[1],
-        dx = p2[0] - x,
-        dy = p2[1] - y;
-
-    if (dx !== 0 || dy !== 0) {
-
-        var t = ((p[0] - x) * dx + (p[1] - y) * dy) / (dx * dx + dy * dy);
-
-        if (t > 1) {
-            x = p2[0];
-            y = p2[1];
-
-        } else if (t > 0) {
-            x += dx * t;
-            y += dy * t;
-        }
-    }
-
-    dx = p[0] - x;
-    dy = p[1] - y;
-
-    return dx * dx + dy * dy;
-}
-
-function simplifyDPStep(points, first, last, sqTolerance, simplified) {
-    var maxSqDist = sqTolerance,
-        index;
-
-    for (var i = first + 1; i < last; i++) {
-        var sqDist = getSqSegDist(points[i], points[first], points[last]);
-
-        if (sqDist > maxSqDist) {
-            index = i;
-            maxSqDist = sqDist;
-        }
-    }
-
-    if (maxSqDist > sqTolerance) {
-        if (index - first > 1) simplifyDPStep(points, first, index, sqTolerance, simplified);
-        simplified.push(points[index]);
-        if (last - index > 1) simplifyDPStep(points, index, last, sqTolerance, simplified);
-    }
-}
-
-// simplification using Ramer-Douglas-Peucker algorithm
-module.exports = function simplifyDouglasPeucker(points, tolerance) {
-    if (points.length<=1)
-        return points;
-    tolerance = typeof tolerance === 'number' ? tolerance : 1;
-    var sqTolerance = tolerance * tolerance;
-    
-    var last = points.length - 1;
-
-    var simplified = [points[0]];
-    simplifyDPStep(points, 0, last, sqTolerance, simplified);
-    simplified.push(points[last]);
-
-    return simplified;
-}
-
-
-/***/ }),
-/* 67 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return parseColor; });
-/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68);
+/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75);
 /* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(color_rgba__WEBPACK_IMPORTED_MODULE_0__);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
@@ -17452,7 +18331,7 @@ function parseColor(colorStr) {
 }
 
 /***/ }),
-/* 68 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17460,9 +18339,9 @@ function parseColor(colorStr) {
 
 
 
-var parse = __webpack_require__(69)
-var hsl = __webpack_require__(73)
-var clamp = __webpack_require__(75)
+var parse = __webpack_require__(76)
+var hsl = __webpack_require__(80)
+var clamp = __webpack_require__(82)
 
 module.exports = function rgba (color) {
 	var values, i, l
@@ -17488,7 +18367,7 @@ module.exports = function rgba (color) {
 
 
 /***/ }),
-/* 69 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17498,9 +18377,9 @@ module.exports = function rgba (color) {
 
 
 
-var names = __webpack_require__(70)
-var isObject = __webpack_require__(71)
-var defined = __webpack_require__(72)
+var names = __webpack_require__(77)
+var isObject = __webpack_require__(78)
+var defined = __webpack_require__(79)
 
 module.exports = parse
 
@@ -17671,7 +18550,7 @@ function parse (cstr) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(35)))
 
 /***/ }),
-/* 70 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17830,7 +18709,7 @@ module.exports = {
 
 
 /***/ }),
-/* 71 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17844,7 +18723,7 @@ module.exports = function (x) {
 
 
 /***/ }),
-/* 72 */
+/* 79 */
 /***/ (function(module, exports) {
 
 module.exports = function () {
@@ -17855,7 +18734,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 73 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17864,7 +18743,7 @@ module.exports = function () {
  */
 
 
-var rgb = __webpack_require__(74);
+var rgb = __webpack_require__(81);
 
 module.exports = {
 	name: 'hsl',
@@ -17969,7 +18848,7 @@ rgb.hsl = function(rgb) {
 
 
 /***/ }),
-/* 74 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17990,7 +18869,7 @@ module.exports = {
 
 
 /***/ }),
-/* 75 */
+/* 82 */
 /***/ (function(module, exports) {
 
 module.exports = clamp
@@ -18003,7 +18882,7 @@ function clamp(value, min, max) {
 
 
 /***/ }),
-/* 76 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18014,10 +18893,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyCloudShader", function() { return applyCloudShader; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77);
-/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(78);
-/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(79);
-/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(80);
+/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(84);
+/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(85);
+/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(86);
+/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(87);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -18153,7 +19032,7 @@ function applyCloudShader(renderer) {
 }
 
 /***/ }),
-/* 77 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18161,7 +19040,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nattribute vec2 a_vertexTextureCoord;\nvarying vec2 vTextureCoord;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n\nvoid transformPoint(inout vec2 p) {\n  vec3 m0 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m1 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float w = u_globalTransform[3];\n  float h = u_globalTransform[7];\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);\n  \n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n#endif\n}");
 
 /***/ }),
-/* 78 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18169,7 +19048,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nuniform int u_texFlag;\nuniform int u_repeat;\nuniform vec4 u_srcRect;\nvarying vec2 vTextureCoord;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(u_texFlag > 0 && flagBackground > 0.0) {\n    vec2 texCoord = vTextureCoord;\n\n    if(u_repeat == 1) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(u_srcRect.z > 0.0) {\n        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;\n        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord);\n      float alpha = texColor.a;\n      if(u_opacity < 1.0) {\n        texColor.a *= u_opacity;\n        alpha *= mix(0.465, 1.0, u_opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
-/* 79 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18177,835 +19056,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec4 a_transform0;\nattribute vec4 a_transform1;\n\n#ifdef TEXTURE\nattribute vec2 a_vertexTextureCoord;\nvarying vec2 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n#endif\n\nvoid transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 m0 = vec3(a_transform0.x, a_transform0.z, a_transform1.y);\n  vec3 m1 = vec3(a_transform0.y, a_transform1.x, a_transform1.z);\n\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);\n  gl_Position = vec4(xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float width = u_globalTransform[3];\n  float height = u_globalTransform[7];\n  transformPoint(xy, m3, m4, width, height);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
-/* 80 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying float frameIndex;\nvarying vec2 vTextureCoord;\nuniform int u_texFlag;\nuniform int u_repeat;\nuniform vec4 u_srcRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef CLOUDFILTER\nuniform int u_cloudFilterFlag;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n\n#ifdef CLOUDFILTER\nvoid buildCloudColor(inout float colorCloudMatrix[20]) {\n  colorCloudMatrix[0] = colorCloud0[0];\n  colorCloudMatrix[1] = colorCloud1[0];\n  colorCloudMatrix[2] = colorCloud2[0];\n  colorCloudMatrix[3] = colorCloud3[0];\n  colorCloudMatrix[4] = colorCloud4[0];\n\n  colorCloudMatrix[5] = colorCloud0[1];\n  colorCloudMatrix[6] = colorCloud1[1];\n  colorCloudMatrix[7] = colorCloud2[1];\n  colorCloudMatrix[8] = colorCloud3[1];\n  colorCloudMatrix[9] = colorCloud4[1];\n\n  colorCloudMatrix[10] = colorCloud0[2];\n  colorCloudMatrix[11] = colorCloud1[2];\n  colorCloudMatrix[12] = colorCloud2[2];\n  colorCloudMatrix[13] = colorCloud3[2];\n  colorCloudMatrix[14] = colorCloud4[2];\n\n  colorCloudMatrix[15] = colorCloud0[3];\n  colorCloudMatrix[16] = colorCloud1[3];\n  colorCloudMatrix[17] = colorCloud2[3];\n  colorCloudMatrix[18] = colorCloud3[3];\n  colorCloudMatrix[19] = colorCloud4[3];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(u_texFlag > 0 && flagBackground > 0.0) {\n    vec2 texCoord = vTextureCoord;\n\n    if(u_repeat == 1) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(u_srcRect.z > 0.0) {\n        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;\n        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);\n      }\n      if(frameIndex < 0.0) {\n        vec4 texColor = texture2D(u_texSampler, texCoord);\n        color = mix(color, texColor, texColor.a);\n      } else {\n        int index = int(floor(clamp(0.0, 11.0, frameIndex)));\n        vec4 texColor;\n        if(index == 0) texColor = texture2D(u_texFrame0, texCoord);\n        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord);\n        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord);\n        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord);\n        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord);\n        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord);\n        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord);\n        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord);\n        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord);\n        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord);\n        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord);\n        else texColor = texture2D(u_texFrame11, texCoord);\n        float alpha = texColor.a;\n        if(u_opacity < 1.0) {\n          texColor.a *= u_opacity;\n          alpha *= mix(0.465, 1.0, u_opacity);\n        }\n        // color = mix(color, texColor, texColor.a);\n        color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n        color.a = texColor.a + (1.0 - texColor.a) * color.a;\n      }\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLOUDFILTER\n  if(u_cloudFilterFlag > 0) {\n    float colorCloudMatrix[20];\n    buildCloudColor(colorCloudMatrix);\n    transformColor(color, colorCloudMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
-
-/***/ }),
-/* 81 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Figure2D; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82);
-/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(83);
-/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(parse_svg_path__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(43);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(84);
-/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(abs_svg_path__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(85);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(61);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(56);
-/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(87);
-
-
-
-
-
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-
-
-
-
-
-
-
-
-var _contours = Symbol('contours');
-
-var _path = Symbol('path');
-
-var _simplify = Symbol('simplify');
-
-var _scale = Symbol('scale');
-
-var Figure2D =
-/*#__PURE__*/
-function () {
-  function Figure2D() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Figure2D);
-
-    if (typeof options === 'string') options = {
-      path: options
-    };
-    if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(options.path);else this[_path] = [];
-    this[_contours] = null;
-    this[_simplify] = options.simplify || 0;
-    this[_scale] = options.scale || 1;
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Figure2D, [{
-    key: "normalize",
-    value: function normalize() {
-      var _this$_path;
-
-      var x0 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var y0 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-      var path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default()(this[_path])).map(function (_ref) {
-        var _ref2 = _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref),
-            cmd = _ref2[0],
-            args = _ref2.slice(1);
-
-        var transformed = [cmd];
-
-        for (var i = 0; i < args.length; i += 2) {
-          var x = args[i] - x0,
-              y = args[i + 1] - y0;
-          transformed.push(x, y);
-        }
-
-        return transformed;
-      });
-
-      this.beginPath();
-
-      (_this$_path = this[_path]).push.apply(_this$_path, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(path));
-
-      return this;
-    }
-  }, {
-    key: "getPointAtLength",
-    value: function getPointAtLength(length) {
-      if (this.contours) {
-        return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_9__["getPointAtLength"])(this[_contours], length);
-      }
-
-      return null;
-    }
-  }, {
-    key: "getTotalLength",
-    value: function getTotalLength() {
-      if (this.contours) {
-        return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_9__["getTotalLength"])(this[_contours]);
-      }
-
-      return 0;
-    }
-  }, {
-    key: "addPath",
-    value: function addPath(path) {
-      var _this$_path2;
-
-      this[_contours] = null;
-
-      (_this$_path2 = this[_path]).push.apply(_this$_path2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(path)));
-    }
-  }, {
-    key: "beginPath",
-    value: function beginPath() {
-      this[_path] = [];
-      this[_contours] = null;
-    }
-  }, {
-    key: "clear",
-    value: function clear() {
-      this.beginPath();
-    }
-  }, {
-    key: "ellipse",
-    value: function ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle) {
-      var anticlockwise = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0;
-      startAngle += rotation;
-      endAngle += rotation;
-      if (radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
-      var PI2 = 2 * Math.PI;
-
-      if (endAngle < startAngle) {
-        endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
-      }
-
-      if (endAngle - startAngle > PI2) {
-        endAngle = startAngle + PI2;
-      }
-
-      var delta = endAngle - startAngle;
-      var path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
-      var direction = anticlockwise ? -1 : 1;
-      var startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_10__["getPoint"])(x, y, radiusX, radiusY, startAngle);
-      var endPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_10__["getPoint"])(x, y, radiusX, radiusY, endAngle);
-      var sweepFlag = Number(!anticlockwise);
-      var largeArcFlag = delta > Math.PI ? 1 : 0;
-      if (anticlockwise) largeArcFlag = 1 - largeArcFlag;
-
-      if (delta >= PI2) {
-        endPoint[1] -= direction * 1e-2;
-      }
-
-      path += startPoint.join(' ');
-      path += "A".concat(radiusX, " ").concat(radiusY, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
-
-      if (delta >= PI2) {
-        path += 'Z';
-      }
-
-      this.addPath(path);
-    }
-  }, {
-    key: "arc",
-    value: function arc(x, y, radius, startAngle, endAngle) {
-      var anticlockwise = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-      return this.ellipse(x, y, radius, radius, 0, startAngle, endAngle, anticlockwise);
-    }
-  }, {
-    key: "arcTo",
-    value: function arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
-    }
-  }, {
-    key: "moveTo",
-    value: function moveTo(x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['M', x, y]);
-    }
-  }, {
-    key: "lineTo",
-    value: function lineTo(x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['L', x, y]);
-    }
-  }, {
-    key: "bezierCurveTo",
-    value: function bezierCurveTo(x1, y1, x2, y2, x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['C', x1, y1, x2, y2, x, y]);
-    }
-  }, {
-    key: "quadraticCurveTo",
-    value: function quadraticCurveTo(x1, y1, x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['Q', x1, y1, x, y]);
-    }
-  }, {
-    key: "rect",
-    value: function rect(x, y, width, height) {
-      var path = "M".concat(x, " ").concat(y, "L").concat(x + width, " ").concat(y, "L").concat(x + width, " ").concat(y + height, "L").concat(x, " ").concat(y + height, "Z");
-      this.addPath(path);
-    }
-  }, {
-    key: "closePath",
-    value: function closePath() {
-      this[_contours] = null;
-      var lastPath = [];
-      var len = this[_path].length;
-
-      if (len > 0) {
-        lastPath = this[_path][len - 1];
-      }
-
-      if (lastPath[0] !== 'Z' && lastPath[0] !== 'z') {
-        this[_path].push(['Z']);
-      }
-    }
-  }, {
-    key: "contours",
-    get: function get() {
-      var ret = null;
-
-      if (!this[_contours] && this[_path]) {
-        var path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default()(this[_path]));
-
-        this[_contours] = _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default()(path, this[_scale], this[_simplify]);
-        this[_contours].path = path;
-        this[_contours].simplify = this[_simplify];
-        this[_contours].scale = this[_scale];
-      }
-
-      if (this[_contours]) {
-        ret = this[_contours].map(function (c) {
-          return _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(c);
-        });
-        ret.path = this[_contours].path;
-        ret.simplify = this[_contours].simplify;
-        ret.scale = this[_contours].scale;
-      }
-
-      return ret;
-    }
-  }, {
-    key: "path",
-    get: function get() {
-      return this[_path];
-    }
-  }, {
-    key: "simplify",
-    get: function get() {
-      return this[_simplify];
-    }
-  }, {
-    key: "boundingBox",
-    get: function get() {
-      var contours = this.contours;
-
-      if (contours && contours.length) {
-        var points = contours.reduce(function (a, b) {
-          return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(a), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(b));
-        });
-        return bound_points__WEBPACK_IMPORTED_MODULE_5___default()(points);
-      }
-
-      return [[0, 0], [0, 0]];
-    }
-  }, {
-    key: "boundingCenter",
-    get: function get() {
-      var bound = this.boundingBox;
-
-      if (bound) {
-        return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
-      }
-
-      return [0, 0];
-    }
-  }]);
-
-  return Figure2D;
-}();
-
-
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithHoles = __webpack_require__(14);
-
-var iterableToArray = __webpack_require__(19);
-
-var nonIterableRest = __webpack_require__(16);
-
-function _toArray(arr) {
-  return arrayWithHoles(arr) || iterableToArray(arr) || nonIterableRest();
-}
-
-module.exports = _toArray;
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports) {
-
-
-module.exports = parse
-
-/**
- * expected argument lengths
- * @type {Object}
- */
-
-var length = {a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0}
-
-/**
- * segment pattern
- * @type {RegExp}
- */
-
-var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig
-
-/**
- * parse an svg path data string. Generates an Array
- * of commands where each command is an Array of the
- * form `[command, arg1, arg2, ...]`
- *
- * @param {String} path
- * @return {Array}
- */
-
-function parse(path) {
-	var data = []
-	path.replace(segment, function(_, command, args){
-		var type = command.toLowerCase()
-		args = parseValues(args)
-
-		// overloaded moveTo
-		if (type == 'm' && args.length > 2) {
-			data.push([command].concat(args.splice(0, 2)))
-			type = 'l'
-			command = command == 'm' ? 'l' : 'L'
-		}
-
-		while (true) {
-			if (args.length == length[type]) {
-				args.unshift(command)
-				return data.push(args)
-			}
-			if (args.length < length[type]) throw new Error('malformed path data')
-			data.push([command].concat(args.splice(0, length[type])))
-		}
-	})
-	return data
-}
-
-var number = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig
-
-function parseValues(args) {
-	var numbers = args.match(number)
-	return numbers ? numbers.map(Number) : []
-}
-
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports) {
-
-
-module.exports = absolutize
-
-/**
- * redefine `path` with absolute coordinates
- *
- * @param {Array} path
- * @return {Array}
- */
-
-function absolutize(path){
-	var startX = 0
-	var startY = 0
-	var x = 0
-	var y = 0
-
-	return path.map(function(seg){
-		seg = seg.slice()
-		var type = seg[0]
-		var command = type.toUpperCase()
-
-		// is relative
-		if (type != command) {
-			seg[0] = command
-			switch (type) {
-				case 'a':
-					seg[6] += x
-					seg[7] += y
-					break
-				case 'v':
-					seg[1] += y
-					break
-				case 'h':
-					seg[1] += x
-					break
-				default:
-					for (var i = 1; i < seg.length;) {
-						seg[i++] += x
-						seg[i++] += y
-					}
-			}
-		}
-
-		// update cursor state
-		switch (command) {
-			case 'Z':
-				x = startX
-				y = startY
-				break
-			case 'H':
-				x = seg[1]
-				break
-			case 'V':
-				y = seg[1]
-				break
-			case 'M':
-				x = startX = seg[1]
-				y = startY = seg[2]
-				break
-			default:
-				x = seg[seg.length - 2]
-				y = seg[seg.length - 1]
-		}
-
-		return seg
-	})
-}
-
-
-/***/ }),
-/* 85 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalize; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _a2c__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86);
-
-
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-// https://github.com/jkroso/normalize-svg-path
-
-/* eslint-disable */
-
-function normalize(path) {
-  // init state
-  var prev;
-  var result = [];
-  var bezierX = 0;
-  var bezierY = 0;
-  var startX = 0;
-  var startY = 0;
-  var quadX = null;
-  var quadY = null;
-  var x = 0;
-  var y = 0;
-
-  for (var i = 0, len = path.length; i < len; i++) {
-    var seg = path[i];
-    var command = seg[0];
-
-    switch (command) {
-      case 'M':
-        startX = seg[1];
-        startY = seg[2];
-        break;
-
-      case 'A':
-        var curves = Object(_a2c__WEBPACK_IMPORTED_MODULE_1__["default"])(x, y, seg[6], seg[7], seg[4], seg[5], seg[1], seg[2], seg[3]);
-        if (!curves.length) continue;
-        curves = curves.map(function (curve) {
-          var _curve = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(curve, 8),
-              x0 = _curve[0],
-              y0 = _curve[1],
-              x1 = _curve[2],
-              y1 = _curve[3],
-              x2 = _curve[4],
-              y2 = _curve[5],
-              x = _curve[6],
-              y = _curve[7];
-
-          return {
-            x1: x1,
-            y1: y1,
-            x2: x2,
-            y2: y2,
-            x: x,
-            y: y
-          };
-        });
-
-        for (var j = 0, c; j < curves.length; j++) {
-          c = curves[j];
-          seg = ['C', c.x1, c.y1, c.x2, c.y2, c.x, c.y];
-          if (j < curves.length - 1) result.push(seg);
-        }
-
-        break;
-
-      case 'S':
-        // default control point
-        var cx = x;
-        var cy = y;
-
-        if (prev == 'C' || prev == 'S') {
-          cx += cx - bezierX; // reflect the previous command's control
-
-          cy += cy - bezierY; // point relative to the current point
-        }
-
-        seg = ['C', cx, cy, seg[1], seg[2], seg[3], seg[4]];
-        break;
-
-      case 'T':
-        if (prev == 'Q' || prev == 'T') {
-          quadX = x * 2 - quadX; // as with 'S' reflect previous control point
-
-          quadY = y * 2 - quadY;
-        } else {
-          quadX = x;
-          quadY = y;
-        }
-
-        seg = quadratic(x, y, quadX, quadY, seg[1], seg[2]);
-        break;
-
-      case 'Q':
-        quadX = seg[1];
-        quadY = seg[2];
-        seg = quadratic(x, y, seg[1], seg[2], seg[3], seg[4]);
-        break;
-
-      case 'L':
-        seg = line(x, y, seg[1], seg[2]);
-        break;
-
-      case 'H':
-        seg = line(x, y, seg[1], y);
-        break;
-
-      case 'V':
-        seg = line(x, y, x, seg[1]);
-        break;
-
-      case 'Z':
-        seg = line(x, y, startX, startY);
-        break;
-    } // update state
-
-
-    prev = command;
-    x = seg[seg.length - 2];
-    y = seg[seg.length - 1];
-
-    if (seg.length > 4) {
-      bezierX = seg[seg.length - 4];
-      bezierY = seg[seg.length - 3];
-    } else {
-      bezierX = x;
-      bezierY = y;
-    }
-
-    result.push(seg);
-  }
-
-  return result;
-}
-
-function line(x1, y1, x2, y2) {
-  return ['C', x1, y1, x2, y2, x2, y2];
-}
-
-function quadratic(x1, y1, cx, cy, x2, y2) {
-  return ['C', x1 / 3 + 2 / 3 * cx, y1 / 3 + 2 / 3 * cy, x2 / 3 + 2 / 3 * cx, y2 / 3 + 2 / 3 * cy, x2, y2];
-}
-/* eslint-enable */
-
-/***/ }),
-/* 86 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return a2c; });
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-// https://github.com/colinmeinke/svg-arc-to-cubic-bezier
-//
-// Convert an arc to a sequence of cubic bézier curves
-//
-var TAU = Math.PI * 2;
-/* eslint-disable space-infix-ops */
-// Calculate an angle between two unit vectors
-//
-// Since we measure angle between radii of circular arcs,
-// we can use simplified math (without length normalization)
-//
-
-function unit_vector_angle(ux, uy, vx, vy) {
-  var sign = ux * vy - uy * vx < 0 ? -1 : 1;
-  var dot = ux * vx + uy * vy; // Add this to work with arbitrary vectors:
-  // dot /= Math.sqrt(ux * ux + uy * uy) * Math.sqrt(vx * vx + vy * vy);
-  // rounding errors, e.g. -1.0000000000000002 can screw up this
-
-  if (dot > 1.0) {
-    dot = 1.0;
-  }
-
-  if (dot < -1.0) {
-    dot = -1.0;
-  }
-
-  return sign * Math.acos(dot);
-} // Convert from endpoint to center parameterization,
-// see http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes
-//
-// Return [cx, cy, theta1, delta_theta]
-//
-
-
-function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
-  // Step 1.
-  //
-  // Moving an ellipse so origin will be the middlepoint between our two
-  // points. After that, rotate it to line up ellipse axes with coordinate
-  // axes.
-  //
-  var x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
-  var y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
-  var rx_sq = rx * rx;
-  var ry_sq = ry * ry;
-  var x1p_sq = x1p * x1p;
-  var y1p_sq = y1p * y1p; // Step 2.
-  //
-  // Compute coordinates of the centre of this ellipse (cx', cy')
-  // in the new coordinate system.
-  //
-
-  var radicant = rx_sq * ry_sq - rx_sq * y1p_sq - ry_sq * x1p_sq;
-
-  if (radicant < 0) {
-    // due to rounding errors it might be e.g. -1.3877787807814457e-17
-    radicant = 0;
-  }
-
-  radicant /= rx_sq * y1p_sq + ry_sq * x1p_sq;
-  radicant = Math.sqrt(radicant) * (fa === fs ? -1 : 1);
-  var cxp = radicant * rx / ry * y1p;
-  var cyp = radicant * -ry / rx * x1p; // Step 3.
-  //
-  // Transform back to get centre coordinates (cx, cy) in the original
-  // coordinate system.
-  //
-
-  var cx = cos_phi * cxp - sin_phi * cyp + (x1 + x2) / 2;
-  var cy = sin_phi * cxp + cos_phi * cyp + (y1 + y2) / 2; // Step 4.
-  //
-  // Compute angles (theta1, delta_theta).
-  //
-
-  var v1x = (x1p - cxp) / rx;
-  var v1y = (y1p - cyp) / ry;
-  var v2x = (-x1p - cxp) / rx;
-  var v2y = (-y1p - cyp) / ry;
-  var theta1 = unit_vector_angle(1, 0, v1x, v1y);
-  var delta_theta = unit_vector_angle(v1x, v1y, v2x, v2y);
-
-  if (fs === 0 && delta_theta > 0) {
-    delta_theta -= TAU;
-  }
-
-  if (fs === 1 && delta_theta < 0) {
-    delta_theta += TAU;
-  }
-
-  return [cx, cy, theta1, delta_theta];
-} //
-// Approximate one unit arc segment with bézier curves,
-// see http://math.stackexchange.com/questions/873224
-//
-
-
-function approximate_unit_arc(theta1, delta_theta) {
-  var alpha = 4 / 3 * Math.tan(delta_theta / 4);
-  var x1 = Math.cos(theta1);
-  var y1 = Math.sin(theta1);
-  var x2 = Math.cos(theta1 + delta_theta);
-  var y2 = Math.sin(theta1 + delta_theta);
-  return [x1, y1, x1 - y1 * alpha, y1 + x1 * alpha, x2 + y2 * alpha, y2 - x2 * alpha, x2, y2];
-}
-
-function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
-  var sin_phi = Math.sin(phi * TAU / 360);
-  var cos_phi = Math.cos(phi * TAU / 360); // Make sure radii are valid
-  //
-
-  var x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
-  var y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
-
-  if (x1p === 0 && y1p === 0) {
-    // we're asked to draw line to itself
-    return [];
-  }
-
-  if (rx === 0 || ry === 0) {
-    // one of the radii is zero
-    return [];
-  } // Compensate out-of-range radii
-  //
-
-
-  rx = Math.abs(rx);
-  ry = Math.abs(ry);
-  var lambda = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
-
-  if (lambda > 1) {
-    rx *= Math.sqrt(lambda);
-    ry *= Math.sqrt(lambda);
-  } // Get center parameters (cx, cy, theta1, delta_theta)
-  //
-
-
-  var cc = get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi);
-  var result = [];
-  var theta1 = cc[2];
-  var delta_theta = cc[3]; // Split an arc to multiple segments, so each segment
-  // will be less than τ/4 (= 90°)
-  //
-
-  var segments = Math.max(Math.ceil(Math.abs(delta_theta) / (TAU / 4)), 1);
-  delta_theta /= segments;
-
-  for (var i = 0; i < segments; i++) {
-    result.push(approximate_unit_arc(theta1, delta_theta));
-    theta1 += delta_theta;
-  } // We have a bezier approximation of a unit circle,
-  // now need to transform back to the original ellipse
-  //
-
-
-  return result.map(function (curve) {
-    for (var _i = 0; _i < curve.length; _i += 2) {
-      var x = curve[_i + 0];
-      var y = curve[_i + 1]; // scale
-
-      x *= rx;
-      y *= ry; // rotate
-
-      var xp = cos_phi * x - sin_phi * y;
-      var yp = sin_phi * x + cos_phi * y; // translate
-
-      curve[_i + 0] = xp + cc[0];
-      curve[_i + 1] = yp + cc[1];
-    }
-
-    return curve;
-  });
-}
-
-/***/ }),
 /* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPoint", function() { return getPoint; });
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-// 根据椭圆旋转角度求椭圆上的点
-var PI2 = Math.PI * 2;
-function getPoint(x0, y0, a, b, theta) {
-  theta %= PI2;
-  if (theta < 0) theta += PI2;
-  var k = Math.tan(theta);
-
-  if (Math.abs(k) < 1e5) {
-    // y - y0 = k (x - x0)
-    // y = k x + (y0 - k x0)
-    // (x - x0) ** 2 / a ** 2 + (y - y0) ** 2 / b ** 2 = 1
-    var c = y0 - k * x0;
-    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2);
-    var d = -1;
-    if (theta <= Math.PI / 2 || theta > 3 * Math.PI / 2) d = 1;
-    var x = d * Math.sqrt(1 / t) + x0;
-    var y = k * x + c;
-    return [x, y];
-  }
-
-  if (theta < Math.PI) {
-    return [x0, y0 + b];
-  }
-
-  return [x0, y0 - b];
-}
+/* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying float frameIndex;\nvarying vec2 vTextureCoord;\nuniform int u_texFlag;\nuniform int u_repeat;\nuniform vec4 u_srcRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef CLOUDFILTER\nuniform int u_cloudFilterFlag;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n\n#ifdef CLOUDFILTER\nvoid buildCloudColor(inout float colorCloudMatrix[20]) {\n  colorCloudMatrix[0] = colorCloud0[0];\n  colorCloudMatrix[1] = colorCloud1[0];\n  colorCloudMatrix[2] = colorCloud2[0];\n  colorCloudMatrix[3] = colorCloud3[0];\n  colorCloudMatrix[4] = colorCloud4[0];\n\n  colorCloudMatrix[5] = colorCloud0[1];\n  colorCloudMatrix[6] = colorCloud1[1];\n  colorCloudMatrix[7] = colorCloud2[1];\n  colorCloudMatrix[8] = colorCloud3[1];\n  colorCloudMatrix[9] = colorCloud4[1];\n\n  colorCloudMatrix[10] = colorCloud0[2];\n  colorCloudMatrix[11] = colorCloud1[2];\n  colorCloudMatrix[12] = colorCloud2[2];\n  colorCloudMatrix[13] = colorCloud3[2];\n  colorCloudMatrix[14] = colorCloud4[2];\n\n  colorCloudMatrix[15] = colorCloud0[3];\n  colorCloudMatrix[16] = colorCloud1[3];\n  colorCloudMatrix[17] = colorCloud2[3];\n  colorCloudMatrix[18] = colorCloud3[3];\n  colorCloudMatrix[19] = colorCloud4[3];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(u_texFlag > 0 && flagBackground > 0.0) {\n    vec2 texCoord = vTextureCoord;\n\n    if(u_repeat == 1) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(u_srcRect.z > 0.0) {\n        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;\n        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);\n      }\n      if(frameIndex < 0.0) {\n        vec4 texColor = texture2D(u_texSampler, texCoord);\n        color = mix(color, texColor, texColor.a);\n      } else {\n        int index = int(floor(clamp(0.0, 11.0, frameIndex)));\n        vec4 texColor;\n        if(index == 0) texColor = texture2D(u_texFrame0, texCoord);\n        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord);\n        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord);\n        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord);\n        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord);\n        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord);\n        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord);\n        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord);\n        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord);\n        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord);\n        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord);\n        else texColor = texture2D(u_texFrame11, texCoord);\n        float alpha = texColor.a;\n        if(u_opacity < 1.0) {\n          texColor.a *= u_opacity;\n          alpha *= mix(0.465, 1.0, u_opacity);\n        }\n        // color = mix(color, texColor, texColor.a);\n        color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n        color.a = texColor.a + (1.0 - texColor.a) * color.a;\n      }\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLOUDFILTER\n  if(u_cloudFilterFlag > 0) {\n    float colorCloudMatrix[20];\n    buildCloudColor(colorCloudMatrix);\n    transformColor(color, colorCloudMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
 /* 88 */
@@ -19025,9 +19081,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(68);
 /* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(38);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(67);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(74);
 
 
 

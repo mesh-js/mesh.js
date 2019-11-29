@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    canvas {
+      width: 512px;
+      height: 512px;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: 'webgl',
+    });
+
+    // const textureURL = 'https://p2.ssl.qhimg.com/t0130f95e9db5a228bd.png';
+    const textureURL = 'https://p0.ssl.qhimg.com/t01a72262146b87165f.png';
+    const meshList = [];
+
+    function loadImage(src) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          resolve(img);
+        };
+        img.src = src;
+      });
+    }
+
+    (async function () {
+      let texture = await renderer.loadTexture(textureURL);
+      texture = renderer.createText('abcdefg', {font: 'normal 24px arial', fillColor: [1, 0, 0, 1]});
+
+      const img = await loadImage(textureURL);
+      console.log(img);
+
+      // console.log(texture);
+      const NUM = 1;
+      const size = 150;
+
+      // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
+      // const d = 'M30 30A10 10 1 1 0 10 10z';
+      const figure = new Figure2D();
+      figure.rect(50, 50, size, size);
+
+      for(let i = 0; i < NUM; i++) {
+        // figure.arc(50, 50, 30, 0, 2 * Math.PI);
+        // figure.rect(50, 50, 100, 100);
+        // console.log(figure.contours);
+
+        const mesh = new Mesh2D(figure, {width: 512, height: 512});
+        // mesh.setStroke({
+        //   thickness: 6,
+        //   color: [1, 0, 1, 1],
+        // });
+
+        // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
+
+        mesh.setFill({
+          color: 'cyan',
+        });
+        mesh.setTransform(1, 0, 0, 1, 200, 200);
+        // console.log(mesh.meshData);
+        mesh.uniforms.u_opacity = 0.3;
+
+        // if(i > NUM / 2) {
+        mesh.setTexture(texture, {
+          scale: false,
+          repeat: false,
+          rect: [60, 60],
+          // rect: [20, 20],
+          // srcRect: [0, 0, 100, 50],
+        });
+        // }
+
+        mesh.setLinearGradient({
+          vector: [50, 50, 50, 200],
+          colors: [
+            {offset: 0, color: 'red'},
+            {offset: 1, color: 'green'},
+          ],
+          type: 'fill',
+        });
+
+        // mesh.setFill({
+        //   color: [1, 0, 0, 1],
+        // });
+
+        // mesh.brightness(3);
+        // mesh.grayscale(1);
+        // mesh.saturate(0.5);
+        // mesh.blur(5);
+        // mesh.dropShadow(10, 10, 10, [0, 0, 1, 1]);
+        // mesh.dropShadow(-10, -10, 10, [0, 1, 0, 1]);
+        // mesh.contrast(0.5);
+        // mesh.opacity(0.2);
+        // // // mesh.hueRotate(130);
+        // // // mesh.clearFilter();
+        // mesh.hueRotate(130);
+
+        meshList.push(mesh);
+      }
+
+      function getData() {
+        return meshList.map((mesh) => {
+          // mesh.setTransform(1, 0, 0, 1, 200, 200);
+          // mesh.setTransform(1, 0, 0, 1, 400 * Math.random(), 400 * Math.random());
+          // mesh.transform([1, 0, 0, 1, -25, -25]);
+          // mesh.translate(-25, -25);
+          // const ang = Math.PI / 6;
+          // mesh.transform([Math.cos(ang), Math.sin(ang), -Math.sin(ang), Math.cos(ang), 0, 0]);
+          // mesh.rotate(ang, [25, 25]);
+          // mesh.scale(2);
+          // mesh.translate(50, 50);
+          // mesh.skew(0, 1.10, [75, 75]);
+          // mesh.translate(25, 25);
+          // mesh.translate(50, 50);
+          // mesh.setTransform([Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100]);
+          return mesh;
+        });
+      }
+
+      window.getData = getData;
+
+      function update() {
+        renderer.clear();
+        renderer.drawImage(img, 0, 0, 50, 50, 100, 100, 50, 50);
+        const meshes = getData();
+        renderer.drawMeshes(meshes);
+        // requestAnimationFrame(update);
+      }
+      update();
+
+      window.update = update;
+    }());
+  </script>
+</body>
+</html>
