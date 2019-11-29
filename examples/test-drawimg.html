@@ -135,7 +135,8 @@
 
       function update() {
         renderer.clear();
-        renderer.drawImage(img, 0, 0, 50, 50, 100, 100, 50, 50);
+        renderer.globalTranslate(100, 0);
+        renderer.drawImage(img, 0, 0, 50, 50, -100, 0, 50, 50);
         const meshes = getData();
         renderer.drawMeshes(meshes);
         // requestAnimationFrame(update);

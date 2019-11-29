@@ -8169,17 +8169,6 @@ function () {
   }, {
     key: "drawImage",
     value: function drawImage(image) {
-      var texture = this.createTexture(image);
-      var _this$canvas3 = this.canvas,
-          width = _this$canvas3.width,
-          height = _this$canvas3.height;
-      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_10__["default"]();
-      figure.rect(0, 0, width, height);
-      var mesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_11__["default"](figure, {
-        width: width,
-        height: height
-      });
-
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
@@ -8194,29 +8183,35 @@ function () {
         throw new TypeError("Failed to execute 'drawImage' on 'Renderer': Valid arities are: [3, 5, 9], but ".concat(args.length + 1, " arguments provided."));
       }
 
+      var rect = null;
+      var srcRect = null;
+
       if (argLength === 2) {
         // drawImage(image, dx, dy)
-        var rect = [args[0], args[1], image.width, image.height];
-        mesh.setTexture(texture, {
-          rect: rect
-        });
+        rect = [args[0], args[1], image.width, image.height];
       } else if (argLength === 4) {
         // drawImage(image, dx, dy, dWidth, dHeight)
-        mesh.setTexture(texture, {
-          rect: args
-        });
+        rect = args;
       } else if (argLength === 8) {
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        var srcRect = args.slice(0, 4);
-
-        var _rect = args.slice(4);
-
-        mesh.setTexture(texture, {
-          rect: _rect,
-          srcRect: srcRect
-        });
+        srcRect = args.slice(0, 4);
+        rect = args.slice(4);
       }
 
+      var texture = this.createTexture(image);
+      var _this$canvas3 = this.canvas,
+          width = _this$canvas3.width,
+          height = _this$canvas3.height;
+      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_10__["default"]();
+      figure.rect(rect[0], rect[1], width, height);
+      var mesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_11__["default"](figure, {
+        width: width,
+        height: height
+      });
+      mesh.setTexture(texture, {
+        rect: rect,
+        srcRect: srcRect
+      });
       this.drawMeshes([mesh]);
       this.deleteTexture(texture);
     }

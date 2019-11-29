@@ -312,11 +312,6 @@ export default class Renderer {
   }
 
   drawImage(image, ...args) {
-    const texture = this.createTexture(image);
-    const {width, height} = this.canvas;
-    const figure = new Figure2D();
-    figure.rect(0, 0, width, height);
-    const mesh = new Mesh2D(figure, {width, height});
     const argLength = args.length;
     if(argLength < 2) {
       throw new TypeError(`Failed to execute 'drawImage' on 'Renderer': 3 arguments required, but only ${args.length + 1} present.`);
@@ -324,23 +319,25 @@ export default class Renderer {
     if(argLength !== 2 && argLength !== 4 && argLength !== 8) {
       throw new TypeError(`Failed to execute 'drawImage' on 'Renderer': Valid arities are: [3, 5, 9], but ${args.length + 1} arguments provided.`);
     }
+    let rect = null;
+    let srcRect = null;
     if(argLength === 2) { // drawImage(image, dx, dy)
-      const rect = [args[0], args[1], image.width, image.height];
-      mesh.setTexture(texture, {
-        rect,
-      });
+      rect = [args[0], args[1], image.width, image.height];
     } else if(argLength === 4) { // drawImage(image, dx, dy, dWidth, dHeight)
-      mesh.setTexture(texture, {
-        rect: args,
-      });
+      rect = args;
     } else if(argLength === 8) { // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-      const srcRect = args.slice(0, 4);
-      const rect = args.slice(4);
-      mesh.setTexture(texture, {
-        rect,
-        srcRect,
-      });
+      srcRect = args.slice(0, 4);
+      rect = args.slice(4);
     }
+    const texture = this.createTexture(image);
+    const {width, height} = this.canvas;
+    const figure = new Figure2D();
+    figure.rect(rect[0], rect[1], width, height);
+    const mesh = new Mesh2D(figure, {width, height});
+    mesh.setTexture(texture, {
+      rect,
+      srcRect,
+    });
     this.drawMeshes([mesh]);
     this.deleteTexture(texture);
   }
