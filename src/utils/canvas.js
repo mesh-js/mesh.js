@@ -2,10 +2,13 @@ import {vec2} from 'gl-matrix';
 import vectorToRGBA from './vector-to-rgba';
 import parseFont from './parse-font';
 import {mix} from './math';
+import ENV from './env';
 
 export function createCanvas(width, height, {offscreen = true} = {}) {
   let canvas;
-  if(typeof global.createCanvas === 'function') {
+  if(typeof ENV.createCanvas === 'function') {
+    canvas = ENV.createCanvas(width, height, offscreen);
+  } else if(typeof global.createCanvas === 'function') {
     canvas = global.createCanvas(width, height, offscreen);
   } else if(offscreen && typeof OffscreenCanvas === 'function') {
     canvas = new OffscreenCanvas(width, height);
