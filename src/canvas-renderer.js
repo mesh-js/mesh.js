@@ -57,8 +57,13 @@ export default class CanvasRenderer {
       let filter = mesh.filter;
       if(cloudFilter) filter = filter ? `${filter} ${cloudFilter}` : cloudFilter;
 
-      if(filter && !('filterBuffer' in this)) {
-        this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
+      if(filter && this.filterBuffer !== false) {
+        const canvas = createCanvas(width, height);
+        if(canvas) {
+          this.filterBuffer = canvas.getContext('2d');
+        } else {
+          this.filterBuffer = false;
+        }
       }
 
       if(lastFilter && lastFilter !== filter) {

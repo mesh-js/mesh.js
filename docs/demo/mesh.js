@@ -10660,8 +10660,14 @@ function () {
         var filter = mesh.filter;
         if (cloudFilter) filter = filter ? "".concat(filter, " ").concat(cloudFilter) : cloudFilter;
 
-        if (filter && !('filterBuffer' in _this)) {
-          _this.filterBuffer = _this.filterBuffer || Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["createCanvas"])(width, height).getContext('2d');
+        if (filter && _this.filterBuffer !== false) {
+          var canvas = Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["createCanvas"])(width, height);
+
+          if (canvas) {
+            _this.filterBuffer = canvas.getContext('2d');
+          } else {
+            _this.filterBuffer = false;
+          }
         }
 
         if (lastFilter && lastFilter !== filter) {
