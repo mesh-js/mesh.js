@@ -10739,16 +10739,14 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 function createCanvas(width, height) {
-  var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-      _ref$offscreen = _ref.offscreen,
-      offscreen = _ref$offscreen === void 0 ? true : _ref$offscreen;
-
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var offscreen = options.offscreen !== false;
   var canvas;
 
   if (typeof _env__WEBPACK_IMPORTED_MODULE_5__["default"].createCanvas === 'function') {
-    canvas = _env__WEBPACK_IMPORTED_MODULE_5__["default"].createCanvas(width, height, offscreen);
+    canvas = _env__WEBPACK_IMPORTED_MODULE_5__["default"].createCanvas(width, height, options);
   } else if (typeof global.createCanvas === 'function') {
-    canvas = global.createCanvas(width, height, offscreen);
+    canvas = global.createCanvas(width, height, options);
   } else if (offscreen && typeof OffscreenCanvas === 'function') {
     canvas = new OffscreenCanvas(width, height);
   } else {
@@ -10807,9 +10805,9 @@ function drawMesh2D(mesh, context) {
         _gradient = context.createLinearGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
       }
 
-      colors.forEach(function (_ref2) {
-        var offset = _ref2.offset,
-            color = _ref2.color;
+      colors.forEach(function (_ref) {
+        var offset = _ref.offset,
+            color = _ref.color;
         var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(color);
         if (cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
 
@@ -10857,9 +10855,9 @@ function drawMesh2D(mesh, context) {
       gradient = context.createLinearGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
     }
 
-    _colors.forEach(function (_ref3) {
-      var offset = _ref3.offset,
-          color = _ref3.color;
+    _colors.forEach(function (_ref2) {
+      var offset = _ref2.offset,
+          color = _ref2.color;
       var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(color);
       if (cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
       gradient.addColorStop(offset, rgba);
