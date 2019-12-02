@@ -10807,10 +10807,13 @@ function drawMesh2D(mesh, context) {
           colors = _gradient2.colors;
 
       if (vector.length === 6) {
-        vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector);
         _gradient = context.createRadialGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
-      } else {
+      } else if (vector.length === 4) {
         _gradient = context.createLinearGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
+      } else if (vector.length === 3) {
+        _gradient = context.createCircularGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
+      } else {
+        throw new TypeError('Invalid vector dimension.');
       }
 
       colors.forEach(function (_ref) {
@@ -10857,10 +10860,13 @@ function drawMesh2D(mesh, context) {
         _colors = _gradient3.colors;
 
     if (_vector.length === 6) {
-      _vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector);
       gradient = context.createRadialGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
-    } else {
+    } else if (_vector.length === 4) {
       gradient = context.createLinearGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
+    } else if (_vector.length === 3) {
+      gradient = context.createCircularGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
+    } else {
+      throw new TypeError('Invalid vector dimension.');
     }
 
     _colors.forEach(function (_ref2) {

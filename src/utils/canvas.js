@@ -52,12 +52,15 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   if(mesh.lineWidth) {
     let gradient = mesh.gradient && mesh.gradient.stroke;
     if(gradient) {
-      let {vector, colors} = gradient;
+      const {vector, colors} = gradient;
       if(vector.length === 6) {
-        vector = [...vector];
         gradient = context.createRadialGradient(...vector);
-      } else {
+      } else if(vector.length === 4) {
         gradient = context.createLinearGradient(...vector);
+      } else if(vector.length === 3) {
+        gradient = context.createCircularGradient(...vector);
+      } else {
+        throw new TypeError('Invalid vector dimension.');
       }
       colors.forEach(({offset, color}) => {
         let rgba = vectorToRGBA(color);
@@ -90,12 +93,15 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
 
   let gradient = mesh.gradient && mesh.gradient.fill;
   if(gradient) {
-    let {vector, colors} = gradient;
+    const {vector, colors} = gradient;
     if(vector.length === 6) {
-      vector = [...vector];
       gradient = context.createRadialGradient(...vector);
-    } else {
+    } else if(vector.length === 4) {
       gradient = context.createLinearGradient(...vector);
+    } else if(vector.length === 3) {
+      gradient = context.createCircularGradient(...vector);
+    } else {
+      throw new TypeError('Invalid vector dimension.');
     }
     colors.forEach(({offset, color}) => {
       let rgba = vectorToRGBA(color);
