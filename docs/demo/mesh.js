@@ -13545,13 +13545,29 @@ function () {
       return this;
     }
   }, {
-    key: "setLinearGradient",
-    value: function setLinearGradient() {
+    key: "setCircularGradient",
+    value: function setCircularGradient() {
       var _ref16 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           vector = _ref16.vector,
           gradientColors = _ref16.colors,
           _ref16$type = _ref16.type,
           type = _ref16$type === void 0 ? 'fill' : _ref16$type;
+
+      if (vector.length !== 3) throw new TypeError('Invalid linearGradient.');
+      this.setGradient({
+        vector: vector,
+        colors: gradientColors,
+        type: type
+      });
+    }
+  }, {
+    key: "setLinearGradient",
+    value: function setLinearGradient() {
+      var _ref17 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref17.vector,
+          gradientColors = _ref17.colors,
+          _ref17$type = _ref17.type,
+          type = _ref17$type === void 0 ? 'fill' : _ref17$type;
 
       if (vector.length !== 4) throw new TypeError('Invalid linearGradient.');
       this.setGradient({
@@ -13563,11 +13579,11 @@ function () {
   }, {
     key: "setRadialGradient",
     value: function setRadialGradient() {
-      var _ref17 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref17.vector,
-          gradientColors = _ref17.colors,
-          _ref17$type = _ref17.type,
-          type = _ref17$type === void 0 ? 'fill' : _ref17$type;
+      var _ref18 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref18.vector,
+          gradientColors = _ref18.colors,
+          _ref18$type = _ref18.type,
+          type = _ref18$type === void 0 ? 'fill' : _ref18$type;
 
       if (vector.length !== 6) throw new TypeError('Invalid radialGradient.');
       this.setGradient({
@@ -13584,15 +13600,15 @@ function () {
   }, {
     key: "setGradient",
     value: function setGradient() {
-      var _ref18 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref18.vector,
-          gradientColors = _ref18.colors,
-          _ref18$type = _ref18.type,
-          type = _ref18$type === void 0 ? 'fill' : _ref18$type;
+      var _ref19 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref19.vector,
+          gradientColors = _ref19.colors,
+          _ref19$type = _ref19.type,
+          type = _ref19$type === void 0 ? 'fill' : _ref19$type;
 
-      gradientColors = gradientColors.map(function (_ref19) {
-        var offset = _ref19.offset,
-            color = _ref19.color;
+      gradientColors = gradientColors.map(function (_ref20) {
+        var offset = _ref20.offset,
+            color = _ref20.color;
         if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
         return {
           offset: offset,
@@ -13608,9 +13624,9 @@ function () {
         return a.offset - b.offset;
       });
       var colorSteps = [];
-      gradientColors.forEach(function (_ref20) {
-        var offset = _ref20.offset,
-            color = _ref20.color;
+      gradientColors.forEach(function (_ref21) {
+        var offset = _ref21.offset,
+            color = _ref21.color;
         colorSteps.push.apply(colorSteps, [offset].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(color)));
       });
 
@@ -13707,10 +13723,10 @@ function () {
   }, {
     key: "rotate",
     value: function rotate(rad) {
-      var _ref21 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref21, 2),
-          ox = _ref22[0],
-          oy = _ref22[1];
+      var _ref22 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
+          _ref23 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref22, 2),
+          ox = _ref23[0],
+          oy = _ref23[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -13723,10 +13739,10 @@ function () {
     value: function scale(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref23 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref23, 2),
-          ox = _ref24[0],
-          oy = _ref24[1];
+      var _ref24 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref25 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref24, 2),
+          ox = _ref25[0],
+          oy = _ref25[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -13739,10 +13755,10 @@ function () {
     value: function skew(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref25 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref25, 2),
-          ox = _ref26[0],
-          oy = _ref26[1];
+      var _ref26 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref27 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref26, 2),
+          ox = _ref27[0],
+          oy = _ref27[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -13914,18 +13930,18 @@ function () {
       var positions = meshData.positions,
           cells = meshData.cells;
 
-      function projectionOn(_ref27, _ref28, _ref29) {
-        var _ref30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref27, 2),
-            x0 = _ref30[0],
-            y0 = _ref30[1];
-
+      function projectionOn(_ref28, _ref29, _ref30) {
         var _ref31 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref28, 2),
-            x1 = _ref31[0],
-            y1 = _ref31[1];
+            x0 = _ref31[0],
+            y0 = _ref31[1];
 
         var _ref32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref29, 2),
-            x2 = _ref32[0],
-            y2 = _ref32[1];
+            x1 = _ref32[0],
+            y1 = _ref32[1];
+
+        var _ref33 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref30, 2),
+            x2 = _ref33[0],
+            y2 = _ref33[1];
 
         var v2x = x2 - x1;
         var v2y = y2 - y1;
@@ -14035,10 +14051,10 @@ function () {
             w = _this$_bound$5[0],
             h = _this$_bound$5[1];
 
-        positions = positions.map(function (_ref33) {
-          var _ref34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref33, 2),
-              x = _ref34[0],
-              y = _ref34[1];
+        positions = positions.map(function (_ref34) {
+          var _ref35 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref34, 2),
+              x = _ref35[0],
+              y = _ref35[1];
 
           return transformPoint([x, y], m, w, h, false);
         });

@@ -473,6 +473,11 @@ export default class Mesh2D {
     return this;
   }
 
+  setCircularGradient({vector, colors: gradientColors, type = 'fill'} = {}) {
+    if(vector.length !== 3) throw new TypeError('Invalid linearGradient.');
+    this.setGradient({vector, colors: gradientColors, type});
+  }
+
   setLinearGradient({vector, colors: gradientColors, type = 'fill'} = {}) {
     if(vector.length !== 4) throw new TypeError('Invalid linearGradient.');
     this.setGradient({vector, colors: gradientColors, type});
