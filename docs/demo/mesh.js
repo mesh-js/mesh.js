@@ -10660,6 +10660,10 @@ function () {
         var filter = mesh.filter;
         if (cloudFilter) filter = filter ? "".concat(filter, " ").concat(cloudFilter) : cloudFilter;
 
+        if (filter && !('filterBuffer' in _this)) {
+          _this.filterBuffer = _this.filterBuffer || Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["createCanvas"])(width, height).getContext('2d');
+        }
+
         if (lastFilter && lastFilter !== filter) {
           Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["applyFilter"])(_this.filterBuffer, lastFilter);
           context.drawImage(_this.filterBuffer.canvas, 0, 0, width, height);
@@ -10669,10 +10673,8 @@ function () {
           lastFilter = null;
         }
 
-        if (filter) {
+        if (filter && _this.filterBuffer) {
           var _this$filterBuffer;
-
-          _this.filterBuffer = _this.filterBuffer || Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["createCanvas"])(width, height).getContext('2d');
 
           _this.filterBuffer.save();
 
@@ -10694,7 +10696,7 @@ function () {
         } else {
           context.save();
           context.transform.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_this[_transform]));
-          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, context, false, fill, stroke, frame, transform);
+          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, context, true, fill, stroke, frame, transform);
           context.restore();
         }
 

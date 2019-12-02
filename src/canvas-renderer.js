@@ -56,14 +56,18 @@ export default class CanvasRenderer {
       }
       let filter = mesh.filter;
       if(cloudFilter) filter = filter ? `${filter} ${cloudFilter}` : cloudFilter;
+
+      if(filter && !('filterBuffer' in this)) {
+        this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
+      }
+
       if(lastFilter && lastFilter !== filter) {
         applyFilter(this.filterBuffer, lastFilter);
         context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
         this.filterBuffer.clearRect(0, 0, width, height);
         lastFilter = null;
       }
-      if(filter) {
-        this.filterBuffer = this.filterBuffer || createCanvas(width, height).getContext('2d');
+      if(filter && this.filterBuffer) {
         this.filterBuffer.save();
         this.filterBuffer.transform(...this[_transform]);
         // console.log(this[_transform]);
@@ -79,7 +83,7 @@ export default class CanvasRenderer {
       } else {
         context.save();
         context.transform(...this[_transform]);
-        drawMesh2D(mesh, context, false, fill, stroke, frame, transform);
+        drawMesh2D(mesh, context, true, fill, stroke, frame, transform);
         context.restore();
       }
       if(hook && mesh.afterRender) mesh.afterRender(context, mesh);
