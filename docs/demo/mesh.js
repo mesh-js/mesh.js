@@ -10702,7 +10702,7 @@ function () {
         } else {
           context.save();
           context.transform.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_this[_transform]));
-          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, context, true, fill, stroke, frame, transform);
+          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, context, false, fill, stroke, frame, transform);
           context.restore();
         }
 

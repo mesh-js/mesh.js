@@ -88,7 +88,7 @@ export default class CanvasRenderer {
       } else {
         context.save();
         context.transform(...this[_transform]);
-        drawMesh2D(mesh, context, true, fill, stroke, frame, transform);
+        drawMesh2D(mesh, context, false, fill, stroke, frame, transform);
         context.restore();
       }
       if(hook && mesh.afterRender) mesh.afterRender(context, mesh);
