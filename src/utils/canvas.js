@@ -2,24 +2,6 @@ import {vec2} from 'gl-matrix';
 import vectorToRGBA from './vector-to-rgba';
 import parseFont from './parse-font';
 import {mix} from './math';
-import ENV from './env';
-
-export function createCanvas(width, height, options = {}) {
-  const offscreen = options.offscreen !== false;
-  let canvas;
-  if(typeof ENV.createCanvas === 'function') {
-    canvas = ENV.createCanvas(width, height, options);
-  } else if(typeof global.createCanvas === 'function') {
-    canvas = global.createCanvas(width, height, options);
-  } else if(offscreen && typeof OffscreenCanvas === 'function') {
-    canvas = new OffscreenCanvas(width, height);
-  } else {
-    canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-  }
-  return canvas;
-}
 
 export function applyFilter(context, filter) {
   const canvas = context.canvas;

@@ -3,10 +3,11 @@ import {mat2d} from 'gl-matrix';
 import CanvasRenderer from './canvas-renderer';
 import compress from './utils/compress';
 import createText from './utils/create-text';
-import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
+import {drawMesh2D, applyFilter} from './utils/canvas';
 import Figure2D from './figure2d';
 import Mesh2D from './mesh2d';
 import {isUnitTransform} from './utils/transform';
+import ENV from './utils/env';
 
 import {
   createShaders,
@@ -248,7 +249,7 @@ export default class Renderer {
           const {width, height} = this.canvas;
           let filterContext = this.filterContext;
           if(!filterContext) {
-            const canvas = createCanvas(width, height);
+            const canvas = ENV.createCanvas(width, height);
             filterContext = canvas.getContext('2d');
             this.filterContext = filterContext;
           }

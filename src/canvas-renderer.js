@@ -1,5 +1,5 @@
-import GlRenderer from 'gl-renderer';
-import {drawMesh2D, createCanvas, applyFilter} from './utils/canvas';
+import ENV from './utils/env';
+import {drawMesh2D, applyFilter} from './utils/canvas';
 
 const _transform = Symbol('transform');
 
@@ -16,7 +16,7 @@ export default class CanvasRenderer {
   }
 
   async loadTexture(textureURL) {
-    const image = await GlRenderer.loadImage(textureURL, false);
+    const image = await ENV.loadImage(textureURL, {useImageBitmap: false});
     return this.createTexture(image);
   }
 
@@ -58,7 +58,7 @@ export default class CanvasRenderer {
       if(cloudFilter) filter = filter ? `${filter} ${cloudFilter}` : cloudFilter;
 
       if(filter && this.filterBuffer !== false) {
-        const canvas = createCanvas(width, height);
+        const canvas = ENV.createCanvas(width, height);
         if(canvas) {
           this.filterBuffer = canvas.getContext('2d');
         } else {

@@ -1,5 +1,5 @@
 import parseFont from './parse-font';
-import {createCanvas} from './canvas';
+import ENV from './env';
 import vectorToRGBA from './vector-to-rgba';
 
 const cacheMap = {};
@@ -9,7 +9,7 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   let textCanvas = cacheMap[key];
   if(textCanvas) return textCanvas;
 
-  textCanvas = createCanvas(1, 1);
+  textCanvas = ENV.createCanvas(1, 1);
 
   const textContext = textCanvas.getContext('2d');
   textContext.save();

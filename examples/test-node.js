@@ -1,9 +1,11 @@
 const fs = require('fs');
 const {createCanvas, loadImage} = require('node-canvas-webgl');
-const {Renderer, Figure2D, Mesh2D} = require('../dist/mesh');
+const {Renderer, Figure2D, Mesh2D, ENV} = require('../dist/mesh');
+
+ENV.createCanvas = createCanvas;
 
 const url = 'https://p0.ssl.qhimg.com/t01a72262146b87165f.png';
-const canvas = createCanvas(512, 512);
+const canvas = ENV.createCanvas(512, 512);
 
 const f = new Figure2D();
 f.rect(0, 0, 100, 100);
