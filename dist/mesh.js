@@ -8043,7 +8043,7 @@ function () {
       var renderer = this[_glRenderer] || this[_canvasRenderer];
 
       if (this[_glRenderer]) {
-        var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(this, meshes);
+        var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(this, meshes, program == null);
         var gl = renderer.gl;
         if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
         var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(this[_globalTransform]);
@@ -11345,8 +11345,9 @@ function packData(temp, enableBlend) {
 }
 
 function compress(renderer, meshes) {
-  var maxSize,
+  var ignoreTrasnparent,
       temp,
+      maxSize,
       size,
       enableBlend,
       i,
@@ -11360,15 +11361,16 @@ function compress(renderer, meshes) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          maxSize = _args.length > 2 && _args[2] !== undefined ? _args[2] : renderer.options.bufferSize;
+          ignoreTrasnparent = _args.length > 2 && _args[2] !== undefined ? _args[2] : false;
           temp = [];
+          maxSize = renderer.options.bufferSize;
           size = 0;
           enableBlend = false;
           i = 0;
 
-        case 5:
+        case 6:
           if (!(i < meshes.length)) {
-            _context.next = 41;
+            _context.next = 42;
             break;
           }
 
@@ -11376,8 +11378,8 @@ function compress(renderer, meshes) {
           meshData = mesh.meshData;
           len = 0;
 
-          if (!(meshData && meshData.positions.length)) {
-            _context.next = 31;
+          if (!((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length)) {
+            _context.next = 32;
             break;
           }
 
@@ -11386,80 +11388,80 @@ function compress(renderer, meshes) {
           len = meshData.positions.length;
 
           if (!(filterCanvas || size + len > maxSize)) {
-            _context.next = 21;
+            _context.next = 22;
             break;
           }
 
           if (!temp.length) {
-            _context.next = 17;
+            _context.next = 18;
             break;
           }
 
-          _context.next = 17;
+          _context.next = 18;
           return packData(temp, enableBlend);
 
-        case 17:
+        case 18:
           size = 0;
           enableBlend = false;
-          _context.next = 29;
+          _context.next = 30;
           break;
 
-        case 21:
+        case 22:
           if (!size) {
-            _context.next = 29;
+            _context.next = 30;
             break;
           }
 
           lastMesh = meshes[i - 1];
 
           if (!(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh) || lastMesh.afterRender || mesh.beforeRender)) {
-            _context.next = 29;
+            _context.next = 30;
             break;
           }
 
           if (!temp.length) {
-            _context.next = 27;
+            _context.next = 28;
             break;
           }
 
-          _context.next = 27;
+          _context.next = 28;
           return packData(temp, enableBlend);
 
-        case 27:
+        case 28:
           size = 0;
           enableBlend = false;
 
-        case 29:
+        case 30:
           temp.push(mesh);
           enableBlend = enableBlend || mesh.enableBlend;
 
-        case 31:
+        case 32:
           if (!(i === meshes.length - 1)) {
-            _context.next = 37;
+            _context.next = 38;
             break;
           }
 
           if (!temp.length) {
-            _context.next = 35;
+            _context.next = 36;
             break;
           }
 
-          _context.next = 35;
+          _context.next = 36;
           return packData(temp, enableBlend);
 
-        case 35:
-          _context.next = 38;
+        case 36:
+          _context.next = 39;
           break;
-
-        case 37:
-          size += len;
 
         case 38:
+          size += len;
+
+        case 39:
           i++;
-          _context.next = 5;
+          _context.next = 6;
           break;
 
-        case 41:
+        case 42:
         case "end":
           return _context.stop();
       }
@@ -13460,6 +13462,15 @@ function () {
         this[_bound][1][0] = width;
         this[_bound][1][1] = height;
       }
+    }
+  }, {
+    key: "canIgnore",
+    value: function canIgnore() {
+      var noStroke = this[_stroke] == null || this[_stroke].thickness === 0 || this[_strokeColor][3] === 0;
+      var noFill = this[_fill] == null || this[_fillColor][3] === 0;
+      var noGradient = this[_uniforms].u_radialGradientVector == null;
+      var noTexture = this[_uniforms].u_texSampler == null;
+      return this[_uniforms].u_opacity === 0 || noStroke && noFill && noGradient && noTexture && !this.beforeRender && !this.afterRender;
     } // join: 'miter' or 'bevel'
     // cap: 'butt' or 'square'
     // lineDash: null
@@ -14174,7 +14185,7 @@ function () {
     key: "enableBlend",
     get: function get() {
       if (this[_blend] === true || this[_blend] === false) return this[_blend];
-      return this[_uniforms].u_opacity < 1.0 || this[_strokeColor] != null && this[_strokeColor][3] < 1.0 || this[_fillColor] != null && this[_fillColor][3] < 1.0 || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0 || this[_gradient] || this.beforeRender || this.afterRender;
+      return this[_uniforms].u_opacity < 1.0 || this[_strokeColor] != null && this[_strokeColor][3] < 1.0 || this[_fillColor] != null && this[_fillColor][3] < 1.0 || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0 || this[_uniforms].u_radialGradientVector != null || this.beforeRender || this.afterRender;
     }
   }, {
     key: "filterCanvas",

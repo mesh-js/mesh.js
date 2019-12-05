@@ -220,7 +220,7 @@ export default class Mesh2D {
       || this[_strokeColor] != null && this[_strokeColor][3] < 1.0
       || this[_fillColor] != null && this[_fillColor][3] < 1.0
       || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0
-      || this[_gradient]
+      || this[_uniforms].u_radialGradientVector != null
       || this.beforeRender
       || this.afterRender;
   }
@@ -416,6 +416,15 @@ export default class Mesh2D {
       this[_bound][1][0] = width;
       this[_bound][1][1] = height;
     }
+  }
+
+  canIgnore() {
+    const noStroke = this[_stroke] == null || this[_stroke].thickness === 0 || this[_strokeColor][3] === 0;
+    const noFill = this[_fill] == null || this[_fillColor][3] === 0;
+    const noGradient = this[_uniforms].u_radialGradientVector == null;
+    const noTexture = this[_uniforms].u_texSampler == null;
+    return this[_uniforms].u_opacity === 0 || (
+      noStroke && noFill && noGradient && noTexture && !this.beforeRender && !this.afterRender);
   }
 
   // join: 'miter' or 'bevel'

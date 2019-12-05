@@ -238,7 +238,7 @@ export default class Renderer {
   drawMeshes(meshes, {clear = false, program = null, attributeOptions = {}} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
-      const meshData = compress(this, meshes);
+      const meshData = compress(this, meshes, program == null);
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
       const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);

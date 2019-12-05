@@ -82,8 +82,9 @@ function packData(temp, enableBlend) {
   }
 }
 
-export default function* compress(renderer, meshes, maxSize = renderer.options.bufferSize) {
+export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
   const temp = [];
+  const maxSize = renderer.options.bufferSize;
 
   let size = 0;
   let enableBlend = false;
@@ -93,7 +94,7 @@ export default function* compress(renderer, meshes, maxSize = renderer.options.b
     const meshData = mesh.meshData;
     let len = 0;
 
-    if(meshData && meshData.positions.length) {
+    if((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length) {
       mesh.packIndex = i;
       const filterCanvas = mesh.filterCanvas;
 
