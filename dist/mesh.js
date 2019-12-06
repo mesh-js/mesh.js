@@ -13405,10 +13405,11 @@ function () {
 
       if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
         var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform);
+        var m2 = null;
 
         if (options.rotated) {
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [0, -rect[2]]);
+          m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+          m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m2, [0, -rect[2]]);
         }
 
         mesh.textureCoord = mesh.positions.map(function (_ref7) {
@@ -13427,6 +13428,23 @@ function () {
             var _ref9 = [x / w, y / h];
             x = _ref9[0];
             y = _ref9[1];
+
+            if (options.rotated) {
+              var _ref10 = [2 * x - 1, 2 * y - 1];
+              x = _ref10[0];
+              y = _ref10[1];
+
+              var _transformPoint3 = transformPoint([x, y], m2, w, h, true);
+
+              var _transformPoint4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint3, 2);
+
+              x = _transformPoint4[0];
+              y = _transformPoint4[1];
+              var _ref11 = [x / w, y / h];
+              x = _ref11[0];
+              y = _ref11[1];
+            }
+
             var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], _this[_texOptions]);
             return texCoord;
           }
@@ -13441,28 +13459,28 @@ function () {
           _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), _m, [0, -rect[2]]);
         }
 
-        mesh.textureCoord = mesh.positions.map(function (_ref10) {
-          var _ref11 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref10, 3),
-              x = _ref11[0],
-              y = _ref11[1],
-              z = _ref11[2];
+        mesh.textureCoord = mesh.positions.map(function (_ref12) {
+          var _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref12, 3),
+              x = _ref13[0],
+              y = _ref13[1],
+              z = _ref13[2];
 
           if (z > 0) {
             // fillTag
             if (options.rotated) {
-              var _transformPoint3 = transformPoint([x, y], _m, w, h, true);
+              var _transformPoint5 = transformPoint([x, y], _m, w, h, true);
 
-              var _transformPoint4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint3, 2);
+              var _transformPoint6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint5, 2);
 
-              x = _transformPoint4[0];
-              y = _transformPoint4[1];
-              var _ref12 = [x / w, y / h];
-              x = _ref12[0];
-              y = _ref12[1];
+              x = _transformPoint6[0];
+              y = _transformPoint6[1];
+              var _ref14 = [x / w, y / h];
+              x = _ref14[0];
+              y = _ref14[1];
             } else {
-              var _ref13 = [0.5 * (x + 1), 0.5 * (y + 1)];
-              x = _ref13[0];
-              y = _ref13[1];
+              var _ref15 = [0.5 * (x + 1), 0.5 * (y + 1)];
+              x = _ref15[0];
+              y = _ref15[1];
             }
 
             var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], _this[_texOptions]);
@@ -13503,9 +13521,9 @@ function () {
     }
   }, {
     key: "setResolution",
-    value: function setResolution(_ref14) {
-      var width = _ref14.width,
-          height = _ref14.height;
+    value: function setResolution(_ref16) {
+      var width = _ref16.width,
+          height = _ref16.height;
 
       if (this[_bound][1][0] !== width || this[_bound][1][1] !== height) {
         this[_mesh] = null;
@@ -13529,21 +13547,21 @@ function () {
   }, {
     key: "setStroke",
     value: function setStroke() {
-      var _ref15 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref15$thickness = _ref15.thickness,
-          thickness = _ref15$thickness === void 0 ? 1 : _ref15$thickness,
-          _ref15$cap = _ref15.cap,
-          cap = _ref15$cap === void 0 ? 'butt' : _ref15$cap,
-          _ref15$join = _ref15.join,
-          join = _ref15$join === void 0 ? 'miter' : _ref15$join,
-          _ref15$miterLimit = _ref15.miterLimit,
-          miterLimit = _ref15$miterLimit === void 0 ? 10 : _ref15$miterLimit,
-          _ref15$color = _ref15.color,
-          color = _ref15$color === void 0 ? [0, 0, 0, 0] : _ref15$color,
-          _ref15$lineDash = _ref15.lineDash,
-          lineDash = _ref15$lineDash === void 0 ? null : _ref15$lineDash,
-          _ref15$lineDashOffset = _ref15.lineDashOffset,
-          lineDashOffset = _ref15$lineDashOffset === void 0 ? 0 : _ref15$lineDashOffset;
+      var _ref17 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref17$thickness = _ref17.thickness,
+          thickness = _ref17$thickness === void 0 ? 1 : _ref17$thickness,
+          _ref17$cap = _ref17.cap,
+          cap = _ref17$cap === void 0 ? 'butt' : _ref17$cap,
+          _ref17$join = _ref17.join,
+          join = _ref17$join === void 0 ? 'miter' : _ref17$join,
+          _ref17$miterLimit = _ref17.miterLimit,
+          miterLimit = _ref17$miterLimit === void 0 ? 10 : _ref17$miterLimit,
+          _ref17$color = _ref17.color,
+          color = _ref17$color === void 0 ? [0, 0, 0, 0] : _ref17$color,
+          _ref17$lineDash = _ref17.lineDash,
+          lineDash = _ref17$lineDash === void 0 ? null : _ref17$lineDash,
+          _ref17$lineDashOffset = _ref17.lineDashOffset,
+          lineDashOffset = _ref17$lineDashOffset === void 0 ? 0 : _ref17$lineDashOffset;
 
       this[_mesh] = null;
       this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_6__["default"])({
@@ -13561,15 +13579,15 @@ function () {
   }, {
     key: "setFill",
     value: function setFill() {
-      var _ref16 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref16$delaunay = _ref16.delaunay,
-          delaunay = _ref16$delaunay === void 0 ? true : _ref16$delaunay,
-          _ref16$clean = _ref16.clean,
-          clean = _ref16$clean === void 0 ? true : _ref16$clean,
-          _ref16$randomization = _ref16.randomization,
-          randomization = _ref16$randomization === void 0 ? 0 : _ref16$randomization,
-          _ref16$color = _ref16.color,
-          color = _ref16$color === void 0 ? [0, 0, 0, 0] : _ref16$color;
+      var _ref18 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref18$delaunay = _ref18.delaunay,
+          delaunay = _ref18$delaunay === void 0 ? true : _ref18$delaunay,
+          _ref18$clean = _ref18.clean,
+          clean = _ref18$clean === void 0 ? true : _ref18$clean,
+          _ref18$randomization = _ref18.randomization,
+          randomization = _ref18$randomization === void 0 ? 0 : _ref18$randomization,
+          _ref18$color = _ref18.color,
+          color = _ref18$color === void 0 ? [0, 0, 0, 0] : _ref18$color;
 
       this[_mesh] = null;
       this[_fill] = {
@@ -13615,11 +13633,11 @@ function () {
   }, {
     key: "setCircularGradient",
     value: function setCircularGradient() {
-      var _ref17 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref17.vector,
-          gradientColors = _ref17.colors,
-          _ref17$type = _ref17.type,
-          type = _ref17$type === void 0 ? 'fill' : _ref17$type;
+      var _ref19 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref19.vector,
+          gradientColors = _ref19.colors,
+          _ref19$type = _ref19.type,
+          type = _ref19$type === void 0 ? 'fill' : _ref19$type;
 
       if (vector.length !== 3) throw new TypeError('Invalid linearGradient.');
       this.setGradient({
@@ -13631,11 +13649,11 @@ function () {
   }, {
     key: "setLinearGradient",
     value: function setLinearGradient() {
-      var _ref18 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref18.vector,
-          gradientColors = _ref18.colors,
-          _ref18$type = _ref18.type,
-          type = _ref18$type === void 0 ? 'fill' : _ref18$type;
+      var _ref20 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref20.vector,
+          gradientColors = _ref20.colors,
+          _ref20$type = _ref20.type,
+          type = _ref20$type === void 0 ? 'fill' : _ref20$type;
 
       if (vector.length !== 4) throw new TypeError('Invalid linearGradient.');
       this.setGradient({
@@ -13647,11 +13665,11 @@ function () {
   }, {
     key: "setRadialGradient",
     value: function setRadialGradient() {
-      var _ref19 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref19.vector,
-          gradientColors = _ref19.colors,
-          _ref19$type = _ref19.type,
-          type = _ref19$type === void 0 ? 'fill' : _ref19$type;
+      var _ref21 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref21.vector,
+          gradientColors = _ref21.colors,
+          _ref21$type = _ref21.type,
+          type = _ref21$type === void 0 ? 'fill' : _ref21$type;
 
       if (vector.length !== 6) throw new TypeError('Invalid radialGradient.');
       this.setGradient({
@@ -13668,15 +13686,15 @@ function () {
   }, {
     key: "setGradient",
     value: function setGradient() {
-      var _ref20 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref20.vector,
-          gradientColors = _ref20.colors,
-          _ref20$type = _ref20.type,
-          type = _ref20$type === void 0 ? 'fill' : _ref20$type;
+      var _ref22 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vector = _ref22.vector,
+          gradientColors = _ref22.colors,
+          _ref22$type = _ref22.type,
+          type = _ref22$type === void 0 ? 'fill' : _ref22$type;
 
-      gradientColors = gradientColors.map(function (_ref21) {
-        var offset = _ref21.offset,
-            color = _ref21.color;
+      gradientColors = gradientColors.map(function (_ref23) {
+        var offset = _ref23.offset,
+            color = _ref23.color;
         if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
         return {
           offset: offset,
@@ -13692,9 +13710,9 @@ function () {
         return a.offset - b.offset;
       });
       var colorSteps = [];
-      gradientColors.forEach(function (_ref22) {
-        var offset = _ref22.offset,
-            color = _ref22.color;
+      gradientColors.forEach(function (_ref24) {
+        var offset = _ref24.offset,
+            color = _ref24.color;
         colorSteps.push.apply(colorSteps, [offset].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(color)));
       });
 
@@ -13791,10 +13809,10 @@ function () {
   }, {
     key: "rotate",
     value: function rotate(rad) {
-      var _ref23 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref23, 2),
-          ox = _ref24[0],
-          oy = _ref24[1];
+      var _ref25 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
+          _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref25, 2),
+          ox = _ref26[0],
+          oy = _ref26[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -13807,10 +13825,10 @@ function () {
     value: function scale(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref25 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref25, 2),
-          ox = _ref26[0],
-          oy = _ref26[1];
+      var _ref27 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref27, 2),
+          ox = _ref28[0],
+          oy = _ref28[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -13823,10 +13841,10 @@ function () {
     value: function skew(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref27 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref27, 2),
-          ox = _ref28[0],
-          oy = _ref28[1];
+      var _ref29 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref29, 2),
+          ox = _ref30[0],
+          oy = _ref30[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -13998,18 +14016,18 @@ function () {
       var positions = meshData.positions,
           cells = meshData.cells;
 
-      function projectionOn(_ref29, _ref30, _ref31) {
-        var _ref32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref29, 2),
-            x0 = _ref32[0],
-            y0 = _ref32[1];
-
-        var _ref33 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref30, 2),
-            x1 = _ref33[0],
-            y1 = _ref33[1];
-
+      function projectionOn(_ref31, _ref32, _ref33) {
         var _ref34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref31, 2),
-            x2 = _ref34[0],
-            y2 = _ref34[1];
+            x0 = _ref34[0],
+            y0 = _ref34[1];
+
+        var _ref35 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref32, 2),
+            x1 = _ref35[0],
+            y1 = _ref35[1];
+
+        var _ref36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref33, 2),
+            x2 = _ref36[0],
+            y2 = _ref36[1];
 
         var v2x = x2 - x1;
         var v2y = y2 - y1;
@@ -14119,10 +14137,10 @@ function () {
             w = _this$_bound$5[0],
             h = _this$_bound$5[1];
 
-        positions = positions.map(function (_ref35) {
-          var _ref36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref35, 2),
-              x = _ref36[0],
-              y = _ref36[1];
+        positions = positions.map(function (_ref37) {
+          var _ref38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref37, 2),
+              x = _ref38[0],
+              y = _ref38[1];
 
           return transformPoint([x, y], m, w, h, false);
         });

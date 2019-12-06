@@ -371,15 +371,22 @@ export default class Mesh2D {
     const [w, h] = this[_bound][1];
 
     if(transformed && !isUnitTransform(transform)) {
-      let m = mat2d.invert(transform);
+      const m = mat2d.invert(transform);
+      let m2 = null;
       if(options.rotated) {
-        m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-        m = mat2d.translate(m, [0, -rect[2]]);
+        m2 = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+        m2 = mat2d.translate(m2, [0, -rect[2]]);
       }
+
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) {
           [x, y] = transformPoint([x, y], m, w, h, true);
           [x, y] = [x / w, y / h];
+          if(options.rotated) {
+            [x, y] = [2 * x - 1, 2 * y - 1];
+            [x, y] = transformPoint([x, y], m2, w, h, true);
+            [x, y] = [x / w, y / h];
+          }
           const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
           return texCoord;
         }
