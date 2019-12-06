@@ -5,10 +5,8 @@ varying float flagBackground;
 uniform float u_opacity;
 
 #ifdef TEXTURE
-uniform int u_texFlag;
-uniform int u_repeat;
-uniform vec4 u_srcRect;
-varying vec2 vTextureCoord;
+varying vec3 vTextureCoord;
+varying vec4 vSourceRect;
 #endif
 
 #ifdef FILTER
@@ -111,20 +109,20 @@ void main() {
   }
 
 #ifdef TEXTURE
-  if(u_texFlag > 0 && flagBackground > 0.0) {
-    vec2 texCoord = vTextureCoord;
+  if(flagBackground > 0.0) {
+    vec3 texCoord = vTextureCoord;
 
-    if(u_repeat == 1) {
+    if(texCoord.z == 1.0) {
       texCoord = fract(texCoord);
     }
 
     if(texCoord.x <= 1.0 && texCoord.x >= 0.0
       && texCoord.y <= 1.0 && texCoord.y >= 0.0) {
-      if(u_srcRect.z > 0.0) {
-        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;
-        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
+      if(vSourceRect.z > 0.0) {
+        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;
+        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);
       }
-      vec4 texColor = texture2D(u_texSampler, texCoord);
+      vec4 texColor = texture2D(u_texSampler, texCoord.xy);
       float alpha = texColor.a;
       if(u_opacity < 1.0) {
         texColor.a *= u_opacity;

@@ -242,7 +242,9 @@ export default class Renderer {
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
       const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
+      this._drawCalls = 0;
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
+        this._drawCalls++;
         if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
         if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
           applyShader(renderer, {hasTexture: true});

@@ -56,7 +56,7 @@ function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
     y += oy;
   }
 
-  return [x, y];
+  return [x, y, 0];
 }
 
 function accurate(path, scale, simplify) {
@@ -269,6 +269,7 @@ export default class Mesh2D {
           });
           mesh.attributes = {
             a_color: Array.from({length: mesh.positions.length}).map(() => this[_fillColor].map(c => Math.round(255 * c))),
+            // a_sourceRect: Array.from({length: mesh.positions.length}).map(() => [0, 0, 0, 0]),
           };
           meshes.fill = mesh;
         } catch (ex) {
@@ -311,7 +312,6 @@ export default class Mesh2D {
       this[_applyTexture](mesh, this[_texOptions], false);
     }
     mesh.uniforms = this[_uniforms];
-    // if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
     // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
     // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
     this[_mesh] = mesh;
@@ -370,7 +370,9 @@ export default class Mesh2D {
 
     const [w, h] = this[_bound][1];
 
-    if(transformed && !isUnitTransform(transform)) {
+    if(options.hidden) {
+      mesh.textureCoord = mesh.positions.map(() => [-1, -1, -1]);
+    } else if(transformed && !isUnitTransform(transform)) {
       const m = mat2d.invert(transform);
       let m2 = null;
       if(options.rotated) {
@@ -388,9 +390,10 @@ export default class Mesh2D {
             [x, y] = [x / w, y / h];
           }
           const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
+          if(options.repeat) texCoord[2] = 1;
           return texCoord;
         }
-        return [0, 0];
+        return [-1, -1, -1];
       });
     } else {
       let m = null;
@@ -408,22 +411,17 @@ export default class Mesh2D {
             [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
           }
           const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
+          if(options.repeat) texCoord[2] = 1;
           return texCoord;
         }
-        return [0, 0];
+        return [-1, -1, -1];
       });
     }
-
     if(srcRect) {
       const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-      this[_uniforms].u_srcRect = sRect;
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
     } else {
-      this[_uniforms].u_srcRect = [0, 0, 0, 0];
-    }
-    if(options.repeat) {
-      this[_uniforms].u_repeat = 1;
-    } else {
-      this[_uniforms].u_repeat = 0;
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
     }
   }
 
@@ -492,6 +490,7 @@ export default class Mesh2D {
       rotated: false,
       rect: [10, 10],
       srcRect: [...],
+      hidden: false,
     }
    */
   setTexture(texture, options = {}) {
@@ -499,7 +498,6 @@ export default class Mesh2D {
       this.setFill();
     }
     this.setUniforms({
-      u_texFlag: 1,
       u_texSampler: texture,
     });
 

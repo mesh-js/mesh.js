@@ -4,8 +4,10 @@ varying vec4 vColor;
 varying float flagBackground;
 
 #ifdef TEXTURE
-attribute vec2 a_vertexTextureCoord;
-varying vec2 vTextureCoord;
+attribute vec3 a_vertexTextureCoord;
+varying vec3 vTextureCoord;
+attribute vec4 a_sourceRect;
+varying vec4 vSourceRect;
 #endif
 
 #ifdef GRADIENT
@@ -66,5 +68,6 @@ void main() {
 
 #ifdef TEXTURE
   vTextureCoord = a_vertexTextureCoord;
+  vSourceRect = a_sourceRect;
 #endif
 }

@@ -8047,6 +8047,7 @@ function () {
         var gl = renderer.gl;
         if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
         var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(this[_globalTransform]);
+        this._drawCalls = 0;
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -8055,6 +8056,7 @@ function () {
           for (var _iterator = meshData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var mesh = _step.value;
             // eslint-disable-line no-restricted-syntax
+            this._drawCalls++;
             if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
 
             if (!program && mesh.filterCanvas) {
@@ -8925,6 +8927,13 @@ function () {
         program._dimension = Number(matched[1]);
       }
 
+      var texCoordPattern = new RegExp("attribute vec(\\d) ".concat(this.options.vertexTextureCoord), 'im');
+      matched = vertexShader.match(texCoordPattern);
+
+      if (matched) {
+        program._texCoordSize = Number(matched[1]);
+      }
+
       var attributePattern = /^\s*attribute (\w+?)(\d*) (\w+)/gim;
       matched = vertexShader.match(attributePattern);
 
@@ -9005,7 +9014,7 @@ function () {
       if (program._enableTextures) {
         gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.texCoordBuffer);
         var vTexCoord = gl.getAttribLocation(program, this.options.vertexTextureCoord);
-        gl.vertexAttribPointer(vTexCoord, 2, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(vTexCoord, program._texCoordSize || 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(vTexCoord);
       }
 
@@ -9031,8 +9040,10 @@ function () {
           gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers[name]);
           var attrib = gl.getAttribLocation(program, name); // console.log(size, gl[bufferType]);
 
-          gl.vertexAttribPointer(attrib, size, gl[bufferType], normalize, 0, 0);
-          gl.enableVertexAttribArray(attrib);
+          if (attrib >= 0) {
+            gl.vertexAttribPointer(attrib, size, gl[bufferType], normalize, 0, 0);
+            gl.enableVertexAttribArray(attrib);
+          }
         }
       });
 
@@ -11278,10 +11289,16 @@ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(compress)
 function compareUniform(a, b) {
   var ua = a.uniforms || {};
   var ub = b.uniforms || {};
+  if (ua.u_texSampler && ub.u_texSampler && ua.u_texSampler !== ub.u_texSampler) return false;
   var keysA = Object.keys(ua),
-      keysB = Object.keys(ub);
+      keysB = Object.keys(ub); // console.log(keysA, keysB);
+
+  var idx1 = keysA.indexOf('u_texSampler');
+  var idx2 = keysB.indexOf('u_texSampler');
+  if (idx1 >= 0) keysA.splice(idx1, 1);
+  if (idx2 >= 0) keysB.splice(idx2, 1);
   if (keysA.length !== keysB.length) return false;
-  return keysA.every(function (key) {
+  var ret = keysA.every(function (key) {
     var va = ua[key],
         vb = ub[key];
     if (va === vb) return true;
@@ -11296,6 +11313,20 @@ function compareUniform(a, b) {
 
     return false;
   });
+
+  if (ret) {
+    if (ua.u_texSampler && !ub.u_texSampler) {
+      b.setTexture(ua.u_texSampler, {
+        hidden: true
+      });
+    } else if (!ua.u_texSampler && ub.u_texSampler) {
+      a.setTexture(ub.u_texSampler, {
+        hidden: true
+      });
+    }
+  }
+
+  return ret;
 }
 
 var bufferCache = {};
@@ -11350,6 +11381,21 @@ function packData(temp, enableBlend) {
       meshData.attributes.a_color = {
         data: gl_renderer__WEBPACK_IMPORTED_MODULE_1__["default"].UBYTE(meshData.attributes.a_color, bufferCache.a_color)
       };
+    }
+
+    if (meshData.attributes.a_sourceRect) {
+      var sourceRectCount = meshData.attributes.a_sourceRect.length * meshData.attributes.a_sourceRect[0].length;
+
+      if (!bufferCache.a_sourceRect || bufferCache.a_sourceRect.length < sourceRectCount) {
+        bufferCache.a_sourceRect = gl_renderer__WEBPACK_IMPORTED_MODULE_1__["default"].FLOAT(meshData.attributes.a_sourceRect);
+        meshData.attributes.a_sourceRect = {
+          data: bufferCache.a_sourceRect
+        };
+      } else {
+        meshData.attributes.a_sourceRect = {
+          data: gl_renderer__WEBPACK_IMPORTED_MODULE_1__["default"].FLOAT(meshData.attributes.a_sourceRect, bufferCache.a_sourceRect)
+        };
+      }
     }
 
     meshData.packIndex = temp[0].packIndex;
@@ -11504,6 +11550,7 @@ function flattenMeshes(meshes) {
   var textureCoord = [];
   var cells = [];
   var a_color = [];
+  var a_sourceRect = [];
   var idx = 0;
   var uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
   meshes.forEach(function (mesh) {
@@ -11516,16 +11563,23 @@ function flattenMeshes(meshes) {
         });
       })));
       a_color.push.apply(a_color, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes.a_color));
+
+      if (mesh.attributes.a_sourceRect) {
+        a_sourceRect.push.apply(a_sourceRect, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes.a_sourceRect));
+      }
+
       if (mesh.textureCoord) textureCoord.push.apply(textureCoord, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.textureCoord));
       idx += mesh.positions.length;
     }
   });
+  var attributes = {
+    a_color: a_color
+  };
+  if (a_sourceRect.length > 0) attributes.a_sourceRect = a_sourceRect;
   var ret = {
     positions: positions,
     cells: cells,
-    attributes: {
-      a_color: a_color
-    },
+    attributes: attributes,
     uniforms: uniforms
   };
 
@@ -13294,7 +13348,7 @@ function getTexCoord(_ref, _ref2, _ref3) {
     y += oy;
   }
 
-  return [x, y];
+  return [x, y, 0];
 }
 
 function _accurate(path, scale, simplify) {
@@ -13403,7 +13457,11 @@ function () {
           w = _this$_bound$2[0],
           h = _this$_bound$2[1];
 
-      if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
+      if (options.hidden) {
+        mesh.textureCoord = mesh.positions.map(function () {
+          return [-1, -1, -1];
+        });
+      } else if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
         var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform);
         var m2 = null;
 
@@ -13446,10 +13504,11 @@ function () {
             }
 
             var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], _this[_texOptions]);
+            if (options.repeat) texCoord[2] = 1;
             return texCoord;
           }
 
-          return [0, 0];
+          return [-1, -1, -1];
         });
       } else {
         var _m = null;
@@ -13484,24 +13543,23 @@ function () {
             }
 
             var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], _this[_texOptions]);
+            if (options.repeat) texCoord[2] = 1;
             return texCoord;
           }
 
-          return [0, 0];
+          return [-1, -1, -1];
         });
       }
 
       if (srcRect) {
         var sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-        this[_uniforms].u_srcRect = sRect;
+        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
+          return [].concat(sRect);
+        });
       } else {
-        this[_uniforms].u_srcRect = [0, 0, 0, 0];
-      }
-
-      if (options.repeat) {
-        this[_uniforms].u_repeat = 1;
-      } else {
-        this[_uniforms].u_repeat = 0;
+        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
+          return [0, 0, 0, 0];
+        });
       }
     }
   }, {
@@ -13606,6 +13664,7 @@ function () {
         rotated: false,
         rect: [10, 10],
         srcRect: [...],
+        hidden: false,
       }
      */
 
@@ -13619,7 +13678,6 @@ function () {
       }
 
       this.setUniforms({
-        u_texFlag: 1,
         u_texSampler: texture
       });
       this[_texOptions] = options;
@@ -14316,7 +14374,8 @@ function () {
                 return _this2[_fillColor].map(function (c) {
                   return Math.round(255 * c);
                 });
-              })
+              }) // a_sourceRect: Array.from({length: mesh.positions.length}).map(() => [0, 0, 0, 0]),
+
             };
             meshes.fill = _mesh2;
           } catch (ex) {// ignore this[_fill]
@@ -14371,8 +14430,7 @@ function () {
         this[_applyTexture](mesh, this[_texOptions], false);
       }
 
-      mesh.uniforms = this[_uniforms]; // if(!mesh.uniforms.u_texFlag) mesh.uniforms.u_texFlag = 0;
-      // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
+      mesh.uniforms = this[_uniforms]; // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
       // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
 
       this[_mesh] = mesh;
@@ -19167,7 +19225,7 @@ function applyCloudShader(renderer) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nattribute vec2 a_vertexTextureCoord;\nvarying vec2 vTextureCoord;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n\nvoid transformPoint(inout vec2 p) {\n  vec3 m0 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m1 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float w = u_globalTransform[3];\n  float h = u_globalTransform[7];\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);\n  \n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n#endif\n}");
+/* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n\nvoid transformPoint(inout vec2 p) {\n  vec3 m0 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m1 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float w = u_globalTransform[3];\n  float h = u_globalTransform[7];\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);\n  \n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  vSourceRect = a_sourceRect;\n#endif\n}");
 
 /***/ }),
 /* 86 */
@@ -19175,7 +19233,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nuniform int u_texFlag;\nuniform int u_repeat;\nuniform vec4 u_srcRect;\nvarying vec2 vTextureCoord;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(u_texFlag > 0 && flagBackground > 0.0) {\n    vec2 texCoord = vTextureCoord;\n\n    if(u_repeat == 1) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(u_srcRect.z > 0.0) {\n        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;\n        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord);\n      float alpha = texColor.a;\n      if(u_opacity < 1.0) {\n        texColor.a *= u_opacity;\n        alpha *= mix(0.465, 1.0, u_opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
+/* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n      float alpha = texColor.a;\n      if(u_opacity < 1.0) {\n        texColor.a *= u_opacity;\n        alpha *= mix(0.465, 1.0, u_opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
 /* 87 */
@@ -19183,7 +19241,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec4 a_transform0;\nattribute vec4 a_transform1;\n\n#ifdef TEXTURE\nattribute vec2 a_vertexTextureCoord;\nvarying vec2 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n#endif\n\nvoid transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 m0 = vec3(a_transform0.x, a_transform0.z, a_transform1.y);\n  vec3 m1 = vec3(a_transform0.y, a_transform1.x, a_transform1.z);\n\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);\n  gl_Position = vec4(xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float width = u_globalTransform[3];\n  float height = u_globalTransform[7];\n  transformPoint(xy, m3, m4, width, height);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
+/* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec4 a_transform0;\nattribute vec4 a_transform1;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n#endif\n\nvoid transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 m0 = vec3(a_transform0.x, a_transform0.z, a_transform1.y);\n  vec3 m1 = vec3(a_transform0.y, a_transform1.x, a_transform1.z);\n\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);\n  gl_Position = vec4(xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float width = u_globalTransform[3];\n  float height = u_globalTransform[7];\n  transformPoint(xy, m3, m4, width, height);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
 /* 88 */
@@ -19191,7 +19249,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying float frameIndex;\nvarying vec2 vTextureCoord;\nuniform int u_texFlag;\nuniform int u_repeat;\nuniform vec4 u_srcRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef CLOUDFILTER\nuniform int u_cloudFilterFlag;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n\n#ifdef CLOUDFILTER\nvoid buildCloudColor(inout float colorCloudMatrix[20]) {\n  colorCloudMatrix[0] = colorCloud0[0];\n  colorCloudMatrix[1] = colorCloud1[0];\n  colorCloudMatrix[2] = colorCloud2[0];\n  colorCloudMatrix[3] = colorCloud3[0];\n  colorCloudMatrix[4] = colorCloud4[0];\n\n  colorCloudMatrix[5] = colorCloud0[1];\n  colorCloudMatrix[6] = colorCloud1[1];\n  colorCloudMatrix[7] = colorCloud2[1];\n  colorCloudMatrix[8] = colorCloud3[1];\n  colorCloudMatrix[9] = colorCloud4[1];\n\n  colorCloudMatrix[10] = colorCloud0[2];\n  colorCloudMatrix[11] = colorCloud1[2];\n  colorCloudMatrix[12] = colorCloud2[2];\n  colorCloudMatrix[13] = colorCloud3[2];\n  colorCloudMatrix[14] = colorCloud4[2];\n\n  colorCloudMatrix[15] = colorCloud0[3];\n  colorCloudMatrix[16] = colorCloud1[3];\n  colorCloudMatrix[17] = colorCloud2[3];\n  colorCloudMatrix[18] = colorCloud3[3];\n  colorCloudMatrix[19] = colorCloud4[3];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(u_texFlag > 0 && flagBackground > 0.0) {\n    vec2 texCoord = vTextureCoord;\n\n    if(u_repeat == 1) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(u_srcRect.z > 0.0) {\n        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;\n        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);\n      }\n      if(frameIndex < 0.0) {\n        vec4 texColor = texture2D(u_texSampler, texCoord);\n        color = mix(color, texColor, texColor.a);\n      } else {\n        int index = int(floor(clamp(0.0, 11.0, frameIndex)));\n        vec4 texColor;\n        if(index == 0) texColor = texture2D(u_texFrame0, texCoord);\n        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord);\n        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord);\n        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord);\n        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord);\n        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord);\n        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord);\n        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord);\n        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord);\n        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord);\n        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord);\n        else texColor = texture2D(u_texFrame11, texCoord);\n        float alpha = texColor.a;\n        if(u_opacity < 1.0) {\n          texColor.a *= u_opacity;\n          alpha *= mix(0.465, 1.0, u_opacity);\n        }\n        // color = mix(color, texColor, texColor.a);\n        color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n        color.a = texColor.a + (1.0 - texColor.a) * color.a;\n      }\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLOUDFILTER\n  if(u_cloudFilterFlag > 0) {\n    float colorCloudMatrix[20];\n    buildCloudColor(colorCloudMatrix);\n    transformColor(color, colorCloudMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
+/* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying float frameIndex;\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef CLOUDFILTER\nuniform int u_cloudFilterFlag;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n\n#ifdef CLOUDFILTER\nvoid buildCloudColor(inout float colorCloudMatrix[20]) {\n  colorCloudMatrix[0] = colorCloud0[0];\n  colorCloudMatrix[1] = colorCloud1[0];\n  colorCloudMatrix[2] = colorCloud2[0];\n  colorCloudMatrix[3] = colorCloud3[0];\n  colorCloudMatrix[4] = colorCloud4[0];\n\n  colorCloudMatrix[5] = colorCloud0[1];\n  colorCloudMatrix[6] = colorCloud1[1];\n  colorCloudMatrix[7] = colorCloud2[1];\n  colorCloudMatrix[8] = colorCloud3[1];\n  colorCloudMatrix[9] = colorCloud4[1];\n\n  colorCloudMatrix[10] = colorCloud0[2];\n  colorCloudMatrix[11] = colorCloud1[2];\n  colorCloudMatrix[12] = colorCloud2[2];\n  colorCloudMatrix[13] = colorCloud3[2];\n  colorCloudMatrix[14] = colorCloud4[2];\n\n  colorCloudMatrix[15] = colorCloud0[3];\n  colorCloudMatrix[16] = colorCloud1[3];\n  colorCloudMatrix[17] = colorCloud2[3];\n  colorCloudMatrix[18] = colorCloud3[3];\n  colorCloudMatrix[19] = colorCloud4[3];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      if(frameIndex < 0.0) {\n        vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n        color = mix(color, texColor, texColor.a);\n      } else {\n        int index = int(floor(clamp(0.0, 11.0, frameIndex)));\n        vec4 texColor;\n        if(index == 0) texColor = texture2D(u_texFrame0, texCoord.xy);\n        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord.xy);\n        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord.xy);\n        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord.xy);\n        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord.xy);\n        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord.xy);\n        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord.xy);\n        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord.xy);\n        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord.xy);\n        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord.xy);\n        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord.xy);\n        else texColor = texture2D(u_texFrame11, texCoord.xy);\n        float alpha = texColor.a;\n        if(u_opacity < 1.0) {\n          texColor.a *= u_opacity;\n          alpha *= mix(0.465, 1.0, u_opacity);\n        }\n        // color = mix(color, texColor, texColor.a);\n        color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n        color.a = texColor.a + (1.0 - texColor.a) * color.a;\n      }\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLOUDFILTER\n  if(u_cloudFilterFlag > 0) {\n    float colorCloudMatrix[20];\n    buildCloudColor(colorCloudMatrix);\n    transformColor(color, colorCloudMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
 /* 89 */

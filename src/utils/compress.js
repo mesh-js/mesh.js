@@ -5,12 +5,20 @@ function compareUniform(a, b) {
   const ua = a.uniforms || {};
   const ub = b.uniforms || {};
 
+  if(ua.u_texSampler && ub.u_texSampler && ua.u_texSampler !== ub.u_texSampler) return false;
+
   const keysA = Object.keys(ua),
     keysB = Object.keys(ub);
 
+  // console.log(keysA, keysB);
+  const idx1 = keysA.indexOf('u_texSampler');
+  const idx2 = keysB.indexOf('u_texSampler');
+  if(idx1 >= 0) keysA.splice(idx1, 1);
+  if(idx2 >= 0) keysB.splice(idx2, 1);
+
   if(keysA.length !== keysB.length) return false;
 
-  return keysA.every((key) => {
+  const ret = keysA.every((key) => {
     const va = ua[key],
       vb = ub[key];
 
@@ -23,6 +31,16 @@ function compareUniform(a, b) {
     }
     return false;
   });
+
+  if(ret) {
+    if(ua.u_texSampler && !ub.u_texSampler) {
+      b.setTexture(ua.u_texSampler, {hidden: true});
+    } else if(!ua.u_texSampler && ub.u_texSampler) {
+      a.setTexture(ub.u_texSampler, {hidden: true});
+    }
+  }
+
+  return ret;
 }
 
 const bufferCache = {
@@ -73,6 +91,16 @@ function packData(temp, enableBlend) {
       meshData.attributes.a_color = {data: GlRenderer.UBYTE(meshData.attributes.a_color, bufferCache.a_color)};
     }
 
+    if(meshData.attributes.a_sourceRect) {
+      const sourceRectCount = meshData.attributes.a_sourceRect.length * meshData.attributes.a_sourceRect[0].length;
+      if(!bufferCache.a_sourceRect || bufferCache.a_sourceRect.length < sourceRectCount) {
+        bufferCache.a_sourceRect = GlRenderer.FLOAT(meshData.attributes.a_sourceRect);
+        meshData.attributes.a_sourceRect = {data: bufferCache.a_sourceRect};
+      } else {
+        meshData.attributes.a_sourceRect = {data: GlRenderer.FLOAT(meshData.attributes.a_sourceRect, bufferCache.a_sourceRect)};
+      }
+    }
+
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
     meshData.beforeRender = temp[0].beforeRender;
@@ -85,7 +113,6 @@ function packData(temp, enableBlend) {
 export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
   const temp = [];
   const maxSize = renderer.options.bufferSize;
-
   let size = 0;
   let enableBlend = false;
 

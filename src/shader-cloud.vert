@@ -6,10 +6,12 @@ attribute vec4 a_transform0;
 attribute vec4 a_transform1;
 
 #ifdef TEXTURE
-attribute vec2 a_vertexTextureCoord;
-varying vec2 vTextureCoord;
+attribute vec3 a_vertexTextureCoord;
+varying vec3 vTextureCoord;
 attribute float a_frameIndex;
 varying float frameIndex;
+attribute vec4 a_sourceRect;
+varying vec4 vSourceRect;
 #endif
 
 #ifdef CLOUDFILTER
@@ -103,6 +105,7 @@ void main() {
 #ifdef TEXTURE
   vTextureCoord = a_vertexTextureCoord;
   frameIndex = a_frameIndex;
+  vSourceRect = a_sourceRect;
 #endif
 
 #ifdef CLOUDFILTER

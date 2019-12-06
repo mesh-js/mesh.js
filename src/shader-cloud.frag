@@ -6,10 +6,8 @@ uniform float u_opacity;
 
 #ifdef TEXTURE
 varying float frameIndex;
-varying vec2 vTextureCoord;
-uniform int u_texFlag;
-uniform int u_repeat;
-uniform vec4 u_srcRect;
+varying vec3 vTextureCoord;
+varying vec4 vSourceRect;
 #endif
 
 #ifdef FILTER
@@ -146,37 +144,37 @@ void main() {
   }
 
 #ifdef TEXTURE
-  if(u_texFlag > 0 && flagBackground > 0.0) {
-    vec2 texCoord = vTextureCoord;
+  if(flagBackground > 0.0) {
+    vec3 texCoord = vTextureCoord;
 
-    if(u_repeat == 1) {
+    if(texCoord.z == 1.0) {
       texCoord = fract(texCoord);
     }
 
     if(texCoord.x <= 1.0 && texCoord.x >= 0.0
       && texCoord.y <= 1.0 && texCoord.y >= 0.0) {
-      if(u_srcRect.z > 0.0) {
-        texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;
-        texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
+      if(vSourceRect.z > 0.0) {
+        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;
+        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);
       }
       if(frameIndex < 0.0) {
-        vec4 texColor = texture2D(u_texSampler, texCoord);
+        vec4 texColor = texture2D(u_texSampler, texCoord.xy);
         color = mix(color, texColor, texColor.a);
       } else {
         int index = int(floor(clamp(0.0, 11.0, frameIndex)));
         vec4 texColor;
-        if(index == 0) texColor = texture2D(u_texFrame0, texCoord);
-        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord);
-        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord);
-        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord);
-        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord);
-        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord);
-        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord);
-        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord);
-        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord);
-        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord);
-        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord);
-        else texColor = texture2D(u_texFrame11, texCoord);
+        if(index == 0) texColor = texture2D(u_texFrame0, texCoord.xy);
+        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord.xy);
+        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord.xy);
+        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord.xy);
+        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord.xy);
+        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord.xy);
+        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord.xy);
+        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord.xy);
+        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord.xy);
+        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord.xy);
+        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord.xy);
+        else texColor = texture2D(u_texFrame11, texCoord.xy);
         float alpha = texColor.a;
         if(u_opacity < 1.0) {
           texColor.a *= u_opacity;
