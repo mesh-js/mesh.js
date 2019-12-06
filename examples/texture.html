@@ -16,7 +16,7 @@ const {Renderer, Figure2D, Mesh2D} = meshjs;
 
 const canvas = document.querySelector('canvas');
 const renderer = new Renderer(canvas, {
-  contextType: '2d',
+  // contextType: '2d',
 });
 
 (async function () {
@@ -24,8 +24,11 @@ const renderer = new Renderer(canvas, {
   const figure = new Figure2D();
   figure.rect(0, 0, 196, 256);
   const mesh = new Mesh2D(figure, canvas);
+  mesh.setFill({
+    color: 'red',
+  });
   mesh.setTexture(texture, {
-    srcRect: [0, 0, 196, 128],
+    srcRect: [0, 0, 146, 128],
     // rect: [0, 50, 50, 150],
     rotated: true,
   });

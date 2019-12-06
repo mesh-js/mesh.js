@@ -354,21 +354,16 @@ export default class Mesh2D {
     const texture = this[_uniforms].u_texSampler;
     if(!texture) return;
 
-    let {width: imgWidth, height: imgHeight} = texture._img;
-
-    if(options.rotated) {
-      [imgWidth, imgHeight] = [imgHeight, imgWidth];
-      this[_uniforms].u_rotated = 1;
-    }
+    const {width: imgWidth, height: imgHeight} = texture._img;
 
     const transform = this[_transform];
-    let srcRect = options.srcRect;
+    const srcRect = options.srcRect;
 
-    if(srcRect && options.rotated) {
-      srcRect = [srcRect[1], srcRect[0], srcRect[3], srcRect[2]];
+    let rect = options.rect || [0, 0];
+
+    if(options.rotated) {
+      rect = [-rect[1], rect[0], rect[3], rect[2]];
     }
-
-    const rect = options.rect || [0, 0];
 
     if(rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
     if(rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
@@ -376,21 +371,37 @@ export default class Mesh2D {
     const [w, h] = this[_bound][1];
 
     if(transformed && !isUnitTransform(transform)) {
-      const m = mat2d.invert(transform);
+      let m = mat2d.invert(transform);
+      if(options.rotated) {
+        m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+        m = mat2d.translate(m, [0, -rect[2]]);
+      }
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) {
           [x, y] = transformPoint([x, y], m, w, h, true);
           [x, y] = [x / w, y / h];
-          return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
+          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
+          return texCoord;
         }
         return [0, 0];
       });
     } else {
+      let m = null;
+      if(options.rotated) {
+        m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+        m = mat2d.translate(m, [0, -rect[2]]);
+      }
       mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
         if(z > 0) {
           // fillTag
-          [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
-          return getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
+          if(options.rotated) {
+            [x, y] = transformPoint([x, y], m, w, h, true);
+            [x, y] = [x / w, y / h];
+          } else {
+            [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
+          }
+          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
+          return texCoord;
         }
         return [0, 0];
       });
