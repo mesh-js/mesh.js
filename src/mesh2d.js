@@ -354,10 +354,20 @@ export default class Mesh2D {
     const texture = this[_uniforms].u_texSampler;
     if(!texture) return;
 
-    const {width: imgWidth, height: imgHeight} = texture._img;
+    let {width: imgWidth, height: imgHeight} = texture._img;
+
+    if(options.rotated) {
+      [imgWidth, imgHeight] = [imgHeight, imgWidth];
+      this[_uniforms].u_rotated = 1;
+    }
 
     const transform = this[_transform];
-    const srcRect = options.srcRect;
+    let srcRect = options.srcRect;
+
+    if(srcRect && options.rotated) {
+      srcRect = [srcRect[1], srcRect[0], srcRect[3], srcRect[2]];
+    }
+
     const rect = options.rect || [0, 0];
 
     if(rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
@@ -461,6 +471,7 @@ export default class Mesh2D {
     options: {
       scale: false,
       repeat: false,
+      rotated: false,
       rect: [10, 10],
       srcRect: [...],
     }

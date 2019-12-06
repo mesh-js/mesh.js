@@ -160,13 +160,26 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
           if(options.scale) {
             rect = [0, 0, context.canvas.width, context.canvas.height];
           }
+          if(options.rotated && rect) {
+            rect = [-rect[1], rect[0], rect[3], rect[2]];
+          }
           if(srcRect) {
             rect = rect || [0, 0, srcRect[2], srcRect[3]];
+          }
+          if(options.rotated) {
+            context.save();
+            context.translate(0, rect ? rect[2] : image.width);
+            context.rotate(-0.5 * Math.PI);
+          }
+          if(srcRect) {
             context.drawImage(image, ...srcRect, ...rect);
           } else if(rect) {
             context.drawImage(image, ...rect);
           } else {
             context.drawImage(image, 0, 0);
+          }
+          if(options.rotated) {
+            context.restore();
           }
         }
       }

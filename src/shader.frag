@@ -7,6 +7,7 @@ uniform float u_opacity;
 #ifdef TEXTURE
 uniform int u_texFlag;
 uniform int u_repeat;
+uniform int u_rotated;
 uniform vec4 u_srcRect;
 varying vec2 vTextureCoord;
 #endif
@@ -124,7 +125,13 @@ void main() {
         texCoord.x = u_srcRect.x + texCoord.x * u_srcRect.z;
         texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
       }
-      vec4 texColor = texture2D(u_texSampler, texCoord);
+      vec4 texColor = vec4(0);
+      if(u_rotated == 1) {
+        vec2 t = vec2(texCoord.y, 1.0 - texCoord.x);
+        texColor = texture2D(u_texSampler, t);
+      } else {
+        texColor = texture2D(u_texSampler, texCoord);
+      }
       float alpha = texColor.a;
       if(u_opacity < 1.0) {
         texColor.a *= u_opacity;

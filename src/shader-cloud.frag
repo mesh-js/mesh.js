@@ -9,6 +9,7 @@ varying float frameIndex;
 varying vec2 vTextureCoord;
 uniform int u_texFlag;
 uniform int u_repeat;
+uniform int u_rotated;
 uniform vec4 u_srcRect;
 #endif
 
@@ -160,7 +161,13 @@ void main() {
         texCoord.y = 1.0 - (u_srcRect.y + (1.0 - texCoord.y) * u_srcRect.w);
       }
       if(frameIndex < 0.0) {
-        vec4 texColor = texture2D(u_texSampler, texCoord);
+        vec4 texColor = vec4(0);
+        if(u_rotated == 1) {
+          vec2 t = vec2(texCoord.y, 1.0 - texCoord.x);
+          texColor = texture2D(u_texSampler, t);
+        } else {
+          texColor = texture2D(u_texSampler, texCoord);
+        }
         color = mix(color, texColor, texColor.a);
       } else {
         int index = int(floor(clamp(0.0, 11.0, frameIndex)));
