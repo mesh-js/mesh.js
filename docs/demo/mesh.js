@@ -13381,6 +13381,7 @@ function () {
     };
     this[_filter] = [];
     this[_blend] = null;
+    this[_texOptions] = {};
     this.contours = figure.contours;
   }
 
@@ -13435,7 +13436,11 @@ function () {
   }, {
     key: _applyTexture,
     value: function value(mesh, options, transformed) {
-      var _this = this;
+      function compareRect(r1, r2) {
+        if (r1 == null && r2 == null) return true;
+        if (r1 == null || r2 == null) return false;
+        return r1[0] === r2[0] && r1[1] === r2[1] && r1[2] === r2[2] && r1[3] === r2[3];
+      }
 
       var texture = this[_uniforms].u_texSampler;
       if (!texture) return;
@@ -13461,105 +13466,109 @@ function () {
         mesh.textureCoord = mesh.positions.map(function () {
           return [-1, -1, -1];
         });
-      } else if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
-        var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform);
-        var m2 = null;
+      } else if (!mesh.textureCoord || !compareRect(this[_texOptions].rect, options.rect) || this[_texOptions].hidden !== options.hidden || this[_texOptions].rotated !== options.rotated) {
+        if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
+          var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform);
+          var m2 = null;
 
-        if (options.rotated) {
-          m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m2, [0, -rect[2]]);
-        }
-
-        mesh.textureCoord = mesh.positions.map(function (_ref7) {
-          var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref7, 3),
-              x = _ref8[0],
-              y = _ref8[1],
-              z = _ref8[2];
-
-          if (z > 0) {
-            var _transformPoint = transformPoint([x, y], m, w, h, true);
-
-            var _transformPoint2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint, 2);
-
-            x = _transformPoint2[0];
-            y = _transformPoint2[1];
-            var _ref9 = [x / w, y / h];
-            x = _ref9[0];
-            y = _ref9[1];
-
-            if (options.rotated) {
-              var _ref10 = [2 * x - 1, 2 * y - 1];
-              x = _ref10[0];
-              y = _ref10[1];
-
-              var _transformPoint3 = transformPoint([x, y], m2, w, h, true);
-
-              var _transformPoint4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint3, 2);
-
-              x = _transformPoint4[0];
-              y = _transformPoint4[1];
-              var _ref11 = [x / w, y / h];
-              x = _ref11[0];
-              y = _ref11[1];
-            }
-
-            var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], _this[_texOptions]);
-            if (options.repeat) texCoord[2] = 1;
-            return texCoord;
+          if (options.rotated) {
+            m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+            m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m2, [0, -rect[2]]);
           }
 
-          return [-1, -1, -1];
-        });
-      } else {
-        var _m = null;
+          mesh.textureCoord = mesh.positions.map(function (_ref7) {
+            var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref7, 3),
+                x = _ref8[0],
+                y = _ref8[1],
+                z = _ref8[2];
 
-        if (options.rotated) {
-          _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), _m, [0, -rect[2]]);
-        }
+            if (z > 0) {
+              var _transformPoint = transformPoint([x, y], m, w, h, true);
 
-        mesh.textureCoord = mesh.positions.map(function (_ref12) {
-          var _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref12, 3),
-              x = _ref13[0],
-              y = _ref13[1],
-              z = _ref13[2];
+              var _transformPoint2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint, 2);
 
-          if (z > 0) {
-            // fillTag
-            if (options.rotated) {
-              var _transformPoint5 = transformPoint([x, y], _m, w, h, true);
+              x = _transformPoint2[0];
+              y = _transformPoint2[1];
+              var _ref9 = [x / w, y / h];
+              x = _ref9[0];
+              y = _ref9[1];
 
-              var _transformPoint6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint5, 2);
+              if (options.rotated) {
+                var _ref10 = [2 * x - 1, 2 * y - 1];
+                x = _ref10[0];
+                y = _ref10[1];
 
-              x = _transformPoint6[0];
-              y = _transformPoint6[1];
-              var _ref14 = [x / w, y / h];
-              x = _ref14[0];
-              y = _ref14[1];
-            } else {
-              var _ref15 = [0.5 * (x + 1), 0.5 * (y + 1)];
-              x = _ref15[0];
-              y = _ref15[1];
+                var _transformPoint3 = transformPoint([x, y], m2, w, h, true);
+
+                var _transformPoint4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint3, 2);
+
+                x = _transformPoint4[0];
+                y = _transformPoint4[1];
+                var _ref11 = [x / w, y / h];
+                x = _ref11[0];
+                y = _ref11[1];
+              }
+
+              var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
+              if (options.repeat) texCoord[2] = 1;
+              return texCoord;
             }
 
-            var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], _this[_texOptions]);
-            if (options.repeat) texCoord[2] = 1;
-            return texCoord;
+            return [-1, -1, -1];
+          });
+        } else {
+          var _m = null;
+
+          if (options.rotated) {
+            _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+            _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), _m, [0, -rect[2]]);
           }
 
-          return [-1, -1, -1];
-        });
+          mesh.textureCoord = mesh.positions.map(function (_ref12) {
+            var _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref12, 3),
+                x = _ref13[0],
+                y = _ref13[1],
+                z = _ref13[2];
+
+            if (z > 0) {
+              // fillTag
+              if (options.rotated) {
+                var _transformPoint5 = transformPoint([x, y], _m, w, h, true);
+
+                var _transformPoint6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint5, 2);
+
+                x = _transformPoint6[0];
+                y = _transformPoint6[1];
+                var _ref14 = [x / w, y / h];
+                x = _ref14[0];
+                y = _ref14[1];
+              } else {
+                var _ref15 = [0.5 * (x + 1), 0.5 * (y + 1)];
+                x = _ref15[0];
+                y = _ref15[1];
+              }
+
+              var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
+              if (options.repeat) texCoord[2] = 1;
+              return texCoord;
+            }
+
+            return [-1, -1, -1];
+          });
+        }
       }
 
-      if (srcRect) {
-        var sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
-          return [].concat(sRect);
-        });
-      } else {
-        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
-          return [0, 0, 0, 0];
-        });
+      if (!mesh.attributes.a_sourceRect || !compareRect(this[_texOptions].srcRect, options.srcRect)) {
+        if (srcRect) {
+          var sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
+          mesh.attributes.a_sourceRect = mesh.positions.map(function () {
+            return [].concat(sRect);
+          });
+        } else {
+          mesh.attributes.a_sourceRect = mesh.positions.map(function () {
+            return [0, 0, 0, 0];
+          });
+        }
       }
     }
   }, {
@@ -13680,12 +13689,12 @@ function () {
       this.setUniforms({
         u_texSampler: texture
       });
-      this[_texOptions] = options;
 
       if (this[_mesh]) {
         this[_applyTexture](this[_mesh], options, true);
       }
 
+      this[_texOptions] = options;
       return this;
     }
   }, {
@@ -14344,7 +14353,7 @@ function () {
   }, {
     key: "meshData",
     get: function get() {
-      var _this2 = this;
+      var _this = this;
 
       if (this[_mesh]) {
         return this[_mesh];
@@ -14363,7 +14372,7 @@ function () {
             var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default()(contours);
 
             _mesh2.positions = _mesh2.positions.map(function (p) {
-              p[1] = _this2[_bound][1][1] - p[1];
+              p[1] = _this[_bound][1][1] - p[1];
               p.push(1);
               return p;
             });
@@ -14371,7 +14380,7 @@ function () {
               a_color: Array.from({
                 length: _mesh2.positions.length
               }).map(function () {
-                return _this2[_fillColor].map(function (c) {
+                return _this[_fillColor].map(function (c) {
                   return Math.round(255 * c);
                 });
               }) // a_sourceRect: Array.from({length: mesh.positions.length}).map(() => [0, 0, 0, 0]),
@@ -14393,12 +14402,12 @@ function () {
 
           var _meshes = strokeContours.map(function (lines, i) {
             var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_4__["vec2"].equals(lines[0], lines[lines.length - 1]);
-            return _this2[_stroke].build(lines, closed);
+            return _this[_stroke].build(lines, closed);
           });
 
           _meshes.forEach(function (mesh) {
             mesh.positions = mesh.positions.map(function (p) {
-              p[1] = _this2[_bound][1][1] - p[1];
+              p[1] = _this[_bound][1][1] - p[1];
               p.push(0);
               return p;
             });
@@ -14406,7 +14415,7 @@ function () {
               a_color: Array.from({
                 length: mesh.positions.length
               }).map(function () {
-                return _this2[_strokeColor].map(function (c) {
+                return _this[_strokeColor].map(function (c) {
                   return Math.round(255 * c);
                 });
               })

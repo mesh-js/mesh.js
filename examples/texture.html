@@ -27,12 +27,12 @@ const renderer = new Renderer(canvas, {
   mesh.setFill({
     color: 'red',
   });
-  // mesh.setTexture(texture, {
-  //   srcRect: [50, 50, 146, 128],
-  //   rect: [0, 50, 50, 150],
-  //   rotated: true,
-  //   // repeat: true,
-  // });
+  mesh.setTexture(texture, {
+    srcRect: [50, 50, 146, 128],
+    rect: [0, 50, 50, 150],
+    rotated: true,
+    // repeat: true,
+  });
 
   const mesh2 = new Mesh2D(figure, canvas);
   mesh2.setTexture(texture, {
@@ -41,6 +41,7 @@ const renderer = new Renderer(canvas, {
 
   mesh.translate(202, 22); // 300 - 196 / 2, 150 - 256 / 2
   window.mesh = mesh;
+  window.texture = texture;
 
   renderer.drawMeshes([mesh, mesh2]);
 }());

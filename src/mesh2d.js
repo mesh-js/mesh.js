@@ -76,6 +76,7 @@ export default class Mesh2D {
     this[_uniforms] = {u_opacity: 1.0};
     this[_filter] = [];
     this[_blend] = null;
+    this[_texOptions] = {};
     this.contours = figure.contours;
   }
 
@@ -351,6 +352,12 @@ export default class Mesh2D {
   }
 
   [_applyTexture](mesh, options, transformed) {
+    function compareRect(r1, r2) {
+      if(r1 == null && r2 == null) return true;
+      if(r1 == null || r2 == null) return false;
+      return r1[0] === r2[0] && r1[1] === r2[1] && r1[2] === r2[2] && r1[3] === r2[3];
+    }
+
     const texture = this[_uniforms].u_texSampler;
     if(!texture) return;
 
@@ -369,59 +376,66 @@ export default class Mesh2D {
     if(rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
 
     const [w, h] = this[_bound][1];
-
     if(options.hidden) {
       mesh.textureCoord = mesh.positions.map(() => [-1, -1, -1]);
-    } else if(transformed && !isUnitTransform(transform)) {
-      const m = mat2d.invert(transform);
-      let m2 = null;
-      if(options.rotated) {
-        m2 = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-        m2 = mat2d.translate(m2, [0, -rect[2]]);
-      }
-
-      mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-        if(z > 0) {
-          [x, y] = transformPoint([x, y], m, w, h, true);
-          [x, y] = [x / w, y / h];
-          if(options.rotated) {
-            [x, y] = [2 * x - 1, 2 * y - 1];
-            [x, y] = transformPoint([x, y], m2, w, h, true);
-            [x, y] = [x / w, y / h];
-          }
-          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
-          if(options.repeat) texCoord[2] = 1;
-          return texCoord;
+    } else if(!mesh.textureCoord
+      || !compareRect(this[_texOptions].rect, options.rect)
+      || this[_texOptions].hidden !== options.hidden
+      || this[_texOptions].rotated !== options.rotated) {
+      if(transformed && !isUnitTransform(transform)) {
+        const m = mat2d.invert(transform);
+        let m2 = null;
+        if(options.rotated) {
+          m2 = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+          m2 = mat2d.translate(m2, [0, -rect[2]]);
         }
-        return [-1, -1, -1];
-      });
-    } else {
-      let m = null;
-      if(options.rotated) {
-        m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-        m = mat2d.translate(m, [0, -rect[2]]);
-      }
-      mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-        if(z > 0) {
-          // fillTag
-          if(options.rotated) {
+
+        mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
+          if(z > 0) {
             [x, y] = transformPoint([x, y], m, w, h, true);
             [x, y] = [x / w, y / h];
-          } else {
-            [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
+            if(options.rotated) {
+              [x, y] = [2 * x - 1, 2 * y - 1];
+              [x, y] = transformPoint([x, y], m2, w, h, true);
+              [x, y] = [x / w, y / h];
+            }
+            const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
+            if(options.repeat) texCoord[2] = 1;
+            return texCoord;
           }
-          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], this[_texOptions]);
-          if(options.repeat) texCoord[2] = 1;
-          return texCoord;
+          return [-1, -1, -1];
+        });
+      } else {
+        let m = null;
+        if(options.rotated) {
+          m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+          m = mat2d.translate(m, [0, -rect[2]]);
         }
-        return [-1, -1, -1];
-      });
+        mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
+          if(z > 0) {
+            // fillTag
+            if(options.rotated) {
+              [x, y] = transformPoint([x, y], m, w, h, true);
+              [x, y] = [x / w, y / h];
+            } else {
+              [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
+            }
+            const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
+            if(options.repeat) texCoord[2] = 1;
+            return texCoord;
+          }
+          return [-1, -1, -1];
+        });
+      }
     }
-    if(srcRect) {
-      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-      mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
-    } else {
-      mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
+    if(!mesh.attributes.a_sourceRect
+      || !compareRect(this[_texOptions].srcRect, options.srcRect)) {
+      if(srcRect) {
+        const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
+        mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
+      } else {
+        mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
+      }
     }
   }
 
@@ -501,11 +515,10 @@ export default class Mesh2D {
       u_texSampler: texture,
     });
 
-    this[_texOptions] = options;
-
     if(this[_mesh]) {
       this[_applyTexture](this[_mesh], options, true);
     }
+    this[_texOptions] = options;
     return this;
   }
 
