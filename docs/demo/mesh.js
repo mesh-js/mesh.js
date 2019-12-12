@@ -11553,15 +11553,21 @@ function flattenMeshes(meshes) {
   var a_sourceRect = [];
   var idx = 0;
   var uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
-  meshes.forEach(function (mesh) {
+
+  for (var i = 0; i < meshes.length; i++) {
+    var mesh = meshes[i];
+
     if (mesh) {
       if (mesh.meshData) mesh = mesh.meshData;
       positions.push.apply(positions, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.positions));
-      cells.push.apply(cells, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.cells.map(function (cell) {
-        return cell.map(function (c) {
-          return c + idx;
-        });
-      })));
+      var _cells = mesh.cells;
+
+      for (var j = 0; j < _cells.length; j++) {
+        var cell = _cells[j];
+        cells.push([cell[0] + idx, cell[1] + idx, cell[2] + idx]);
+      } // cells.push(...mesh.cells.map(cell => cell.map(c => c + idx)));
+
+
       a_color.push.apply(a_color, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes.a_color));
 
       if (mesh.attributes.a_sourceRect) {
@@ -11571,7 +11577,8 @@ function flattenMeshes(meshes) {
       if (mesh.textureCoord) textureCoord.push.apply(textureCoord, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.textureCoord));
       idx += mesh.positions.length;
     }
-  });
+  }
+
   var attributes = {
     a_color: a_color
   };
