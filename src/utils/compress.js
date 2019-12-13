@@ -1,4 +1,3 @@
-import GlRenderer from 'gl-renderer';
 import flattenMeshes from './flatten-meshes';
 
 function compareUniform(a, b) {
@@ -49,56 +48,11 @@ const bufferCache = {
 
 function packData(temp, enableBlend) {
   if(temp.length) {
-    const meshData = flattenMeshes(temp);
-
-    const positionsCount = meshData.positions.length * meshData.positions[0].length;
-    if(!bufferCache.positions || bufferCache.positions.length < positionsCount) {
-      bufferCache.positions = GlRenderer.FLOAT(meshData.positions);
-      meshData.positions = bufferCache.positions;
-    } else {
-      meshData.positions = GlRenderer.FLOAT(meshData.positions, bufferCache.positions);
-    }
-
-    const cellsCount = meshData.cells.length * meshData.cells[0].length;
-    if(!bufferCache.cells || bufferCache.cells.length < cellsCount) {
-      bufferCache.cells = GlRenderer.USHORT(meshData.cells);
-      meshData.cells = bufferCache.cells;
-    } else {
-      meshData.cellsCount = cellsCount;
-      meshData.cells = GlRenderer.USHORT(meshData.cells, bufferCache.cells);
-    }
-
-    const textureCoordCount = meshData.textureCoord.length * meshData.textureCoord[0].length;
-    if(meshData.textureCoord) {
-      if(!bufferCache.textureCoord || bufferCache.textureCoord.length < textureCoordCount) {
-        bufferCache.textureCoord = GlRenderer.FLOAT(meshData.textureCoord);
-        meshData.textureCoord = bufferCache.textureCoord;
-      } else {
-        meshData.textureCoord = GlRenderer.FLOAT(meshData.textureCoord, bufferCache.textureCoord);
-      }
-    }
+    const meshData = flattenMeshes(temp, bufferCache);
 
     meshData.enableBlend = enableBlend;
     if(temp[0].filterCanvas) {
       meshData.filterCanvas = true;
-    }
-
-    const colorCount = meshData.attributes.a_color.length * meshData.attributes.a_color[0].length;
-    if(!bufferCache.a_color || bufferCache.a_color.length < colorCount) {
-      bufferCache.a_color = GlRenderer.UBYTE(meshData.attributes.a_color);
-      meshData.attributes.a_color = {data: bufferCache.a_color};
-    } else {
-      meshData.attributes.a_color = {data: GlRenderer.UBYTE(meshData.attributes.a_color, bufferCache.a_color)};
-    }
-
-    if(meshData.attributes.a_sourceRect) {
-      const sourceRectCount = meshData.attributes.a_sourceRect.length * meshData.attributes.a_sourceRect[0].length;
-      if(!bufferCache.a_sourceRect || bufferCache.a_sourceRect.length < sourceRectCount) {
-        bufferCache.a_sourceRect = GlRenderer.FLOAT(meshData.attributes.a_sourceRect);
-        meshData.attributes.a_sourceRect = {data: bufferCache.a_sourceRect};
-      } else {
-        meshData.attributes.a_sourceRect = {data: GlRenderer.FLOAT(meshData.attributes.a_sourceRect, bufferCache.a_sourceRect)};
-      }
     }
 
     meshData.packIndex = temp[0].packIndex;

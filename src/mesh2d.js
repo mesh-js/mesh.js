@@ -308,7 +308,7 @@ export default class Mesh2D {
     mesh.enableBlend = this.enableBlend;
     normalizePoints(mesh.positions, this[_bound]);
     if(!this[_uniforms].u_texSampler) {
-      mesh.textureCoord = mesh.positions.map(() => [0, 0]);
+      // mesh.textureCoord = mesh.positions.map(() => [0, 0]);
     } else {
       this[_applyTexture](mesh, this[_texOptions], false);
     }

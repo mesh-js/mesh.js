@@ -15,7 +15,7 @@ self.addEventListener('message', (evt) => {
 
   const meshList = [];
 
-  for(let i = 0; i < 3000; i++) {
+  for(let i = 0; i < 2000; i++) {
     const pos = [Math.random() * 400, Math.random() * 400];
     const mesh = new Mesh2D(figure, canvas);
     // mesh.blend = false;
