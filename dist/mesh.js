@@ -103,25 +103,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Renderer", function() { return _renderer__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(43);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Figure2D", function() { return _figure2d__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(60);
+/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(84);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Mesh2D", function() { return _mesh2d__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MeshCloud", function() { return _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _utils_create_text__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(42);
+/* harmony import */ var _utils_create_text__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(66);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createText", function() { return _utils_create_text__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _utils_parse_font__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(38);
+/* harmony import */ var _utils_parse_font__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(50);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseFont", function() { return _utils_parse_font__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(75);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(57);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseColor", function() { return _utils_parse_color__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(34);
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(46);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ENV", function() { return _utils_env__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -7727,21 +7727,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var gl_renderer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/* harmony import */ var _canvas_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(33);
-/* harmony import */ var _utils_compress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(40);
-/* harmony import */ var _utils_create_text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(42);
-/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(36);
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(43);
-/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(60);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(70);
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(34);
-/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(84);
+/* harmony import */ var _canvas_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(43);
+/* harmony import */ var _utils_compress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(52);
+/* harmony import */ var _utils_create_text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(66);
+/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(48);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(67);
+/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(84);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(54);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(93);
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(46);
+/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(98);
 
 
 
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
 
 
 
@@ -7808,9 +7810,7 @@ function () {
     if (!contextType) {
       if (typeof WebGL2RenderingContext === 'function') {
         contextType = 'webgl2';
-      }
-
-      if (typeof WebGLRenderingContext === 'function') {
+      } else if (typeof WebGLRenderingContext === 'function') {
         contextType = 'webgl';
       } else {
         contextType = '2d';
@@ -7843,9 +7843,9 @@ function () {
     if (contextType === 'webgl' || contextType === 'webgl2') {
       if (contextType === 'webgl2') this[_options].webgl2 = true;
       var renderer = new gl_renderer__WEBPACK_IMPORTED_MODULE_4__["default"](canvas, this[_options]);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["createShaders"])(renderer);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["createCloudShaders"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__["createShaders"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__["applyShader"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__["createCloudShaders"])(renderer);
       var gl = renderer.gl; // gl.clearColor(1.0, 1.0, 1.0, 1.0);
       // gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
 
@@ -7965,10 +7965,10 @@ function () {
           var hasTexture = !!mesh.uniforms.u_texSampler;
           var hasFilter = !!mesh.uniforms.u_filterFlag;
           var hasGradient = !!mesh.uniforms.u_radialGradientVector;
-          var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(this[_globalTransform]);
+          var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_13__["isUnitTransform"])(this[_globalTransform]);
           var hasCloudColor = cloud.hasCloudColor;
           var hasCloudFilter = true;
-          Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyCloudShader"])(renderer, {
+          Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__["applyCloudShader"])(renderer, {
             hasTexture: hasTexture,
             hasFilter: hasFilter,
             hasGradient: hasGradient,
@@ -7995,38 +7995,18 @@ function () {
 
         this[_applyGlobalTransform](this[_globalTransform]);
 
-        renderer.setMeshData(cloud.meshData);
+        renderer.setMeshData([cloud.meshData]);
         if (cloud.beforeRender) cloud.beforeRender(gl, cloud);
 
         renderer._draw();
 
         if (cloud.afterRender) cloud.afterRender(gl, cloud);
       } else {
-        var cloudMeshes = [];
-
-        for (var i = 0; i < cloud.amount; i++) {
-          var transform = cloud.getTransform(i);
-          var frame = cloud.getTextureFrame(i);
-          if (frame) frame = frame._img;
-          var filter = cloud.getFilter(i);
-
-          var _cloud$getCloudRGBA = cloud.getCloudRGBA(i),
-              fill = _cloud$getCloudRGBA.fill,
-              stroke = _cloud$getCloudRGBA.stroke;
-
-          cloudMeshes.push({
-            mesh: cloud.mesh,
-            _cloudOptions: [fill, stroke, frame, transform, filter]
-          }); // console.log(transform, colorTransform, frame);
-        }
-
         renderer.setTransform(this[_globalTransform]);
-        if (cloud.beforeRender) cloud.beforeRender(renderer.context, cloud);
-        renderer.drawMeshes(cloudMeshes, {
+        renderer.drawMeshCloud(cloud, {
           clear: clear,
           hook: false
         });
-        if (cloud.afterRender) cloud.afterRender(renderer.context, cloud);
       }
     }
   }, {
@@ -8040,13 +8020,14 @@ function () {
           _ref4$attributeOption = _ref4.attributeOptions,
           attributeOptions = _ref4$attributeOption === void 0 ? {} : _ref4$attributeOption;
 
+      // eslint-disable-line complexity
       var renderer = this[_glRenderer] || this[_canvasRenderer];
 
       if (this[_glRenderer]) {
         var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(this, meshes, program == null);
         var gl = renderer.gl;
         if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
-        var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(this[_globalTransform]);
+        var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_13__["isUnitTransform"])(this[_globalTransform]);
         this._drawCalls = 0;
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
@@ -8057,97 +8038,106 @@ function () {
             var mesh = _step.value;
             // eslint-disable-line no-restricted-syntax
             this._drawCalls++;
-            if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
 
-            if (!program && mesh.filterCanvas) {
-              // 有一些滤镜用shader不好实现：blur、drop-shadow、url
-              Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer, {
-                hasTexture: true
-              });
-              var _this$canvas2 = this.canvas,
-                  width = _this$canvas2.width,
-                  height = _this$canvas2.height;
-              var filterContext = this.filterContext;
+            if (mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_12__["default"]) {
+              this.drawMeshCloud(mesh, {
+                clear: clear,
+                program: program,
+                attributeOptions: attributeOptions
+              }); // continue; // eslint-disable-line no-continue
+            } else {
+              if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
 
-              if (!filterContext) {
-                var canvas = _utils_env__WEBPACK_IMPORTED_MODULE_13__["default"].createCanvas(width, height);
-                filterContext = canvas.getContext('2d');
-                this.filterContext = filterContext;
-              }
+              if (!program && mesh.filterCanvas) {
+                // 有一些滤镜用shader不好实现：blur、drop-shadow、url
+                Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__["applyShader"])(renderer, {
+                  hasTexture: true
+                });
+                var _this$canvas2 = this.canvas,
+                    width = _this$canvas2.width,
+                    height = _this$canvas2.height;
+                var filterContext = this.filterContext;
 
-              var originalMesh = meshes[mesh.packIndex];
-              var currentFilter = originalMesh.filter;
-              var nextMesh = meshes[mesh.packIndex + 1];
-              var previousMesh = meshes[mesh.packIndex - 1];
+                if (!filterContext) {
+                  var canvas = _utils_env__WEBPACK_IMPORTED_MODULE_14__["default"].createCanvas(width, height);
+                  filterContext = canvas.getContext('2d');
+                  this.filterContext = filterContext;
+                }
 
-              if ((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter) && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
-                if (hasGlobalTransform) {
-                  var _filterContext;
+                var originalMesh = meshes[mesh.packIndex];
+                var currentFilter = originalMesh.filter;
+                var nextMesh = meshes[mesh.packIndex + 1];
+                var previousMesh = meshes[mesh.packIndex - 1];
 
-                  filterContext.save();
+                if ((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter) && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
+                  if (hasGlobalTransform) {
+                    var _filterContext;
 
-                  (_filterContext = filterContext).transform.apply(_filterContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this[_globalTransform]));
+                    filterContext.save();
+
+                    (_filterContext = filterContext).transform.apply(_filterContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this[_globalTransform]));
+
+                    Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["drawMesh2D"])(originalMesh, filterContext, false);
+                    filterContext.restore();
+                    Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["applyFilter"])(filterContext, currentFilter);
+                  } else {
+                    Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["drawMesh2D"])(originalMesh, filterContext, true);
+                  }
+
+                  drawFilterContext(renderer, filterContext, width, height);
+                } else {
+                  if (hasGlobalTransform) {
+                    var _filterContext2;
+
+                    filterContext.save();
+
+                    (_filterContext2 = filterContext).transform.apply(_filterContext2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this[_globalTransform]));
+                  }
 
                   Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["drawMesh2D"])(originalMesh, filterContext, false);
-                  filterContext.restore();
-                  Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["applyFilter"])(filterContext, currentFilter);
-                } else {
-                  Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["drawMesh2D"])(originalMesh, filterContext, true);
-                }
 
-                drawFilterContext(renderer, filterContext, width, height);
-              } else {
-                if (hasGlobalTransform) {
-                  var _filterContext2;
-
-                  filterContext.save();
-
-                  (_filterContext2 = filterContext).transform.apply(_filterContext2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this[_globalTransform]));
-                }
-
-                Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["drawMesh2D"])(originalMesh, filterContext, false);
-
-                if (hasGlobalTransform) {
-                  filterContext.restore();
-                }
-
-                if (!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
-                  Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["applyFilter"])(filterContext, currentFilter);
-                  drawFilterContext(renderer, filterContext, width, height);
-                }
-              }
-            } else {
-              if (!program) {
-                var hasTexture = !!mesh.uniforms.u_texSampler;
-                var hasFilter = !!mesh.uniforms.u_filterFlag;
-                var hasGradient = !!mesh.uniforms.u_radialGradientVector;
-                Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer, {
-                  hasTexture: hasTexture,
-                  hasFilter: hasFilter,
-                  hasGradient: hasGradient,
-                  hasGlobalTransform: hasGlobalTransform
-                });
-              } else if (renderer.program !== program) {
-                renderer.useProgram(program, Object.assign({
-                  a_color: {
-                    type: 'UNSIGNED_BYTE',
-                    normalize: true
+                  if (hasGlobalTransform) {
+                    filterContext.restore();
                   }
-                }, attributeOptions));
+
+                  if (!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
+                    Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_9__["applyFilter"])(filterContext, currentFilter);
+                    drawFilterContext(renderer, filterContext, width, height);
+                  }
+                }
+              } else {
+                if (!program) {
+                  var hasTexture = !!mesh.uniforms.u_texSampler;
+                  var hasFilter = !!mesh.uniforms.u_filterFlag;
+                  var hasGradient = !!mesh.uniforms.u_radialGradientVector;
+                  Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_15__["applyShader"])(renderer, {
+                    hasTexture: hasTexture,
+                    hasFilter: hasFilter,
+                    hasGradient: hasGradient,
+                    hasGlobalTransform: hasGlobalTransform
+                  });
+                } else if (renderer.program !== program) {
+                  renderer.useProgram(program, Object.assign({
+                    a_color: {
+                      type: 'UNSIGNED_BYTE',
+                      normalize: true
+                    }
+                  }, attributeOptions));
+                }
+
+                if (mesh.filterCanvas) {
+                  console.warn('User program ignored some filter effects.');
+                }
+
+                this[_applyGlobalTransform](this[_globalTransform]);
+
+                renderer.setMeshData([mesh]);
+
+                renderer._draw();
               }
 
-              if (mesh.filterCanvas) {
-                console.warn('User program ignored some filter effects.');
-              }
-
-              this[_applyGlobalTransform](this[_globalTransform]);
-
-              renderer.setMeshData([mesh]);
-
-              renderer._draw();
+              if (mesh.afterRender) mesh.afterRender(gl, mesh);
             }
-
-            if (mesh.afterRender) mesh.afterRender(gl, mesh);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -8528,20 +8518,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(32);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(21);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(28);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(38);
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(29);
-/* harmony import */ var _default_vert_glsl__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(30);
-/* harmony import */ var _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(31);
-/* harmony import */ var _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(32);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(39);
+/* harmony import */ var _default_vert_glsl__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(40);
+/* harmony import */ var _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(41);
+/* harmony import */ var _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(42);
 
 
 
@@ -8741,6 +8731,7 @@ function () {
         gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, program._buffers.cellsBuffer);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, cells, gl.STATIC_DRAW);
+        var locations = [];
 
         if (attributes) {
           Object.values(attributes).forEach(function (_ref) {
@@ -8753,6 +8744,7 @@ function () {
             if (divisor != null) {
               var location = gl.getAttribLocation(program, name);
               gl.enableVertexAttribArray(location);
+              locations.push(location);
 
               if (gl.vertexAttribDivisor) {
                 gl.vertexAttribDivisor(location, divisor);
@@ -8785,6 +8777,10 @@ function () {
           } else if (_this.aia_ext) {
             _this.aia_ext.drawElementsInstancedANGLE(gl.TRIANGLES, cellsCount, gl.UNSIGNED_SHORT, 0, instanceCount);
           }
+
+          locations.forEach(function (location) {
+            gl.vertexAttribDivisor(location, null);
+          });
         } else {
           gl.drawElements(gl.TRIANGLES, cellsCount, gl.UNSIGNED_SHORT, 0);
         }
@@ -10272,6 +10268,164 @@ module.exports = _asyncToGenerator;
 
 /***/ }),
 /* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(29);
+
+var iterableToArrayLimit = __webpack_require__(30);
+
+var nonIterableRest = __webpack_require__(31);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(33);
+
+var iterableToArray = __webpack_require__(34);
+
+var nonIterableSpread = __webpack_require__(35);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+/* 38 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -10292,7 +10446,7 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 
 /***/ }),
-/* 29 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10514,7 +10668,7 @@ function _fetchShader() {
 }
 
 /***/ }),
-/* 30 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10522,7 +10676,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition, 1);\n}");
 
 /***/ }),
-/* 31 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10530,7 +10684,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#endif\n\nvoid main() {\n  gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);\n}");
 
 /***/ }),
-/* 32 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10538,7 +10692,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec4 a_vertexPosition;\nattribute vec2 a_vertexTextureCoord;\nvarying vec2 vTextureCoord;\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = a_vertexPosition;\n  vTextureCoord = a_vertexTextureCoord;\n}");
 
 /***/ }),
-/* 33 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10548,16 +10702,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(21);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(22);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34);
-/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(36);
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(46);
+/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(48);
 
 
 
@@ -10641,15 +10795,47 @@ function () {
       context.clearRect(x, y, w, h);
     }
   }, {
+    key: "drawMeshCloud",
+    value: function drawMeshCloud(cloud) {
+      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref$clear = _ref.clear,
+          clear = _ref$clear === void 0 ? false : _ref$clear;
+
+      var cloudMeshes = [];
+
+      for (var i = 0; i < cloud.amount; i++) {
+        var transform = cloud.getTransform(i);
+        var frame = cloud.getTextureFrame(i);
+        if (frame) frame = frame._img;
+        var filter = cloud.getFilter(i);
+
+        var _cloud$getCloudRGBA = cloud.getCloudRGBA(i),
+            fill = _cloud$getCloudRGBA.fill,
+            stroke = _cloud$getCloudRGBA.stroke;
+
+        cloudMeshes.push({
+          mesh: cloud.mesh,
+          _cloudOptions: [fill, stroke, frame, transform, filter]
+        }); // console.log(transform, colorTransform, frame);
+      }
+
+      if (cloud.beforeRender) cloud.beforeRender(this.context, cloud);
+      this.drawMeshes(cloudMeshes, {
+        clear: clear,
+        hook: false
+      });
+      if (cloud.afterRender) cloud.afterRender(this.context, cloud);
+    }
+  }, {
     key: "drawMeshes",
     value: function drawMeshes(meshes) {
       var _this = this;
 
-      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref$clear = _ref.clear,
-          clear = _ref$clear === void 0 ? false : _ref$clear,
-          _ref$hook = _ref.hook,
-          hook = _ref$hook === void 0 ? true : _ref$hook;
+      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref2$clear = _ref2.clear,
+          clear = _ref2$clear === void 0 ? false : _ref2$clear,
+          _ref2$hook = _ref2.hook,
+          hook = _ref2$hook === void 0 ? true : _ref2$hook;
 
       var context = this.context;
 
@@ -10742,7 +10928,56 @@ function () {
 
 
 /***/ }),
-/* 34 */
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(26);
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports) {
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+module.exports = _asyncToGenerator;
+
+/***/ }),
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10772,10 +11007,10 @@ var ENV = {
   loadImage: gl_renderer__WEBPACK_IMPORTED_MODULE_0__["default"].loadImage
 };
 /* harmony default export */ __webpack_exports__["default"] = (ENV);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(35)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47)))
 
 /***/ }),
-/* 35 */
+/* 47 */
 /***/ (function(module, exports) {
 
 var g;
@@ -10801,7 +11036,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 36 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10811,9 +11046,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37);
-/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38);
-/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(39);
+/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(49);
+/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(50);
+/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -11068,7 +11303,7 @@ function drawMesh2D(mesh, context) {
 }
 
 /***/ }),
-/* 37 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11084,7 +11319,7 @@ function vectorToRGBA(vector) {
 }
 
 /***/ }),
-/* 38 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11228,7 +11463,7 @@ function parseFont(str, defaultHeight) {
 }
 
 /***/ }),
-/* 39 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11265,15 +11500,16 @@ function transformPoint(p, m) {
 }
 
 /***/ }),
-/* 40 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return compress; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _flatten_meshes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
+/* harmony import */ var _flatten_meshes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -11281,6 +11517,7 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 var _marked =
 /*#__PURE__*/
 _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(compress);
+
 
 
 
@@ -11373,16 +11610,41 @@ function compress(renderer, meshes) {
 
         case 6:
           if (!(i < meshes.length)) {
-            _context.next = 42;
+            _context.next = 52;
             break;
           }
 
           mesh = meshes[i];
+
+          if (!(mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_2__["default"])) {
+            _context.next = 18;
+            break;
+          }
+
+          if (!temp.length) {
+            _context.next = 12;
+            break;
+          }
+
+          _context.next = 12;
+          return packData(temp, enableBlend);
+
+        case 12:
+          size = 0;
+          enableBlend = false;
+          _context.next = 16;
+          return mesh;
+
+        case 16:
+          _context.next = 49;
+          break;
+
+        case 18:
           meshData = mesh.meshData;
           len = 0;
 
           if (!((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length)) {
-            _context.next = 32;
+            _context.next = 42;
             break;
           }
 
@@ -11391,34 +11653,7 @@ function compress(renderer, meshes) {
           len = meshData.positions.length;
 
           if (!(filterCanvas || size + len > maxSize)) {
-            _context.next = 22;
-            break;
-          }
-
-          if (!temp.length) {
-            _context.next = 18;
-            break;
-          }
-
-          _context.next = 18;
-          return packData(temp, enableBlend);
-
-        case 18:
-          size = 0;
-          enableBlend = false;
-          _context.next = 30;
-          break;
-
-        case 22:
-          if (!size) {
-            _context.next = 30;
-            break;
-          }
-
-          lastMesh = meshes[i - 1];
-
-          if (!(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh) || lastMesh.afterRender || mesh.beforeRender)) {
-            _context.next = 30;
+            _context.next = 32;
             break;
           }
 
@@ -11433,38 +11668,65 @@ function compress(renderer, meshes) {
         case 28:
           size = 0;
           enableBlend = false;
-
-        case 30:
-          temp.push(mesh);
-          enableBlend = enableBlend || mesh.enableBlend;
+          _context.next = 40;
+          break;
 
         case 32:
-          if (!(i === meshes.length - 1)) {
-            _context.next = 38;
+          if (!size) {
+            _context.next = 40;
+            break;
+          }
+
+          lastMesh = meshes[i - 1];
+
+          if (!(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh) || lastMesh.afterRender || mesh.beforeRender)) {
+            _context.next = 40;
             break;
           }
 
           if (!temp.length) {
-            _context.next = 36;
+            _context.next = 38;
             break;
           }
 
-          _context.next = 36;
+          _context.next = 38;
           return packData(temp, enableBlend);
 
-        case 36:
-          _context.next = 39;
+        case 38:
+          size = 0;
+          enableBlend = false;
+
+        case 40:
+          temp.push(mesh);
+          enableBlend = enableBlend || mesh.enableBlend;
+
+        case 42:
+          if (!(i === meshes.length - 1)) {
+            _context.next = 48;
+            break;
+          }
+
+          if (!temp.length) {
+            _context.next = 46;
+            break;
+          }
+
+          _context.next = 46;
+          return packData(temp, enableBlend);
+
+        case 46:
+          _context.next = 49;
           break;
 
-        case 38:
+        case 48:
           size += len;
 
-        case 39:
+        case 49:
           i++;
           _context.next = 6;
           break;
 
-        case 42:
+        case 52:
         case "end":
           return _context.stop();
       }
@@ -11473,7 +11735,7 @@ function compress(renderer, meshes) {
 }
 
 /***/ }),
-/* 41 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11685,7 +11947,1243 @@ function flattenMeshes(meshes, bufferCache) {
 }
 
 /***/ }),
-/* 42 */
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(56);
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(51);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(57);
+
+
+
+
+
+
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+var _mesh = Symbol('mesh');
+
+var _count = Symbol('count');
+
+var _transform0 = Symbol('transform');
+
+var _transform1 = Symbol('transform');
+
+var _color0 = Symbol('color');
+
+var _color1 = Symbol('color');
+
+var _color2 = Symbol('color');
+
+var _color3 = Symbol('color');
+
+var _color4 = Symbol('color');
+
+var _blend = Symbol('blend');
+
+var _filters = Symbol('filter');
+
+var _textures = Symbol('textures');
+
+var _frameIndex = Symbol('frameIndex');
+
+var _fillColor = Symbol('fillColor');
+
+var _strokeColor = Symbol('strokeColor');
+
+var _hasCloudColor = Symbol('cloudColor');
+
+var _default =
+/*#__PURE__*/
+function () {
+  function _default(mesh) {
+    var amount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3___default()(this, _default);
+
+    this[_count] = amount;
+    this[_mesh] = mesh;
+    this[_transform0] = [];
+    this[_transform1] = [];
+    this[_color0] = [];
+    this[_color1] = [];
+    this[_color2] = [];
+    this[_color3] = [];
+    this[_color4] = [];
+    this[_textures] = [];
+    this[_frameIndex] = [];
+    this[_filters] = [];
+    this[_fillColor] = [];
+    this[_strokeColor] = [];
+    this[_hasCloudColor] = false;
+    this[_blend] = false;
+    var width = mesh.width,
+        height = mesh.height;
+
+    for (var i = 0; i < amount; i++) {
+      this[_transform0].push([1, 0, 0, width]);
+
+      this[_transform1].push([1, 0, 0, height]);
+
+      this[_frameIndex].push([-1]);
+
+      this[_filters].push([]);
+
+      this[_fillColor].push([0, 0, 0, 0]);
+
+      this[_strokeColor].push([0, 0, 0, 0]);
+
+      this.setColorTransform(i, null);
+    }
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default()(_default, [{
+    key: "getFilter",
+    value: function getFilter(idx) {
+      return this[_filters][idx].join(' ');
+    }
+  }, {
+    key: "canIgnore",
+    value: function canIgnore() {
+      return this[_mesh].canIgnore();
+    }
+  }, {
+    key: "setColorTransform",
+    value: function setColorTransform(idx, m) {
+      if (m != null) {
+        if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+        this[_color0][idx] = [m[0], m[5], m[10], m[15]];
+        this[_color1][idx] = [m[1], m[6], m[11], m[16]];
+        this[_color2][idx] = [m[2], m[7], m[12], m[17]];
+        this[_color3][idx] = [m[3], m[8], m[13], m[18]];
+        this[_color4][idx] = [m[4], m[9], m[14], m[19]];
+        this[_blend] = this[_blend] || m[18] < 1.0;
+
+        this[_mesh].setUniforms({
+          u_cloudFilterFlag: 1
+        });
+      } else {
+        this[_color0][idx] = [1, 0, 0, 0];
+        this[_color1][idx] = [0, 1, 0, 0];
+        this[_color2][idx] = [0, 0, 1, 0];
+        this[_color3][idx] = [0, 0, 0, 1];
+        this[_color4][idx] = [0, 0, 0, 0];
+
+        this[_mesh].setUniforms({
+          u_cloudFilterFlag: 0
+        });
+      }
+
+      return this;
+    }
+  }, {
+    key: "getColorTransform",
+    value: function getColorTransform(idx) {
+      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+      return [this[_color0][idx][0], this[_color1][idx][0], this[_color2][idx][0], this[_color3][idx][0], this[_color4][idx][0], this[_color0][idx][1], this[_color1][idx][1], this[_color2][idx][1], this[_color3][idx][1], this[_color4][idx][1], this[_color0][idx][2], this[_color1][idx][2], this[_color2][idx][2], this[_color3][idx][2], this[_color4][idx][2], this[_color0][idx][3], this[_color1][idx][3], this[_color2][idx][3], this[_color3][idx][3], this[_color4][idx][3]];
+    }
+  }, {
+    key: "transformColor",
+    value: function transformColor(idx, m) {
+      var transform = this.getColorTransform(idx);
+      transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["multiply"])(transform, m);
+      this.setColorTransform(idx, transform);
+      return this;
+    }
+  }, {
+    key: "setFillColor",
+    value: function setFillColor(idx, color) {
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
+      if (color[3] > 0.0) this[_hasCloudColor] = true;
+      this[_fillColor][idx] = color.map(function (c) {
+        return Math.round(255 * c);
+      });
+    }
+  }, {
+    key: "setStrokeColor",
+    value: function setStrokeColor(idx, color) {
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
+      if (color[3] > 0.0) this[_hasCloudColor] = true;
+      this[_strokeColor][idx] = color.map(function (c) {
+        return Math.round(255 * c);
+      });
+    }
+  }, {
+    key: "getCloudRGBA",
+    value: function getCloudRGBA(idx) {
+      var fillColor = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_fillColor][idx]);
+
+      var strokeColor = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_strokeColor][idx]);
+
+      fillColor[3] /= 255;
+      strokeColor[3] /= 255;
+      return {
+        fill: "rgba(".concat(fillColor.join(), ")"),
+        stroke: "rgba(".concat(strokeColor.join(), ")")
+      };
+    }
+  }, {
+    key: "grayscale",
+    value: function grayscale(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["grayscale"])(p));
+
+      this[_filters][idx].push("grayscale(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "brightness",
+    value: function brightness(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["brightness"])(p));
+
+      this[_filters][idx].push("brightness(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "saturate",
+    value: function saturate(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["saturate"])(p));
+
+      this[_filters][idx].push("saturate(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "contrast",
+    value: function contrast(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["contrast"])(p));
+
+      this[_filters][idx].push("contrast(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "invert",
+    value: function invert(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["invert"])(p));
+
+      this[_filters][idx].push("invert(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "sepia",
+    value: function sepia(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["sepia"])(p));
+
+      this[_filters][idx].push("sepia(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "opacity",
+    value: function opacity(idx, p) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["opacity"])(p));
+
+      this[_filters][idx].push("opacity(".concat(100 * p, "%)"));
+    }
+  }, {
+    key: "hueRotate",
+    value: function hueRotate(idx, deg) {
+      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["hueRotate"])(deg));
+
+      this[_filters][idx].push("hue-rotate(".concat(deg, "deg)"));
+    }
+  }, {
+    key: "setTransform",
+    value: function setTransform(idx, m) {
+      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+      this[_transform0][idx][0] = m[0];
+      this[_transform0][idx][1] = m[1];
+      this[_transform0][idx][2] = m[2];
+      this[_transform1][idx][0] = m[3];
+      this[_transform1][idx][1] = m[4];
+      this[_transform1][idx][2] = m[5];
+      return this;
+    }
+  }, {
+    key: "getTransform",
+    value: function getTransform(idx) {
+      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+      var m = [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_transform0][idx].slice(0, 3)), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_transform1][idx].slice(0, 3)));
+      return m;
+    }
+  }, {
+    key: "getTextureFrame",
+    value: function getTextureFrame(idx) {
+      return this[_textures][this[_frameIndex][idx]];
+    }
+  }, {
+    key: "setTextureFrames",
+    value: function setTextureFrames() {
+      var frames = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      if (frames.length > 12) {
+        throw new Error('Max frames exceed. Allow 12 frames.');
+      }
+
+      if (frames.length) {
+        var mesh = this[_mesh];
+        mesh.setTexture(frames[0], options);
+      }
+
+      this[_textures] = frames;
+    }
+  }, {
+    key: "setFrameIndex",
+    value: function setFrameIndex(idx, frameIndex) {
+      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+      var len = this[_textures].length;
+      if (len <= 0) throw new Error('No frames');
+      this[_frameIndex][idx] = frameIndex % len;
+    }
+  }, {
+    key: "transform",
+    value: function transform(idx, m) {
+      var transform = this.getTransform(idx);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, transform);
+      this.setTransform(idx, m);
+      return this;
+    }
+  }, {
+    key: "translate",
+    value: function translate(idx, _ref) {
+      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref, 2),
+          x = _ref2[0],
+          y = _ref2[1];
+
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+      return this.transform(idx, m);
+    }
+  }, {
+    key: "rotate",
+    value: function rotate(idx, rad) {
+      var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref3, 2),
+          ox = _ref4[0],
+          oy = _ref4[1];
+
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      return this.transform(idx, m);
+    }
+  }, {
+    key: "scale",
+    value: function scale(idx, _ref5) {
+      var _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref5, 2),
+          x = _ref6[0],
+          _ref6$ = _ref6[1],
+          y = _ref6$ === void 0 ? x : _ref6$;
+
+      var _ref7 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref7, 2),
+          ox = _ref8[0],
+          oy = _ref8[1];
+
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      return this.transform(idx, m);
+    }
+  }, {
+    key: "skew",
+    value: function skew(idx, _ref9) {
+      var _ref10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref9, 2),
+          x = _ref10[0],
+          _ref10$ = _ref10[1],
+          y = _ref10$ === void 0 ? x : _ref10$;
+
+      var _ref11 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref11, 2),
+          ox = _ref12[0],
+          oy = _ref12[1];
+
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      return this.transform(idx, m);
+    }
+  }, {
+    key: "isPointCollision",
+    value: function isPointCollision(idx, _ref13) {
+      var _this$_mesh;
+
+      var _ref14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref13, 2),
+          x = _ref14[0],
+          y = _ref14[1];
+
+      var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'both';
+      var m = this.getTransform(idx);
+      var p = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["transformPoint"])([x, y], gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), m));
+      return (_this$_mesh = this[_mesh]).isPointCollision.apply(_this$_mesh, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(p).concat([type]));
+    }
+  }, {
+    key: "isPointInPath",
+    value: function isPointInPath(idx, _ref15) {
+      var _ref16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref15, 2),
+          x = _ref16[0],
+          y = _ref16[1];
+
+      return this.isPointCollision(idx, [x, y], 'fill');
+    }
+  }, {
+    key: "isPointInStroke",
+    value: function isPointInStroke(idx, _ref17) {
+      var _ref18 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref17, 2),
+          x = _ref18[0],
+          y = _ref18[1];
+
+      return this.isPointCollision(idx, [x, y], 'stroke');
+    }
+  }, {
+    key: "mesh",
+    get: function get() {
+      return this[_mesh];
+    }
+  }, {
+    key: "hasCloudColor",
+    get: function get() {
+      return this[_hasCloudColor];
+    }
+  }, {
+    key: "hasCloudFilter",
+    get: function get() {
+      return !!this[_mesh].uniforms.u_cloudFilterFlag;
+    }
+  }, {
+    key: "enableBlend",
+    get: function get() {
+      return this[_mesh].enableBlend || this[_blend];
+    }
+  }, {
+    key: "amount",
+    get: function get() {
+      return this[_count];
+    }
+  }, {
+    key: "meshData",
+    get: function get() {
+      var _this$_mesh$meshData = this[_mesh].meshData,
+          attributes = _this$_mesh$meshData.attributes,
+          cells = _this$_mesh$meshData.cells,
+          positions = _this$_mesh$meshData.positions,
+          textureCoord = _this$_mesh$meshData.textureCoord,
+          uniforms = _this$_mesh$meshData.uniforms;
+      var frames = this[_textures];
+      var meshData = {
+        attributes: _objectSpread({}, attributes),
+        cells: cells,
+        positions: positions,
+        textureCoord: textureCoord,
+        uniforms: _objectSpread({}, uniforms),
+        instanceCount: this[_count],
+        enableBlend: this.enableBlend
+      };
+
+      if (frames.length) {
+        frames.forEach(function (frame, i) {
+          meshData.uniforms["u_texFrame".concat(i)] = frame;
+        });
+      } // console.log(this[_mesh].meshData)
+
+
+      meshData.attributes.a_frameIndex = {
+        data: this[_frameIndex],
+        divisor: 1
+      };
+      meshData.attributes.a_transform0 = {
+        data: this[_transform0],
+        divisor: 1
+      };
+      meshData.attributes.a_transform1 = {
+        data: this[_transform1],
+        divisor: 1
+      };
+      meshData.attributes.a_colorCloud0 = {
+        data: this[_color0],
+        divisor: 1
+      };
+      meshData.attributes.a_colorCloud1 = {
+        data: this[_color1],
+        divisor: 1
+      };
+      meshData.attributes.a_colorCloud2 = {
+        data: this[_color2],
+        divisor: 1
+      };
+      meshData.attributes.a_colorCloud3 = {
+        data: this[_color3],
+        divisor: 1
+      };
+      meshData.attributes.a_colorCloud4 = {
+        data: this[_color4],
+        divisor: 1
+      };
+      meshData.attributes.a_fillCloudColor = {
+        data: this[_fillColor],
+        divisor: 1
+      };
+      meshData.attributes.a_strokeCloudColor = {
+        data: this[_strokeColor],
+        divisor: 1
+      };
+      return meshData;
+    }
+  }]);
+
+  return _default;
+}();
+
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "multiply", function() { return multiply; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "grayscale", function() { return grayscale; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "brightness", function() { return brightness; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saturate", function() { return saturate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "contrast", function() { return contrast; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "invert", function() { return invert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sepia", function() { return sepia; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "opacity", function() { return opacity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hueRotate", function() { return hueRotate; });
+/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51);
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
+function multiply(a, b) {
+  var out = [];
+  var a00 = a[0],
+      a01 = a[1],
+      a02 = a[2],
+      a03 = a[3],
+      a04 = a[4]; // eslint-disable-line one-var-declaration-per-line
+
+  var a10 = a[5],
+      a11 = a[6],
+      a12 = a[7],
+      a13 = a[8],
+      a14 = a[9]; // eslint-disable-line one-var-declaration-per-line
+
+  var a20 = a[10],
+      a21 = a[11],
+      a22 = a[12],
+      a23 = a[13],
+      a24 = a[14]; // eslint-disable-line one-var-declaration-per-line
+
+  var a30 = a[15],
+      a31 = a[16],
+      a32 = a[17],
+      a33 = a[18],
+      a34 = a[19]; // eslint-disable-line one-var-declaration-per-line
+  // Cache only the current line of the second matrix
+
+  var b0 = b[0],
+      b1 = b[1],
+      b2 = b[2],
+      b3 = b[3],
+      b4 = b[4]; // eslint-disable-line one-var-declaration-per-line
+
+  out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  out[4] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
+  b0 = b[5];
+  b1 = b[6];
+  b2 = b[7];
+  b3 = b[8];
+  b4 = b[9];
+  out[5] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[6] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[7] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[8] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  out[9] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
+  b0 = b[10];
+  b1 = b[11];
+  b2 = b[12];
+  b3 = b[13];
+  b4 = b[14];
+  out[10] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[11] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[12] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[13] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  out[14] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
+  b0 = b[15];
+  b1 = b[16];
+  b2 = b[17];
+  b3 = b[18];
+  b4 = b[19];
+  out[15] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[16] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[17] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[18] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  out[19] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
+  return out;
+} // export function transformColor(color, m) {
+//   const [r, g, b, a] = color;
+//   color[0] = m[0] * r + m[1] * g + m[2] * b + m[3] * a + m[4];
+//   color[1] = m[5] * r + m[6] * g + m[7] * b + m[8] * a + m[9];
+//   color[2] = m[10] * r + m[11] * g + m[12] * b + m[13] * a + m[14];
+//   color[3] = m[15] * r + m[16] * g + m[17] * b + m[18] * a + m[19];
+//   return color;
+// }
+
+function grayscale(p) {
+  p = Object(_math__WEBPACK_IMPORTED_MODULE_0__["clamp"])(0, 1, p);
+  var r = 0.212 * p;
+  var g = 0.714 * p;
+  var b = 0.074 * p;
+  return [r + 1 - p, g, b, 0, 0, r, g + 1 - p, b, 0, 0, r, g, b + 1 - p, 0, 0, 0, 0, 0, 1, 0];
+}
+function brightness(p) {
+  return [p, 0, 0, 0, 0, 0, p, 0, 0, 0, 0, 0, p, 0, 0, 0, 0, 0, 1, 0];
+}
+function saturate(p) {
+  p = Object(_math__WEBPACK_IMPORTED_MODULE_0__["clamp"])(0, 1, p);
+  var r = 0.212 * (1 - p);
+  var g = 0.714 * (1 - p);
+  var b = 0.074 * (1 - p);
+  return [r + p, g, b, 0, 0, r, g + p, b, 0, 0, r, g, b + p, 0, 0, 0, 0, 0, 1, 0];
+}
+function contrast(p) {
+  var d = 0.5 * (1 - p);
+  return [p, 0, 0, 0, d, 0, p, 0, 0, d, 0, 0, p, 0, d, 0, 0, 0, 1, 0];
+}
+function invert(p) {
+  var d = 1 - 2 * p;
+  return [d, 0, 0, 0, p, 0, d, 0, 0, p, 0, 0, d, 0, p, 0, 0, 0, 1, 0];
+}
+function sepia(p) {
+  return [1 - 0.607 * p, 0.769 * p, 0.189 * p, 0, 0, 0.349 * p, 1 - 0.314 * p, 0.168 * p, 0, 0, 0.272 * p, 0.534 * p, 1 - 0.869 * p, 0, 0, 0, 0, 0, 1, 0];
+}
+function opacity(p) {
+  return [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, p, 0];
+}
+function hueRotate(deg) {
+  var rotation = deg / 180 * Math.PI;
+  var cos = Math.cos(rotation),
+      sin = Math.sin(rotation),
+      lumR = 0.213,
+      lumG = 0.715,
+      lumB = 0.072;
+  return [lumR + cos * (1 - lumR) + sin * -lumR, lumG + cos * -lumG + sin * -lumG, lumB + cos * -lumB + sin * (1 - lumB), 0, 0, lumR + cos * -lumR + sin * 0.143, lumG + cos * (1 - lumG) + sin * 0.140, lumB + cos * -lumB + sin * -0.283, 0, 0, lumR + cos * -lumR + sin * -(1 - lumR), lumG + cos * -lumG + sin * lumG, lumB + cos * (1 - lumB) + sin * lumB, 0, 0, 0, 0, 0, 1, 0];
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return parseColor; });
+/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(58);
+/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(color_rgba__WEBPACK_IMPORTED_MODULE_0__);
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
+function parseColor(colorStr) {
+  var ret = color_rgba__WEBPACK_IMPORTED_MODULE_0___default()(colorStr);
+  if (!ret || !ret.length) throw new TypeError('Invalid color value.');
+  return [ret[0] / 255, ret[1] / 255, ret[2] / 255, ret[3]];
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @module  color-rgba */
+
+
+
+var parse = __webpack_require__(59)
+var hsl = __webpack_require__(63)
+var clamp = __webpack_require__(65)
+
+module.exports = function rgba (color) {
+	var values, i, l
+
+	//attempt to parse non-array arguments
+	var parsed = parse(color)
+
+	if (!parsed.space) return []
+
+	values = Array(3)
+	values[0] = clamp(parsed.values[0], 0, 255)
+	values[1] = clamp(parsed.values[1], 0, 255)
+	values[2] = clamp(parsed.values[2], 0, 255)
+
+	if (parsed.space[0] === 'h') {
+		values = hsl.rgb(values)
+	}
+
+	values.push(clamp(parsed.alpha, 0, 1))
+
+	return values
+}
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/**
+ * @module color-parse
+ */
+
+
+
+var names = __webpack_require__(60)
+var isObject = __webpack_require__(61)
+var defined = __webpack_require__(62)
+
+module.exports = parse
+
+/**
+ * Base hues
+ * http://dev.w3.org/csswg/css-color/#typedef-named-hue
+ */
+//FIXME: use external hue detector
+var baseHues = {
+	red: 0,
+	orange: 60,
+	yellow: 120,
+	green: 180,
+	blue: 240,
+	purple: 300
+}
+
+/**
+ * Parse color from the string passed
+ *
+ * @return {Object} A space indicator `space`, an array `values` and `alpha`
+ */
+function parse (cstr) {
+	var m, parts = [], alpha = 1, space
+
+	if (typeof cstr === 'string') {
+		//keyword
+		if (names[cstr]) {
+			parts = names[cstr].slice()
+			space = 'rgb'
+		}
+
+		//reserved words
+		else if (cstr === 'transparent') {
+			alpha = 0
+			space = 'rgb'
+			parts = [0,0,0]
+		}
+
+		//hex
+		else if (/^#[A-Fa-f0-9]+$/.test(cstr)) {
+			var base = cstr.slice(1)
+			var size = base.length
+			var isShort = size <= 4
+			alpha = 1
+
+			if (isShort) {
+				parts = [
+					parseInt(base[0] + base[0], 16),
+					parseInt(base[1] + base[1], 16),
+					parseInt(base[2] + base[2], 16)
+				]
+				if (size === 4) {
+					alpha = parseInt(base[3] + base[3], 16) / 255
+				}
+			}
+			else {
+				parts = [
+					parseInt(base[0] + base[1], 16),
+					parseInt(base[2] + base[3], 16),
+					parseInt(base[4] + base[5], 16)
+				]
+				if (size === 8) {
+					alpha = parseInt(base[6] + base[7], 16) / 255
+				}
+			}
+
+			if (!parts[0]) parts[0] = 0
+			if (!parts[1]) parts[1] = 0
+			if (!parts[2]) parts[2] = 0
+
+			space = 'rgb'
+		}
+
+		//color space
+		else if (m = /^((?:rgb|hs[lvb]|hwb|cmyk?|xy[zy]|gray|lab|lchu?v?|[ly]uv|lms)a?)\s*\(([^\)]*)\)/.exec(cstr)) {
+			var name = m[1]
+			var isRGB = name === 'rgb'
+			var base = name.replace(/a$/, '')
+			space = base
+			var size = base === 'cmyk' ? 4 : base === 'gray' ? 1 : 3
+			parts = m[2].trim()
+				.split(/\s*,\s*/)
+				.map(function (x, i) {
+					//<percentage>
+					if (/%$/.test(x)) {
+						//alpha
+						if (i === size)	return parseFloat(x) / 100
+						//rgb
+						if (base === 'rgb') return parseFloat(x) * 255 / 100
+						return parseFloat(x)
+					}
+					//hue
+					else if (base[i] === 'h') {
+						//<deg>
+						if (/deg$/.test(x)) {
+							return parseFloat(x)
+						}
+						//<base-hue>
+						else if (baseHues[x] !== undefined) {
+							return baseHues[x]
+						}
+					}
+					return parseFloat(x)
+				})
+
+			if (name === base) parts.push(1)
+			alpha = (isRGB) ? 1 : (parts[size] === undefined) ? 1 : parts[size]
+			parts = parts.slice(0, size)
+		}
+
+		//named channels case
+		else if (cstr.length > 10 && /[0-9](?:\s|\/)/.test(cstr)) {
+			parts = cstr.match(/([0-9]+)/g).map(function (value) {
+				return parseFloat(value)
+			})
+
+			space = cstr.match(/([a-z])/ig).join('').toLowerCase()
+		}
+	}
+
+	//numeric case
+	else if (!isNaN(cstr)) {
+		space = 'rgb'
+		parts = [cstr >>> 16, (cstr & 0x00ff00) >>> 8, cstr & 0x0000ff]
+	}
+
+	//object case - detects css cases of rgb and hsl
+	else if (isObject(cstr)) {
+		var r = defined(cstr.r, cstr.red, cstr.R, null)
+
+		if (r !== null) {
+			space = 'rgb'
+			parts = [
+				r,
+				defined(cstr.g, cstr.green, cstr.G),
+				defined(cstr.b, cstr.blue, cstr.B)
+			]
+		}
+		else {
+			space = 'hsl'
+			parts = [
+				defined(cstr.h, cstr.hue, cstr.H),
+				defined(cstr.s, cstr.saturation, cstr.S),
+				defined(cstr.l, cstr.lightness, cstr.L, cstr.b, cstr.brightness)
+			]
+		}
+
+		alpha = defined(cstr.a, cstr.alpha, cstr.opacity, 1)
+
+		if (cstr.opacity != null) alpha /= 100
+	}
+
+	//array
+	else if (Array.isArray(cstr) || global.ArrayBuffer && ArrayBuffer.isView && ArrayBuffer.isView(cstr)) {
+		parts = [cstr[0], cstr[1], cstr[2]]
+		space = 'rgb'
+		alpha = cstr.length === 4 ? cstr[3] : 1
+	}
+
+	return {
+		space: space,
+		values: parts,
+		alpha: alpha
+	}
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47)))
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+	"aliceblue": [240, 248, 255],
+	"antiquewhite": [250, 235, 215],
+	"aqua": [0, 255, 255],
+	"aquamarine": [127, 255, 212],
+	"azure": [240, 255, 255],
+	"beige": [245, 245, 220],
+	"bisque": [255, 228, 196],
+	"black": [0, 0, 0],
+	"blanchedalmond": [255, 235, 205],
+	"blue": [0, 0, 255],
+	"blueviolet": [138, 43, 226],
+	"brown": [165, 42, 42],
+	"burlywood": [222, 184, 135],
+	"cadetblue": [95, 158, 160],
+	"chartreuse": [127, 255, 0],
+	"chocolate": [210, 105, 30],
+	"coral": [255, 127, 80],
+	"cornflowerblue": [100, 149, 237],
+	"cornsilk": [255, 248, 220],
+	"crimson": [220, 20, 60],
+	"cyan": [0, 255, 255],
+	"darkblue": [0, 0, 139],
+	"darkcyan": [0, 139, 139],
+	"darkgoldenrod": [184, 134, 11],
+	"darkgray": [169, 169, 169],
+	"darkgreen": [0, 100, 0],
+	"darkgrey": [169, 169, 169],
+	"darkkhaki": [189, 183, 107],
+	"darkmagenta": [139, 0, 139],
+	"darkolivegreen": [85, 107, 47],
+	"darkorange": [255, 140, 0],
+	"darkorchid": [153, 50, 204],
+	"darkred": [139, 0, 0],
+	"darksalmon": [233, 150, 122],
+	"darkseagreen": [143, 188, 143],
+	"darkslateblue": [72, 61, 139],
+	"darkslategray": [47, 79, 79],
+	"darkslategrey": [47, 79, 79],
+	"darkturquoise": [0, 206, 209],
+	"darkviolet": [148, 0, 211],
+	"deeppink": [255, 20, 147],
+	"deepskyblue": [0, 191, 255],
+	"dimgray": [105, 105, 105],
+	"dimgrey": [105, 105, 105],
+	"dodgerblue": [30, 144, 255],
+	"firebrick": [178, 34, 34],
+	"floralwhite": [255, 250, 240],
+	"forestgreen": [34, 139, 34],
+	"fuchsia": [255, 0, 255],
+	"gainsboro": [220, 220, 220],
+	"ghostwhite": [248, 248, 255],
+	"gold": [255, 215, 0],
+	"goldenrod": [218, 165, 32],
+	"gray": [128, 128, 128],
+	"green": [0, 128, 0],
+	"greenyellow": [173, 255, 47],
+	"grey": [128, 128, 128],
+	"honeydew": [240, 255, 240],
+	"hotpink": [255, 105, 180],
+	"indianred": [205, 92, 92],
+	"indigo": [75, 0, 130],
+	"ivory": [255, 255, 240],
+	"khaki": [240, 230, 140],
+	"lavender": [230, 230, 250],
+	"lavenderblush": [255, 240, 245],
+	"lawngreen": [124, 252, 0],
+	"lemonchiffon": [255, 250, 205],
+	"lightblue": [173, 216, 230],
+	"lightcoral": [240, 128, 128],
+	"lightcyan": [224, 255, 255],
+	"lightgoldenrodyellow": [250, 250, 210],
+	"lightgray": [211, 211, 211],
+	"lightgreen": [144, 238, 144],
+	"lightgrey": [211, 211, 211],
+	"lightpink": [255, 182, 193],
+	"lightsalmon": [255, 160, 122],
+	"lightseagreen": [32, 178, 170],
+	"lightskyblue": [135, 206, 250],
+	"lightslategray": [119, 136, 153],
+	"lightslategrey": [119, 136, 153],
+	"lightsteelblue": [176, 196, 222],
+	"lightyellow": [255, 255, 224],
+	"lime": [0, 255, 0],
+	"limegreen": [50, 205, 50],
+	"linen": [250, 240, 230],
+	"magenta": [255, 0, 255],
+	"maroon": [128, 0, 0],
+	"mediumaquamarine": [102, 205, 170],
+	"mediumblue": [0, 0, 205],
+	"mediumorchid": [186, 85, 211],
+	"mediumpurple": [147, 112, 219],
+	"mediumseagreen": [60, 179, 113],
+	"mediumslateblue": [123, 104, 238],
+	"mediumspringgreen": [0, 250, 154],
+	"mediumturquoise": [72, 209, 204],
+	"mediumvioletred": [199, 21, 133],
+	"midnightblue": [25, 25, 112],
+	"mintcream": [245, 255, 250],
+	"mistyrose": [255, 228, 225],
+	"moccasin": [255, 228, 181],
+	"navajowhite": [255, 222, 173],
+	"navy": [0, 0, 128],
+	"oldlace": [253, 245, 230],
+	"olive": [128, 128, 0],
+	"olivedrab": [107, 142, 35],
+	"orange": [255, 165, 0],
+	"orangered": [255, 69, 0],
+	"orchid": [218, 112, 214],
+	"palegoldenrod": [238, 232, 170],
+	"palegreen": [152, 251, 152],
+	"paleturquoise": [175, 238, 238],
+	"palevioletred": [219, 112, 147],
+	"papayawhip": [255, 239, 213],
+	"peachpuff": [255, 218, 185],
+	"peru": [205, 133, 63],
+	"pink": [255, 192, 203],
+	"plum": [221, 160, 221],
+	"powderblue": [176, 224, 230],
+	"purple": [128, 0, 128],
+	"rebeccapurple": [102, 51, 153],
+	"red": [255, 0, 0],
+	"rosybrown": [188, 143, 143],
+	"royalblue": [65, 105, 225],
+	"saddlebrown": [139, 69, 19],
+	"salmon": [250, 128, 114],
+	"sandybrown": [244, 164, 96],
+	"seagreen": [46, 139, 87],
+	"seashell": [255, 245, 238],
+	"sienna": [160, 82, 45],
+	"silver": [192, 192, 192],
+	"skyblue": [135, 206, 235],
+	"slateblue": [106, 90, 205],
+	"slategray": [112, 128, 144],
+	"slategrey": [112, 128, 144],
+	"snow": [255, 250, 250],
+	"springgreen": [0, 255, 127],
+	"steelblue": [70, 130, 180],
+	"tan": [210, 180, 140],
+	"teal": [0, 128, 128],
+	"thistle": [216, 191, 216],
+	"tomato": [255, 99, 71],
+	"turquoise": [64, 224, 208],
+	"violet": [238, 130, 238],
+	"wheat": [245, 222, 179],
+	"white": [255, 255, 255],
+	"whitesmoke": [245, 245, 245],
+	"yellow": [255, 255, 0],
+	"yellowgreen": [154, 205, 50]
+};
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var toString = Object.prototype.toString;
+
+module.exports = function (x) {
+	var prototype;
+	return toString.call(x) === '[object Object]' && (prototype = Object.getPrototypeOf(x), prototype === null || prototype === Object.getPrototypeOf({}));
+};
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports) {
+
+module.exports = function () {
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i] !== undefined) return arguments[i];
+    }
+};
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * @module color-space/hsl
+ */
+
+
+var rgb = __webpack_require__(64);
+
+module.exports = {
+	name: 'hsl',
+	min: [0,0,0],
+	max: [360,100,100],
+	channel: ['hue', 'saturation', 'lightness'],
+	alias: ['HSL'],
+
+	rgb: function(hsl) {
+		var h = hsl[0] / 360,
+				s = hsl[1] / 100,
+				l = hsl[2] / 100,
+				t1, t2, t3, rgb, val;
+
+		if (s === 0) {
+			val = l * 255;
+			return [val, val, val];
+		}
+
+		if (l < 0.5) {
+			t2 = l * (1 + s);
+		}
+		else {
+			t2 = l + s - l * s;
+		}
+		t1 = 2 * l - t2;
+
+		rgb = [0, 0, 0];
+		for (var i = 0; i < 3; i++) {
+			t3 = h + 1 / 3 * - (i - 1);
+			if (t3 < 0) {
+				t3++;
+			}
+			else if (t3 > 1) {
+				t3--;
+			}
+
+			if (6 * t3 < 1) {
+				val = t1 + (t2 - t1) * 6 * t3;
+			}
+			else if (2 * t3 < 1) {
+				val = t2;
+			}
+			else if (3 * t3 < 2) {
+				val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
+			}
+			else {
+				val = t1;
+			}
+
+			rgb[i] = val * 255;
+		}
+
+		return rgb;
+	}
+};
+
+
+//extend rgb
+rgb.hsl = function(rgb) {
+	var r = rgb[0]/255,
+			g = rgb[1]/255,
+			b = rgb[2]/255,
+			min = Math.min(r, g, b),
+			max = Math.max(r, g, b),
+			delta = max - min,
+			h, s, l;
+
+	if (max === min) {
+		h = 0;
+	}
+	else if (r === max) {
+		h = (g - b) / delta;
+	}
+	else if (g === max) {
+		h = 2 + (b - r) / delta;
+	}
+	else if (b === max) {
+		h = 4 + (r - g)/ delta;
+	}
+
+	h = Math.min(h * 60, 360);
+
+	if (h < 0) {
+		h += 360;
+	}
+
+	l = (min + max) / 2;
+
+	if (max === min) {
+		s = 0;
+	}
+	else if (l <= 0.5) {
+		s = delta / (max + min);
+	}
+	else {
+		s = delta / (2 - max - min);
+	}
+
+	return [h, s * 100, l * 100];
+};
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * RGB space.
+ *
+ * @module  color-space/rgb
+ */
+
+
+module.exports = {
+	name: 'rgb',
+	min: [0,0,0],
+	max: [255,255,255],
+	channel: ['red', 'green', 'blue'],
+	alias: ['RGB']
+};
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports) {
+
+module.exports = clamp
+
+function clamp(value, min, max) {
+  return min < max
+    ? (value < min ? min : value > max ? max : value)
+    : (value < max ? max : value > min ? min : value)
+}
+
+
+/***/ }),
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11693,9 +13191,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createText; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
-/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37);
+/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(50);
+/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
+/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(49);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -11797,7 +13295,7 @@ function createText(text, _ref) {
 }
 
 /***/ }),
-/* 43 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11805,23 +13303,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Figure2D; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
+/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68);
 /* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(45);
+/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(69);
 /* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(parse_svg_path__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(46);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(70);
 /* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(47);
+/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(71);
 /* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(abs_svg_path__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(48);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(50);
+/* harmony import */ var _normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(72);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(74);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(57);
-/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(59);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(81);
+/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(83);
 
 
 
@@ -12099,7 +13597,7 @@ function () {
 
 
 /***/ }),
-/* 44 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithHoles = __webpack_require__(14);
@@ -12115,7 +13613,7 @@ function _toArray(arr) {
 module.exports = _toArray;
 
 /***/ }),
-/* 45 */
+/* 69 */
 /***/ (function(module, exports) {
 
 
@@ -12178,7 +13676,7 @@ function parseValues(args) {
 
 
 /***/ }),
-/* 46 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12206,7 +13704,7 @@ function findBounds(points) {
 }
 
 /***/ }),
-/* 47 */
+/* 71 */
 /***/ (function(module, exports) {
 
 
@@ -12279,7 +13777,7 @@ function absolutize(path){
 
 
 /***/ }),
-/* 48 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12287,7 +13785,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalize; });
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _a2c__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49);
+/* harmony import */ var _a2c__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(73);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -12430,7 +13928,7 @@ function quadratic(x1, y1, cx, cy, x2, y2) {
 /* eslint-enable */
 
 /***/ }),
-/* 49 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12612,7 +14110,7 @@ function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
 }
 
 /***/ }),
-/* 50 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -12620,11 +14118,11 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/svg-path-contours
 
 /* eslint-disable */
-var bezier = __webpack_require__(51);
+var bezier = __webpack_require__(75);
 
-var vec2 = __webpack_require__(53);
+var vec2 = __webpack_require__(77);
 
-var simplify = __webpack_require__(54);
+var simplify = __webpack_require__(78);
 
 function set(out, x, y) {
   out[0] = x;
@@ -12666,13 +14164,13 @@ module.exports = function contours(svg, scale, simp) {
 };
 
 /***/ }),
-/* 51 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(52)()
+module.exports = __webpack_require__(76)()
 
 /***/ }),
-/* 52 */
+/* 76 */
 /***/ (function(module, exports) {
 
 function clone(point) { //TODO: use gl-vec2 for this
@@ -12875,7 +14373,7 @@ module.exports = function createBezierBuilder(opt) {
 
 
 /***/ }),
-/* 53 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12904,11 +14402,11 @@ var dot = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].dot;
 
 
 /***/ }),
-/* 54 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var simplifyRadialDist = __webpack_require__(55)
-var simplifyDouglasPeucker = __webpack_require__(56)
+var simplifyRadialDist = __webpack_require__(79)
+var simplifyDouglasPeucker = __webpack_require__(80)
 
 //simplifies using both algorithms
 module.exports = function simplify(points, tolerance) {
@@ -12921,7 +14419,7 @@ module.exports.radialDistance = simplifyRadialDist;
 module.exports.douglasPeucker = simplifyDouglasPeucker;
 
 /***/ }),
-/* 55 */
+/* 79 */
 /***/ (function(module, exports) {
 
 function getSqDist(p1, p2) {
@@ -12957,7 +14455,7 @@ module.exports = function simplifyRadialDist(points, tolerance) {
 }
 
 /***/ }),
-/* 56 */
+/* 80 */
 /***/ (function(module, exports) {
 
 // square distance from a point to a segment
@@ -13025,7 +14523,7 @@ module.exports = function simplifyDouglasPeucker(points, tolerance) {
 
 
 /***/ }),
-/* 57 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13035,7 +14533,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDashContours", function() { return getDashContours; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _positions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(58);
+/* harmony import */ var _positions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -13217,7 +14715,7 @@ function getDashContours(contours, lineDash, lineDashOffset) {
 }
 
 /***/ }),
-/* 58 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13280,7 +14778,7 @@ function distance(_ref5, _ref6) {
 }
 
 /***/ }),
-/* 59 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13316,7 +14814,7 @@ function getPoint(x0, y0, a, b, theta) {
 }
 
 /***/ }),
-/* 60 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13331,20 +14829,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(46);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(70);
 /* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(61);
-/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(41);
-/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37);
-/* harmony import */ var _utils_positions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(58);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(69);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(70);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(57);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(71);
+/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(85);
+/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(53);
+/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(49);
+/* harmony import */ var _utils_positions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(82);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(56);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(93);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(81);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(94);
 /* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(50);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(74);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(75);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(57);
 
 
 
@@ -14550,7 +16048,7 @@ function () {
 
 
 /***/ }),
-/* 61 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14559,9 +16057,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(62);
+/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
 /* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(as_number__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _vecutil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(53);
+/* harmony import */ var _vecutil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(77);
 
 
 
@@ -14576,7 +16074,7 @@ var lineB = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 var tangent = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 var miter = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 
-var util = __webpack_require__(63);
+var util = __webpack_require__(87);
 
 var computeMiter = util.computeMiter,
     normal = util.normal,
@@ -14773,7 +16271,7 @@ function extrusions(complex, point, normal, scale) {
 /* harmony default export */ __webpack_exports__["default"] = (Stroke);
 
 /***/ }),
-/* 62 */
+/* 86 */
 /***/ (function(module, exports) {
 
 module.exports = function numtype(num, def) {
@@ -14783,14 +16281,14 @@ module.exports = function numtype(num, def) {
 }
 
 /***/ }),
-/* 63 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var add = __webpack_require__(64)
-var set = __webpack_require__(65)
-var normalize = __webpack_require__(66)
-var subtract = __webpack_require__(67)
-var dot = __webpack_require__(68)
+var add = __webpack_require__(88)
+var set = __webpack_require__(89)
+var normalize = __webpack_require__(90)
+var subtract = __webpack_require__(91)
+var dot = __webpack_require__(92)
 
 var tmp = [0, 0]
 
@@ -14821,7 +16319,7 @@ module.exports.direction = function direction(out, a, b) {
 }
 
 /***/ }),
-/* 64 */
+/* 88 */
 /***/ (function(module, exports) {
 
 module.exports = add
@@ -14841,7 +16339,7 @@ function add(out, a, b) {
 }
 
 /***/ }),
-/* 65 */
+/* 89 */
 /***/ (function(module, exports) {
 
 module.exports = set
@@ -14861,7 +16359,7 @@ function set(out, x, y) {
 }
 
 /***/ }),
-/* 66 */
+/* 90 */
 /***/ (function(module, exports) {
 
 module.exports = normalize
@@ -14887,7 +16385,7 @@ function normalize(out, a) {
 }
 
 /***/ }),
-/* 67 */
+/* 91 */
 /***/ (function(module, exports) {
 
 module.exports = subtract
@@ -14907,7 +16405,7 @@ function subtract(out, a, b) {
 }
 
 /***/ }),
-/* 68 */
+/* 92 */
 /***/ (function(module, exports) {
 
 module.exports = dot
@@ -14924,145 +16422,7 @@ function dot(a, b) {
 }
 
 /***/ }),
-/* 69 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "multiply", function() { return multiply; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "grayscale", function() { return grayscale; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "brightness", function() { return brightness; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saturate", function() { return saturate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "contrast", function() { return contrast; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "invert", function() { return invert; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sepia", function() { return sepia; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "opacity", function() { return opacity; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hueRotate", function() { return hueRotate; });
-/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-
-function multiply(a, b) {
-  var out = [];
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3],
-      a04 = a[4]; // eslint-disable-line one-var-declaration-per-line
-
-  var a10 = a[5],
-      a11 = a[6],
-      a12 = a[7],
-      a13 = a[8],
-      a14 = a[9]; // eslint-disable-line one-var-declaration-per-line
-
-  var a20 = a[10],
-      a21 = a[11],
-      a22 = a[12],
-      a23 = a[13],
-      a24 = a[14]; // eslint-disable-line one-var-declaration-per-line
-
-  var a30 = a[15],
-      a31 = a[16],
-      a32 = a[17],
-      a33 = a[18],
-      a34 = a[19]; // eslint-disable-line one-var-declaration-per-line
-  // Cache only the current line of the second matrix
-
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3],
-      b4 = b[4]; // eslint-disable-line one-var-declaration-per-line
-
-  out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  out[4] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
-  b0 = b[5];
-  b1 = b[6];
-  b2 = b[7];
-  b3 = b[8];
-  b4 = b[9];
-  out[5] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[6] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[7] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[8] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  out[9] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
-  b0 = b[10];
-  b1 = b[11];
-  b2 = b[12];
-  b3 = b[13];
-  b4 = b[14];
-  out[10] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[11] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[12] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[13] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  out[14] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
-  b0 = b[15];
-  b1 = b[16];
-  b2 = b[17];
-  b3 = b[18];
-  b4 = b[19];
-  out[15] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[16] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[17] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[18] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  out[19] = b0 * a04 + b1 * a14 + b2 * a24 + b3 * a34 + b4;
-  return out;
-} // export function transformColor(color, m) {
-//   const [r, g, b, a] = color;
-//   color[0] = m[0] * r + m[1] * g + m[2] * b + m[3] * a + m[4];
-//   color[1] = m[5] * r + m[6] * g + m[7] * b + m[8] * a + m[9];
-//   color[2] = m[10] * r + m[11] * g + m[12] * b + m[13] * a + m[14];
-//   color[3] = m[15] * r + m[16] * g + m[17] * b + m[18] * a + m[19];
-//   return color;
-// }
-
-function grayscale(p) {
-  p = Object(_math__WEBPACK_IMPORTED_MODULE_0__["clamp"])(0, 1, p);
-  var r = 0.212 * p;
-  var g = 0.714 * p;
-  var b = 0.074 * p;
-  return [r + 1 - p, g, b, 0, 0, r, g + 1 - p, b, 0, 0, r, g, b + 1 - p, 0, 0, 0, 0, 0, 1, 0];
-}
-function brightness(p) {
-  return [p, 0, 0, 0, 0, 0, p, 0, 0, 0, 0, 0, p, 0, 0, 0, 0, 0, 1, 0];
-}
-function saturate(p) {
-  p = Object(_math__WEBPACK_IMPORTED_MODULE_0__["clamp"])(0, 1, p);
-  var r = 0.212 * (1 - p);
-  var g = 0.714 * (1 - p);
-  var b = 0.074 * (1 - p);
-  return [r + p, g, b, 0, 0, r, g + p, b, 0, 0, r, g, b + p, 0, 0, 0, 0, 0, 1, 0];
-}
-function contrast(p) {
-  var d = 0.5 * (1 - p);
-  return [p, 0, 0, 0, d, 0, p, 0, 0, d, 0, 0, p, 0, d, 0, 0, 0, 1, 0];
-}
-function invert(p) {
-  var d = 1 - 2 * p;
-  return [d, 0, 0, 0, p, 0, d, 0, 0, p, 0, 0, d, 0, p, 0, 0, 0, 1, 0];
-}
-function sepia(p) {
-  return [1 - 0.607 * p, 0.769 * p, 0.189 * p, 0, 0, 0.349 * p, 1 - 0.314 * p, 0.168 * p, 0, 0, 0.272 * p, 0.534 * p, 1 - 0.869 * p, 0, 0, 0, 0, 0, 1, 0];
-}
-function opacity(p) {
-  return [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, p, 0];
-}
-function hueRotate(deg) {
-  var rotation = deg / 180 * Math.PI;
-  var cos = Math.cos(rotation),
-      sin = Math.sin(rotation),
-      lumR = 0.213,
-      lumG = 0.715,
-      lumB = 0.072;
-  return [lumR + cos * (1 - lumR) + sin * -lumR, lumG + cos * -lumG + sin * -lumG, lumB + cos * -lumB + sin * (1 - lumB), 0, 0, lumR + cos * -lumR + sin * 0.143, lumG + cos * (1 - lumG) + sin * 0.140, lumB + cos * -lumB + sin * -0.283, 0, 0, lumR + cos * -lumR + sin * -(1 - lumR), lumG + cos * -lumG + sin * lumG, lumB + cos * (1 - lumB) + sin * lumB, 0, 0, 0, 0, 0, 1, 0];
-}
-
-/***/ }),
-/* 70 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15075,7 +16435,7 @@ function isUnitTransform(m) {
 }
 
 /***/ }),
-/* 71 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -15083,9 +16443,9 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/triangulate-contours
 
 /* eslint-disable */
-var Tess2 = __webpack_require__(72);
+var Tess2 = __webpack_require__(95);
 
-var xtend = __webpack_require__(74);
+var xtend = __webpack_require__(97);
 
 module.exports = function (contours, opt) {
   opt = opt || {};
@@ -15139,13 +16499,13 @@ module.exports = function (contours, opt) {
 };
 
 /***/ }),
-/* 72 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(73);
+module.exports = __webpack_require__(96);
 
 /***/ }),
-/* 73 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18576,7 +19936,7 @@ module.exports = __webpack_require__(73);
 	};
 
 /***/ }),
-/* 74 */
+/* 97 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -18601,576 +19961,7 @@ function extend() {
 
 
 /***/ }),
-/* 75 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return parseColor; });
-/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76);
-/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(color_rgba__WEBPACK_IMPORTED_MODULE_0__);
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-
-function parseColor(colorStr) {
-  var ret = color_rgba__WEBPACK_IMPORTED_MODULE_0___default()(colorStr);
-  if (!ret || !ret.length) throw new TypeError('Invalid color value.');
-  return [ret[0] / 255, ret[1] / 255, ret[2] / 255, ret[3]];
-}
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/** @module  color-rgba */
-
-
-
-var parse = __webpack_require__(77)
-var hsl = __webpack_require__(81)
-var clamp = __webpack_require__(83)
-
-module.exports = function rgba (color) {
-	var values, i, l
-
-	//attempt to parse non-array arguments
-	var parsed = parse(color)
-
-	if (!parsed.space) return []
-
-	values = Array(3)
-	values[0] = clamp(parsed.values[0], 0, 255)
-	values[1] = clamp(parsed.values[1], 0, 255)
-	values[2] = clamp(parsed.values[2], 0, 255)
-
-	if (parsed.space[0] === 'h') {
-		values = hsl.rgb(values)
-	}
-
-	values.push(clamp(parsed.alpha, 0, 1))
-
-	return values
-}
-
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/**
- * @module color-parse
- */
-
-
-
-var names = __webpack_require__(78)
-var isObject = __webpack_require__(79)
-var defined = __webpack_require__(80)
-
-module.exports = parse
-
-/**
- * Base hues
- * http://dev.w3.org/csswg/css-color/#typedef-named-hue
- */
-//FIXME: use external hue detector
-var baseHues = {
-	red: 0,
-	orange: 60,
-	yellow: 120,
-	green: 180,
-	blue: 240,
-	purple: 300
-}
-
-/**
- * Parse color from the string passed
- *
- * @return {Object} A space indicator `space`, an array `values` and `alpha`
- */
-function parse (cstr) {
-	var m, parts = [], alpha = 1, space
-
-	if (typeof cstr === 'string') {
-		//keyword
-		if (names[cstr]) {
-			parts = names[cstr].slice()
-			space = 'rgb'
-		}
-
-		//reserved words
-		else if (cstr === 'transparent') {
-			alpha = 0
-			space = 'rgb'
-			parts = [0,0,0]
-		}
-
-		//hex
-		else if (/^#[A-Fa-f0-9]+$/.test(cstr)) {
-			var base = cstr.slice(1)
-			var size = base.length
-			var isShort = size <= 4
-			alpha = 1
-
-			if (isShort) {
-				parts = [
-					parseInt(base[0] + base[0], 16),
-					parseInt(base[1] + base[1], 16),
-					parseInt(base[2] + base[2], 16)
-				]
-				if (size === 4) {
-					alpha = parseInt(base[3] + base[3], 16) / 255
-				}
-			}
-			else {
-				parts = [
-					parseInt(base[0] + base[1], 16),
-					parseInt(base[2] + base[3], 16),
-					parseInt(base[4] + base[5], 16)
-				]
-				if (size === 8) {
-					alpha = parseInt(base[6] + base[7], 16) / 255
-				}
-			}
-
-			if (!parts[0]) parts[0] = 0
-			if (!parts[1]) parts[1] = 0
-			if (!parts[2]) parts[2] = 0
-
-			space = 'rgb'
-		}
-
-		//color space
-		else if (m = /^((?:rgb|hs[lvb]|hwb|cmyk?|xy[zy]|gray|lab|lchu?v?|[ly]uv|lms)a?)\s*\(([^\)]*)\)/.exec(cstr)) {
-			var name = m[1]
-			var isRGB = name === 'rgb'
-			var base = name.replace(/a$/, '')
-			space = base
-			var size = base === 'cmyk' ? 4 : base === 'gray' ? 1 : 3
-			parts = m[2].trim()
-				.split(/\s*,\s*/)
-				.map(function (x, i) {
-					//<percentage>
-					if (/%$/.test(x)) {
-						//alpha
-						if (i === size)	return parseFloat(x) / 100
-						//rgb
-						if (base === 'rgb') return parseFloat(x) * 255 / 100
-						return parseFloat(x)
-					}
-					//hue
-					else if (base[i] === 'h') {
-						//<deg>
-						if (/deg$/.test(x)) {
-							return parseFloat(x)
-						}
-						//<base-hue>
-						else if (baseHues[x] !== undefined) {
-							return baseHues[x]
-						}
-					}
-					return parseFloat(x)
-				})
-
-			if (name === base) parts.push(1)
-			alpha = (isRGB) ? 1 : (parts[size] === undefined) ? 1 : parts[size]
-			parts = parts.slice(0, size)
-		}
-
-		//named channels case
-		else if (cstr.length > 10 && /[0-9](?:\s|\/)/.test(cstr)) {
-			parts = cstr.match(/([0-9]+)/g).map(function (value) {
-				return parseFloat(value)
-			})
-
-			space = cstr.match(/([a-z])/ig).join('').toLowerCase()
-		}
-	}
-
-	//numeric case
-	else if (!isNaN(cstr)) {
-		space = 'rgb'
-		parts = [cstr >>> 16, (cstr & 0x00ff00) >>> 8, cstr & 0x0000ff]
-	}
-
-	//object case - detects css cases of rgb and hsl
-	else if (isObject(cstr)) {
-		var r = defined(cstr.r, cstr.red, cstr.R, null)
-
-		if (r !== null) {
-			space = 'rgb'
-			parts = [
-				r,
-				defined(cstr.g, cstr.green, cstr.G),
-				defined(cstr.b, cstr.blue, cstr.B)
-			]
-		}
-		else {
-			space = 'hsl'
-			parts = [
-				defined(cstr.h, cstr.hue, cstr.H),
-				defined(cstr.s, cstr.saturation, cstr.S),
-				defined(cstr.l, cstr.lightness, cstr.L, cstr.b, cstr.brightness)
-			]
-		}
-
-		alpha = defined(cstr.a, cstr.alpha, cstr.opacity, 1)
-
-		if (cstr.opacity != null) alpha /= 100
-	}
-
-	//array
-	else if (Array.isArray(cstr) || global.ArrayBuffer && ArrayBuffer.isView && ArrayBuffer.isView(cstr)) {
-		parts = [cstr[0], cstr[1], cstr[2]]
-		space = 'rgb'
-		alpha = cstr.length === 4 ? cstr[3] : 1
-	}
-
-	return {
-		space: space,
-		values: parts,
-		alpha: alpha
-	}
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(35)))
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-	"aliceblue": [240, 248, 255],
-	"antiquewhite": [250, 235, 215],
-	"aqua": [0, 255, 255],
-	"aquamarine": [127, 255, 212],
-	"azure": [240, 255, 255],
-	"beige": [245, 245, 220],
-	"bisque": [255, 228, 196],
-	"black": [0, 0, 0],
-	"blanchedalmond": [255, 235, 205],
-	"blue": [0, 0, 255],
-	"blueviolet": [138, 43, 226],
-	"brown": [165, 42, 42],
-	"burlywood": [222, 184, 135],
-	"cadetblue": [95, 158, 160],
-	"chartreuse": [127, 255, 0],
-	"chocolate": [210, 105, 30],
-	"coral": [255, 127, 80],
-	"cornflowerblue": [100, 149, 237],
-	"cornsilk": [255, 248, 220],
-	"crimson": [220, 20, 60],
-	"cyan": [0, 255, 255],
-	"darkblue": [0, 0, 139],
-	"darkcyan": [0, 139, 139],
-	"darkgoldenrod": [184, 134, 11],
-	"darkgray": [169, 169, 169],
-	"darkgreen": [0, 100, 0],
-	"darkgrey": [169, 169, 169],
-	"darkkhaki": [189, 183, 107],
-	"darkmagenta": [139, 0, 139],
-	"darkolivegreen": [85, 107, 47],
-	"darkorange": [255, 140, 0],
-	"darkorchid": [153, 50, 204],
-	"darkred": [139, 0, 0],
-	"darksalmon": [233, 150, 122],
-	"darkseagreen": [143, 188, 143],
-	"darkslateblue": [72, 61, 139],
-	"darkslategray": [47, 79, 79],
-	"darkslategrey": [47, 79, 79],
-	"darkturquoise": [0, 206, 209],
-	"darkviolet": [148, 0, 211],
-	"deeppink": [255, 20, 147],
-	"deepskyblue": [0, 191, 255],
-	"dimgray": [105, 105, 105],
-	"dimgrey": [105, 105, 105],
-	"dodgerblue": [30, 144, 255],
-	"firebrick": [178, 34, 34],
-	"floralwhite": [255, 250, 240],
-	"forestgreen": [34, 139, 34],
-	"fuchsia": [255, 0, 255],
-	"gainsboro": [220, 220, 220],
-	"ghostwhite": [248, 248, 255],
-	"gold": [255, 215, 0],
-	"goldenrod": [218, 165, 32],
-	"gray": [128, 128, 128],
-	"green": [0, 128, 0],
-	"greenyellow": [173, 255, 47],
-	"grey": [128, 128, 128],
-	"honeydew": [240, 255, 240],
-	"hotpink": [255, 105, 180],
-	"indianred": [205, 92, 92],
-	"indigo": [75, 0, 130],
-	"ivory": [255, 255, 240],
-	"khaki": [240, 230, 140],
-	"lavender": [230, 230, 250],
-	"lavenderblush": [255, 240, 245],
-	"lawngreen": [124, 252, 0],
-	"lemonchiffon": [255, 250, 205],
-	"lightblue": [173, 216, 230],
-	"lightcoral": [240, 128, 128],
-	"lightcyan": [224, 255, 255],
-	"lightgoldenrodyellow": [250, 250, 210],
-	"lightgray": [211, 211, 211],
-	"lightgreen": [144, 238, 144],
-	"lightgrey": [211, 211, 211],
-	"lightpink": [255, 182, 193],
-	"lightsalmon": [255, 160, 122],
-	"lightseagreen": [32, 178, 170],
-	"lightskyblue": [135, 206, 250],
-	"lightslategray": [119, 136, 153],
-	"lightslategrey": [119, 136, 153],
-	"lightsteelblue": [176, 196, 222],
-	"lightyellow": [255, 255, 224],
-	"lime": [0, 255, 0],
-	"limegreen": [50, 205, 50],
-	"linen": [250, 240, 230],
-	"magenta": [255, 0, 255],
-	"maroon": [128, 0, 0],
-	"mediumaquamarine": [102, 205, 170],
-	"mediumblue": [0, 0, 205],
-	"mediumorchid": [186, 85, 211],
-	"mediumpurple": [147, 112, 219],
-	"mediumseagreen": [60, 179, 113],
-	"mediumslateblue": [123, 104, 238],
-	"mediumspringgreen": [0, 250, 154],
-	"mediumturquoise": [72, 209, 204],
-	"mediumvioletred": [199, 21, 133],
-	"midnightblue": [25, 25, 112],
-	"mintcream": [245, 255, 250],
-	"mistyrose": [255, 228, 225],
-	"moccasin": [255, 228, 181],
-	"navajowhite": [255, 222, 173],
-	"navy": [0, 0, 128],
-	"oldlace": [253, 245, 230],
-	"olive": [128, 128, 0],
-	"olivedrab": [107, 142, 35],
-	"orange": [255, 165, 0],
-	"orangered": [255, 69, 0],
-	"orchid": [218, 112, 214],
-	"palegoldenrod": [238, 232, 170],
-	"palegreen": [152, 251, 152],
-	"paleturquoise": [175, 238, 238],
-	"palevioletred": [219, 112, 147],
-	"papayawhip": [255, 239, 213],
-	"peachpuff": [255, 218, 185],
-	"peru": [205, 133, 63],
-	"pink": [255, 192, 203],
-	"plum": [221, 160, 221],
-	"powderblue": [176, 224, 230],
-	"purple": [128, 0, 128],
-	"rebeccapurple": [102, 51, 153],
-	"red": [255, 0, 0],
-	"rosybrown": [188, 143, 143],
-	"royalblue": [65, 105, 225],
-	"saddlebrown": [139, 69, 19],
-	"salmon": [250, 128, 114],
-	"sandybrown": [244, 164, 96],
-	"seagreen": [46, 139, 87],
-	"seashell": [255, 245, 238],
-	"sienna": [160, 82, 45],
-	"silver": [192, 192, 192],
-	"skyblue": [135, 206, 235],
-	"slateblue": [106, 90, 205],
-	"slategray": [112, 128, 144],
-	"slategrey": [112, 128, 144],
-	"snow": [255, 250, 250],
-	"springgreen": [0, 255, 127],
-	"steelblue": [70, 130, 180],
-	"tan": [210, 180, 140],
-	"teal": [0, 128, 128],
-	"thistle": [216, 191, 216],
-	"tomato": [255, 99, 71],
-	"turquoise": [64, 224, 208],
-	"violet": [238, 130, 238],
-	"wheat": [245, 222, 179],
-	"white": [255, 255, 255],
-	"whitesmoke": [245, 245, 245],
-	"yellow": [255, 255, 0],
-	"yellowgreen": [154, 205, 50]
-};
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var toString = Object.prototype.toString;
-
-module.exports = function (x) {
-	var prototype;
-	return toString.call(x) === '[object Object]' && (prototype = Object.getPrototypeOf(x), prototype === null || prototype === Object.getPrototypeOf({}));
-};
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports) {
-
-module.exports = function () {
-    for (var i = 0; i < arguments.length; i++) {
-        if (arguments[i] !== undefined) return arguments[i];
-    }
-};
-
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * @module color-space/hsl
- */
-
-
-var rgb = __webpack_require__(82);
-
-module.exports = {
-	name: 'hsl',
-	min: [0,0,0],
-	max: [360,100,100],
-	channel: ['hue', 'saturation', 'lightness'],
-	alias: ['HSL'],
-
-	rgb: function(hsl) {
-		var h = hsl[0] / 360,
-				s = hsl[1] / 100,
-				l = hsl[2] / 100,
-				t1, t2, t3, rgb, val;
-
-		if (s === 0) {
-			val = l * 255;
-			return [val, val, val];
-		}
-
-		if (l < 0.5) {
-			t2 = l * (1 + s);
-		}
-		else {
-			t2 = l + s - l * s;
-		}
-		t1 = 2 * l - t2;
-
-		rgb = [0, 0, 0];
-		for (var i = 0; i < 3; i++) {
-			t3 = h + 1 / 3 * - (i - 1);
-			if (t3 < 0) {
-				t3++;
-			}
-			else if (t3 > 1) {
-				t3--;
-			}
-
-			if (6 * t3 < 1) {
-				val = t1 + (t2 - t1) * 6 * t3;
-			}
-			else if (2 * t3 < 1) {
-				val = t2;
-			}
-			else if (3 * t3 < 2) {
-				val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
-			}
-			else {
-				val = t1;
-			}
-
-			rgb[i] = val * 255;
-		}
-
-		return rgb;
-	}
-};
-
-
-//extend rgb
-rgb.hsl = function(rgb) {
-	var r = rgb[0]/255,
-			g = rgb[1]/255,
-			b = rgb[2]/255,
-			min = Math.min(r, g, b),
-			max = Math.max(r, g, b),
-			delta = max - min,
-			h, s, l;
-
-	if (max === min) {
-		h = 0;
-	}
-	else if (r === max) {
-		h = (g - b) / delta;
-	}
-	else if (g === max) {
-		h = 2 + (b - r) / delta;
-	}
-	else if (b === max) {
-		h = 4 + (r - g)/ delta;
-	}
-
-	h = Math.min(h * 60, 360);
-
-	if (h < 0) {
-		h += 360;
-	}
-
-	l = (min + max) / 2;
-
-	if (max === min) {
-		s = 0;
-	}
-	else if (l <= 0.5) {
-		s = delta / (max + min);
-	}
-	else {
-		s = delta / (2 - max - min);
-	}
-
-	return [h, s * 100, l * 100];
-};
-
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * RGB space.
- *
- * @module  color-space/rgb
- */
-
-
-module.exports = {
-	name: 'rgb',
-	min: [0,0,0],
-	max: [255,255,255],
-	channel: ['red', 'green', 'blue'],
-	alias: ['RGB']
-};
-
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports) {
-
-module.exports = clamp
-
-function clamp(value, min, max) {
-  return min < max
-    ? (value < min ? min : value > max ? max : value)
-    : (value < max ? max : value > min ? min : value)
-}
-
-
-/***/ }),
-/* 84 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19181,10 +19972,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyCloudShader", function() { return applyCloudShader; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85);
-/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
-/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87);
-/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(88);
+/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99);
+/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(100);
+/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(101);
+/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(102);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -19320,7 +20111,7 @@ function applyCloudShader(renderer) {
 }
 
 /***/ }),
-/* 85 */
+/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19328,7 +20119,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n\nvoid transformPoint(inout vec2 p) {\n  vec3 m0 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m1 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float w = u_globalTransform[3];\n  float h = u_globalTransform[7];\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);\n  \n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  vSourceRect = a_sourceRect;\n#endif\n}");
 
 /***/ }),
-/* 86 */
+/* 100 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19336,7 +20127,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n      float alpha = texColor.a;\n      if(u_opacity < 1.0) {\n        texColor.a *= u_opacity;\n        alpha *= mix(0.465, 1.0, u_opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
-/* 87 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19344,515 +20135,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec4 a_transform0;\nattribute vec4 a_transform1;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\n#ifdef GLOBALTRANSFORM\nuniform float u_globalTransform[8];\n#endif\n\nvoid transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {\n  float x = p.x;\n  float y = p.y;\n  x = (x + 1.0) * 0.5 * w;\n  y = (1.0 - y) * 0.5 * h;\n  p.x = x * m0.x + y * m0.y + m0.z;\n  p.y = x * m1.x + y * m1.y + m1.z;\n  p.x = 2.0 * (p.x / w - 0.5);\n  p.y = 2.0 * (0.5 - p.y / h);\n}\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 m0 = vec3(a_transform0.x, a_transform0.z, a_transform1.y);\n  vec3 m1 = vec3(a_transform0.y, a_transform1.x, a_transform1.z);\n\n  vec2 xy = a_vertexPosition.xy;\n  transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);\n  gl_Position = vec4(xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);\n  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);\n#endif\n\n#ifdef GLOBALTRANSFORM\n  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);\n  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);\n  float width = u_globalTransform[3];\n  float height = u_globalTransform[7];\n  transformPoint(xy, m3, m4, width, height);\n  gl_Position = vec4(xy, 1.0, 1.0);\n#ifdef GRADIENT\n  vec2 vg1 = vGradientVector1.xy;\n  vec2 vg2 = vGradientVector2.xy;\n  float h = u_globalTransform[7];\n  float y1 = h - vg1.y;\n  float y2 = h - vg2.y;\n\n  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);\n\n  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];\n  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);\n#endif\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
-/* 88 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform float u_opacity;\n\n#ifdef TEXTURE\nvarying float frameIndex;\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef CLOUDFILTER\nuniform int u_cloudFilterFlag;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n\n#ifdef CLOUDFILTER\nvoid buildCloudColor(inout float colorCloudMatrix[20]) {\n  colorCloudMatrix[0] = colorCloud0[0];\n  colorCloudMatrix[1] = colorCloud1[0];\n  colorCloudMatrix[2] = colorCloud2[0];\n  colorCloudMatrix[3] = colorCloud3[0];\n  colorCloudMatrix[4] = colorCloud4[0];\n\n  colorCloudMatrix[5] = colorCloud0[1];\n  colorCloudMatrix[6] = colorCloud1[1];\n  colorCloudMatrix[7] = colorCloud2[1];\n  colorCloudMatrix[8] = colorCloud3[1];\n  colorCloudMatrix[9] = colorCloud4[1];\n\n  colorCloudMatrix[10] = colorCloud0[2];\n  colorCloudMatrix[11] = colorCloud1[2];\n  colorCloudMatrix[12] = colorCloud2[2];\n  colorCloudMatrix[13] = colorCloud3[2];\n  colorCloudMatrix[14] = colorCloud4[2];\n\n  colorCloudMatrix[15] = colorCloud0[3];\n  colorCloudMatrix[16] = colorCloud1[3];\n  colorCloudMatrix[17] = colorCloud2[3];\n  colorCloudMatrix[18] = colorCloud3[3];\n  colorCloudMatrix[19] = colorCloud4[3];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(u_opacity < 1.0) {\n    color.a *= u_opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      if(frameIndex < 0.0) {\n        vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n        color = mix(color, texColor, texColor.a);\n      } else {\n        int index = int(floor(clamp(0.0, 11.0, frameIndex)));\n        vec4 texColor;\n        if(index == 0) texColor = texture2D(u_texFrame0, texCoord.xy);\n        else if(index == 1) texColor = texture2D(u_texFrame1, texCoord.xy);\n        else if(index == 2) texColor = texture2D(u_texFrame2, texCoord.xy);\n        else if(index == 3) texColor = texture2D(u_texFrame3, texCoord.xy);\n        else if(index == 4) texColor = texture2D(u_texFrame4, texCoord.xy);\n        else if(index == 5) texColor = texture2D(u_texFrame5, texCoord.xy);\n        else if(index == 6) texColor = texture2D(u_texFrame6, texCoord.xy);\n        else if(index == 7) texColor = texture2D(u_texFrame7, texCoord.xy);\n        else if(index == 8) texColor = texture2D(u_texFrame8, texCoord.xy);\n        else if(index == 9) texColor = texture2D(u_texFrame9, texCoord.xy);\n        else if(index == 10) texColor = texture2D(u_texFrame10, texCoord.xy);\n        else texColor = texture2D(u_texFrame11, texCoord.xy);\n        float alpha = texColor.a;\n        if(u_opacity < 1.0) {\n          texColor.a *= u_opacity;\n          alpha *= mix(0.465, 1.0, u_opacity);\n        }\n        // color = mix(color, texColor, texColor.a);\n        color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);\n        color.a = texColor.a + (1.0 - texColor.a) * color.a;\n      }\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLOUDFILTER\n  if(u_cloudFilterFlag > 0) {\n    float colorCloudMatrix[20];\n    buildCloudColor(colorCloudMatrix);\n    transformColor(color, colorCloudMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
-
-/***/ }),
-/* 89 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(69);
-/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(39);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(75);
-
-
-
-
-
-
-__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-
-
-
-var _mesh = Symbol('mesh');
-
-var _count = Symbol('count');
-
-var _transform0 = Symbol('transform');
-
-var _transform1 = Symbol('transform');
-
-var _color0 = Symbol('color');
-
-var _color1 = Symbol('color');
-
-var _color2 = Symbol('color');
-
-var _color3 = Symbol('color');
-
-var _color4 = Symbol('color');
-
-var _blend = Symbol('blend');
-
-var _filters = Symbol('filter');
-
-var _textures = Symbol('textures');
-
-var _frameIndex = Symbol('frameIndex');
-
-var _fillColor = Symbol('fillColor');
-
-var _strokeColor = Symbol('strokeColor');
-
-var _hasCloudColor = Symbol('cloudColor');
-
-var _default =
-/*#__PURE__*/
-function () {
-  function _default(mesh) {
-    var amount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3___default()(this, _default);
-
-    this[_count] = amount;
-    this[_mesh] = mesh;
-    this[_transform0] = [];
-    this[_transform1] = [];
-    this[_color0] = [];
-    this[_color1] = [];
-    this[_color2] = [];
-    this[_color3] = [];
-    this[_color4] = [];
-    this[_textures] = [];
-    this[_frameIndex] = [];
-    this[_filters] = [];
-    this[_fillColor] = [];
-    this[_strokeColor] = [];
-    this[_hasCloudColor] = false;
-    this[_blend] = false;
-    var width = mesh.width,
-        height = mesh.height;
-
-    for (var i = 0; i < amount; i++) {
-      this[_transform0].push([1, 0, 0, width]);
-
-      this[_transform1].push([1, 0, 0, height]);
-
-      this[_frameIndex].push([-1]);
-
-      this[_filters].push([]);
-
-      this[_fillColor].push([0, 0, 0, 0]);
-
-      this[_strokeColor].push([0, 0, 0, 0]);
-
-      this.setColorTransform(i, null);
-    }
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default()(_default, [{
-    key: "getFilter",
-    value: function getFilter(idx) {
-      return this[_filters][idx].join(' ');
-    }
-  }, {
-    key: "setColorTransform",
-    value: function setColorTransform(idx, m) {
-      if (m != null) {
-        if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-        this[_color0][idx] = [m[0], m[5], m[10], m[15]];
-        this[_color1][idx] = [m[1], m[6], m[11], m[16]];
-        this[_color2][idx] = [m[2], m[7], m[12], m[17]];
-        this[_color3][idx] = [m[3], m[8], m[13], m[18]];
-        this[_color4][idx] = [m[4], m[9], m[14], m[19]];
-        this[_blend] = this[_blend] || m[18] < 1.0;
-
-        this[_mesh].setUniforms({
-          u_cloudFilterFlag: 1
-        });
-      } else {
-        this[_color0][idx] = [1, 0, 0, 0];
-        this[_color1][idx] = [0, 1, 0, 0];
-        this[_color2][idx] = [0, 0, 1, 0];
-        this[_color3][idx] = [0, 0, 0, 1];
-        this[_color4][idx] = [0, 0, 0, 0];
-
-        this[_mesh].setUniforms({
-          u_cloudFilterFlag: 0
-        });
-      }
-
-      return this;
-    }
-  }, {
-    key: "getColorTransform",
-    value: function getColorTransform(idx) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      return [this[_color0][idx][0], this[_color1][idx][0], this[_color2][idx][0], this[_color3][idx][0], this[_color4][idx][0], this[_color0][idx][1], this[_color1][idx][1], this[_color2][idx][1], this[_color3][idx][1], this[_color4][idx][1], this[_color0][idx][2], this[_color1][idx][2], this[_color2][idx][2], this[_color3][idx][2], this[_color4][idx][2], this[_color0][idx][3], this[_color1][idx][3], this[_color2][idx][3], this[_color3][idx][3], this[_color4][idx][3]];
-    }
-  }, {
-    key: "transformColor",
-    value: function transformColor(idx, m) {
-      var transform = this.getColorTransform(idx);
-      transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["multiply"])(transform, m);
-      this.setColorTransform(idx, transform);
-      return this;
-    }
-  }, {
-    key: "setFillColor",
-    value: function setFillColor(idx, color) {
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
-      if (color[3] > 0.0) this[_hasCloudColor] = true;
-      this[_fillColor][idx] = color.map(function (c) {
-        return Math.round(255 * c);
-      });
-    }
-  }, {
-    key: "setStrokeColor",
-    value: function setStrokeColor(idx, color) {
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
-      if (color[3] > 0.0) this[_hasCloudColor] = true;
-      this[_strokeColor][idx] = color.map(function (c) {
-        return Math.round(255 * c);
-      });
-    }
-  }, {
-    key: "getCloudRGBA",
-    value: function getCloudRGBA(idx) {
-      var fillColor = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_fillColor][idx]);
-
-      var strokeColor = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_strokeColor][idx]);
-
-      fillColor[3] /= 255;
-      strokeColor[3] /= 255;
-      return {
-        fill: "rgba(".concat(fillColor.join(), ")"),
-        stroke: "rgba(".concat(strokeColor.join(), ")")
-      };
-    }
-  }, {
-    key: "grayscale",
-    value: function grayscale(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["grayscale"])(p));
-
-      this[_filters][idx].push("grayscale(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "brightness",
-    value: function brightness(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["brightness"])(p));
-
-      this[_filters][idx].push("brightness(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "saturate",
-    value: function saturate(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["saturate"])(p));
-
-      this[_filters][idx].push("saturate(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "contrast",
-    value: function contrast(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["contrast"])(p));
-
-      this[_filters][idx].push("contrast(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "invert",
-    value: function invert(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["invert"])(p));
-
-      this[_filters][idx].push("invert(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "sepia",
-    value: function sepia(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["sepia"])(p));
-
-      this[_filters][idx].push("sepia(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "opacity",
-    value: function opacity(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["opacity"])(p));
-
-      this[_filters][idx].push("opacity(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "hueRotate",
-    value: function hueRotate(idx, deg) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["hueRotate"])(deg));
-
-      this[_filters][idx].push("hue-rotate(".concat(deg, "deg)"));
-    }
-  }, {
-    key: "setTransform",
-    value: function setTransform(idx, m) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      this[_transform0][idx][0] = m[0];
-      this[_transform0][idx][1] = m[1];
-      this[_transform0][idx][2] = m[2];
-      this[_transform1][idx][0] = m[3];
-      this[_transform1][idx][1] = m[4];
-      this[_transform1][idx][2] = m[5];
-      return this;
-    }
-  }, {
-    key: "getTransform",
-    value: function getTransform(idx) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      var m = [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_transform0][idx].slice(0, 3)), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(this[_transform1][idx].slice(0, 3)));
-      return m;
-    }
-  }, {
-    key: "getTextureFrame",
-    value: function getTextureFrame(idx) {
-      return this[_textures][this[_frameIndex][idx]];
-    }
-  }, {
-    key: "setTextureFrames",
-    value: function setTextureFrames() {
-      var frames = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      if (frames.length > 12) {
-        throw new Error('Max frames exceed. Allow 12 frames.');
-      }
-
-      if (frames.length) {
-        var mesh = this[_mesh];
-        mesh.setTexture(frames[0], options);
-      }
-
-      this[_textures] = frames;
-    }
-  }, {
-    key: "setFrameIndex",
-    value: function setFrameIndex(idx, frameIndex) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      var len = this[_textures].length;
-      if (len <= 0) throw new Error('No frames');
-      this[_frameIndex][idx] = frameIndex % len;
-    }
-  }, {
-    key: "transform",
-    value: function transform(idx, m) {
-      var transform = this.getTransform(idx);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, transform);
-      this.setTransform(idx, m);
-      return this;
-    }
-  }, {
-    key: "translate",
-    value: function translate(idx, _ref) {
-      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref, 2),
-          x = _ref2[0],
-          y = _ref2[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "rotate",
-    value: function rotate(idx, rad) {
-      var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref3, 2),
-          ox = _ref4[0],
-          oy = _ref4[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "scale",
-    value: function scale(idx, _ref5) {
-      var _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref5, 2),
-          x = _ref6[0],
-          _ref6$ = _ref6[1],
-          y = _ref6$ === void 0 ? x : _ref6$;
-
-      var _ref7 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref7, 2),
-          ox = _ref8[0],
-          oy = _ref8[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "skew",
-    value: function skew(idx, _ref9) {
-      var _ref10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref9, 2),
-          x = _ref10[0],
-          _ref10$ = _ref10[1],
-          y = _ref10$ === void 0 ? x : _ref10$;
-
-      var _ref11 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref11, 2),
-          ox = _ref12[0],
-          oy = _ref12[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "isPointCollision",
-    value: function isPointCollision(idx, _ref13) {
-      var _this$_mesh;
-
-      var _ref14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref13, 2),
-          x = _ref14[0],
-          y = _ref14[1];
-
-      var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'both';
-      var m = this.getTransform(idx);
-      var p = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["transformPoint"])([x, y], gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), m));
-      return (_this$_mesh = this[_mesh]).isPointCollision.apply(_this$_mesh, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2___default()(p).concat([type]));
-    }
-  }, {
-    key: "isPointInPath",
-    value: function isPointInPath(idx, _ref15) {
-      var _ref16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref15, 2),
-          x = _ref16[0],
-          y = _ref16[1];
-
-      return this.isPointCollision(idx, [x, y], 'fill');
-    }
-  }, {
-    key: "isPointInStroke",
-    value: function isPointInStroke(idx, _ref17) {
-      var _ref18 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref17, 2),
-          x = _ref18[0],
-          y = _ref18[1];
-
-      return this.isPointCollision(idx, [x, y], 'stroke');
-    }
-  }, {
-    key: "mesh",
-    get: function get() {
-      return this[_mesh];
-    }
-  }, {
-    key: "hasCloudColor",
-    get: function get() {
-      return this[_hasCloudColor];
-    }
-  }, {
-    key: "hasCloudFilter",
-    get: function get() {
-      return !!this[_mesh].uniforms.u_cloudFilterFlag;
-    }
-  }, {
-    key: "enableBlend",
-    get: function get() {
-      return this[_mesh].enableBlend || this[_blend];
-    }
-  }, {
-    key: "amount",
-    get: function get() {
-      return this[_count];
-    }
-  }, {
-    key: "meshData",
-    get: function get() {
-      var _this$_mesh$meshData = this[_mesh].meshData,
-          attributes = _this$_mesh$meshData.attributes,
-          cells = _this$_mesh$meshData.cells,
-          positions = _this$_mesh$meshData.positions,
-          textureCoord = _this$_mesh$meshData.textureCoord,
-          uniforms = _this$_mesh$meshData.uniforms;
-      var frames = this[_textures];
-      var meshData = {
-        attributes: _objectSpread({}, attributes),
-        cells: cells,
-        positions: positions,
-        textureCoord: textureCoord,
-        uniforms: _objectSpread({}, uniforms),
-        instanceCount: this[_count],
-        enableBlend: this.enableBlend
-      };
-
-      if (frames.length) {
-        frames.forEach(function (frame, i) {
-          meshData.uniforms["u_texFrame".concat(i)] = frame;
-        });
-      } // console.log(this[_mesh].meshData)
-
-
-      meshData.attributes.a_frameIndex = {
-        data: this[_frameIndex],
-        divisor: 1
-      };
-      meshData.attributes.a_transform0 = {
-        data: this[_transform0],
-        divisor: 1
-      };
-      meshData.attributes.a_transform1 = {
-        data: this[_transform1],
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud0 = {
-        data: this[_color0],
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud1 = {
-        data: this[_color1],
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud2 = {
-        data: this[_color2],
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud3 = {
-        data: this[_color3],
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud4 = {
-        data: this[_color4],
-        divisor: 1
-      };
-      meshData.attributes.a_fillCloudColor = {
-        data: this[_fillColor],
-        divisor: 1
-      };
-      meshData.attributes.a_strokeCloudColor = {
-        data: this[_strokeColor],
-        divisor: 1
-      };
-      return meshData;
-    }
-  }]);
-
-  return _default;
-}();
-
-
 
 /***/ })
 /******/ ]);
