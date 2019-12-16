@@ -24,12 +24,28 @@
         const texture = await renderer.loadTexture(textureURL);
         const texture2 = await renderer.loadTexture(textureURL2);
         // console.log(texture);
-        const size = 150;
+        const size = 50;
 
         // const d = `M0 0L0 ${size}L${size} ${size}L${size} 0Z`;
         // const d = 'M30 30A10 10 1 1 0 10 10z';
         const figure = new Figure2D();
         figure.rect(50, 50, size, size);
+
+        const f2 = new Figure2D();
+        f2.rect(50, 50, 100, 100);
+
+        const m = new Mesh2D(f2, canvas);
+        m.setFill({
+          color: [0, 0, 0, 1],
+        });
+
+        const f3 = new Figure2D();
+        f3.rect(150, 150, 100, 100);
+
+        const m2 = new Mesh2D(f3, canvas);
+        m2.setFill({
+          color: [0, 1, 0, 1],
+        });
 
         const mesh = new Mesh2D(figure, canvas);
         mesh.setFill({
@@ -42,7 +58,7 @@
         });
         // mesh.setTransform(1, 0, 0, 1, 200, 200);
 
-        const cloud = new MeshCloud(mesh, 10);
+        const cloud = new MeshCloud(mesh, 1000);
         // cloud.setTransform(2, [1, 0, 0, 1, 50, 50]);
 
         // cloud.setTextureFrames([texture, texture2], {
@@ -52,16 +68,19 @@
         function update(t) {
           for(let i = 0; i < cloud.amount; i++) {
             cloud.setFillColor(i, [Math.random(), 0, Math.random(), 1]);
-            cloud.grayscale(i, 1);
-            cloud.opacity(i, 0.3);
+            cloud.setColorTransform(i, null);
+            // cloud.grayscale(i, 1);
+            // cloud.opacity(i, 0.3);
             // cloud.setFrameIndex(i, i);
             cloud.setTransform(i, [1, 0, 0, 1, Math.random() * 400, Math.random() * 400]);
           }
           renderer.clear();
-          renderer.globalRotate(Math.PI / 6);
-          renderer.drawMeshCloud(cloud);
+          // renderer.globalRotate(Math.PI / 6);
+          // renderer.drawMeshes([cloud]);
+          // renderer.drawMeshes([cloud]);
+          renderer.drawMeshes([m, cloud, m2]);
           // renderer.drawMeshes([mesh]);
-          // requestAnimationFrame(update);
+          requestAnimationFrame(update);
         }
         update(0);
 

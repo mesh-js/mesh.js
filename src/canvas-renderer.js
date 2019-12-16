@@ -33,6 +33,25 @@ export default class CanvasRenderer {
     context.clearRect(x, y, w, h);
   }
 
+  drawMeshCloud(cloud, {clear = false} = {}) {
+    const cloudMeshes = [];
+    for(let i = 0; i < cloud.amount; i++) {
+      const transform = cloud.getTransform(i);
+      let frame = cloud.getTextureFrame(i);
+      if(frame) frame = frame._img;
+      const filter = cloud.getFilter(i);
+      const {fill, stroke} = cloud.getCloudRGBA(i);
+      cloudMeshes.push({
+        mesh: cloud.mesh,
+        _cloudOptions: [fill, stroke, frame, transform, filter],
+      });
+      // console.log(transform, colorTransform, frame);
+    }
+    if(cloud.beforeRender) cloud.beforeRender(this.context, cloud);
+    this.drawMeshes(cloudMeshes, {clear, hook: false});
+    if(cloud.afterRender) cloud.afterRender(this.context, cloud);
+  }
+
   drawMeshes(meshes, {clear = false, hook = true} = {}) {
     const context = this.context;
     if(clear) {

@@ -79,6 +79,10 @@ export default class {
     return this[_mesh].enableBlend || this[_blend];
   }
 
+  canIgnore() {
+    return this[_mesh].canIgnore();
+  }
+
   setColorTransform(idx, m) {
     if(m != null) {
       if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');

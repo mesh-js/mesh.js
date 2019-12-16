@@ -6,6 +6,7 @@ import createText from './utils/create-text';
 import {drawMesh2D, applyFilter} from './utils/canvas';
 import Figure2D from './figure2d';
 import Mesh2D from './mesh2d';
+import MeshCloud from './mesh-cloud';
 import {isUnitTransform} from './utils/transform';
 import ENV from './utils/env';
 
@@ -53,7 +54,7 @@ export default class Renderer {
     if(!contextType) {
       if(typeof WebGL2RenderingContext === 'function') {
         contextType = 'webgl2';
-      } if(typeof WebGLRenderingContext === 'function') {
+      } else if(typeof WebGLRenderingContext === 'function') {
         contextType = 'webgl';
       } else {
         contextType = '2d';
@@ -210,32 +211,17 @@ export default class Renderer {
         }, attributeOptions));
       }
       this[_applyGlobalTransform](this[_globalTransform]);
-      renderer.setMeshData(cloud.meshData);
+      renderer.setMeshData([cloud.meshData]);
       if(cloud.beforeRender) cloud.beforeRender(gl, cloud);
       renderer._draw();
       if(cloud.afterRender) cloud.afterRender(gl, cloud);
     } else {
-      const cloudMeshes = [];
-      for(let i = 0; i < cloud.amount; i++) {
-        const transform = cloud.getTransform(i);
-        let frame = cloud.getTextureFrame(i);
-        if(frame) frame = frame._img;
-        const filter = cloud.getFilter(i);
-        const {fill, stroke} = cloud.getCloudRGBA(i);
-        cloudMeshes.push({
-          mesh: cloud.mesh,
-          _cloudOptions: [fill, stroke, frame, transform, filter],
-        });
-        // console.log(transform, colorTransform, frame);
-      }
       renderer.setTransform(this[_globalTransform]);
-      if(cloud.beforeRender) cloud.beforeRender(renderer.context, cloud);
-      renderer.drawMeshes(cloudMeshes, {clear, hook: false});
-      if(cloud.afterRender) cloud.afterRender(renderer.context, cloud);
+      renderer.drawMeshCloud(cloud, {clear, hook: false});
     }
   }
 
-  drawMeshes(meshes, {clear = false, program = null, attributeOptions = {}} = {}) {
+  drawMeshes(meshes, {clear = false, program = null, attributeOptions = {}} = {}) { // eslint-disable-line complexity
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const meshData = compress(this, meshes, program == null);
@@ -245,68 +231,73 @@ export default class Renderer {
       this._drawCalls = 0;
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
         this._drawCalls++;
-        if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
-        if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
-          applyShader(renderer, {hasTexture: true});
-          const {width, height} = this.canvas;
-          let filterContext = this.filterContext;
-          if(!filterContext) {
-            const canvas = ENV.createCanvas(width, height);
-            filterContext = canvas.getContext('2d');
-            this.filterContext = filterContext;
-          }
-          const originalMesh = meshes[mesh.packIndex];
-          const currentFilter = originalMesh.filter;
-          const nextMesh = meshes[mesh.packIndex + 1];
-          const previousMesh = meshes[mesh.packIndex - 1];
-          if((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter)
-            && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
-            if(hasGlobalTransform) {
-              filterContext.save();
-              filterContext.transform(...this[_globalTransform]);
-              drawMesh2D(originalMesh, filterContext, false);
-              filterContext.restore();
-              applyFilter(filterContext, currentFilter);
-            } else {
-              drawMesh2D(originalMesh, filterContext, true);
-            }
-            drawFilterContext(renderer, filterContext, width, height);
-          } else {
-            if(hasGlobalTransform) {
-              filterContext.save();
-              filterContext.transform(...this[_globalTransform]);
-            }
-            drawMesh2D(originalMesh, filterContext, false);
-            if(hasGlobalTransform) {
-              filterContext.restore();
-            }
-            if(!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
-              applyFilter(filterContext, currentFilter);
-              drawFilterContext(renderer, filterContext, width, height);
-            }
-          }
+        if(mesh instanceof MeshCloud) {
+          this.drawMeshCloud(mesh, {clear, program, attributeOptions});
+          // continue; // eslint-disable-line no-continue
         } else {
-          if(!program) {
-            const hasTexture = !!mesh.uniforms.u_texSampler;
-            const hasFilter = !!mesh.uniforms.u_filterFlag;
-            const hasGradient = !!mesh.uniforms.u_radialGradientVector;
-            applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
-          } else if(renderer.program !== program) {
-            renderer.useProgram(program, Object.assign({
-              a_color: {
-                type: 'UNSIGNED_BYTE',
-                normalize: true,
-              },
-            }, attributeOptions));
+          if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
+          if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
+            applyShader(renderer, {hasTexture: true});
+            const {width, height} = this.canvas;
+            let filterContext = this.filterContext;
+            if(!filterContext) {
+              const canvas = ENV.createCanvas(width, height);
+              filterContext = canvas.getContext('2d');
+              this.filterContext = filterContext;
+            }
+            const originalMesh = meshes[mesh.packIndex];
+            const currentFilter = originalMesh.filter;
+            const nextMesh = meshes[mesh.packIndex + 1];
+            const previousMesh = meshes[mesh.packIndex - 1];
+            if((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter)
+              && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
+              if(hasGlobalTransform) {
+                filterContext.save();
+                filterContext.transform(...this[_globalTransform]);
+                drawMesh2D(originalMesh, filterContext, false);
+                filterContext.restore();
+                applyFilter(filterContext, currentFilter);
+              } else {
+                drawMesh2D(originalMesh, filterContext, true);
+              }
+              drawFilterContext(renderer, filterContext, width, height);
+            } else {
+              if(hasGlobalTransform) {
+                filterContext.save();
+                filterContext.transform(...this[_globalTransform]);
+              }
+              drawMesh2D(originalMesh, filterContext, false);
+              if(hasGlobalTransform) {
+                filterContext.restore();
+              }
+              if(!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
+                applyFilter(filterContext, currentFilter);
+                drawFilterContext(renderer, filterContext, width, height);
+              }
+            }
+          } else {
+            if(!program) {
+              const hasTexture = !!mesh.uniforms.u_texSampler;
+              const hasFilter = !!mesh.uniforms.u_filterFlag;
+              const hasGradient = !!mesh.uniforms.u_radialGradientVector;
+              applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
+            } else if(renderer.program !== program) {
+              renderer.useProgram(program, Object.assign({
+                a_color: {
+                  type: 'UNSIGNED_BYTE',
+                  normalize: true,
+                },
+              }, attributeOptions));
+            }
+            if(mesh.filterCanvas) {
+              console.warn('User program ignored some filter effects.');
+            }
+            this[_applyGlobalTransform](this[_globalTransform]);
+            renderer.setMeshData([mesh]);
+            renderer._draw();
           }
-          if(mesh.filterCanvas) {
-            console.warn('User program ignored some filter effects.');
-          }
-          this[_applyGlobalTransform](this[_globalTransform]);
-          renderer.setMeshData([mesh]);
-          renderer._draw();
+          if(mesh.afterRender) mesh.afterRender(gl, mesh);
         }
-        if(mesh.afterRender) mesh.afterRender(gl, mesh);
       }
     } else {
       renderer.setTransform(this[_globalTransform]);

@@ -1,4 +1,5 @@
 import flattenMeshes from './flatten-meshes';
+import MeshCloud from '../mesh-cloud';
 
 function compareUniform(a, b) {
   const ua = a.uniforms || {};
@@ -72,37 +73,47 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
 
   for(let i = 0; i < meshes.length; i++) {
     const mesh = meshes[i];
-    const meshData = mesh.meshData;
-    let len = 0;
 
-    if((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length) {
-      mesh.packIndex = i;
-      const filterCanvas = mesh.filterCanvas;
+    if(mesh instanceof MeshCloud) {
+      if(temp.length) yield packData(temp, enableBlend);
+      size = 0;
+      enableBlend = false;
+      yield mesh;
+    } else {
+      const meshData = mesh.meshData;
+      let len = 0;
 
-      len = meshData.positions.length;
+      if((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length) {
+        mesh.packIndex = i;
+        const filterCanvas = mesh.filterCanvas;
 
-      if(filterCanvas || size + len > maxSize) { // cannot merge
-        if(temp.length) yield packData(temp, enableBlend);
-        size = 0;
-        enableBlend = false;
-      } else if(size) {
-        const lastMesh = meshes[i - 1];
-        if(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh)
-          || lastMesh.afterRender || mesh.beforeRender) {
+        len = meshData.positions.length;
+
+        if(filterCanvas || size + len > maxSize) { // cannot merge
           if(temp.length) yield packData(temp, enableBlend);
           size = 0;
           enableBlend = false;
+        } else if(size) {
+          const lastMesh = meshes[i - 1];
+          if(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh)
+            || lastMesh.afterRender || mesh.beforeRender) {
+            if(temp.length) yield packData(temp, enableBlend);
+            size = 0;
+            enableBlend = false;
+          }
         }
+
+        temp.push(mesh);
+        enableBlend = enableBlend || mesh.enableBlend;
       }
 
-      temp.push(mesh);
-      enableBlend = enableBlend || mesh.enableBlend;
-    }
-
-    if(i === meshes.length - 1) {
-      if(temp.length) yield packData(temp, enableBlend);
-    } else {
-      size += len;
+      if(i === meshes.length - 1) {
+        if(temp.length) {
+          yield packData(temp, enableBlend);
+        }
+      } else {
+        size += len;
+      }
     }
   }
 }
