@@ -187,6 +187,7 @@ export default class {
 
   setTransform(idx, m) {
     if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    if(m == null) m = [1, 0, 0, 1, 0, 0];
     this[_transform0][idx][0] = m[0];
     this[_transform0][idx][1] = m[1];
     this[_transform0][idx][2] = m[2];
@@ -228,6 +229,37 @@ export default class {
     return this[_count];
   }
 
+  set amount(value) {
+    const amount = this.amount;
+    if(value === amount) return;
+    if(value < amount) {
+      this[_transform0].length = value;
+      this[_transform1].length = value;
+      this[_frameIndex].length = value;
+      this[_filters].length = value;
+      this[_fillColor].length = value;
+      this[_strokeColor].length = value;
+
+      this[_color0].length = value;
+      this[_color1].length = value;
+      this[_color2].length = value;
+      this[_color3].length = value;
+      this[_color4].length = value;
+    } else {
+      const {width, height} = this[_mesh];
+      for(let i = amount; i < value; i++) {
+        this[_transform0].push([1, 0, 0, width]);
+        this[_transform1].push([1, 0, 0, height]);
+        this[_frameIndex].push([-1]);
+        this[_filters].push([]);
+        this[_fillColor].push([0, 0, 0, 0]);
+        this[_strokeColor].push([0, 0, 0, 0]);
+        this.setColorTransform(i, null);
+      }
+    }
+    this[_count] = value;
+  }
+
   get meshData() {
     const {attributes, cells, positions, textureCoord, uniforms} = this[_mesh].meshData;
     const frames = this[_textures];
@@ -247,9 +279,11 @@ export default class {
         meshData.uniforms[`u_texFrame${i}`] = frame;
       });
     }
-
+    if(this[_mesh].uniforms.u_texSampler) {
+      meshData.attributes.a_frameIndex = {data: this[_frameIndex], divisor: 1};
+    }
     // console.log(this[_mesh].meshData)
-    meshData.attributes.a_frameIndex = {data: this[_frameIndex], divisor: 1};
+
     meshData.attributes.a_transform0 = {data: this[_transform0], divisor: 1};
     meshData.attributes.a_transform1 = {data: this[_transform1], divisor: 1};
     meshData.attributes.a_colorCloud0 = {data: this[_color0], divisor: 1};
@@ -258,8 +292,10 @@ export default class {
     meshData.attributes.a_colorCloud3 = {data: this[_color3], divisor: 1};
     meshData.attributes.a_colorCloud4 = {data: this[_color4], divisor: 1};
 
-    meshData.attributes.a_fillCloudColor = {data: this[_fillColor], divisor: 1};
-    meshData.attributes.a_strokeCloudColor = {data: this[_strokeColor], divisor: 1};
+    if(this.hasCloudColor) {
+      meshData.attributes.a_fillCloudColor = {data: this[_fillColor], divisor: 1};
+      meshData.attributes.a_strokeCloudColor = {data: this[_strokeColor], divisor: 1};
+    }
 
     return meshData;
   }
