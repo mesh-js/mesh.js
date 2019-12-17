@@ -95,7 +95,8 @@ export default class Figure2D {
 
   addPath(path) {
     this[_contours] = null;
-    this[_path].push(...parse(path));
+    if(typeof path === 'string') path = parse(path);
+    this[_path].push(...path);
   }
 
   beginPath() {

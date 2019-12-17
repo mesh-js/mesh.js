@@ -13414,8 +13414,9 @@ function () {
       var _this$_path2;
 
       this[_contours] = null;
+      if (typeof path === 'string') path = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(path);
 
-      (_this$_path2 = this[_path]).push.apply(_this$_path2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(path)));
+      (_this$_path2 = this[_path]).push.apply(_this$_path2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(path));
     }
   }, {
     key: "beginPath",
