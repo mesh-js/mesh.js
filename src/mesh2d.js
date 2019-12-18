@@ -455,6 +455,13 @@ export default class Mesh2D {
       this[_mesh] = null;
       this[_bound][1][0] = width;
       this[_bound][1][1] = height;
+      if(this[_gradient]) {
+        if(this[_gradient].fill) {
+          this.setGradient({...this[_gradient].fill, type: 'fill'});
+        } else if(this[_gradient].stroke) {
+          this.setGradient({...this[_gradient].stroke, type: 'stroke'});
+        }
+      }
     }
   }
 

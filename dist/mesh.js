@@ -14871,33 +14871,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Mesh2D; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(70);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(85);
-/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(53);
-/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(49);
-/* harmony import */ var _utils_positions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(82);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(56);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(93);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(81);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(94);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(74);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(57);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(70);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(85);
+/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(53);
+/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(49);
+/* harmony import */ var _utils_positions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(82);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(56);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(93);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(81);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(94);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(74);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(57);
+
 
 
 
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
@@ -14945,7 +14952,7 @@ var _gradient = Symbol('gradient');
 var _filter = Symbol('filter');
 
 function normalizePoints(points, bound) {
-  var _bound$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(bound[1], 2),
+  var _bound$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(bound[1], 2),
       w = _bound$[0],
       h = _bound$[1];
 
@@ -14957,8 +14964,8 @@ function normalizePoints(points, bound) {
 }
 
 function transformPoint(p, m, w, h, flipY) {
-  var _denormalize = Object(_utils_positions__WEBPACK_IMPORTED_MODULE_9__["denormalize"])(p, w, h),
-      _denormalize2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_denormalize, 2),
+  var _denormalize = Object(_utils_positions__WEBPACK_IMPORTED_MODULE_10__["denormalize"])(p, w, h),
+      _denormalize2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_denormalize, 2),
       x = _denormalize2[0],
       y = _denormalize2[1];
 
@@ -14969,11 +14976,11 @@ function transformPoint(p, m, w, h, flipY) {
 }
 
 function getTexCoord(_ref, _ref2, _ref3) {
-  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref, 2),
+  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref, 2),
       x = _ref4[0],
       y = _ref4[1];
 
-  var _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref2, 4),
+  var _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref2, 4),
       ox = _ref5[0],
       oy = _ref5[1],
       w = _ref5[2],
@@ -14993,7 +15000,7 @@ function getTexCoord(_ref, _ref2, _ref3) {
 }
 
 function _accurate(path, scale, simplify) {
-  var contours = _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default()(path, scale, simplify);
+  var contours = _svg_path_contours__WEBPACK_IMPORTED_MODULE_15___default()(path, scale, simplify);
   contours.path = path;
   contours.simplify = simplify;
   contours.scale = scale;
@@ -15011,7 +15018,7 @@ function () {
         width = _ref6.width,
         height = _ref6.height;
 
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, Mesh2D);
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Mesh2D);
 
     this[_stroke] = null;
     this[_fill] = null;
@@ -15026,22 +15033,22 @@ function () {
     this.contours = figure.contours;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(Mesh2D, [{
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Mesh2D, [{
     key: "getPointAtLength",
     value: function getPointAtLength(length) {
-      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getPointAtLength"])(this[_contours], length);
+      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_13__["getPointAtLength"])(this[_contours], length);
     }
   }, {
     key: "getTotalLength",
     value: function getTotalLength() {
-      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getTotalLength"])(this[_contours]);
+      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_13__["getTotalLength"])(this[_contours]);
     }
   }, {
     key: _applyTransform,
     value: function value(mesh, m) {
       var positions = mesh.positions;
 
-      var _this$_bound$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(this[_bound][1], 2),
+      var _this$_bound$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this[_bound][1], 2),
           w = _this$_bound$[0],
           h = _this$_bound$[1];
 
@@ -15059,7 +15066,7 @@ function () {
       var vector = this[_uniforms].u_radialGradientVector;
 
       if (vector) {
-        var _vector2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(vector, 5),
+        var _vector2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(vector, 5),
             x1 = _vector2[0],
             y1 = _vector2[1],
             x2 = _vector2[3],
@@ -15099,7 +15106,7 @@ function () {
       if (rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
       if (rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
 
-      var _this$_bound$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(this[_bound][1], 2),
+      var _this$_bound$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this[_bound][1], 2),
           w = _this$_bound$2[0],
           h = _this$_bound$2[1];
 
@@ -15108,17 +15115,17 @@ function () {
           return [-1, -1, -1];
         });
       } else if (!mesh.textureCoord || !compareRect(this[_texOptions].rect, options.rect) || this[_texOptions].hidden !== options.hidden || this[_texOptions].rotated !== options.rotated) {
-        if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
-          var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform);
+        if (transformed && !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(transform)) {
+          var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform);
           var m2 = null;
 
           if (options.rotated) {
-            m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-            m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m2, [0, -rect[2]]);
+            m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+            m2 = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m2, [0, -rect[2]]);
           }
 
           mesh.textureCoord = mesh.positions.map(function (_ref7) {
-            var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref7, 3),
+            var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref7, 3),
                 x = _ref8[0],
                 y = _ref8[1],
                 z = _ref8[2];
@@ -15126,7 +15133,7 @@ function () {
             if (z > 0) {
               var _transformPoint = transformPoint([x, y], m, w, h, true);
 
-              var _transformPoint2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint, 2);
+              var _transformPoint2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_transformPoint, 2);
 
               x = _transformPoint2[0];
               y = _transformPoint2[1];
@@ -15141,7 +15148,7 @@ function () {
 
                 var _transformPoint3 = transformPoint([x, y], m2, w, h, true);
 
-                var _transformPoint4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint3, 2);
+                var _transformPoint4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_transformPoint3, 2);
 
                 x = _transformPoint4[0];
                 y = _transformPoint4[1];
@@ -15161,12 +15168,12 @@ function () {
           var _m = null;
 
           if (options.rotated) {
-            _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-            _m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), _m, [0, -rect[2]]);
+            _m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+            _m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), _m, [0, -rect[2]]);
           }
 
           mesh.textureCoord = mesh.positions.map(function (_ref12) {
-            var _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref12, 3),
+            var _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref12, 3),
                 x = _ref13[0],
                 y = _ref13[1],
                 z = _ref13[2];
@@ -15176,7 +15183,7 @@ function () {
               if (options.rotated) {
                 var _transformPoint5 = transformPoint([x, y], _m, w, h, true);
 
-                var _transformPoint6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_transformPoint5, 2);
+                var _transformPoint6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_transformPoint5, 2);
 
                 x = _transformPoint6[0];
                 y = _transformPoint6[1];
@@ -15237,6 +15244,18 @@ function () {
         this[_mesh] = null;
         this[_bound][1][0] = width;
         this[_bound][1][1] = height;
+
+        if (this[_gradient]) {
+          if (this[_gradient].fill) {
+            this.setGradient(_objectSpread({}, this[_gradient].fill, {
+              type: 'fill'
+            }));
+          } else if (this[_gradient].stroke) {
+            this.setGradient(_objectSpread({}, this[_gradient].stroke, {
+              type: 'stroke'
+            }));
+          }
+        }
       }
     }
   }, {
@@ -15272,13 +15291,13 @@ function () {
           lineDashOffset = _ref17$lineDashOffset === void 0 ? 0 : _ref17$lineDashOffset;
 
       this[_mesh] = null;
-      this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_6__["default"])({
+      this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_7__["default"])({
         thickness: thickness,
         cap: cap,
         join: join,
         miterLimit: miterLimit
       });
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_16__["default"])(color);
       this[_strokeColor] = color;
       this[_stroke].lineDash = lineDash;
       this[_stroke].lineDashOffset = lineDashOffset;
@@ -15303,7 +15322,7 @@ function () {
         clean: clean,
         randomization: randomization
       };
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_16__["default"])(color);
       this[_fillColor] = color;
       return this;
     }
@@ -15403,7 +15422,7 @@ function () {
       gradientColors = gradientColors.map(function (_ref23) {
         var offset = _ref23.offset,
             color = _ref23.color;
-        if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
+        if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_16__["default"])(color);
         return {
           offset: offset,
           color: color
@@ -15433,7 +15452,7 @@ function () {
         _vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector);
       }
 
-      var _this$_bound$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(this[_bound][1], 2),
+      var _this$_bound$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this[_bound][1], 2),
           h = _this$_bound$3[1];
 
       _vector[1] = h - _vector[1];
@@ -15464,7 +15483,7 @@ function () {
 
       var transform = this[_transform];
 
-      if (!gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].equals(m, transform)) {
+      if (!gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].equals(m, transform)) {
         this[_transform] = m;
         var acc = this.transformScale / this.contours.scale;
 
@@ -15473,7 +15492,7 @@ function () {
         }
 
         if (this[_mesh] || this[_uniforms].u_radialGradientVector) {
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform));
+          m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), transform));
         }
 
         if (this[_mesh]) {
@@ -15496,7 +15515,7 @@ function () {
         m[_key2] = arguments[_key2];
       }
 
-      this[_transform] = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, transform);
+      this[_transform] = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, transform);
       var acc = this.transformScale / this.contours.scale;
 
       if (acc > 1.5 || acc < 0.67) {
@@ -15510,22 +15529,22 @@ function () {
   }, {
     key: "translate",
     value: function translate(x, y) {
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
       return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
     }
   }, {
     key: "rotate",
     value: function rotate(rad) {
       var _ref25 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref25, 2),
+          _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref25, 2),
           ox = _ref26[0],
           oy = _ref26[1];
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
       return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
     }
   }, {
@@ -15534,14 +15553,14 @@ function () {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
       var _ref27 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref27, 2),
+          _ref28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref27, 2),
           ox = _ref28[0],
           oy = _ref28[1];
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
       return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
     }
   }, {
@@ -15550,14 +15569,14 @@ function () {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
       var _ref29 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref29, 2),
+          _ref30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref29, 2),
           ox = _ref30[0],
           oy = _ref30[1];
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
       return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
     }
   }, {
@@ -15599,7 +15618,7 @@ function () {
       }
 
       if (transform) {
-        transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["multiply"])(transform, m);
+        transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["multiply"])(transform, m);
       } else {
         transform = m;
       }
@@ -15621,7 +15640,7 @@ function () {
 
       this[_filter].push("brightness(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["brightness"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["brightness"])(p)));
     }
   }, {
     key: "contrast",
@@ -15630,14 +15649,14 @@ function () {
 
       this[_filter].push("contrast(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["contrast"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["contrast"])(p)));
     }
   }, {
     key: "dropShadow",
     value: function dropShadow(offsetX, offsetY) {
       var blurRadius = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
       var color = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0, 0, 1];
-      if (Array.isArray(color)) color = Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
+      if (Array.isArray(color)) color = Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(color);
 
       this[_filter].push("drop-shadow(".concat(offsetX, "px ").concat(offsetY, "px ").concat(blurRadius, "px ").concat(color, ")"));
 
@@ -15650,7 +15669,7 @@ function () {
 
       this[_filter].push("grayscale(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["grayscale"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["grayscale"])(p)));
     } // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
 
   }, {
@@ -15660,7 +15679,7 @@ function () {
 
       this[_filter].push("hue-rotate(".concat(deg, "deg)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["hueRotate"])(deg)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["hueRotate"])(deg)));
     }
   }, {
     key: "invert",
@@ -15669,7 +15688,7 @@ function () {
 
       this[_filter].push("invert(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["invert"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["invert"])(p)));
     }
   }, {
     key: "opacity",
@@ -15678,7 +15697,7 @@ function () {
 
       this[_filter].push("opacity(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["opacity"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["opacity"])(p)));
     }
   }, {
     key: "saturate",
@@ -15687,7 +15706,7 @@ function () {
 
       this[_filter].push("saturate(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["saturate"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["saturate"])(p)));
     }
   }, {
     key: "sepia",
@@ -15696,7 +15715,7 @@ function () {
 
       this[_filter].push("sepia(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["sepia"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_11__["sepia"])(p)));
     }
   }, {
     key: "url",
@@ -15710,13 +15729,13 @@ function () {
     value: function isPointCollision(x, y) {
       var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'both';
 
-      var _this$_bound$4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(this[_bound][1], 2),
+      var _this$_bound$4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this[_bound][1], 2),
           w = _this$_bound$4[0],
           h = _this$_bound$4[1];
 
-      var _normalize = Object(_utils_positions__WEBPACK_IMPORTED_MODULE_9__["normalize"])([x, y], w, h);
+      var _normalize = Object(_utils_positions__WEBPACK_IMPORTED_MODULE_10__["normalize"])([x, y], w, h);
 
-      var _normalize2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_normalize, 2);
+      var _normalize2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_normalize, 2);
 
       x = _normalize2[0];
       y = _normalize2[1];
@@ -15725,15 +15744,15 @@ function () {
           cells = meshData.cells;
 
       function projectionOn(_ref31, _ref32, _ref33) {
-        var _ref34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref31, 2),
+        var _ref34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref31, 2),
             x0 = _ref34[0],
             y0 = _ref34[1];
 
-        var _ref35 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref32, 2),
+        var _ref35 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref32, 2),
             x1 = _ref35[0],
             y1 = _ref35[1];
 
-        var _ref36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref33, 2),
+        var _ref36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref33, 2),
             x2 = _ref36[0],
             y2 = _ref36[1];
 
@@ -15751,14 +15770,14 @@ function () {
         var _cell$map = cell.map(function (idx) {
           return positions[idx];
         }),
-            _cell$map2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map, 3),
-            _cell$map2$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map2[0], 2),
+            _cell$map2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map, 3),
+            _cell$map2$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[0], 2),
             x1 = _cell$map2$[0],
             y1 = _cell$map2$[1],
-            _cell$map2$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map2[1], 2),
+            _cell$map2$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[1], 2),
             x2 = _cell$map2$2[0],
             y2 = _cell$map2$2[1],
-            _cell$map2$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map2[2], 2),
+            _cell$map2$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[2], 2),
             x3 = _cell$map2$3[0],
             y3 = _cell$map2$3[1];
 
@@ -15839,20 +15858,20 @@ function () {
 
       if (meshData) {
         var positions = meshData.positions;
-        var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), this[_transform]);
+        var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), this[_transform]);
 
-        var _this$_bound$5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(this[_bound][1], 2),
+        var _this$_bound$5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this[_bound][1], 2),
             w = _this$_bound$5[0],
             h = _this$_bound$5[1];
 
         positions = positions.map(function (_ref37) {
-          var _ref38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref37, 2),
+          var _ref38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref37, 2),
               x = _ref38[0],
               y = _ref38[1];
 
           return transformPoint([x, y], m, w, h, false);
         });
-        if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_5___default()(positions);else return [[0, 0], [0, 0]];
+        if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);else return [[0, 0], [0, 0]];
         return meshData.boundingBox;
       }
 
@@ -15909,7 +15928,7 @@ function () {
     key: "strokeStyle",
     get: function get() {
       if (this[_strokeColor] && this[_strokeColor][3] !== 0) {
-        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__["default"])(this[_strokeColor]);
+        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(this[_strokeColor]);
       }
 
       return '';
@@ -15936,7 +15955,7 @@ function () {
     key: "fillStyle",
     get: function get() {
       if (this[_fillColor] && this[_fillColor][3] !== 0) {
-        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__["default"])(this[_fillColor]);
+        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(this[_fillColor]);
       }
 
       return '';
@@ -16010,7 +16029,7 @@ function () {
       if (contours && contours.length) {
         if (this[_fill]) {
           try {
-            var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default()(contours);
+            var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_14___default()(contours);
 
             _mesh2.positions = _mesh2.positions.map(function (p) {
               p[1] = _this[_bound][1][1] - p[1];
@@ -16038,11 +16057,11 @@ function () {
 
           if (lineDash) {
             var lineDashOffset = this[_stroke].lineDashOffset;
-            strokeContours = Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getDashContours"])(contours, lineDash, lineDashOffset);
+            strokeContours = Object(_utils_contours__WEBPACK_IMPORTED_MODULE_13__["getDashContours"])(contours, lineDash, lineDashOffset);
           }
 
           var _meshes = strokeContours.map(function (lines, i) {
-            var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_4__["vec2"].equals(lines[0], lines[lines.length - 1]);
+            var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_5__["vec2"].equals(lines[0], lines[lines.length - 1]);
             return _this[_stroke].build(lines, closed);
           });
 
@@ -16063,11 +16082,11 @@ function () {
             };
           });
 
-          meshes.stroke = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__["default"])(_meshes);
+          meshes.stroke = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__["default"])(_meshes);
         }
       }
 
-      var mesh = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__["default"])([meshes.fill, meshes.stroke]);
+      var mesh = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__["default"])([meshes.fill, meshes.stroke]);
       mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
       mesh.enableBlend = this.enableBlend;
       normalizePoints(mesh.positions, this[_bound]);
@@ -16083,7 +16102,7 @@ function () {
       this[_mesh] = mesh;
       var transform = this[_transform];
 
-      if (!Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
+      if (!Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(transform)) {
         this[_applyTransform](mesh, transform);
       }
 
