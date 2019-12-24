@@ -515,6 +515,16 @@ export default class Mesh2D {
     }
    */
   setTexture(texture, options = {}) {
+    if(texture && texture.image) {
+      const {image, rect} = texture;
+      texture = image;
+      if(options.rect) {
+        for(let i = 0; i < options.rect.length; i++) {
+          rect[i] = options.rect[i];
+        }
+      }
+      options.rect = rect;
+    }
     if(!this[_fill]) {
       this.setFill();
     }

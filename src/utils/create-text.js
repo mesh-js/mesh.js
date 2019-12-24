@@ -4,6 +4,11 @@ import vectorToRGBA from './vector-to-rgba';
 
 const cacheMap = {};
 
+function fontEx(info, ratio) {
+  const {style, variant, weight, stretch, size, pxLineHeight, family} = info;
+  return `${style} ${variant} ${weight} ${stretch} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
+}
+
 export default function createText(text, {font, fillColor, strokeColor, strokeWidth}) {
   const key = [text, font, String(fillColor), String(strokeColor)].join('###');
   let textCanvas = cacheMap[key];
@@ -26,11 +31,15 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   if(!fillColor && !strokeColor) fillColor = '#000';
 
   const canvas = textContext.canvas;
-  canvas.width = Math.ceil(width);
-  canvas.height = Math.ceil(height);
+  const w = Math.ceil(width);
+  const h = Math.ceil(height);
+
+  const ratio = 2;
+  canvas.width = w * ratio;
+  canvas.height = h * ratio;
 
   textContext.save();
-  textContext.font = font;
+  textContext.font = fontEx(fontInfo, ratio);
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
 
@@ -77,5 +86,5 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   textContext.restore();
 
   cacheMap[key] = textCanvas;
-  return textCanvas;
+  return {image: textCanvas, rect: [0, 0, w, h]};
 }

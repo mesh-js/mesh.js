@@ -153,7 +153,7 @@ export default class Renderer {
         text,
         {font, fillColor, strokeColor}
       );
-      return this.createTexture(img);
+      return {image: this.createTexture(img.image), rect: img.rect};
     }
     return {_img: {font, fillColor, strokeColor, text}};
   }
