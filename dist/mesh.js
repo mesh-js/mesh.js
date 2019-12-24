@@ -13356,11 +13356,11 @@ function createText(text, _ref) {
   }
 
   textContext.restore();
-  cacheMap[key] = textCanvas;
-  return {
+  cacheMap[key] = {
     image: textCanvas,
     rect: [0, 0, w, h]
   };
+  return cacheMap[key];
 }
 
 /***/ }),

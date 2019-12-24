@@ -85,6 +85,6 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   }
   textContext.restore();
 
-  cacheMap[key] = textCanvas;
-  return {image: textCanvas, rect: [0, 0, w, h]};
+  cacheMap[key] = {image: textCanvas, rect: [0, 0, w, h]};
+  return cacheMap[key];
 }
