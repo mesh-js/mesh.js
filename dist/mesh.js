@@ -7913,7 +7913,10 @@ function () {
           strokeColor: strokeColor
         });
 
-        return this.createTexture(img);
+        return {
+          image: this.createTexture(img.image),
+          rect: img.rect
+        };
       }
 
       return {
@@ -13250,6 +13253,18 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 var cacheMap = {};
+
+function fontEx(info, ratio) {
+  var style = info.style,
+      variant = info.variant,
+      weight = info.weight,
+      stretch = info.stretch,
+      size = info.size,
+      pxLineHeight = info.pxLineHeight,
+      family = info.family;
+  return "".concat(style, " ").concat(variant, " ").concat(weight, " ").concat(stretch, " ").concat(size * ratio, "px/").concat(pxLineHeight * ratio, "px ").concat(family);
+}
+
 function createText(text, _ref) {
   var font = _ref.font,
       fillColor = _ref.fillColor,
@@ -13276,10 +13291,13 @@ function createText(text, _ref) {
 
   if (!fillColor && !strokeColor) fillColor = '#000';
   var canvas = textContext.canvas;
-  canvas.width = Math.ceil(width);
-  canvas.height = Math.ceil(height);
+  var w = Math.ceil(width);
+  var h = Math.ceil(height);
+  var ratio = 2;
+  canvas.width = w * ratio;
+  canvas.height = h * ratio;
   textContext.save();
-  textContext.font = font;
+  textContext.font = fontEx(fontInfo, ratio);
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
   var top = canvas.height / 2;
@@ -13339,7 +13357,10 @@ function createText(text, _ref) {
 
   textContext.restore();
   cacheMap[key] = textCanvas;
-  return textCanvas;
+  return {
+    image: textCanvas,
+    rect: [0, 0, w, h]
+  };
 }
 
 /***/ }),
@@ -15341,6 +15362,21 @@ function () {
     key: "setTexture",
     value: function setTexture(texture) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      if (texture && texture.image) {
+        var _texture = texture,
+            image = _texture.image,
+            rect = _texture.rect;
+        texture = image;
+
+        if (options.rect) {
+          for (var i = 0; i < options.rect.length; i++) {
+            rect[i] = options.rect[i];
+          }
+        }
+
+        options.rect = rect;
+      }
 
       if (!this[_fill]) {
         this.setFill();
