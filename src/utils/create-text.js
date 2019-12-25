@@ -14,7 +14,8 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   let textCanvas = cacheMap[key];
   if(textCanvas) return textCanvas;
 
-  textCanvas = ENV.createCanvas(1, 1);
+  // cannot use offscreen canvas because use offscreen canvas as texture will fail in early versions of Chrome.
+  textCanvas = ENV.createCanvas(1, 1, {offscreen: false});
 
   const textContext = textCanvas.getContext('2d');
   textContext.save();

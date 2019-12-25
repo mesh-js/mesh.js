@@ -13264,8 +13264,11 @@ function createText(text, _ref) {
       strokeWidth = _ref.strokeWidth;
   var key = [text, font, String(fillColor), String(strokeColor)].join('###');
   var textCanvas = cacheMap[key];
-  if (textCanvas) return textCanvas;
-  textCanvas = _env__WEBPACK_IMPORTED_MODULE_2__["default"].createCanvas(1, 1);
+  if (textCanvas) return textCanvas; // cannot use offscreen canvas because use offscreen canvas as texture will fail in early versions of Chrome.
+
+  textCanvas = _env__WEBPACK_IMPORTED_MODULE_2__["default"].createCanvas(1, 1, {
+    offscreen: false
+  });
   var textContext = textCanvas.getContext('2d');
   textContext.save();
   textContext.font = font;
