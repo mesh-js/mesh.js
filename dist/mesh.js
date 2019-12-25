@@ -11616,7 +11616,7 @@ function compress(renderer, meshes) {
 
         case 6:
           if (!(i < meshes.length)) {
-            _context.next = 52;
+            _context.next = 49;
             break;
           }
 
@@ -11642,7 +11642,7 @@ function compress(renderer, meshes) {
           return mesh;
 
         case 16:
-          _context.next = 49;
+          _context.next = 46;
           break;
 
         case 18:
@@ -11674,41 +11674,37 @@ function compress(renderer, meshes) {
         case 28:
           size = 0;
           enableBlend = false;
-          _context.next = 40;
+          _context.next = 39;
           break;
 
         case 32:
           if (!size) {
-            _context.next = 40;
+            _context.next = 39;
             break;
           }
 
-          lastMesh = meshes[i - 1];
+          lastMesh = temp[temp.length - 1];
 
-          if (!(lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || !compareUniform(lastMesh, mesh, temp))) {
-            _context.next = 40;
+          if (!(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || !compareUniform(lastMesh, mesh, temp)))) {
+            _context.next = 39;
             break;
           }
 
-          if (!temp.length) {
-            _context.next = 38;
-            break;
-          }
-
-          _context.next = 38;
+          _context.next = 37;
           return packData(temp, enableBlend);
 
-        case 38:
+        case 37:
           size = 0;
           enableBlend = false;
 
-        case 40:
+        case 39:
           temp.push(mesh);
           enableBlend = enableBlend || mesh.enableBlend;
+          size += len;
 
         case 42:
           if (!(i === meshes.length - 1)) {
-            _context.next = 48;
+            _context.next = 46;
             break;
           }
 
@@ -11721,18 +11717,11 @@ function compress(renderer, meshes) {
           return packData(temp, enableBlend);
 
         case 46:
-          _context.next = 49;
-          break;
-
-        case 48:
-          size += len;
-
-        case 49:
           i++;
           _context.next = 6;
           break;
 
-        case 52:
+        case 49:
         case "end":
           return _context.stop();
       }

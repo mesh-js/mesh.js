@@ -97,10 +97,10 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
           size = 0;
           enableBlend = false;
         } else if(size) {
-          const lastMesh = meshes[i - 1];
-          if(lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender
-            || !compareUniform(lastMesh, mesh, temp)) {
-            if(temp.length) yield packData(temp, enableBlend);
+          const lastMesh = temp[temp.length - 1];
+          if(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender
+            || !compareUniform(lastMesh, mesh, temp))) {
+            yield packData(temp, enableBlend);
             size = 0;
             enableBlend = false;
           }
@@ -108,14 +108,13 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
 
         temp.push(mesh);
         enableBlend = enableBlend || mesh.enableBlend;
+        size += len;
       }
 
       if(i === meshes.length - 1) {
         if(temp.length) {
           yield packData(temp, enableBlend);
         }
-      } else {
-        size += len;
       }
     }
   }
