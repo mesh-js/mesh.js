@@ -11524,7 +11524,7 @@ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(compress)
 
 
 
-function compareUniform(a, b) {
+function compareUniform(a, b, temp) {
   var ua = a.uniforms || {};
   var ub = b.uniforms || {};
   if (ua.u_texSampler && ub.u_texSampler && ua.u_texSampler !== ub.u_texSampler) return false;
@@ -11558,9 +11558,12 @@ function compareUniform(a, b) {
         hidden: true
       });
     } else if (!ua.u_texSampler && ub.u_texSampler) {
-      a.setTexture(ub.u_texSampler, {
-        hidden: true
-      });
+      // a.setTexture(ub.u_texSampler, {hidden: true});
+      for (var i = 0; i < temp.length; i++) {
+        temp[i].setTexture(ub.u_texSampler, {
+          hidden: true
+        });
+      }
     }
   }
 
@@ -11682,7 +11685,7 @@ function compress(renderer, meshes) {
 
           lastMesh = meshes[i - 1];
 
-          if (!(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh) || lastMesh.afterRender || mesh.beforeRender)) {
+          if (!(lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || !compareUniform(lastMesh, mesh, temp))) {
             _context.next = 40;
             break;
           }

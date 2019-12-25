@@ -1,7 +1,7 @@
 import flattenMeshes from './flatten-meshes';
 import MeshCloud from '../mesh-cloud';
 
-function compareUniform(a, b) {
+function compareUniform(a, b, temp) {
   const ua = a.uniforms || {};
   const ub = b.uniforms || {};
 
@@ -36,7 +36,10 @@ function compareUniform(a, b) {
     if(ua.u_texSampler && !ub.u_texSampler) {
       b.setTexture(ua.u_texSampler, {hidden: true});
     } else if(!ua.u_texSampler && ub.u_texSampler) {
-      a.setTexture(ub.u_texSampler, {hidden: true});
+      // a.setTexture(ub.u_texSampler, {hidden: true});
+      for(let i = 0; i < temp.length; i++) {
+        temp[i].setTexture(ub.u_texSampler, {hidden: true});
+      }
     }
   }
 
@@ -95,8 +98,8 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
           enableBlend = false;
         } else if(size) {
           const lastMesh = meshes[i - 1];
-          if(lastMesh.filterCanvas || !compareUniform(lastMesh, mesh)
-            || lastMesh.afterRender || mesh.beforeRender) {
+          if(lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender
+            || !compareUniform(lastMesh, mesh, temp)) {
             if(temp.length) yield packData(temp, enableBlend);
             size = 0;
             enableBlend = false;
