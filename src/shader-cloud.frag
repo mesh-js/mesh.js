@@ -16,7 +16,6 @@ uniform float u_colorMatrix[20];
 #endif
 
 #ifdef CLOUDFILTER
-uniform int u_cloudFilterFlag;
 varying vec4 colorCloud0;
 varying vec4 colorCloud1;
 varying vec4 colorCloud2;
@@ -195,11 +194,9 @@ void main() {
 #endif
 
 #ifdef CLOUDFILTER
-  if(u_cloudFilterFlag > 0) {
-    float colorCloudMatrix[20];
-    buildCloudColor(colorCloudMatrix);
-    transformColor(color, colorCloudMatrix);
-  }
+  float colorCloudMatrix[20];
+  buildCloudColor(colorCloudMatrix);
+  transformColor(color, colorCloudMatrix);
 #endif
 
   gl_FragColor = color;

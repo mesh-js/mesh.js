@@ -185,7 +185,7 @@ export default class Renderer {
         const hasGradient = !!mesh.uniforms.u_radialGradientVector;
         const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
         const hasCloudColor = cloud.hasCloudColor;
-        const hasCloudFilter = true;
+        const hasCloudFilter = cloud.hasCloudFilter;
         applyCloudShader(renderer, {
           hasTexture,
           hasFilter,

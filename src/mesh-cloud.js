@@ -26,6 +26,8 @@ const _fillColor = Symbol('fillColor');
 const _strokeColor = Symbol('strokeColor');
 const _hasCloudColor = Symbol('cloudColor');
 
+const _hasCloudFilter = Symbol('cloudFilter');
+
 export default class {
   constructor(mesh, amount = 1) {
     this[_count] = amount;
@@ -43,6 +45,7 @@ export default class {
     this[_fillColor] = [];
     this[_strokeColor] = [];
     this[_hasCloudColor] = false;
+    this[_hasCloudFilter] = false;
 
     this[_blend] = false;
 
@@ -68,7 +71,7 @@ export default class {
   }
 
   get hasCloudFilter() {
-    return !!this[_mesh].uniforms.u_cloudFilterFlag;
+    return this[_hasCloudFilter];
   }
 
   getFilter(idx) {
@@ -92,14 +95,13 @@ export default class {
       this[_color3][idx] = [m[3], m[8], m[13], m[18]];
       this[_color4][idx] = [m[4], m[9], m[14], m[19]];
       this[_blend] = this[_blend] || m[18] < 1.0;
-      this[_mesh].setUniforms({u_cloudFilterFlag: 1});
+      this[_hasCloudFilter] = true;
     } else {
       this[_color0][idx] = [1, 0, 0, 0];
       this[_color1][idx] = [0, 1, 0, 0];
       this[_color2][idx] = [0, 0, 1, 0];
       this[_color3][idx] = [0, 0, 0, 1];
       this[_color4][idx] = [0, 0, 0, 0];
-      this[_mesh].setUniforms({u_cloudFilterFlag: 0});
     }
     return this;
   }
@@ -230,7 +232,7 @@ export default class {
   }
 
   set amount(value) {
-    const amount = this.amount;
+    const amount = this[_count];
     if(value === amount) return;
     if(value < amount) {
       this[_transform0].length = value;
@@ -239,7 +241,6 @@ export default class {
       this[_filters].length = value;
       this[_fillColor].length = value;
       this[_strokeColor].length = value;
-
       this[_color0].length = value;
       this[_color1].length = value;
       this[_color2].length = value;
@@ -258,6 +259,21 @@ export default class {
       }
     }
     this[_count] = value;
+  }
+
+  delete(idx) {
+    if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    this[_transform0].splice(idx, 1);
+    this[_transform1].splice(idx, 1);
+    this[_frameIndex].splice(idx, 1);
+    this[_filters].splice(idx, 1);
+    this[_fillColor].splice(idx, 1);
+    this[_strokeColor].splice(idx, 1);
+    this[_color0].splice(idx, 1);
+    this[_color1].splice(idx, 1);
+    this[_color2].splice(idx, 1);
+    this[_color3].splice(idx, 1);
+    this[_color4].splice(idx, 1);
   }
 
   get meshData() {
