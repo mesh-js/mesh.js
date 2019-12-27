@@ -8746,13 +8746,16 @@ function () {
 
             if (divisor != null) {
               var location = gl.getAttribLocation(program, name);
-              gl.enableVertexAttribArray(location);
-              locations.push(location);
 
-              if (gl.vertexAttribDivisor) {
-                gl.vertexAttribDivisor(location, divisor);
-              } else if (_this.aia_ext) {
-                _this.aia_ext.vertexAttribDivisorANGLE(location, divisor);
+              if (location >= 0) {
+                gl.enableVertexAttribArray(location);
+                locations.push(location);
+
+                if (gl.vertexAttribDivisor) {
+                  gl.vertexAttribDivisor(location, divisor);
+                } else if (_this.aia_ext) {
+                  _this.aia_ext.vertexAttribDivisorANGLE(location, divisor);
+                }
               }
             }
           });
