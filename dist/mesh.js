@@ -12006,6 +12006,8 @@ var _filters = Symbol('filter');
 
 var _textures = Symbol('textures');
 
+var _textureOptions = Symbol('textureOptions');
+
 var _frameIndex = Symbol('frameIndex');
 
 var _fillColor = Symbol('fillColor');
@@ -12236,6 +12238,7 @@ function () {
       }
 
       this[_textures] = frames;
+      this[_textureOptions] = options;
     }
   }, {
     key: "setFrameIndex",
@@ -12381,6 +12384,13 @@ function () {
     key: "mesh",
     get: function get() {
       return this[_mesh];
+    },
+    set: function set(mesh) {
+      this[_mesh] = mesh;
+
+      if (this[_textures]) {
+        this.setTextureFrames(this[_textures], this[_textureOptions]);
+      }
     }
   }, {
     key: "hasCloudColor",

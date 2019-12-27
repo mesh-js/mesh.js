@@ -20,6 +20,7 @@ const _blend = Symbol('blend');
 const _filters = Symbol('filter');
 
 const _textures = Symbol('textures');
+const _textureOptions = Symbol('textureOptions');
 const _frameIndex = Symbol('frameIndex');
 
 const _fillColor = Symbol('fillColor');
@@ -64,6 +65,13 @@ export default class {
 
   get mesh() {
     return this[_mesh];
+  }
+
+  set mesh(mesh) {
+    this[_mesh] = mesh;
+    if(this[_textures]) {
+      this.setTextureFrames(this[_textures], this[_textureOptions]);
+    }
   }
 
   get hasCloudColor() {
@@ -218,6 +226,7 @@ export default class {
       mesh.setTexture(frames[0], options);
     }
     this[_textures] = frames;
+    this[_textureOptions] = options;
   }
 
   setFrameIndex(idx, frameIndex) {
