@@ -11091,7 +11091,7 @@ function drawMesh2D(mesh, context) {
   context.save();
   var stroke = false;
   var fill = false;
-  context.globalAlpha = mesh.uniforms.u_opacity;
+  context.globalAlpha = mesh.getOpacity();
 
   if (mesh.lineWidth) {
     var _gradient = mesh.gradient && mesh.gradient.stroke;

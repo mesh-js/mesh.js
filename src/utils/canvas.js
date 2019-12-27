@@ -29,7 +29,7 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   let stroke = false;
   let fill = false;
 
-  context.globalAlpha = mesh.uniforms.u_opacity;
+  context.globalAlpha = mesh.getOpacity();
 
   if(mesh.lineWidth) {
     let gradient = mesh.gradient && mesh.gradient.stroke;
