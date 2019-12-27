@@ -15081,7 +15081,7 @@ function () {
   }, {
     key: "setOpacity",
     value: function setOpacity(value) {
-      if (value < 0 || value >= 1.0) throw new TypeError('Invalid opacity value.');
+      if (value < 0 || value > 1.0) throw new TypeError('Invalid opacity value.');
 
       if (this[_mesh]) {
         this[_mesh].positions.forEach(function (p) {

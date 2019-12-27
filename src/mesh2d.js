@@ -109,7 +109,7 @@ export default class Mesh2D {
   }
 
   setOpacity(value) {
-    if(value < 0 || value >= 1.0) throw new TypeError('Invalid opacity value.');
+    if(value < 0 || value > 1.0) throw new TypeError('Invalid opacity value.');
     if(this[_mesh]) {
       this[_mesh].positions.forEach((p) => {
         p[2] = 1 / p[2] > 0 ? value : -value;
