@@ -12268,6 +12268,8 @@ function () {
       this[_color3].splice(idx, 1);
 
       this[_color4].splice(idx, 1);
+
+      this[_count]--;
     }
   }, {
     key: "transform",
