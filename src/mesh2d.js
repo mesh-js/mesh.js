@@ -30,6 +30,7 @@ const _applyGradientTransform = Symbol('applyGradientTransform');
 const _gradient = Symbol('gradient');
 
 const _filter = Symbol('filter');
+const _opacity = Symbol('opacity');
 
 function normalizePoints(points, bound) {
   const [w, h] = bound[1];
@@ -73,7 +74,8 @@ export default class Mesh2D {
     this[_fill] = null;
     this[_bound] = [[0, 0], [width, height]];
     this[_transform] = [1, 0, 0, 1, 0, 0];
-    this[_uniforms] = {u_opacity: 1.0};
+    this[_opacity] = 1.0;
+    this[_uniforms] = {};
     this[_filter] = [];
     this[_blend] = null;
     this[_texOptions] = {};
@@ -100,6 +102,20 @@ export default class Mesh2D {
     if(acc > 1.5 || acc < 0.67) {
       this.accurate(this.transformScale);
     }
+  }
+
+  getOpacity() {
+    return this[_opacity];
+  }
+
+  setOpacity(value) {
+    if(value < 0 || value >= 1.0) throw new TypeError('Invalid opacity value.');
+    if(this[_mesh]) {
+      this[_mesh].positions.forEach((p) => {
+        p[2] = 1 / p[2] > 0 ? value : -value;
+      });
+    }
+    this[_opacity] = value;
   }
 
   getPointAtLength(length) {
@@ -217,7 +233,7 @@ export default class Mesh2D {
 
   get enableBlend() {
     if(this[_blend] === true || this[_blend] === false) return this[_blend];
-    return this[_uniforms].u_opacity < 1.0
+    return this[_opacity] < 1.0
       || this[_strokeColor] != null && this[_strokeColor][3] < 1.0
       || this[_fillColor] != null && this[_fillColor][3] < 1.0
       || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0
@@ -265,7 +281,7 @@ export default class Mesh2D {
           const mesh = triangulate(contours);
           mesh.positions = mesh.positions.map((p) => {
             p[1] = this[_bound][1][1] - p[1];
-            p.push(1);
+            p.push(this[_opacity]);
             return p;
           });
           mesh.attributes = {
@@ -292,7 +308,7 @@ export default class Mesh2D {
         _meshes.forEach((mesh) => {
           mesh.positions = mesh.positions.map((p) => {
             p[1] = this[_bound][1][1] - p[1];
-            p.push(0);
+            p.push(-this[_opacity]);
             return p;
           });
           mesh.attributes = {
@@ -470,7 +486,7 @@ export default class Mesh2D {
     const noFill = this[_fill] == null || this[_fillColor][3] === 0;
     const noGradient = this[_uniforms].u_radialGradientVector == null;
     const noTexture = this[_uniforms].u_texSampler == null;
-    return this[_uniforms].u_opacity === 0 || (
+    return this[_opacity] === 0 || (
       noStroke && noFill && noGradient && noTexture && !this.beforeRender && !this.afterRender);
   }
 

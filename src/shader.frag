@@ -2,7 +2,6 @@ precision mediump float;
 
 varying vec4 vColor;
 varying float flagBackground;
-uniform float u_opacity;
 
 #ifdef TEXTURE
 varying vec3 vTextureCoord;
@@ -97,6 +96,7 @@ void transformColor(inout vec4 color, in float colorMatrix[20]) {
 
 void main() {
   vec4 color = vColor;
+  float opacity = abs(flagBackground);
 
 #ifdef GRADIENT
   if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {
@@ -104,8 +104,8 @@ void main() {
   }
 #endif
 
-  if(u_opacity < 1.0) {
-    color.a *= u_opacity;
+  if(opacity < 1.0) {
+    color.a *= opacity;
   }
 
 #ifdef TEXTURE
@@ -124,9 +124,9 @@ void main() {
       }
       vec4 texColor = texture2D(u_texSampler, texCoord.xy);
       float alpha = texColor.a;
-      if(u_opacity < 1.0) {
-        texColor.a *= u_opacity;
-        alpha *= mix(0.465, 1.0, u_opacity);
+      if(opacity < 1.0) {
+        texColor.a *= opacity;
+        alpha *= mix(0.465, 1.0, opacity);
       }
       // color = mix(color, texColor, texColor.a);
       color.rgb = mix(texColor.rgb, color.rgb, 1.0 - alpha);
