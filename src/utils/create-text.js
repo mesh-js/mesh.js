@@ -44,8 +44,8 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
 
-  const top = canvas.height / 2;
-  const left = canvas.width / 2;
+  const top = canvas.height * 0.57;
+  const left = canvas.width * 0.5;
 
   if(fillColor) {
     if(Array.isArray(fillColor)) fillColor = vectorToRGBA(fillColor);
