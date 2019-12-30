@@ -99,6 +99,7 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
         } else if(size) {
           const lastMesh = temp[temp.length - 1];
           if(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender
+            || lastMesh.program !== mesh.program
             || !compareUniform(lastMesh, mesh, temp))) {
             yield packData(temp, enableBlend);
             size = 0;

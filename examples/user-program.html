@@ -20,28 +20,34 @@
     const vertShader = `
       attribute vec3 a_vertexPosition;
       // attribute vec4 a_color;
-      // varying vec4 vColor;
+      varying vec3 vColor;
+      attribute vec3 a_pp;
 
       void main() {
         gl_PointSize = 1.0;
         gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);
-        // vColor = a_color;
+        vColor = a_pp;
       }
     `;
 
     const fragShader = `
       precision mediump float;
-      // varying vec4 vColor;
+      varying vec3 vColor;
       uniform vec4 u_color;
       uniform vec2 u_resolution;
 
       void main() {
         vec2 st = gl_FragCoord.xy / u_resolution;
-        gl_FragColor = st.x * u_color;
+        gl_FragColor = st.x * vec4(vColor, 1);
       }
     `;
 
-    const program = renderer.glRenderer.compileSync(fragShader, vertShader);
+    const program = renderer.createProgram(fragShader, vertShader, {
+      // a_pp: {
+      //   type: 'UNSIGNED_BYTE',
+      //   normalize: true,
+      // },
+    });
 
     const figure = new Figure2D();
     figure.rect(0, 0, canvas.width, canvas.height);
@@ -50,6 +56,11 @@
     mesh.setUniforms({
       u_color: [1, 0, 1, 1],
       u_resolution: [canvas.width, canvas.height],
+    });
+
+    mesh.setProgram(program);
+    mesh.setAttribute('a_pp', (p) => {
+      return [1, 0, 0];
     });
 
     function update(t) {

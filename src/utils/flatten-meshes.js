@@ -1,12 +1,23 @@
-function allocateBuffer(meshes, bufferCache) {
+const typeMap = {
+  UNSIGNED_BYTE: Uint8Array,
+  UNSIGNED_SHORT: Uint16Array,
+  BYTE: Int8Array,
+  SHORT: Int16Array,
+  FLOAT: Float32Array,
+};
+
+function allocateBuffer(meshes, bufferCache) { // eslint-disable-line complexity
   let positionsCount = 0;
   let cellsCount = 0;
   let textureCoordCount = 0;
   let sourceRectCount = 0;
   let colorCount = 0;
+  let count = 0;
+  const program = meshes[0].program;
   for(let i = 0; i < meshes.length; i++) {
     const mesh = meshes[i].meshData;
     if(mesh) {
+      count += mesh.positions.length;
       const dimension = mesh.positions[0].length;
       positionsCount += mesh.positions.length * dimension;
       cellsCount += mesh.cells.length * 3;
@@ -40,10 +51,25 @@ function allocateBuffer(meshes, bufferCache) {
       bufferCache.a_sourceRect = new Float32Array(sourceRectCount);
     }
   }
+  if(program) {
+    const attribs = Object.entries(program._attribute);
+    const meta = program._attribOpts || {};
+    for(let i = 0; i < attribs.length; i++) {
+      const [key, opts] = attribs[i];
+      if(key !== 'a_color' && key !== 'a_sourceRect' && opts !== 'ignored') {
+        const type = meta[key] ? meta[key].type : 'FLOAT';
+        const TypeArray = typeMap[type];
+        const attribCount = opts.size * count;
+        if(!bufferCache[key] || bufferCache[key].length < attribCount) {
+          bufferCache[key] = new TypeArray(attribCount);
+        }
+      }
+    }
+  }
   return bufferCache;
 }
 
-export default function flattenMeshes(meshes, bufferCache) {
+export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-line complexity
   let positions = [];
   let cells = [];
   let textureCoord = [];
@@ -54,6 +80,7 @@ export default function flattenMeshes(meshes, bufferCache) {
   let cidx = 0;
 
   const uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
+  const program = meshes[0] ? meshes[0].program : null;
 
   if(bufferCache) {
     allocateBuffer(meshes, bufferCache);
@@ -63,7 +90,9 @@ export default function flattenMeshes(meshes, bufferCache) {
     a_color = bufferCache.a_color;
     a_sourceRect = bufferCache.a_sourceRect;
   }
+  let hasSourceRect = false;
 
+  const attributes = {};
   for(let i = 0; i < meshes.length; i++) {
     let mesh = meshes[i];
     if(mesh) {
@@ -107,6 +136,7 @@ export default function flattenMeshes(meshes, bufferCache) {
         a_color.push(...mesh.attributes.a_color);
       }
       if(mesh.attributes.a_sourceRect) {
+        hasSourceRect = true;
         if(bufferCache) {
           const _sourceRect = mesh.attributes.a_sourceRect;
           for(let j = 0; j < _sourceRect.length; j++) {
@@ -135,14 +165,39 @@ export default function flattenMeshes(meshes, bufferCache) {
           textureCoord.push(...mesh.textureCoord);
         }
       }
+
+      if(program) {
+        const attribs = Object.entries(program._attribute);
+        for(let j = 0; j < attribs.length; j++) {
+          const [name, opts] = attribs[j];
+          if(name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
+            attributes[name] = [];
+            if(bufferCache) {
+              attributes[name] = bufferCache[name];
+              const _attr = mesh.attributes[name];
+              const size = _attr[0].length;
+              for(let k = 0; k < _attr.length; k++) {
+                const t = _attr[k];
+                const o = size * (idx + k);
+                for(let w = 0; w < t.length; w++) {
+                  attributes[name][o + w] = t[w];
+                }
+              }
+            } else {
+              attributes[name].push(...mesh.attributes[name]);
+            }
+          }
+        }
+      }
+
       idx += mesh.positions.length;
       cidx += mesh.cells.length;
     }
   }
 
-  const attributes = {a_color};
-  if(a_sourceRect && a_sourceRect.length > 0) attributes.a_sourceRect = a_sourceRect;
-  const ret = {positions, cells, attributes, uniforms, cellsCount: cidx * 3};
+  attributes.a_color = a_color;
+  if(hasSourceRect && a_sourceRect && a_sourceRect.length > 0) attributes.a_sourceRect = a_sourceRect;
+  const ret = {positions, cells, attributes, uniforms, cellsCount: cidx * 3, program};
 
   if(textureCoord && textureCoord.length) {
     ret.textureCoord = textureCoord;

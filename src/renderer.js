@@ -158,6 +158,23 @@ export default class Renderer {
     return {_img: {font, fillColor, strokeColor, text}};
   }
 
+  createProgram(fragShader, vertShader, attributeOptions = {}) {
+    if(this[_glRenderer]) {
+      const program = this[_glRenderer].compileSync(fragShader, vertShader);
+      program._attribOpts = attributeOptions;
+      return program;
+    }
+    throw new Error('Context 2D cannot create webgl program.');
+  }
+
+  useProgram(program, attributeOptions = {}) {
+    if(this[_glRenderer]) {
+      const attrOpts = Object.assign({}, program._attribOpts, attributeOptions);
+      return this[_glRenderer].useProgram(program, attrOpts);
+    }
+    throw new Error('Context 2D cannot use webgl program.');
+  }
+
   deleteTexture(texture) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     return renderer.deleteTexture(texture);
@@ -172,7 +189,7 @@ export default class Renderer {
     }
   }
 
-  drawMeshCloud(cloud, {clear = false, program = null, attributeOptions = {}} = {}) {
+  drawMeshCloud(cloud, {clear = false, program = null} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
     if(this[_glRenderer]) {
@@ -195,7 +212,7 @@ export default class Renderer {
           hasCloudFilter,
         });
       } else if(renderer.program !== program) {
-        renderer.useProgram(program, Object.assign({
+        this.useProgram(program, {
           a_color: {
             type: 'UNSIGNED_BYTE',
             normalize: true,
@@ -208,7 +225,7 @@ export default class Renderer {
             type: 'UNSIGNED_BYTE',
             normalize: true,
           },
-        }, attributeOptions));
+        });
       }
       this[_applyGlobalTransform](this[_globalTransform]);
       renderer.setMeshData([cloud.meshData]);
@@ -221,7 +238,7 @@ export default class Renderer {
     }
   }
 
-  drawMeshes(meshes, {clear = false, program = null, attributeOptions = {}} = {}) { // eslint-disable-line complexity
+  drawMeshes(meshes, {clear = false, program = null} = {}) { // eslint-disable-line complexity
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const meshData = compress(this, meshes, program == null);
@@ -231,8 +248,9 @@ export default class Renderer {
       this._drawCalls = 0;
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
         this._drawCalls++;
+        program = program || mesh.program;
         if(mesh instanceof MeshCloud) {
-          this.drawMeshCloud(mesh, {clear, program, attributeOptions});
+          this.drawMeshCloud(mesh, {clear, program});
           // continue; // eslint-disable-line no-continue
         } else {
           if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
@@ -282,12 +300,12 @@ export default class Renderer {
               const hasGradient = !!mesh.uniforms.u_radialGradientVector;
               applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
             } else if(renderer.program !== program) {
-              renderer.useProgram(program, Object.assign({
+              this.useProgram(program, {
                 a_color: {
                   type: 'UNSIGNED_BYTE',
                   normalize: true,
                 },
-              }, attributeOptions));
+              });
             }
             if(mesh.filterCanvas) {
               console.warn('User program ignored some filter effects.');
