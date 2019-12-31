@@ -370,7 +370,7 @@ export default class Mesh2D {
           this[_mesh].attributes[name] = [];
           for(let j = 0; j < positions.length; j++) {
             const p = positions[j];
-            this[_mesh].attributes[name].push(setter ? setter(p) : Array(opts.size).fill(0));
+            this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
           }
         }
       }
