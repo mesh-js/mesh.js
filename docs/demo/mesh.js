@@ -7930,13 +7930,16 @@ function () {
     }
   }, {
     key: "createProgram",
-    value: function createProgram(fragShader, vertShader) {
-      var attributeOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    value: function createProgram() {
+      var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          vertex = _ref3.vertex,
+          fragment = _ref3.fragment,
+          options = _ref3.options;
 
       if (this[_glRenderer]) {
-        var program = this[_glRenderer].compileSync(fragShader, vertShader);
+        var program = this[_glRenderer].compileSync(fragment, vertex);
 
-        program._attribOpts = attributeOptions;
+        program._attribOpts = options;
         return program;
       }
 
@@ -7975,11 +7978,11 @@ function () {
   }, {
     key: "drawMeshCloud",
     value: function drawMeshCloud(cloud) {
-      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref3$clear = _ref3.clear,
-          clear = _ref3$clear === void 0 ? false : _ref3$clear,
-          _ref3$program = _ref3.program,
-          program = _ref3$program === void 0 ? null : _ref3$program;
+      var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref4$clear = _ref4.clear,
+          clear = _ref4$clear === void 0 ? false : _ref4$clear,
+          _ref4$program = _ref4.program,
+          program = _ref4$program === void 0 ? null : _ref4$program;
 
       var renderer = this[_glRenderer] || this[_canvasRenderer]; // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
 
@@ -8039,11 +8042,11 @@ function () {
   }, {
     key: "drawMeshes",
     value: function drawMeshes(meshes) {
-      var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref4$clear = _ref4.clear,
-          clear = _ref4$clear === void 0 ? false : _ref4$clear,
-          _ref4$program = _ref4.program,
-          drawProgram = _ref4$program === void 0 ? null : _ref4$program;
+      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref5$clear = _ref5.clear,
+          clear = _ref5$clear === void 0 ? false : _ref5$clear,
+          _ref5$program = _ref5.program,
+          drawProgram = _ref5$program === void 0 ? null : _ref5$program;
 
       // eslint-disable-line complexity
       var renderer = this[_glRenderer] || this[_canvasRenderer];
@@ -8277,10 +8280,10 @@ function () {
   }, {
     key: "globalRotate",
     value: function globalRotate(rad) {
-      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 2),
-          ox = _ref6[0],
-          oy = _ref6[1];
+      var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
+          _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref6, 2),
+          ox = _ref7[0],
+          oy = _ref7[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -8293,10 +8296,10 @@ function () {
     value: function globalScale(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref7 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref7, 2),
-          ox = _ref8[0],
-          oy = _ref8[1];
+      var _ref8 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref9 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref8, 2),
+          ox = _ref9[0],
+          oy = _ref9[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -8309,10 +8312,10 @@ function () {
     value: function globalSkew(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref9 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref9, 2),
-          ox = _ref10[0],
-          oy = _ref10[1];
+      var _ref10 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref11 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref10, 2),
+          ox = _ref11[0],
+          oy = _ref11[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);

@@ -158,10 +158,10 @@ export default class Renderer {
     return {_img: {font, fillColor, strokeColor, text}};
   }
 
-  createProgram(fragShader, vertShader, attributeOptions = {}) {
+  createProgram({vertex, fragment, options} = {}) {
     if(this[_glRenderer]) {
-      const program = this[_glRenderer].compileSync(fragShader, vertShader);
-      program._attribOpts = attributeOptions;
+      const program = this[_glRenderer].compileSync(fragment, vertex);
+      program._attribOpts = options;
       return program;
     }
     throw new Error('Context 2D cannot create webgl program.');

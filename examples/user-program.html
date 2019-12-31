@@ -17,7 +17,7 @@
       contextType: 'webgl2',
     });
 
-    const vertShader = `
+    const vertex = `
       attribute vec3 a_vertexPosition;
       // attribute vec4 a_color;
       varying vec3 vColor;
@@ -30,7 +30,7 @@
       }
     `;
 
-    const fragShader = `
+    const fragment = `
       precision mediump float;
       varying vec3 vColor;
       uniform vec4 u_color;
@@ -42,11 +42,15 @@
       }
     `;
 
-    const program = renderer.createProgram(fragShader, vertShader, {
-      // a_pp: {
-      //   type: 'UNSIGNED_BYTE',
-      //   normalize: true,
-      // },
+    const program = renderer.createProgram({
+      vertex,
+      fragment,
+      options: {
+        // a_pp: {
+        //   type: 'UNSIGNED_BYTE',
+        //   normalize: true,
+        // },
+      },
     });
 
     const figure = new Figure2D();
