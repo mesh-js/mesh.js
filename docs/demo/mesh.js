@@ -8043,13 +8043,13 @@ function () {
           _ref4$clear = _ref4.clear,
           clear = _ref4$clear === void 0 ? false : _ref4$clear,
           _ref4$program = _ref4.program,
-          program = _ref4$program === void 0 ? null : _ref4$program;
+          drawProgram = _ref4$program === void 0 ? null : _ref4$program;
 
       // eslint-disable-line complexity
       var renderer = this[_glRenderer] || this[_canvasRenderer];
 
       if (this[_glRenderer]) {
-        var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(this, meshes, program == null);
+        var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(this, meshes, drawProgram == null);
         var gl = renderer.gl;
         if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
         var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_13__["isUnitTransform"])(this[_globalTransform]);
@@ -8063,7 +8063,7 @@ function () {
             var mesh = _step.value;
             // eslint-disable-line no-restricted-syntax
             this._drawCalls++;
-            program = program || mesh.program;
+            var program = drawProgram || mesh.program;
 
             if (mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_12__["default"]) {
               this.drawMeshCloud(mesh, {

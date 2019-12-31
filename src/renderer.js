@@ -238,17 +238,17 @@ export default class Renderer {
     }
   }
 
-  drawMeshes(meshes, {clear = false, program = null} = {}) { // eslint-disable-line complexity
+  drawMeshes(meshes, {clear = false, program: drawProgram = null} = {}) { // eslint-disable-line complexity
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
-      const meshData = compress(this, meshes, program == null);
+      const meshData = compress(this, meshes, drawProgram == null);
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
       const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
       this._drawCalls = 0;
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
         this._drawCalls++;
-        program = program || mesh.program;
+        const program = drawProgram || mesh.program;
         if(mesh instanceof MeshCloud) {
           this.drawMeshCloud(mesh, {clear, program});
           // continue; // eslint-disable-line no-continue
