@@ -10,7 +10,7 @@ function fontEx(info, ratio) {
 }
 
 export default function createText(text, {font, fillColor, strokeColor, strokeWidth}) {
-  const key = [text, font, String(fillColor), String(strokeColor)].join('###');
+  const key = [text, font, String(fillColor), String(strokeColor), String(strokeWidth)].join('###');
   let textCanvas = cacheMap[key];
   if(textCanvas) return textCanvas;
 

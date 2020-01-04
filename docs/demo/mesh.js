@@ -13402,7 +13402,7 @@ function createText(text, _ref) {
       fillColor = _ref.fillColor,
       strokeColor = _ref.strokeColor,
       strokeWidth = _ref.strokeWidth;
-  var key = [text, font, String(fillColor), String(strokeColor)].join('###');
+  var key = [text, font, String(fillColor), String(strokeColor), String(strokeWidth)].join('###');
   var textCanvas = cacheMap[key];
   if (textCanvas) return textCanvas; // cannot use offscreen canvas because use offscreen canvas as texture will fail in early versions of Chrome.
 
