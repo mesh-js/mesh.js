@@ -44,7 +44,7 @@ export default function createText(text, {font, fillColor, strokeColor, strokeWi
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
 
-  const top = canvas.height * 0.57;
+  const top = canvas.height * 0.5 + fontInfo.pxHeight * 0.13;
   const left = canvas.width * 0.5;
 
   if(fillColor) {
