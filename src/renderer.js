@@ -85,7 +85,9 @@ export default class Renderer {
     if(contextType === 'webgl' || contextType === 'webgl2') {
       if(contextType === 'webgl2') this[_options].webgl2 = true;
       const renderer = new GlRenderer(canvas, this[_options]);
-
+      if(contextType === 'webgl2' && !renderer.isWebGL2) { // webgl2 may disabled by browser settings
+        opts.contextType = 'webgl';
+      }
       createShaders(renderer);
       applyShader(renderer);
       createCloudShaders(renderer);
