@@ -2,7 +2,6 @@ import GlRenderer from 'gl-renderer';
 import {mat2d} from 'gl-matrix';
 import CanvasRenderer from './canvas-renderer';
 import compress from './utils/compress';
-import createText from './utils/create-text';
 import {drawMesh2D, applyFilter} from './utils/canvas';
 import Figure2D from './figure2d';
 import Mesh2D from './mesh2d';
@@ -151,7 +150,7 @@ export default class Renderer {
 
   createText(text, {font = '16px arial', fillColor = null, strokeColor = null, strokeWidth = 1} = {}) {
     if(this[_glRenderer]) {
-      const img = createText(
+      const img = ENV.createText(
         text,
         {font, fillColor, strokeColor}
       );

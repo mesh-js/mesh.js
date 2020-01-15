@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "0.14.7",
+  "version": "0.14.8",
   "description": "A graphics system born for visualization.",
   "main": "dist/mesh.min.js",
   "module": "dist/mesh.js",
@@ -43,7 +43,7 @@
     "as-number": "^1.0.0",
     "bound-points": "^1.0.0",
     "color-rgba": "^2.1.1",
-    "gl-matrix": "^3.0.0",
+    "gl-matrix": "^3.1.0",
     "gl-renderer": "^0.11.5",
     "parse-svg-path": "^0.1.2",
     "polyline-miter-util": "^1.0.1",
