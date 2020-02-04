@@ -54,7 +54,7 @@
         // mesh.setTransform(Math.cos(Math.PI / 4), Math.sin(Math.PI / 4), -Math.sin(Math.PI / 4), Math.cos(Math.PI / 4), 100, 100);
 
         mesh.setFill({
-          color: 'cyan',
+          color: '#f00',
         });
         mesh.setTransform(1, 0, 0, 1, 200, 200);
         // console.log(mesh.meshData);
@@ -70,14 +70,26 @@
         });
         // }
 
-        mesh.setLinearGradient({
-          vector: [50, 50, 50, 200],
-          colors: [
-            {offset: 0, color: 'red'},
-            {offset: 1, color: 'green'},
-          ],
-          type: 'fill',
+        // mesh.setLinearGradient({
+        //   vector: [50, 50, 50, 200],
+        //   colors: [
+        //     {offset: 0, color: 'red'},
+        //     {offset: 1, color: 'green'},
+        //   ],
+        //   type: 'fill',
+        // });
+        const passProgram = renderer.createPassProgram({
+          fragment: `precision mediump float;
+            varying vec3 vTextureCoord;
+            uniform sampler2D u_texSampler;
+            uniform float abc;
+            void main() {
+              gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy) * 0.5 + abc;
+            }`,
         });
+        mesh.addPass(passProgram, {abc: 0.5});
+        mesh.addPass(passProgram, {abc: 0.5});
+        mesh.addPass(passProgram, {abc: 0.5});
 
         // mesh.setFill({
         //   color: [1, 0, 0, 1],

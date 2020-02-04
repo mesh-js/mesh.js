@@ -7855,6 +7855,8 @@ var defaultOpts = {
   // antialias: false,
   bufferSize: 1500
 };
+var defaultPassVertex = "attribute vec3 a_vertexPosition;\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);    \n  vTextureCoord = a_vertexTextureCoord;              \n}\n";
+var defaultPassFragment = "precision mediump float;\nvarying vec3 vTextureCoord;\nuniform sampler2D u_texSampler;\nvoid main() {\n  gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy);\n}\n";
 
 var _glRenderer = Symbol('glRenderer');
 
@@ -7868,6 +7870,22 @@ var _applyGlobalTransform = Symbol('applyGlobalTransform');
 
 var _canvas = Symbol('canvas');
 
+function draw(renderer) {
+  var gl = renderer.gl;
+  var fbo = renderer.fbo;
+
+  if (fbo) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  }
+
+  renderer._draw();
+
+  if (fbo) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+}
+
 function drawFilterContext(renderer, filterContext, width, height) {
   var filterTexture = renderer.createTexture(filterContext.canvas);
   var contours = [[[0, 0], [width, 0], [width, height], [0, height], [0, 0]]];
@@ -7879,10 +7897,7 @@ function drawFilterContext(renderer, filterContext, width, height) {
     height: height
   });
   filterMesh.setTexture(filterTexture);
-  renderer.setMeshData([filterMesh.meshData]);
-
-  renderer._draw();
-
+  draw(renderer);
   filterTexture.delete();
   filterContext.clearRect(0, 0, width, height);
   delete filterContext._filter;
@@ -8042,6 +8057,21 @@ function () {
       throw new Error('Context 2D cannot create webgl program.');
     }
   }, {
+    key: "createPassProgram",
+    value: function createPassProgram() {
+      var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref4$vertex = _ref4.vertex,
+          vertex = _ref4$vertex === void 0 ? defaultPassVertex : _ref4$vertex,
+          _ref4$fragment = _ref4.fragment,
+          fragment = _ref4$fragment === void 0 ? defaultPassFragment : _ref4$fragment,
+          options = _ref4.options;
+
+      return this.createProgram({
+        vertex: vertex,
+        fragment: fragment
+      });
+    }
+  }, {
     key: "useProgram",
     value: function useProgram(program) {
       var attributeOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -8074,11 +8104,11 @@ function () {
   }, {
     key: "drawMeshCloud",
     value: function drawMeshCloud(cloud) {
-      var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref4$clear = _ref4.clear,
-          clear = _ref4$clear === void 0 ? false : _ref4$clear,
-          _ref4$program = _ref4.program,
-          program = _ref4$program === void 0 ? null : _ref4$program;
+      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref5$clear = _ref5.clear,
+          clear = _ref5$clear === void 0 ? false : _ref5$clear,
+          _ref5$program = _ref5.program,
+          program = _ref5$program === void 0 ? null : _ref5$program;
 
       var renderer = this[_glRenderer] || this[_canvasRenderer]; // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
 
@@ -8123,9 +8153,7 @@ function () {
 
         renderer.setMeshData([cloud.meshData]);
         if (cloud.beforeRender) cloud.beforeRender(gl, cloud);
-
-        renderer._draw();
-
+        draw(renderer);
         if (cloud.afterRender) cloud.afterRender(gl, cloud);
       } else {
         renderer.setTransform(this[_globalTransform]);
@@ -8138,11 +8166,13 @@ function () {
   }, {
     key: "drawMeshes",
     value: function drawMeshes(meshes) {
-      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref5$clear = _ref5.clear,
-          clear = _ref5$clear === void 0 ? false : _ref5$clear,
-          _ref5$program = _ref5.program,
-          drawProgram = _ref5$program === void 0 ? null : _ref5$program;
+      var _this = this;
+
+      var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref6$clear = _ref6.clear,
+          clear = _ref6$clear === void 0 ? false : _ref6$clear,
+          _ref6$program = _ref6.program,
+          drawProgram = _ref6$program === void 0 ? null : _ref6$program;
 
       // eslint-disable-line complexity
       var renderer = this[_glRenderer] || this[_canvasRenderer];
@@ -8158,34 +8188,54 @@ function () {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = meshData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var _loop = function _loop() {
             var mesh = _step.value;
             // eslint-disable-line no-restricted-syntax
-            this._drawCalls++;
+            _this._drawCalls++;
             var program = drawProgram || mesh.program;
 
             if (mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_11__["default"]) {
-              this.drawMeshCloud(mesh, {
+              _this.drawMeshCloud(mesh, {
                 clear: clear,
                 program: program
               }); // continue; // eslint-disable-line no-continue
+
             } else {
+              var _this$canvas2 = _this.canvas,
+                  width = _this$canvas2.width,
+                  height = _this$canvas2.height;
               if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
+              var oldFBO = renderer.fbo;
+
+              if (mesh.pass.length) {
+                if (!_this.fbo || _this.fbo.width !== width || _this.fbo !== height) {
+                  _this.fbo = {
+                    width: width,
+                    height: height,
+                    target: renderer.createFBO(),
+                    buffer: renderer.createFBO(),
+                    swap: function swap() {
+                      var _ref7 = [this.buffer, this.target];
+                      this.target = _ref7[0];
+                      this.buffer = _ref7[1];
+                    }
+                  };
+                }
+
+                renderer.bindFBO(_this.fbo.target);
+              }
 
               if (!program && mesh.filterCanvas) {
                 // 有一些滤镜用shader不好实现：blur、drop-shadow、url
                 Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer, {
                   hasTexture: true
                 });
-                var _this$canvas2 = this.canvas,
-                    width = _this$canvas2.width,
-                    height = _this$canvas2.height;
-                var filterContext = this.filterContext;
+                var filterContext = _this.filterContext;
 
                 if (!filterContext) {
                   var canvas = _utils_env__WEBPACK_IMPORTED_MODULE_13__["default"].createCanvas(width, height);
                   filterContext = canvas.getContext('2d');
-                  this.filterContext = filterContext;
+                  _this.filterContext = filterContext;
                 }
 
                 var originalMesh = meshes[mesh.packIndex];
@@ -8199,7 +8249,7 @@ function () {
 
                     filterContext.save();
 
-                    (_filterContext = filterContext).transform.apply(_filterContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this[_globalTransform]));
+                    (_filterContext = filterContext).transform.apply(_filterContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(_this[_globalTransform]));
 
                     Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["drawMesh2D"])(originalMesh, filterContext, false);
                     filterContext.restore();
@@ -8215,7 +8265,7 @@ function () {
 
                     filterContext.save();
 
-                    (_filterContext2 = filterContext).transform.apply(_filterContext2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this[_globalTransform]));
+                    (_filterContext2 = filterContext).transform.apply(_filterContext2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(_this[_globalTransform]));
                   }
 
                   Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["drawMesh2D"])(originalMesh, filterContext, false);
@@ -8241,7 +8291,7 @@ function () {
                     hasGlobalTransform: hasGlobalTransform
                   });
                 } else if (renderer.program !== program) {
-                  this.useProgram(program, {
+                  _this.useProgram(program, {
                     a_color: {
                       type: 'UNSIGNED_BYTE',
                       normalize: true
@@ -8253,15 +8303,37 @@ function () {
                   console.warn('User program ignored some filter effects.');
                 }
 
-                this[_applyGlobalTransform](this[_globalTransform]);
+                _this[_applyGlobalTransform](_this[_globalTransform]);
 
                 renderer.setMeshData([mesh]);
+                draw(renderer);
+              }
 
-                renderer._draw();
+              if (mesh.pass.length) {
+                var len = mesh.pass.length;
+                mesh.pass.forEach(function (pass, idx) {
+                  pass.blend = mesh.enableBlend;
+                  pass.setTexture(renderer.fbo.texture);
+                  if (idx === len - 1) renderer.bindFBO(oldFBO);else {
+                    _this.fbo.swap();
+
+                    renderer.bindFBO(_this.fbo.target);
+                  }
+                  if (pass.program) renderer.useProgram(pass.program);else {
+                    _this.defaultPassProgram = _this.defaultPassProgram || _this.createPassProgram();
+                    renderer.useProgram(_this.defaultPassProgram);
+                  }
+                  renderer.setMeshData([pass.meshData]);
+                  draw(renderer);
+                });
               }
 
               if (mesh.afterRender) mesh.afterRender(gl, mesh);
             }
+          };
+
+          for (var _iterator = meshData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            _loop();
           }
         } catch (err) {
           _didIteratorError = true;
@@ -8376,10 +8448,10 @@ function () {
   }, {
     key: "globalRotate",
     value: function globalRotate(rad) {
-      var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref6, 2),
-          ox = _ref7[0],
-          oy = _ref7[1];
+      var _ref8 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
+          _ref9 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref8, 2),
+          ox = _ref9[0],
+          oy = _ref9[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -8392,10 +8464,10 @@ function () {
     value: function globalScale(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref8 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref9 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref8, 2),
-          ox = _ref9[0],
-          oy = _ref9[1];
+      var _ref10 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref11 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref10, 2),
+          ox = _ref11[0],
+          oy = _ref11[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -8408,10 +8480,10 @@ function () {
     value: function globalSkew(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref10 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref11 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref10, 2),
-          ox = _ref11[0],
-          oy = _ref11[1];
+      var _ref12 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
+          _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref12, 2),
+          ox = _ref13[0],
+          oy = _ref13[1];
 
       var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
       m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
@@ -8806,7 +8878,8 @@ function () {
             if (!samplerMap[name]) {
               samplerMap[name] = idx;
               gl.uniform1i(uniform, idx);
-            }
+            } // gl.bindTexture(gl.TEXTURE_2D, null);
+
 
             if (that.options.autoUpdate) that.update();
           },
@@ -8852,7 +8925,7 @@ function () {
             textureCoord = meshData.textureCoord,
             enableBlend = meshData.enableBlend;
         var gl = _this.gl;
-        if (enableBlend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
+        if ((!_this.fbo || _this.fbo.blend) && enableBlend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
         gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, program._buffers.cellsBuffer);
@@ -9455,15 +9528,25 @@ function () {
     }()
   }, {
     key: "createTexture",
-    value: function createTexture(img) {
+    value: function createTexture() {
       var _this4 = this;
 
+      var img = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var gl = this.gl;
       gl.activeTexture(gl.TEXTURE15);
       var texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img); // gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
+      var _this$canvas = this.canvas,
+          width = _this$canvas.width,
+          height = _this$canvas.height;
+
+      if (img) {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      } else {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      } // gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
+
 
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); // Prevents s-coordinate wrapping (repeating).
@@ -9471,7 +9554,11 @@ function () {
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); // Prevents t-coordinate wrapping (repeating).
 
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      texture._img = img;
+      gl.bindTexture(gl.TEXTURE_2D, null);
+      texture._img = img || {
+        width: width,
+        height: height
+      };
 
       texture.delete = function () {
         _this4.deleteTexture(texture);
@@ -9531,11 +9618,74 @@ function () {
       return loadTexture;
     }()
   }, {
+    key: "createFBO",
+    value: function createFBO() {
+      var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref12$color = _ref12.color,
+          color = _ref12$color === void 0 ? 1 : _ref12$color,
+          _ref12$blend = _ref12.blend,
+          blend = _ref12$blend === void 0 ? false : _ref12$blend,
+          _ref12$depth = _ref12.depth,
+          depth = _ref12$depth === void 0 ? this.options.depth !== false : _ref12$depth,
+          _ref12$stencil = _ref12.stencil,
+          stencil = _ref12$stencil === void 0 ? !!this.options.stencil : _ref12$stencil;
+
+      var gl = this.gl;
+      var buffer = gl.createFramebuffer();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, buffer);
+      var textures = [];
+
+      for (var i = 0; i < color; i++) {
+        var texture = this.createTexture();
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, texture, 0
+        /* level */
+        );
+        textures.push(texture);
+      }
+
+      buffer.textures = textures;
+      buffer.texture = textures[0];
+      buffer.blend = blend;
+      var _this$canvas2 = this.canvas,
+          width = _this$canvas2.width,
+          height = _this$canvas2.height; // Render buffers
+
+      if (depth && !stencil) {
+        buffer.depthBuffer = gl.createRenderbuffer();
+        gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.depthBuffer);
+        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, buffer.depthBuffer);
+      }
+
+      if (stencil && !depth) {
+        buffer.stencilBuffer = gl.createRenderbuffer();
+        gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.stencilBuffer);
+        gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, width, height);
+        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.STENCIL_ATTACHMENT, gl.RENDERBUFFER, buffer.stencilBuffer);
+      }
+
+      if (depth && stencil) {
+        buffer.depthStencilBuffer = gl.createRenderbuffer();
+        gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.depthStencilBuffer);
+        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, width, height);
+        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.RENDERBUFFER, buffer.depthStencilBuffer);
+      }
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      return buffer;
+    }
+  }, {
+    key: "bindFBO",
+    value: function bindFBO() {
+      var fbo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      this.fbo = fbo;
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref12$clearBuffer = _ref12.clearBuffer,
-          clearBuffer = _ref12$clearBuffer === void 0 ? true : _ref12$clearBuffer;
+      var _ref13 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref13$clearBuffer = _ref13.clearBuffer,
+          clearBuffer = _ref13$clearBuffer === void 0 ? true : _ref13$clearBuffer;
 
       this.startRender = true;
       var gl = this.gl;
@@ -9546,10 +9696,18 @@ function () {
         this.useProgram(program);
       }
 
+      if (this.fbo) {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
+      }
+
       if (clearBuffer) gl.clear(gl.COLOR_BUFFER_BIT);
       var lastFrameID = this[_renderFrameID];
 
       this._draw();
+
+      if (this.fbo) {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      }
 
       if (this[_renderFrameID] === lastFrameID) {
         this[_renderFrameID] = null;
@@ -11836,6 +11994,7 @@ function packData(temp, enableBlend) {
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
     meshData.beforeRender = temp[0].beforeRender;
+    meshData.pass = temp[0].pass;
     meshData.afterRender = temp[temp.length - 1].afterRender;
     temp.length = 0;
     return meshData;
@@ -11937,7 +12096,7 @@ function compress(renderer, meshes) {
 
           lastMesh = temp[temp.length - 1];
 
-          if (!(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || lastMesh.program !== mesh.program || !compareUniform(lastMesh, mesh, temp)))) {
+          if (!(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || lastMesh.pass.length || mesh.pass.length || lastMesh.program !== mesh.program || !compareUniform(lastMesh, mesh, temp)))) {
             _context.next = 39;
             break;
           }
@@ -15140,6 +15299,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(73);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(57);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(66);
 
 
 
@@ -15151,6 +15311,7 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 
 
 
@@ -15202,6 +15363,8 @@ var _opacity = Symbol('opacity');
 var _program = Symbol('program');
 
 var _attributes = Symbol('attributes');
+
+var _pass = Symbol('pass');
 
 function normalizePoints(points, bound) {
   var _bound$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(bound[1], 2),
@@ -15284,6 +15447,7 @@ function () {
     this.contours = figure.contours;
     this[_program] = null;
     this[_attributes] = {};
+    this[_pass] = [];
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Mesh2D, [{
@@ -16117,6 +16281,23 @@ function () {
       return this.isPointCollision(x, y, 'stroke');
     }
   }, {
+    key: "addPass",
+    value: function addPass(program) {
+      var uniforms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var width = this.width,
+          height = this.height;
+      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_17__["default"]();
+      figure.rect(0, 0, width, height);
+      var mesh = new Mesh2D(figure, {
+        width: width,
+        height: height
+      });
+      mesh.setUniforms(uniforms);
+      mesh.setProgram(program);
+
+      this[_pass].push(mesh);
+    }
+  }, {
     key: "width",
     get: function get() {
       return this[_bound][1][0];
@@ -16313,6 +16494,11 @@ function () {
     key: "uniforms",
     get: function get() {
       return this[_uniforms];
+    }
+  }, {
+    key: "pass",
+    get: function get() {
+      return this[_pass];
     } // {stroke, fill}
 
   }, {

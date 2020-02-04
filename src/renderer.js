@@ -25,12 +25,43 @@ const defaultOpts = {
   bufferSize: 1500,
 };
 
+const defaultPassVertex = `attribute vec3 a_vertexPosition;
+attribute vec3 a_vertexTextureCoord;
+varying vec3 vTextureCoord;
+void main() {
+  gl_PointSize = 1.0;
+  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);    
+  vTextureCoord = a_vertexTextureCoord;              
+}
+`;
+
+const defaultPassFragment = `precision mediump float;
+varying vec3 vTextureCoord;
+uniform sampler2D u_texSampler;
+void main() {
+  gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy);
+}
+`;
+
 const _glRenderer = Symbol('glRenderer');
 const _canvasRenderer = Symbol('canvasRenderer');
 const _options = Symbol('options');
 const _globalTransform = Symbol('globalTransform');
 const _applyGlobalTransform = Symbol('applyGlobalTransform');
 const _canvas = Symbol('canvas');
+
+function draw(renderer) {
+  const gl = renderer.gl;
+  const fbo = renderer.fbo;
+  if(fbo) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  }
+  renderer._draw();
+  if(fbo) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+}
 
 function drawFilterContext(renderer, filterContext, width, height) {
   const filterTexture = renderer.createTexture(filterContext.canvas);
@@ -40,8 +71,7 @@ function drawFilterContext(renderer, filterContext, width, height) {
   const filterMesh = new Mesh2D({contours}, {width, height});
 
   filterMesh.setTexture(filterTexture);
-  renderer.setMeshData([filterMesh.meshData]);
-  renderer._draw();
+  draw(renderer);
   filterTexture.delete();
   filterContext.clearRect(0, 0, width, height);
   delete filterContext._filter;
@@ -168,6 +198,10 @@ export default class Renderer {
     throw new Error('Context 2D cannot create webgl program.');
   }
 
+  createPassProgram({vertex = defaultPassVertex, fragment = defaultPassFragment, options} = {}) {
+    return this.createProgram({vertex, fragment});
+  }
+
   useProgram(program, attributeOptions = {}) {
     if(this[_glRenderer]) {
       const attrOpts = Object.assign({}, program._attribOpts, attributeOptions);
@@ -231,7 +265,7 @@ export default class Renderer {
       this[_applyGlobalTransform](this[_globalTransform]);
       renderer.setMeshData([cloud.meshData]);
       if(cloud.beforeRender) cloud.beforeRender(gl, cloud);
-      renderer._draw();
+      draw(renderer);
       if(cloud.afterRender) cloud.afterRender(gl, cloud);
     } else {
       renderer.setTransform(this[_globalTransform]);
@@ -254,10 +288,25 @@ export default class Renderer {
           this.drawMeshCloud(mesh, {clear, program});
           // continue; // eslint-disable-line no-continue
         } else {
+          const {width, height} = this.canvas;
           if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
+          const oldFBO = renderer.fbo;
+          if(mesh.pass.length) {
+            if(!this.fbo || this.fbo.width !== width || this.fbo !== height) {
+              this.fbo = {
+                width,
+                height,
+                target: renderer.createFBO(),
+                buffer: renderer.createFBO(),
+                swap() {
+                  [this.target, this.buffer] = [this.buffer, this.target];
+                },
+              };
+            }
+            renderer.bindFBO(this.fbo.target);
+          }
           if(!program && mesh.filterCanvas) { // 有一些滤镜用shader不好实现：blur、drop-shadow、url
             applyShader(renderer, {hasTexture: true});
-            const {width, height} = this.canvas;
             let filterContext = this.filterContext;
             if(!filterContext) {
               const canvas = ENV.createCanvas(width, height);
@@ -313,7 +362,26 @@ export default class Renderer {
             }
             this[_applyGlobalTransform](this[_globalTransform]);
             renderer.setMeshData([mesh]);
-            renderer._draw();
+            draw(renderer);
+          }
+          if(mesh.pass.length) {
+            const len = mesh.pass.length;
+            mesh.pass.forEach((pass, idx) => {
+              pass.blend = mesh.enableBlend;
+              pass.setTexture(renderer.fbo.texture);
+              if(idx === len - 1) renderer.bindFBO(oldFBO);
+              else {
+                this.fbo.swap();
+                renderer.bindFBO(this.fbo.target);
+              }
+              if(pass.program) renderer.useProgram(pass.program);
+              else {
+                this.defaultPassProgram = this.defaultPassProgram || this.createPassProgram();
+                renderer.useProgram(this.defaultPassProgram);
+              }
+              renderer.setMeshData([pass.meshData]);
+              draw(renderer);
+            });
           }
           if(mesh.afterRender) mesh.afterRender(gl, mesh);
         }

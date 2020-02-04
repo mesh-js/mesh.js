@@ -62,6 +62,7 @@ function packData(temp, enableBlend) {
     meshData.packIndex = temp[0].packIndex;
     meshData.packLength = temp.length;
     meshData.beforeRender = temp[0].beforeRender;
+    meshData.pass = temp[0].pass;
     meshData.afterRender = temp[temp.length - 1].afterRender;
     temp.length = 0;
     return meshData;
@@ -99,6 +100,8 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
         } else if(size) {
           const lastMesh = temp[temp.length - 1];
           if(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender
+            || lastMesh.pass.length
+            || mesh.pass.length
             || lastMesh.program !== mesh.program
             || !compareUniform(lastMesh, mesh, temp))) {
             yield packData(temp, enableBlend);

@@ -12,6 +12,7 @@ import {getPointAtLength, getTotalLength, getDashContours} from './utils/contour
 import triangulate from './triangulate-contours';
 import createContours from './svg-path-contours';
 import parseColor from './utils/parse-color';
+import Figure2D from './figure2d';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -34,6 +35,8 @@ const _opacity = Symbol('opacity');
 
 const _program = Symbol('program');
 const _attributes = Symbol('attributes');
+
+const _pass = Symbol('pass');
 
 function normalizePoints(points, bound) {
   const [w, h] = bound[1];
@@ -85,6 +88,7 @@ export default class Mesh2D {
     this.contours = figure.contours;
     this[_program] = null;
     this[_attributes] = {};
+    this[_pass] = [];
   }
 
   get width() {
@@ -282,6 +286,10 @@ export default class Mesh2D {
 
   get uniforms() {
     return this[_uniforms];
+  }
+
+  get pass() {
+    return this[_pass];
   }
 
   // {stroke, fill}
@@ -858,5 +866,15 @@ export default class Mesh2D {
 
   isPointInStroke(x, y) {
     return this.isPointCollision(x, y, 'stroke');
+  }
+
+  addPass(program, uniforms = {}) {
+    const {width, height} = this;
+    const figure = new Figure2D();
+    figure.rect(0, 0, width, height);
+    const mesh = new Mesh2D(figure, {width, height});
+    mesh.setUniforms(uniforms);
+    mesh.setProgram(program);
+    this[_pass].push(mesh);
   }
 }
