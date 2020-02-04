@@ -523,6 +523,11 @@ export default class Mesh2D {
           this.setGradient({...this[_gradient].stroke, type: 'stroke'});
         }
       }
+      if(this[_pass].length) {
+        this[_pass].forEach((pass) => {
+          pass.setResolution({width, height});
+        });
+      }
     }
   }
 

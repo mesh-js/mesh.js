@@ -15705,6 +15705,15 @@ function () {
             }));
           }
         }
+
+        if (this[_pass].length) {
+          this[_pass].forEach(function (pass) {
+            pass.setResolution({
+              width: width,
+              height: height
+            });
+          });
+        }
       }
     }
   }, {
