@@ -292,7 +292,7 @@ export default class Renderer {
           if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
           const oldFBO = renderer.fbo;
           if(mesh.pass.length) {
-            if(!this.fbo || this.fbo.width !== width || this.fbo !== height) {
+            if(!this.fbo || this.fbo.width !== width || this.fbo.height !== height) {
               this.fbo = {
                 width,
                 height,

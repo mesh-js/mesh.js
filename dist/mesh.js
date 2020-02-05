@@ -8209,7 +8209,7 @@ function () {
               var oldFBO = renderer.fbo;
 
               if (mesh.pass.length) {
-                if (!_this.fbo || _this.fbo.width !== width || _this.fbo !== height) {
+                if (!_this.fbo || _this.fbo.width !== width || _this.fbo.height !== height) {
                   _this.fbo = {
                     width: width,
                     height: height,
