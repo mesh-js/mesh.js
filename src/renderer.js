@@ -55,7 +55,6 @@ function draw(renderer) {
   const fbo = renderer.fbo;
   if(fbo) {
     gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-    gl.clear(gl.COLOR_BUFFER_BIT);
   }
   renderer._draw();
   if(fbo) {
@@ -276,6 +275,7 @@ export default class Renderer {
   drawMeshes(meshes, {clear = false, program: drawProgram = null} = {}) { // eslint-disable-line complexity
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
+      const oldFBO = renderer.fbo;
       const meshData = compress(this, meshes, drawProgram == null);
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
@@ -290,7 +290,6 @@ export default class Renderer {
         } else {
           const {width, height} = this.canvas;
           if(mesh.beforeRender) mesh.beforeRender(gl, mesh);
-          const oldFBO = renderer.fbo;
           if(mesh.pass.length) {
             if(!this.fbo || this.fbo.width !== width || this.fbo.height !== height) {
               this.fbo = {
@@ -380,6 +379,7 @@ export default class Renderer {
                 renderer.useProgram(this.defaultPassProgram);
               }
               renderer.setMeshData([pass.meshData]);
+              gl.clear(gl.COLOR_BUFFER_BIT);
               draw(renderer);
             });
           }
