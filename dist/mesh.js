@@ -8928,7 +8928,7 @@ function () {
             textureCoord = meshData.textureCoord,
             enableBlend = meshData.enableBlend;
         var gl = _this.gl;
-        if ((!_this.fbo || _this.fbo.blend) && enableBlend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
+        if (enableBlend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
         gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, program._buffers.cellsBuffer);
