@@ -199,7 +199,7 @@ export default class Renderer {
   }
 
   createPassProgram({vertex = defaultPassVertex, fragment = defaultPassFragment, options} = {}) {
-    return this.createProgram({vertex, fragment});
+    return this.createProgram({vertex, fragment, options});
   }
 
   useProgram(program, attributeOptions = {}) {

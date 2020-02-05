@@ -8068,7 +8068,8 @@ function () {
 
       return this.createProgram({
         vertex: vertex,
-        fragment: fragment
+        fragment: fragment,
+        options: options
       });
     }
   }, {
