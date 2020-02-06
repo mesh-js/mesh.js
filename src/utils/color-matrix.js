@@ -74,7 +74,7 @@ export function brightness(p) {
 }
 
 export function saturate(p) {
-  p = clamp(0, 1, p);
+  // p = clamp(0, 1, p);
   const r = 0.212 * (1 - p);
   const g = 0.714 * (1 - p);
   const b = 0.074 * (1 - p);
