@@ -70,6 +70,7 @@ function drawFilterContext(renderer, filterContext, width, height) {
   const filterMesh = new Mesh2D({contours}, {width, height});
 
   filterMesh.setTexture(filterTexture);
+  renderer.setMeshData([filterMesh.meshData]);
   draw(renderer);
   filterTexture.delete();
   filterContext.clearRect(0, 0, width, height);
