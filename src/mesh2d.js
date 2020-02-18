@@ -865,7 +865,7 @@ export default class Mesh2D {
     return false;
   }
 
-  isPointInPath(x, y) {
+  isPointInFill(x, y) {
     return this.isPointCollision(x, y, 'fill');
   }
 

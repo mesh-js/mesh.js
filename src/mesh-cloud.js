@@ -369,7 +369,7 @@ export default class {
     return this[_mesh].isPointCollision(...p, type);
   }
 
-  isPointInPath(idx, [x, y]) {
+  isPointInFill(idx, [x, y]) {
     return this.isPointCollision(idx, [x, y], 'fill');
   }
 

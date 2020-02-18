@@ -47,7 +47,7 @@
     update(0);
 
     canvas.addEventListener('mousemove', (e) => {
-      console.log([mesh.isPointInPath(e.offsetX, e.offsetY), mesh.isPointInStroke(e.offsetX, e.offsetY)]);
+      console.log([mesh.isPointInFill(e.offsetX, e.offsetY), mesh.isPointInStroke(e.offsetX, e.offsetY)]);
     });
   </script>
 </body>

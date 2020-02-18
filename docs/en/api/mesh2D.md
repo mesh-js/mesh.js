@@ -266,9 +266,9 @@ url(svgFilter)
 | --- | --- | --- | --- | --- |
 | svgFilter | String |  URL |  |  |
 
-#### isPointInPath
+#### isPointInFill
 
-isPointInPath(x, y)
+isPointInFill(x, y)
 
 | Name | Type | Attributes | Default | Description |
 | --- | --- | --- | --- | --- |
