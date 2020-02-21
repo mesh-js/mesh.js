@@ -20,7 +20,7 @@
 
     const canvas = document.querySelector('canvas');
     const renderer = new Renderer(canvas, {
-      contextType: 'webgl',
+      contextType: '2d',
     });
 
     // const textureURL = 'https://p2.ssl.qhimg.com/t0130f95e9db5a228bd.png';
@@ -29,7 +29,7 @@
 
     (async function () {
       let texture = await renderer.loadTexture(textureURL);
-      texture = renderer.createText('abcdefg', {font: 'normal 24px arial', fillColor: [1, 0, 0, 1]});
+      texture = renderer.createText('abcdefg', {font: 'normal 24px arial', strokeWidth: 3, strokeColor: [0, 0, 1, 1]});
 
       // console.log(texture);
       const NUM = 1;
@@ -78,18 +78,18 @@
         //   ],
         //   type: 'fill',
         // });
-        const passProgram = renderer.createPassProgram({
-          fragment: `precision mediump float;
-            varying vec3 vTextureCoord;
-            uniform sampler2D u_texSampler;
-            uniform float abc;
-            void main() {
-              gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy) * 0.5 + abc;
-            }`,
-        });
-        mesh.addPass(passProgram, {abc: 0.5});
-        mesh.addPass(passProgram, {abc: 0.5});
-        mesh.addPass(passProgram, {abc: 0.5});
+        // const passProgram = renderer.createPassProgram({
+        //   fragment: `precision mediump float;
+        //     varying vec3 vTextureCoord;
+        //     uniform sampler2D u_texSampler;
+        //     uniform float abc;
+        //     void main() {
+        //       gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy) * 0.5 + abc;
+        //     }`,
+        // });
+        // mesh.addPass(passProgram, {abc: 0.5});
+        // mesh.addPass(passProgram, {abc: 0.5});
+        // mesh.addPass(passProgram, {abc: 0.5});
 
         // mesh.setFill({
         //   color: [1, 0, 0, 1],

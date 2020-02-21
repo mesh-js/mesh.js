@@ -66,7 +66,7 @@ function createText(text, {font, fillColor, strokeColor, strokeWidth}) {
     textContext.fillText(text, left, top);
   }
   if(strokeColor) {
-    textContext.lineWidth = strokeWidth;
+    textContext.lineWidth = strokeWidth * ratio;
     if(Array.isArray(strokeColor)) strokeColor = vectorToRGBA(strokeColor);
     else if(strokeColor.vector) {
       let gradient;

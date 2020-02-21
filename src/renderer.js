@@ -182,11 +182,11 @@ export default class Renderer {
     if(this[_glRenderer]) {
       const img = ENV.createText(
         text,
-        {font, fillColor, strokeColor}
+        {font, fillColor, strokeColor, strokeWidth}
       );
       return {image: this.createTexture(img.image), rect: img.rect};
     }
-    return {_img: {font, fillColor, strokeColor, text}};
+    return {_img: {font, fillColor, strokeColor, strokeWidth, text}};
   }
 
   createProgram({vertex, fragment, options} = {}) {
