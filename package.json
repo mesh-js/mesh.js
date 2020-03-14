@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "0.16.4",
+  "version": "0.16.5",
   "description": "A graphics system born for visualization.",
   "main": "dist/mesh.min.js",
   "module": "dist/mesh.js",
@@ -27,7 +27,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-gl-matrix": "^0.6.0",
-    "docsify": "^4.9.4",
+    "docsify": "^4.11.2",
     "eslint": "^5.16.0",
     "eslint-config-sprite": "^1.0.6",
     "eslint-plugin-html": "^5.0.5",

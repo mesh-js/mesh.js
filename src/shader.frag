@@ -131,7 +131,7 @@ void main() {
       // color = mix(color, texColor, texColor.a);
       color.rgb = mix(color.rgb, texColor.rgb, alpha);
       // color.rgb = mix(texColor.rgb, color.rgb, color.a);
-      color.rgb = mix(texColor.rgb, color.rgb, color.a / max(0.0001, texColor.a));
+      color.rgb = mix(texColor.rgb, color.rgb, clamp(color.a / max(0.0001, texColor.a), 0.0, 1.0));
       color.a = texColor.a + (1.0 - texColor.a) * color.a;
     }
   }
