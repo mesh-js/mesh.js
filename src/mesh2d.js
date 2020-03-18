@@ -489,14 +489,12 @@ export default class Mesh2D {
         });
       }
     }
-    if(!mesh.attributes.a_sourceRect
-      || !compareRect(this[_texOptions].srcRect, options.srcRect)) {
-      if(srcRect) {
-        const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-        mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
-      } else {
-        mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
-      }
+
+    if(srcRect) {
+      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
+    } else {
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
     }
   }
 

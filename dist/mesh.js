@@ -16440,17 +16440,15 @@ function () {
         }
       }
 
-      if (!mesh.attributes.a_sourceRect || !compareRect(this[_texOptions].srcRect, options.srcRect)) {
-        if (srcRect) {
-          var sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-          mesh.attributes.a_sourceRect = mesh.positions.map(function () {
-            return [].concat(sRect);
-          });
-        } else {
-          mesh.attributes.a_sourceRect = mesh.positions.map(function () {
-            return [0, 0, 0, 0];
-          });
-        }
+      if (srcRect) {
+        var sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
+        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
+          return [].concat(sRect);
+        });
+      } else {
+        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
+          return [0, 0, 0, 0];
+        });
       }
     }
   }, {
