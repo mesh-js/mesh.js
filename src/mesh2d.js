@@ -376,9 +376,19 @@ export default class Mesh2D {
           const setter = attributes[name];
           // console.log(opts.size);
           this[_mesh].attributes[name] = [];
-          for(let j = 0; j < positions.length; j++) {
-            const p = positions[j];
-            this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
+          if(name === 'uv' && !setter) {
+            const bounds = getBounds(positions);
+            const [w, h] = [bounds[1][0] - bounds[0][0], bounds[1][1] - bounds[0][1]];
+            for(let j = 0; j < positions.length; j++) {
+              const p = positions[j];
+              const uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+              this[_mesh].attributes[name].push(uv);
+            }
+          } else {
+            for(let j = 0; j < positions.length; j++) {
+              const p = positions[j];
+              this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
+            }
           }
         }
       }

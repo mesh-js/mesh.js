@@ -8111,9 +8111,11 @@ function () {
           _ref5$clear = _ref5.clear,
           clear = _ref5$clear === void 0 ? false : _ref5$clear,
           _ref5$program = _ref5.program,
-          program = _ref5$program === void 0 ? null : _ref5$program;
+          drawProgram = _ref5$program === void 0 ? null : _ref5$program;
 
       var renderer = this[_glRenderer] || this[_canvasRenderer]; // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
+
+      var program = drawProgram || cloud.program;
 
       if (this[_glRenderer]) {
         var gl = renderer.gl;
@@ -13547,6 +13549,11 @@ function () {
       this[_count]--;
     }
   }, {
+    key: "setProgram",
+    value: function setProgram(program) {
+      this[_mesh].setProgram(program);
+    }
+  }, {
     key: "transform",
     value: function transform(idx, m) {
       var transform = this.getTransform(idx);
@@ -13796,6 +13803,11 @@ function () {
       }
 
       return meshData;
+    }
+  }, {
+    key: "program",
+    get: function get() {
+      return this[_mesh].program;
     }
   }]);
 
@@ -17402,10 +17414,23 @@ function () {
 
             this[_mesh].attributes[name] = [];
 
-            for (var j = 0; j < positions.length; j++) {
-              var p = positions[j];
+            if (name === 'uv' && !setter) {
+              var bounds = bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);
+              var w = bounds[1][0] - bounds[0][0],
+                  h = bounds[1][1] - bounds[0][1];
 
-              this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
+              for (var j = 0; j < positions.length; j++) {
+                var p = positions[j];
+                var uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+
+                this[_mesh].attributes[name].push(uv);
+              }
+            } else {
+              for (var _j = 0; _j < positions.length; _j++) {
+                var _p = positions[_j];
+
+                this[_mesh].attributes[name].push(setter ? setter(_p, i, positions) : Array(opts.size).fill(0));
+              }
             }
           }
         }

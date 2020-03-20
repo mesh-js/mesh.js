@@ -224,9 +224,10 @@ export default class Renderer {
     }
   }
 
-  drawMeshCloud(cloud, {clear = false, program = null} = {}) {
+  drawMeshCloud(cloud, {clear = false, program: drawProgram = null} = {}) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
+    const program = drawProgram || cloud.program;
     if(this[_glRenderer]) {
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);

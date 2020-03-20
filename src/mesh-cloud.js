@@ -326,6 +326,14 @@ export default class {
     return meshData;
   }
 
+  setProgram(program) {
+    this[_mesh].setProgram(program);
+  }
+
+  get program() {
+    return this[_mesh].program;
+  }
+
   transform(idx, m) {
     const transform = this.getTransform(idx);
     m = mat2d(m) * mat2d(transform);
