@@ -14,6 +14,11 @@
     "doc": "docsify serve ./docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://meshjs.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mesh-js/mesh.js"
+  },
   "keywords": [],
   "author": "akira-cn",
   "license": "MIT",
