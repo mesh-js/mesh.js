@@ -101,6 +101,10 @@ export function applyCloudShader(renderer, {
         type: 'UNSIGNED_BYTE',
         normalize: true,
       },
+      a_frameIndex: {
+        type: 'UNSIGNED_BYTE',
+        normalize: false,
+      },
     });
   }
 }
