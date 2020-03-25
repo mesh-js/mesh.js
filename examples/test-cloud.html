@@ -58,7 +58,10 @@
         });
         // mesh.setTransform(1, 0, 0, 1, 200, 200);
 
-        const cloud = new MeshCloud(mesh, 500);
+        const cloud = new MeshCloud(mesh, 10);
+        setTimeout(() => {
+          cloud.amount = 2000;
+        }, 1000);
         // cloud.setTransform(2, [1, 0, 0, 1, 50, 50]);
 
         // cloud.setTextureFrames([texture, texture2], {
