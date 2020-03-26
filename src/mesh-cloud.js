@@ -135,6 +135,30 @@ export default class {
     return this[_mesh].canIgnore();
   }
 
+  delete(idx) {
+    if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    const {transform0, transform1, color0, color1, color2, color3, color4, frameIndex, fillColor, strokeColor} = this[_buffer];
+    transform0.set(transform0.subarray(idx + 1), idx);
+    transform1.set(transform1.subarray(idx + 1), idx);
+    color0.set(color0.subarray(idx + 1), idx);
+    color1.set(color1.subarray(idx + 1), idx);
+    color2.set(color2.subarray(idx + 1), idx);
+    color3.set(color3.subarray(idx + 1), idx);
+    color4.set(color4.subarray(idx + 1), idx);
+    frameIndex.set(frameIndex.subarray(idx + 1), idx);
+    fillColor.set(fillColor.subarray(idx + 1), idx);
+    strokeColor.set(strokeColor.subarray(idx + 1), idx);
+    for(const i in this[_filters]) { // eslint-disable-line no-restricted-syntax
+      if(i === idx) {
+        delete this[_filters][i];
+      } else if(i > idx) {
+        this[_filters][i - 1] = this[_filters][i];
+        delete this[_filters][i];
+      }
+    }
+    this[_count]--;
+  }
+
   setColorTransform(idx, m) {
     if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
     idx *= 4;
