@@ -13427,16 +13427,16 @@ function () {
           frameIndex = _this$_buffer.frameIndex,
           fillColor = _this$_buffer.fillColor,
           strokeColor = _this$_buffer.strokeColor;
-      transform0.set(transform0.subarray(idx + 1), idx);
-      transform1.set(transform1.subarray(idx + 1), idx);
-      color0.set(color0.subarray(idx + 1), idx);
-      color1.set(color1.subarray(idx + 1), idx);
-      color2.set(color2.subarray(idx + 1), idx);
-      color3.set(color3.subarray(idx + 1), idx);
-      color4.set(color4.subarray(idx + 1), idx);
+      transform0.set(transform0.subarray(4 * (idx + 1)), 4 * idx);
+      transform1.set(transform1.subarray(4 * (idx + 1)), 4 * idx);
+      color0.set(color0.subarray(4 * (idx + 1)), 4 * idx);
+      color1.set(color1.subarray(4 * (idx + 1)), 4 * idx);
+      color2.set(color2.subarray(4 * (idx + 1)), 4 * idx);
+      color3.set(color3.subarray(4 * (idx + 1)), 4 * idx);
+      color4.set(color4.subarray(4 * (idx + 1)), 4 * idx);
       frameIndex.set(frameIndex.subarray(idx + 1), idx);
-      fillColor.set(fillColor.subarray(idx + 1), idx);
-      strokeColor.set(strokeColor.subarray(idx + 1), idx);
+      fillColor.set(fillColor.subarray(4 * (idx + 1)), 4 * idx);
+      strokeColor.set(strokeColor.subarray(4 * (idx + 1)), 4 * idx);
 
       for (var i in this[_filters]) {
         // eslint-disable-line no-restricted-syntax
