@@ -12080,7 +12080,9 @@ function createText(text, _ref) {
   var font = _ref.font,
       fillColor = _ref.fillColor,
       strokeColor = _ref.strokeColor,
-      strokeWidth = _ref.strokeWidth;
+      strokeWidth = _ref.strokeWidth,
+      _ref$ratio = _ref.ratio,
+      ratio = _ref$ratio === void 0 ? 1 : _ref$ratio;
   var key = [text, font, String(fillColor), String(strokeColor), String(strokeWidth)].join('###');
   var textCanvas = cacheMap[key];
   if (textCanvas) return textCanvas;
@@ -12104,14 +12106,13 @@ function createText(text, _ref) {
   var canvas = textContext.canvas;
   var w = Math.ceil(width);
   var h = Math.ceil(height);
-  var ratio = 2;
-  canvas.width = w * ratio;
-  canvas.height = h * ratio;
+  canvas.width = Math.round(w * ratio);
+  canvas.height = Math.round(h * ratio);
   textContext.save();
   textContext.font = fontEx(fontInfo, ratio);
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
-  var top = canvas.height * 0.5 + fontInfo.pxHeight * 0.1;
+  var top = canvas.height * 0.5 + fontInfo.pxHeight * 0.05 * ratio;
   var left = canvas.width * 0.5;
 
   if (fillColor) {

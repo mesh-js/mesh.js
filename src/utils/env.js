@@ -9,7 +9,7 @@ function fontEx(info, ratio) {
   return `${style} ${variant} ${weight} ${stretch} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
 }
 
-function createText(text, {font, fillColor, strokeColor, strokeWidth}) {
+function createText(text, {font, fillColor, strokeColor, strokeWidth, ratio = 1}) {
   const key = [text, font, String(fillColor), String(strokeColor), String(strokeWidth)].join('###');
   let textCanvas = cacheMap[key];
   if(textCanvas) return textCanvas;
@@ -34,16 +34,15 @@ function createText(text, {font, fillColor, strokeColor, strokeWidth}) {
   const w = Math.ceil(width);
   const h = Math.ceil(height);
 
-  const ratio = 2;
-  canvas.width = w * ratio;
-  canvas.height = h * ratio;
+  canvas.width = Math.round(w * ratio);
+  canvas.height = Math.round(h * ratio);
 
   textContext.save();
   textContext.font = fontEx(fontInfo, ratio);
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
 
-  const top = canvas.height * 0.5 + fontInfo.pxHeight * 0.1;
+  const top = canvas.height * 0.5 + fontInfo.pxHeight * 0.05 * ratio;
   const left = canvas.width * 0.5;
 
   if(fillColor) {
