@@ -1,3 +1,7 @@
+demos
+docs
+examples
+
 # packConfig
 yarn.lock
 package-lock.json
