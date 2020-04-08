@@ -462,7 +462,7 @@ export default class Mesh2D {
         }
 
         mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-          if(z > 0) {
+          if(1 / z > 0) {
             [x, y] = transformPoint([x, y], m, w, h, true);
             [x, y] = [x / w, y / h];
             if(options.rotated) {
@@ -483,7 +483,7 @@ export default class Mesh2D {
           m = mat2d.translate(m, [0, -rect[2]]);
         }
         mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-          if(z > 0) {
+          if(1 / z > 0) {
             // fillTag
             if(options.rotated) {
               [x, y] = transformPoint([x, y], m, w, h, true);
