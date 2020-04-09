@@ -45,15 +45,13 @@ setStroke({thickness = 1, cap = 'butt', join = 'miter', miterLimit = 10, color =
 
 #### setFill
 
-setFill({delaunay = true, clean = true, randomization = 0, color = [0, 0, 0, 0]})
+setFill({rule = 'nonzero', color = [0, 0, 0, 0]})
 
 - parameters
 
 | Name | Type | Attributes | Default | Description |
 | --- | --- | --- | --- | --- |
-| delaunay | Boolean | _optional_ | true | |
-| clean | Boolean | _optional_ | true | |
-| randomization | Number | _optional_ | 0 | |
+| rule | String | _optional_ | _'nonzero' or 'evenodd'_ | |
 | color | Array | _optional_ | [0, 0, 0, 0] | |
 
 #### setTexture
