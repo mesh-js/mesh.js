@@ -12599,7 +12599,7 @@ function drawMesh2D(mesh, context) {
       }
 
       if (fill) {
-        context.fill();
+        context.fill(mesh.fillRule);
       }
 
       if (drawTexture) {
@@ -16655,20 +16655,14 @@ function () {
     key: "setFill",
     value: function setFill() {
       var _ref18 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref18$delaunay = _ref18.delaunay,
-          delaunay = _ref18$delaunay === void 0 ? true : _ref18$delaunay,
-          _ref18$clean = _ref18.clean,
-          clean = _ref18$clean === void 0 ? true : _ref18$clean,
-          _ref18$randomization = _ref18.randomization,
-          randomization = _ref18$randomization === void 0 ? 0 : _ref18$randomization,
+          _ref18$rule = _ref18.rule,
+          rule = _ref18$rule === void 0 ? 'nonzero' : _ref18$rule,
           _ref18$color = _ref18.color,
           color = _ref18$color === void 0 ? [0, 0, 0, 0] : _ref18$color;
 
       this[_mesh] = null;
       this[_fill] = {
-        delaunay: delaunay,
-        clean: clean,
-        randomization: randomization
+        rule: rule
       };
       if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_16__["default"])(color);
       this[_fillColor] = color;
@@ -17274,6 +17268,15 @@ function () {
       return [0, 0];
     }
   }, {
+    key: "fillRule",
+    get: function get() {
+      if (this[_fill]) {
+        return this[_fill].rule;
+      }
+
+      return 'nonzero';
+    }
+  }, {
     key: "lineWidth",
     get: function get() {
       if (this[_stroke]) {
@@ -17416,7 +17419,7 @@ function () {
         if (contours && contours.length) {
           if (this[_fill]) {
             try {
-              var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_14___default()(contours);
+              var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_14___default()(contours, this[_fill]);
 
               _mesh2.positions = _mesh2.positions.map(function (p) {
                 p[1] = _this[_bound][1][1] - p[1];
@@ -17959,11 +17962,12 @@ module.exports = function (contours, opt) {
     return c.reduce(function (a, b) {
       return a.concat(b);
     });
-  }); // Tesselate
+  });
+  var windingRule = opt.rule === 'evenodd' ? Tess2.WINDING_ODD : Tess2.WINDING_NONZERO; // Tesselate
 
   var res = Tess2.tesselate(xtend({
     contours: contours,
-    windingRule: Tess2.WINDING_ODD,
+    windingRule: windingRule,
     elementType: Tess2.POLYGONS,
     polySize: 3,
     vertexSize: 2

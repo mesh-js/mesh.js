@@ -128,7 +128,7 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
         }
       }
       if(fill) {
-        context.fill();
+        context.fill(mesh.fillRule);
       }
 
       if(drawTexture) {

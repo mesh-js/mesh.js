@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    canvas {
+      width: 512px;
+      height: 512px;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script type="module">
+    import {Vector2D} from './lib/vector2d.js';
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: '2d',
+    });
+
+    const points = [new Vector2D(0, 100)];
+    for(let i = 1; i <= 4; i++) {
+      const p = points[0].copy().rotate(i * Math.PI * 0.4);
+      points.push(p);
+    }
+
+    const figure = new Figure2D();
+    figure.beginPath();
+    figure.moveTo(...points[0]);
+    figure.lineTo(...points[2]);
+    figure.lineTo(...points[4]);
+    figure.lineTo(...points[1]);
+    figure.lineTo(...points[3]);
+
+    console.log(figure);
+
+    const mesh1 = new Mesh2D(figure, canvas);
+    mesh1.setFill({
+      color: [1, 0, 0, 1],
+      // rule: 'evenodd',
+    });
+
+    mesh1.translate(256, 256);
+
+    renderer.drawMeshes([mesh1]);
+  </script>
+</body>
+</html>

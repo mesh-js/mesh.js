@@ -186,6 +186,13 @@ export default class Mesh2D {
     return [0, 0];
   }
 
+  get fillRule() {
+    if(this[_fill]) {
+      return this[_fill].rule;
+    }
+    return 'nonzero';
+  }
+
   get lineWidth() {
     if(this[_stroke]) {
       return this[_stroke].thickness;
@@ -305,7 +312,7 @@ export default class Mesh2D {
       if(contours && contours.length) {
         if(this[_fill]) {
           try {
-            const mesh = triangulate(contours);
+            const mesh = triangulate(contours, this[_fill]);
             mesh.positions = mesh.positions.map((p) => {
               p[1] = this[_bound][1][1] - p[1];
               p.push(this[_opacity]);
@@ -570,9 +577,9 @@ export default class Mesh2D {
     return this;
   }
 
-  setFill({delaunay = true, clean = true, randomization = 0, color = [0, 0, 0, 0]} = {}) {
+  setFill({rule = 'nonzero', color = [0, 0, 0, 0]} = {}) {
     this[_mesh] = null;
-    this[_fill] = {delaunay, clean, randomization};
+    this[_fill] = {rule};
     if(typeof color === 'string') color = parseColor(color);
     this[_fillColor] = color;
     return this;

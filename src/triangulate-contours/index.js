@@ -25,11 +25,13 @@ module.exports = function(contours, opt) {
             return a.concat(b)
         })
     })
+    
+    const windingRule = opt.rule === 'evenodd'? Tess2.WINDING_ODD : Tess2.WINDING_NONZERO;
 
     // Tesselate
     var res = Tess2.tesselate(xtend({
         contours: contours,
-        windingRule: Tess2.WINDING_ODD,
+        windingRule,
         elementType: Tess2.POLYGONS,
         polySize: 3,
         vertexSize: 2
