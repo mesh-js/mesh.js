@@ -9,12 +9,16 @@ function fontEx(info, ratio) {
   return `${style} ${variant} ${weight} ${stretch} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
 }
 
-function createText(text, {font, fillColor, strokeColor, strokeWidth, ratio = 1}) {
+function createText(text, {font, fillColor, strokeColor, strokeWidth, ratio = 1, textCanvas, cachable = false}) {
   const key = [text, font, String(fillColor), String(strokeColor), String(strokeWidth)].join('###');
-  let textCanvas = cacheMap[key];
-  if(textCanvas) return textCanvas;
+  if(cachable) {
+    const cachedCanvas = cacheMap[key];
+    if(cachedCanvas) return cachedCanvas;
+  }
 
-  textCanvas = createCanvas(1, 1);
+  if(!textCanvas) {
+    textCanvas = createCanvas(1, 1);
+  }
 
   const textContext = textCanvas.getContext('2d');
   textContext.save();
@@ -84,8 +88,12 @@ function createText(text, {font, fillColor, strokeColor, strokeWidth, ratio = 1}
   }
   textContext.restore();
 
-  cacheMap[key] = {image: textCanvas, rect: [0, 0, w, h]};
-  return cacheMap[key];
+  const ret = {image: textCanvas, rect: [0, 0, w, h]};
+
+  if(cachable) {
+    cacheMap[key] = ret;
+  }
+  return ret;
 }
 
 // Fixed: use offscreen canvas as texture will fail in early chrome.
