@@ -22,6 +22,7 @@ function Stroke(opt) {
   this.thickness = number(opt.thickness, 1);
   this.join = opt.join || 'miter';
   this.cap = opt.cap || 'butt';
+  this.roundSegments = opt.roundSegments || 20;
   this._normal = null;
   this._lastFlip = -1;
   this._started = false;
@@ -56,27 +57,54 @@ Stroke.prototype.build = function (points, closed = false) {
   this._started = false;
   this._normal = null;
 
-  // join each segment
-  for(let i = 1, count = 0; i < total; i++) {
-    const last = points[i - 1];
-    const cur = points[i];
-    const next = i < points.length - 1 ? points[i + 1] : null;
-    const thickness = this.mapThickness(cur, i, points);
-    const amt = this._seg(complex, count, last, cur, next, thickness / 2, closed, closeNext);
-    count += amt;
-  }
-  if(closed) {
-    complex.positions = complex.positions.slice(2);
-    complex.cells = complex.cells.slice(2).map(([a, b, c]) => [a - 2, b - 2, c - 2]);
+  if(this.join === 'round') {
+    for(let i = 1; i < total; i++) {
+      this._started = false;
+      this._normal = null;
+      this._lastFlip = -1;
+      const _complex = {
+        positions: [],
+        cells: [],
+      };
+      const last = points[i - 1];
+      const cur = points[i];
+      const thickness = this.mapThickness(cur, i, points);
+      if(i === 1 && this.cap !== 'round' && this.cap !== 'roundStart') {
+        this._seg(_complex, 0, last, cur, null, thickness / 2, false, false, 'roundEnd');
+      } else if(i === total - 1 && this.cap !== 'round' && this.cap !== 'roundEnd') {
+        this._seg(_complex, 0, last, cur, null, thickness / 2, false, false, 'roundStart');
+      } else {
+        this._seg(_complex, 0, last, cur, null, thickness / 2, false, false, 'round');
+      }
+      const idx = complex.positions.length;
+      complex.positions.push(..._complex.positions);
+      complex.cells.push(..._complex.cells.map(o => o.map(i => i + idx)));
+    }
+  } else {
+    // join each segment
+    for(let i = 1, count = 0; i < total; i++) {
+      const last = points[i - 1];
+      const cur = points[i];
+      const next = i < points.length - 1 ? points[i + 1] : null;
+      const thickness = this.mapThickness(cur, i, points);
+      this._seg(complex, count, last, cur, next, thickness / 2, closed, closeNext);
+      count = complex.positions.length - 2;
+    }
+    if(closed) {
+      complex.positions = complex.positions.slice(2);
+      complex.cells = complex.cells.slice(2).map(([a, b, c]) => [a - 2, b - 2, c - 2]);
+    }
   }
   return complex;
 };
 
-Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, closed, closeNext) {
-  let count = 0;
+Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, closed, closeNext, cap = this.cap) {
   const cells = complex.cells;
   const positions = complex.positions;
-  const capSquare = this.cap === 'square';
+  const capSquare = cap === 'square';
+  const capRound = cap === 'round';
+  const capRoundStart = cap === 'roundStart';
+  const capRoundEnd = cap === 'roundEnd';
   const joinBevel = this.join === 'bevel';
 
   // get unit direction of line
@@ -97,6 +125,13 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
     if(capSquare) {
       vec.scaleAndAdd(capEnd, last, lineA, -halfThick);
       last = capEnd;
+    }
+    if(capRound || capRoundStart) {
+      round(complex, last, this._normal, halfThick, -1, this.roundSegments);
+      for(let i = 1; i <= this.roundSegments; i++) {
+        cells.push([index, index + i, index + i + 1]);
+      }
+      index += this.roundSegments + 2;
     }
     extrusions(complex, last, this._normal, halfThick);
   }
@@ -125,7 +160,14 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
     extrusions(complex, cur, this._normal, halfThick);
     cells.push(this._lastFlip === 1 ? [index, index + 2, index + 3] : [index + 2, index + 1, index + 3]);
 
-    count += 2;
+    if(capRound || capRoundEnd) {
+      const idx = complex.positions.length;
+      round(complex, cur, this._normal, halfThick, 1, this.roundSegments);
+      for(let i = 1; i <= this.roundSegments; i++) {
+        cells.push([idx, idx + i, idx + i + 1]);
+      }
+      index += this.roundSegments + 2;
+    }
   } else { // we have a next segment, start with miter
     // get unit dir of next line
     if(!next) direction(lineB, closeNext, cur);
@@ -169,11 +211,7 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
         positions.push(vec.clone(tmp));
         // now add the bevel triangle
         cells.push([index + 2, index + 3, index + 4]);
-        count++;
       }
-
-      // //the miter is now the normal for our next join
-      count += 2;
     } else { // miter
       // next two points for our miter join
       extrusions(complex, cur, miter, miterLen);
@@ -185,11 +223,9 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
 
       // the miter is now the normal for our next join
       vec.copy(this._normal, miter);
-      count += 2;
     }
     this._lastFlip = flip;
   }
-  return count;
 };
 
 function extrusions(complex, point, normal, scale) {
@@ -200,6 +236,21 @@ function extrusions(complex, point, normal, scale) {
 
   vec.scaleAndAdd(tmp, point, normal, scale);
   positions.push(vec.clone(tmp));
+}
+
+function round(complex, point, normal, scale, dir = 1, roundSegments = 20) {
+  const positions = complex.positions;
+  // const positions = [];
+  const t = vec.create();
+
+  positions.push(vec.clone(point));
+
+  for(let i = 0; i <= roundSegments; i++) {
+    const rad = dir * Math.PI * i / roundSegments;
+    vec.rotate(t, normal, [0, 0], rad);
+    vec.scaleAndAdd(tmp, point, t, -scale);
+    positions.push(vec.clone(tmp));
+  }
 }
 
 export default Stroke;

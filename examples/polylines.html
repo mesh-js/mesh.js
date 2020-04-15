@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas);
+
+    const figure = new Figure2D();
+    figure.beginPath();
+    figure.moveTo(100, 100);
+    figure.lineTo(100, 200);
+    figure.lineTo(200, 300);
+    figure.lineTo(300, 300);
+    figure.lineTo(200, 330);
+
+    const mesh = new Mesh2D(figure, canvas);
+    mesh.setStroke({
+      color: [0, 0, 1, 1],
+      thickness: 30,
+      cap: 'round',
+      // miterLimit: 6,
+      join: 'round',
+      // join: 'bevel',
+    });
+
+    const mesh2 = new Mesh2D(figure, canvas);
+    mesh2.setStroke({
+      color: [1, 0, 0, 1],
+      thickness: 3,
+    });
+    renderer.drawMeshes([mesh]);
+    renderer.drawMeshes([mesh2]);
+  </script>
+</body>
+</html>

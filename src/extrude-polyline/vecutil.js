@@ -11,6 +11,7 @@ function create() {
 const copy = vec2.copy;
 const scaleAndAdd = vec2.scaleAndAdd;
 const dot = vec2.dot;
+const rotate = vec2.rotate;
 
 export {
   create,
@@ -18,4 +19,5 @@ export {
   copy,
   scaleAndAdd,
   dot,
+  rotate,
 };
