@@ -567,9 +567,10 @@ export default class Mesh2D {
     color = [0, 0, 0, 0],
     lineDash = null,
     lineDashOffset = 0,
+    roundSegments = 20,
   } = {}) {
     this[_mesh] = null;
-    this[_stroke] = stroke({thickness, cap, join, miterLimit});
+    this[_stroke] = stroke({thickness, cap, join, miterLimit, roundSegments});
     if(typeof color === 'string') color = parseColor(color);
     this[_strokeColor] = color;
     this[_stroke].lineDash = lineDash;

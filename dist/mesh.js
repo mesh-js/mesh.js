@@ -16654,14 +16654,17 @@ function () {
           _ref17$lineDash = _ref17.lineDash,
           lineDash = _ref17$lineDash === void 0 ? null : _ref17$lineDash,
           _ref17$lineDashOffset = _ref17.lineDashOffset,
-          lineDashOffset = _ref17$lineDashOffset === void 0 ? 0 : _ref17$lineDashOffset;
+          lineDashOffset = _ref17$lineDashOffset === void 0 ? 0 : _ref17$lineDashOffset,
+          _ref17$roundSegments = _ref17.roundSegments,
+          roundSegments = _ref17$roundSegments === void 0 ? 20 : _ref17$roundSegments;
 
       this[_mesh] = null;
       this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_7__["default"])({
         thickness: thickness,
         cap: cap,
         join: join,
-        miterLimit: miterLimit
+        miterLimit: miterLimit,
+        roundSegments: roundSegments
       });
       if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_16__["default"])(color);
       this[_strokeColor] = color;
