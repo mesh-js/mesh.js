@@ -17215,6 +17215,18 @@ function () {
 
       if (meshData) {
         var positions = meshData.position0;
+
+        var _this$_bound$5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this[_bound][1], 2),
+            w = _this$_bound$5[0],
+            h = _this$_bound$5[1];
+
+        positions = positions.map(function (_ref32) {
+          var _ref33 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref32, 2),
+              x = _ref33[0],
+              y = _ref33[1];
+
+          return Object(_utils_positions__WEBPACK_IMPORTED_MODULE_10__["denormalize"])([x, y], w, h);
+        });
         if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);else return [[0, 0], [0, 0]];
         return meshData.boundingBox;
       }
@@ -17450,11 +17462,11 @@ function () {
         // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
 
         this[_mesh] = mesh;
-        mesh.position0 = mesh.positions.map(function (_ref32) {
-          var _ref33 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref32, 3),
-              x = _ref33[0],
-              y = _ref33[1],
-              z = _ref33[2];
+        mesh.position0 = mesh.positions.map(function (_ref34) {
+          var _ref35 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref34, 3),
+              x = _ref35[0],
+              y = _ref35[1],
+              z = _ref35[2];
 
           return [x, y, z];
         });

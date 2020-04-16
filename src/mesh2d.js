@@ -165,7 +165,11 @@ export default class Mesh2D {
 
     const meshData = this.meshData;
     if(meshData) {
-      const positions = meshData.position0;
+      let positions = meshData.position0;
+      const [w, h] = this[_bound][1];
+      positions = positions.map(([x, y]) => {
+        return denormalize([x, y], w, h);
+      });
       if(positions.length) meshData.boundingBox = getBounds(positions);
       else return [[0, 0], [0, 0]];
       return meshData.boundingBox;
