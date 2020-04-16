@@ -712,7 +712,7 @@ export default class Mesh2D {
 
   transform(...m) {
     const transform = this[_transform];
-    this[_transform] = mat2d(m) * mat2d(transform);
+    this[_transform] = mat2d(transform) * mat2d(m);
     const acc = this.transformScale / this.contours.scale;
     if(acc > 1.5 || acc < 0.67) {
       this.accurate(this.transformScale);
