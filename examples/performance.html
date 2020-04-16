@@ -35,7 +35,7 @@
 
     for(let i = 0; i < pointNumber; i++) {
       const mesh = new Mesh2D(figure, canvas);
-      // mesh.scaleSize = getRangeSize();
+      mesh.scaleSize = getRangeSize();
       mesh.setFill({color: [Math.random(), Math.random(), Math.random(), 1]});
       // mesh.setFill({color: [1, 0, 0, 1]});
       meshList.push(mesh);
@@ -46,7 +46,7 @@
         // const scaleSize = getRangeSize();
         const xPosition = getXPosition();
         const yPosition = getYPosition();
-        // const {scaleSize} = mesh;
+        const {scaleSize} = mesh;
         // mesh.setTransform(scaleSize, 0, 0, scaleSize, 0, 0);
         // console.log(mesh.transformMatrix);
         mesh.setTransform(1, 0, 0, 1, 0, 0);
@@ -59,7 +59,7 @@
 
     const renderer = new Renderer(canvas, {
       antialias: true,
-      // bufferSize: 30000,
+      bufferSize: 30000,
     });
 
     function animate() {

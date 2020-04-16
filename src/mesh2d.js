@@ -3,7 +3,7 @@ import getBounds from 'bound-points';
 import stroke from './extrude-polyline';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
-import {normalize, denormalize} from './utils/positions';
+import {normalize} from './utils/positions';
 import {multiply, grayscale, brightness,
   saturate, contrast, invert,
   sepia, opacity, hueRotate} from './utils/color-matrix';
@@ -43,16 +43,8 @@ function normalizePoints(points, bound) {
   for(let i = 0; i < points.length; i++) {
     const point = points[i];
     point[0] = 2 * point[0] / w - 1;
-    point[1] = 2 * point[1] / h - 1;
+    point[1] = 1 - 2 * point[1] / h;
   }
-}
-
-function transformPoint(p, m, w, h, flipY) {
-  const [x, y] = denormalize(p, w, h);
-  p[0] = x * m[0] + y * m[2] + m[4];
-  p[1] = x * m[1] + y * m[3] + m[5];
-  if(flipY) p[1] = h - p[1];
-  return p;
 }
 
 function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
@@ -165,11 +157,11 @@ export default class Mesh2D {
 
     const meshData = this.meshData;
     if(meshData) {
-      let positions = meshData.position0;
-      const [w, h] = this[_bound][1];
-      positions = positions.map(([x, y]) => {
-        return denormalize([x, y], w, h);
-      });
+      const positions = meshData.position0;
+      // const [w, h] = this[_bound][1];
+      // positions = positions.map(([x, y]) => {
+      //   return denormalize([x, y], w, h);
+      // });
       if(positions.length) meshData.boundingBox = getBounds(positions);
       else return [[0, 0], [0, 0]];
       return meshData.boundingBox;
@@ -300,6 +292,12 @@ export default class Mesh2D {
 
   // {stroke, fill}
   get meshData() { // eslint-disable-line complexity
+    if(this._updateMatrix) {
+      const acc = this.transformScale / this.contours.scale;
+      if(acc > 1.5 || acc < 0.67) {
+        this.accurate(this.transformScale);
+      }
+    }
     if(!this[_mesh]) {
       if(!this[_fill] && !this[_stroke]) {
         this.setFill();
@@ -313,7 +311,7 @@ export default class Mesh2D {
           try {
             const mesh = triangulate(contours, this[_fill]);
             mesh.positions = mesh.positions.map((p) => {
-              p[1] = this[_bound][1][1] - p[1];
+              // p[1] = this[_bound][1][1] - p[1];
               p.push(this[_opacity]);
               return p;
             });
@@ -340,7 +338,7 @@ export default class Mesh2D {
           });
           _meshes.forEach((mesh) => {
             mesh.positions = mesh.positions.map((p) => {
-              p[1] = this[_bound][1][1] - p[1];
+              // p[1] = this[_bound][1][1] - p[1];
               p.push(-this[_opacity]);
               return p;
             });
@@ -355,14 +353,13 @@ export default class Mesh2D {
       const mesh = flattenMeshes([meshes.fill, meshes.stroke]);
       mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
       mesh.enableBlend = this.enableBlend;
+      mesh.position0 = mesh.positions.map(([x, y, z]) => [x, y, z]);
       normalizePoints(mesh.positions, this[_bound]);
 
       mesh.uniforms = this[_uniforms];
       // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
       // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
       this[_mesh] = mesh;
-
-      mesh.position0 = mesh.positions.map(([x, y, z]) => [x, y, z]);
 
       if(!this[_uniforms].u_texSampler) {
         // mesh.textureCoord = mesh.positions.map(() => [0, 0]);
@@ -417,14 +414,12 @@ export default class Mesh2D {
     const [w, h] = this[_bound][1];
 
     for(let i = 0; i < positions.length; i++) {
-      const point = p[i];
+      const [x, y] = p[i];
       const position = positions[i];
-      const x = (point[0] + 1) * 0.5 * w;
-      const y = (1 - point[1]) * 0.5 * h;
       position[0] = x * m[0] + y * m[2] + m[4];
-      position[1] = h - (x * m[1] + y * m[3] + m[5]);
+      position[1] = x * m[1] + y * m[3] + m[5];
       position[0] = 2 * position[0] / w - 1;
-      position[1] = 2 * position[1] / h - 1;
+      position[1] = 1 - 2 * position[1] / h;
     }
     this._updateMatrix = false;
   }
@@ -470,7 +465,7 @@ export default class Mesh2D {
 
     const [w, h] = this[_bound][1];
     if(options.hidden) {
-      mesh.textureCoord = mesh.position0.map(() => [-1, -1, -1]);
+      mesh.textureCoord = mesh.positions.map(() => [-1, -1, -1]);
     } else if(!mesh.textureCoord
       || !compareRect(this[_texOptions].rect, options.rect)
       || this[_texOptions].hidden !== options.hidden
@@ -484,10 +479,11 @@ export default class Mesh2D {
         if(1 / z > 0) {
           // fillTag
           if(options.rotated) {
-            [x, y] = transformPoint([x, y], m, w, h, true);
-            [x, y] = [x / w, y / h];
+            const x0 = x * m[0] + y * m[2] + m[4];
+            const y0 = x * m[1] + y * m[3] + m[5];
+            [x, y] = [x0 / w, 1 - y0 / h];
           } else {
-            [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
+            [x, y] = [x / w, 1 - y / h];
           }
           const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
           if(options.repeat) texCoord[2] = 1;
@@ -499,9 +495,9 @@ export default class Mesh2D {
 
     if(srcRect) {
       const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-      mesh.attributes.a_sourceRect = mesh.position0.map(() => [...sRect]);
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
     } else {
-      mesh.attributes.a_sourceRect = mesh.position0.map(() => [0, 0, 0, 0]);
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
     }
   }
 
@@ -682,10 +678,6 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!mat2d.equals(m, transform)) {
       this[_transform] = m;
-      const acc = this.transformScale / this.contours.scale;
-      if(acc > 1.5 || acc < 0.67) {
-        this.accurate(this.transformScale);
-      }
       // if(this[_mesh] || this[_uniforms].u_radialGradientVector) {
       //   m = mat2d(m) * mat2d.invert(transform);
       // }
@@ -703,10 +695,6 @@ export default class Mesh2D {
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(transform) * mat2d(m);
-    const acc = this.transformScale / this.contours.scale;
-    if(acc > 1.5 || acc < 0.67) {
-      this.accurate(this.transformScale);
-    }
     // if(this[_mesh]) this[_applyTransform](this[_mesh], m);
     // if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
     this._updateMatrix = true;
