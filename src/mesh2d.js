@@ -414,9 +414,10 @@ export default class Mesh2D {
     normalizePoints(positions, this[_bound]);
   }
 
-  [_applyGradientTransform](m) {
+  [_applyGradientTransform]() {
     const h = this[_bound][1][1];
-    const vector = this[_uniforms].u_radialGradientVector;
+    const m = this[_transform];
+    const vector = [...this._radialGradientVector];
     if(vector) {
       let [x1, y1, , x2, y2] = vector;
       y1 = h - y1;
@@ -673,12 +674,12 @@ export default class Mesh2D {
     if(colorSteps.length < 40) colorSteps.push(-1);
     if(colorSteps.length > 40) throw new Error('Too many colors, should be less than 8 colors');
 
-    this[_uniforms].u_radialGradientVector = _vector;
+    this._radialGradientVector = _vector;
     this[_uniforms].u_colorSteps = colorSteps;
     if(type === 'fill') this[_uniforms].u_gradientType = 1;
     else this[_uniforms].u_gradientType = 0;
 
-    this[_applyGradientTransform](this[_transform]);
+    this[_applyGradientTransform]();
 
     return this;
   }
@@ -703,7 +704,7 @@ export default class Mesh2D {
         this[_applyTransform](this[_mesh], m);
       }
       if(this[_uniforms].u_radialGradientVector) {
-        this[_applyGradientTransform](m);
+        this[_applyGradientTransform]();
       }
     }
     return this;
@@ -717,7 +718,7 @@ export default class Mesh2D {
       this.accurate(this.transformScale);
     }
     if(this[_mesh]) this[_applyTransform](this[_mesh], m);
-    if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform](m);
+    if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
     return this;
   }
 

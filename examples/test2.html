@@ -20,19 +20,76 @@
 
   const mesh1 = new Mesh2D(figure, canvas);
 
+  function multiply(out, a, b) {
+    let a00 = a[0], a01 = a[1], a02 = a[2];
+    let a10 = a[3], a11 = a[4], a12 = a[5];
+    let a20 = a[6], a21 = a[7], a22 = a[8];
+
+    let b00 = b[0], b01 = b[1], b02 = b[2];
+    let b10 = b[3], b11 = b[4], b12 = b[5];
+    let b20 = b[6], b21 = b[7], b22 = b[8];
+
+    out[0] = b00 * a00 + b01 * a10 + b02 * a20;
+    out[1] = b00 * a01 + b01 * a11 + b02 * a21;
+    out[2] = b00 * a02 + b01 * a12 + b02 * a22;
+
+    out[3] = b10 * a00 + b11 * a10 + b12 * a20;
+    out[4] = b10 * a01 + b11 * a11 + b12 * a21;
+    out[5] = b10 * a02 + b11 * a12 + b12 * a22;
+
+    out[6] = b20 * a00 + b21 * a10 + b22 * a20;
+    out[7] = b20 * a01 + b21 * a11 + b22 * a21;
+    out[8] = b20 * a02 + b21 * a12 + b22 * a22;
+    return out;
+  }
+
+  const m1 = [
+    1, 0, 50,
+    0, 1, 50,
+    0, 0, 1,
+  ];
+
+  const rad = 0.7;
+  const m2 = [
+    Math.cos(rad), -Math.sin(rad), 0,
+    Math.sin(rad), Math.cos(rad), 0,
+    0, 0, 1,
+  ];
+
+  const m3 = [
+    1, 0, 300,
+    0, 1, 0,
+    0, 0, 1,
+  ];
+
+  const res = [m2, m1].reduce((a, b) => {
+    return multiply([], a, b);
+  });
+
+  const res2 = [m3, res].reduce((a, b) => {
+    return multiply([], a, b);
+  });
+
+  // mesh1.setTransform(res2[0], res2[3],
+  //   res2[1], res2[4],
+  //   res2[2], res2[5]);
+  mesh1.translate(50, 50);
+  mesh1.rotate(0.7);
+  mesh1.translate(300, 0);
+
   mesh1.setFill({
     color: [1, 0, 0, 1],
   });
 
-  const figure2 = new Figure2D();
-  figure2.rect(0, 0, 512, 512);
-  const mesh2 = new Mesh2D(figure2, canvas);
+  // const figure2 = new Figure2D();
+  // figure2.rect(0, 0, 512, 512);
+  // const mesh2 = new Mesh2D(figure2, canvas);
   // mesh2.setFill({
   //   color: [0, 1, 0, 1],
   // });
 
   renderer.drawMeshes([mesh1]);
-  renderer.drawMeshes([mesh2]);
+  // renderer.drawMeshes([mesh2]);
 
   // renderer.glRenderer.setMeshData([mesh1.meshData]);
   // renderer.glRenderer._draw();

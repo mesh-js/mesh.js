@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="960" height="512"></canvas>
+  <script src="https://mrdoob.github.io/stats.js/build/stats.min.js"></script>
+  <script src="/js/mesh.js"></script>
+  <script>
+    /* global Stats */
+    const stats = new Stats();
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild(stats.dom);
+
+    const pointNumber = 10000; //
+
+    const {Figure2D, Mesh2D, Renderer} = meshjs;
+
+    const fmtRangeWrapper = (upperLimit, bottomLimit) => () => Math.floor(Math.random() * ((upperLimit - bottomLimit) + 1)) + bottomLimit;
+    const getRangeSize = fmtRangeWrapper(10, 1);
+    const getXPosition = fmtRangeWrapper(960, 0);
+    const getYPosition = fmtRangeWrapper(512, 0);
+
+    const figure = new Figure2D();
+    figure.arc(0, 0, 10, 0, Math.PI * 2);
+
+    const canvas = document.querySelector('canvas');
+
+    const meshList = [];
+
+    for(let i = 0; i < pointNumber; i++) {
+      const mesh = new Mesh2D(figure, canvas);
+      // mesh.scaleSize = getRangeSize();
+      mesh.setFill({color: [Math.random(), Math.random(), Math.random(), 1]});
+      // mesh.setFill({color: [1, 0, 0, 1]});
+      meshList.push(mesh);
+    }
+
+    function getData() {
+      return meshList.map((mesh) => {
+        // const scaleSize = getRangeSize();
+        const xPosition = getXPosition();
+        const yPosition = getYPosition();
+        // const {scaleSize} = mesh;
+        // mesh.setTransform(scaleSize, 0, 0, scaleSize, 0, 0);
+        // console.log(mesh.transformMatrix);
+        mesh.setTransform(1, 0, 0, 1, 0, 0);
+        mesh
+          // .scale(scaleSize)
+          .translate(xPosition, yPosition);
+        return mesh;
+      });
+    }
+
+    const renderer = new Renderer(canvas, {
+      antialias: false,
+      bufferSize: 30000,
+    });
+
+    function animate() {
+      stats.update();
+      const meshes = getData();
+      renderer.clear();
+      renderer.drawMeshes(meshes);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
