@@ -9,6 +9,8 @@
   <canvas width="960" height="512"></canvas>
   <script src="https://mrdoob.github.io/stats.js/build/stats.min.js"></script>
   <script src="/js/mesh.js"></script>
+  <!-- <script src="https://s3.ssl.qhres.com/static/12cf65959dee7a43.js"></script> -->
+  <!-- <script src="https://unpkg.com/@mesh.js/core/dist/mesh.js"></script> -->
   <script>
     /* global Stats */
     const stats = new Stats();
@@ -56,15 +58,17 @@
     }
 
     const renderer = new Renderer(canvas, {
-      antialias: false,
-      bufferSize: 30000,
+      antialias: true,
+      // bufferSize: 30000,
     });
 
     function animate() {
       stats.update();
       const meshes = getData();
       renderer.clear();
+      // console.time('abc');
       renderer.drawMeshes(meshes);
+      // console.timeEnd('abc');
       requestAnimationFrame(animate);
     }
     animate();

@@ -74,22 +74,22 @@
   //   res2[1], res2[4],
   //   res2[2], res2[5]);
   mesh1.translate(50, 50);
-  mesh1.rotate(0.7);
+  mesh1.rotate(0.9);
   mesh1.translate(300, 0);
 
   mesh1.setFill({
     color: [1, 0, 0, 1],
   });
 
-  // const figure2 = new Figure2D();
-  // figure2.rect(0, 0, 512, 512);
-  // const mesh2 = new Mesh2D(figure2, canvas);
-  // mesh2.setFill({
-  //   color: [0, 1, 0, 1],
-  // });
+  const mesh2 = new Mesh2D(figure, canvas);
+  mesh2.setFill({
+    color: [0, 1, 0, 1],
+  });
 
   renderer.drawMeshes([mesh1]);
-  // renderer.drawMeshes([mesh2]);
+  
+  mesh2.transform(0.7648421872844885, 0.644217687237691, -0.644217687237691, 0.7648421872844885, 279.45265618534654, 243.26530617130732);
+  renderer.drawMeshes([mesh2]);
 
   // renderer.glRenderer.setMeshData([mesh1.meshData]);
   // renderer.glRenderer._draw();

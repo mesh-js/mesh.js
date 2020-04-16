@@ -165,12 +165,7 @@ export default class Mesh2D {
 
     const meshData = this.meshData;
     if(meshData) {
-      let {positions} = meshData;
-      const m = mat2d.invert(this[_transform]);
-      const [w, h] = this[_bound][1];
-      positions = positions.map(([x, y]) => {
-        return transformPoint([x, y], m, w, h, false);
-      });
+      const positions = meshData.position0;
       if(positions.length) meshData.boundingBox = getBounds(positions);
       else return [[0, 0], [0, 0]];
       return meshData.boundingBox;
@@ -300,7 +295,7 @@ export default class Mesh2D {
   }
 
   // {stroke, fill}
-  get meshData() {
+  get meshData() { // eslint-disable-line complexity
     if(!this[_mesh]) {
       if(!this[_fill] && !this[_stroke]) {
         this.setFill();
@@ -357,20 +352,30 @@ export default class Mesh2D {
       mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
       mesh.enableBlend = this.enableBlend;
       normalizePoints(mesh.positions, this[_bound]);
-      if(!this[_uniforms].u_texSampler) {
-        // mesh.textureCoord = mesh.positions.map(() => [0, 0]);
-      } else {
-        this[_applyTexture](mesh, this[_texOptions], false);
-      }
+
       mesh.uniforms = this[_uniforms];
       // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
       // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
       this[_mesh] = mesh;
 
+      mesh.position0 = mesh.positions.map(([x, y, z]) => [x, y, z]);
+
+      if(!this[_uniforms].u_texSampler) {
+        // mesh.textureCoord = mesh.positions.map(() => [0, 0]);
+      } else {
+        this[_applyTexture](mesh, this[_texOptions]);
+      }
+
       const transform = this[_transform];
       if(!isUnitTransform(transform)) {
         this[_applyTransform](mesh, transform);
       }
+    }
+
+    if(this._updateMatrix) {
+      this[_mesh].matrix = this[_transform];
+      this[_applyTransform](this[_mesh], this[_transform]);
+      if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
     }
 
     if(this[_program]) {
@@ -404,14 +409,20 @@ export default class Mesh2D {
   }
 
   [_applyTransform](mesh, m) {
-    const {positions} = mesh;
+    const {positions, position0: p} = mesh;
     const [w, h] = this[_bound][1];
 
     for(let i = 0; i < positions.length; i++) {
-      const point = positions[i];
-      transformPoint(point, m, w, h, true);
+      const point = p[i];
+      const position = positions[i];
+      const x = (point[0] + 1) * 0.5 * w;
+      const y = (1 - point[1]) * 0.5 * h;
+      position[0] = x * m[0] + y * m[2] + m[4];
+      position[1] = h - (x * m[1] + y * m[3] + m[5]);
+      position[0] = 2 * position[0] / w - 1;
+      position[1] = 2 * position[1] / h - 1;
     }
-    normalizePoints(positions, this[_bound]);
+    this._updateMatrix = false;
   }
 
   [_applyGradientTransform]() {
@@ -430,7 +441,7 @@ export default class Mesh2D {
     }
   }
 
-  [_applyTexture](mesh, options, transformed) {
+  [_applyTexture](mesh, options) {
     function compareRect(r1, r2) {
       if(r1 == null && r2 == null) return true;
       if(r1 == null || r2 == null) return false;
@@ -442,7 +453,6 @@ export default class Mesh2D {
 
     const {width: imgWidth, height: imgHeight} = texture._img;
 
-    const transform = this[_transform];
     const srcRect = options.srcRect;
 
     let rect = options.rect || [0, 0];
@@ -456,63 +466,38 @@ export default class Mesh2D {
 
     const [w, h] = this[_bound][1];
     if(options.hidden) {
-      mesh.textureCoord = mesh.positions.map(() => [-1, -1, -1]);
+      mesh.textureCoord = mesh.position0.map(() => [-1, -1, -1]);
     } else if(!mesh.textureCoord
       || !compareRect(this[_texOptions].rect, options.rect)
       || this[_texOptions].hidden !== options.hidden
       || this[_texOptions].rotated !== options.rotated) {
-      if(transformed && !isUnitTransform(transform)) {
-        const m = mat2d.invert(transform);
-        let m2 = null;
-        if(options.rotated) {
-          m2 = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          m2 = mat2d.translate(m2, [0, -rect[2]]);
-        }
-
-        mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-          if(1 / z > 0) {
+      let m = null;
+      if(options.rotated) {
+        m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+        m = mat2d.translate(m, [0, -rect[2]]);
+      }
+      mesh.textureCoord = mesh.position0.map(([x, y, z]) => {
+        if(1 / z > 0) {
+          // fillTag
+          if(options.rotated) {
             [x, y] = transformPoint([x, y], m, w, h, true);
             [x, y] = [x / w, y / h];
-            if(options.rotated) {
-              [x, y] = [2 * x - 1, 2 * y - 1];
-              [x, y] = transformPoint([x, y], m2, w, h, true);
-              [x, y] = [x / w, y / h];
-            }
-            const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
-            if(options.repeat) texCoord[2] = 1;
-            return texCoord;
+          } else {
+            [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
           }
-          return [-1, -1, -1];
-        });
-      } else {
-        let m = null;
-        if(options.rotated) {
-          m = mat2d.rotate(mat2d(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          m = mat2d.translate(m, [0, -rect[2]]);
+          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
+          if(options.repeat) texCoord[2] = 1;
+          return texCoord;
         }
-        mesh.textureCoord = mesh.positions.map(([x, y, z]) => {
-          if(1 / z > 0) {
-            // fillTag
-            if(options.rotated) {
-              [x, y] = transformPoint([x, y], m, w, h, true);
-              [x, y] = [x / w, y / h];
-            } else {
-              [x, y] = [0.5 * (x + 1), 0.5 * (y + 1)];
-            }
-            const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
-            if(options.repeat) texCoord[2] = 1;
-            return texCoord;
-          }
-          return [-1, -1, -1];
-        });
-      }
+        return [-1, -1, -1];
+      });
     }
 
     if(srcRect) {
       const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-      mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
+      mesh.attributes.a_sourceRect = mesh.position0.map(() => [...sRect]);
     } else {
-      mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
+      mesh.attributes.a_sourceRect = mesh.position0.map(() => [0, 0, 0, 0]);
     }
   }
 
@@ -616,7 +601,7 @@ export default class Mesh2D {
     });
 
     if(this[_mesh]) {
-      this[_applyTexture](this[_mesh], options, true);
+      this[_applyTexture](this[_mesh], options);
     }
     this[_texOptions] = options;
     return this;
@@ -697,15 +682,16 @@ export default class Mesh2D {
       if(acc > 1.5 || acc < 0.67) {
         this.accurate(this.transformScale);
       }
-      if(this[_mesh] || this[_uniforms].u_radialGradientVector) {
-        m = mat2d(m) * mat2d.invert(transform);
-      }
-      if(this[_mesh]) {
-        this[_applyTransform](this[_mesh], m);
-      }
-      if(this[_uniforms].u_radialGradientVector) {
-        this[_applyGradientTransform]();
-      }
+      // if(this[_mesh] || this[_uniforms].u_radialGradientVector) {
+      //   m = mat2d(m) * mat2d.invert(transform);
+      // }
+      // if(this[_mesh]) {
+      //   this[_applyTransform](this[_mesh], m);
+      // }
+      // if(this[_uniforms].u_radialGradientVector) {
+      //   this[_applyGradientTransform]();
+      // }
+      this._updateMatrix = true;
     }
     return this;
   }
@@ -717,8 +703,9 @@ export default class Mesh2D {
     if(acc > 1.5 || acc < 0.67) {
       this.accurate(this.transformScale);
     }
-    if(this[_mesh]) this[_applyTransform](this[_mesh], m);
-    if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
+    // if(this[_mesh]) this[_applyTransform](this[_mesh], m);
+    // if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
+    this._updateMatrix = true;
     return this;
   }
 

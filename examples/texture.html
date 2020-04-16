@@ -35,12 +35,14 @@ const renderer = new Renderer(canvas, {
   });
 
   const mesh2 = new Mesh2D(figure, canvas);
+  mesh2.rotate(0.7);
   mesh2.setTexture(texture, {
 
   });
 
   mesh.translate(202, 22); // 300 - 196 / 2, 150 - 256 / 2
   window.mesh = mesh;
+  window.mesh2 = mesh2;
   window.texture = texture;
 
   renderer.drawMeshes([mesh, mesh2]);
