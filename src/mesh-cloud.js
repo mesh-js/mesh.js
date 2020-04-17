@@ -380,7 +380,7 @@ export default class {
 
   transform(idx, m) {
     const transform = this.getTransform(idx);
-    m = mat2d(m) * mat2d(transform);
+    m = mat2d(transform) * mat2d(m);
     this.setTransform(idx, m);
     return this;
   }

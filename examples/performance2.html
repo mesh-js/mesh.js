@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="960" height="512"></canvas>
+  <script src="https://mrdoob.github.io/stats.js/build/stats.min.js"></script>
+  <script src="/js/mesh.js"></script>
+  <!-- <script src="https://s3.ssl.qhres.com/static/12cf65959dee7a43.js"></script> -->
+  <!-- <script src="https://unpkg.com/@mesh.js/core/dist/mesh.js"></script> -->
+  <script>
+    /* global Stats */
+    const stats = new Stats();
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild(stats.dom);
+
+    const pointNumber = 10000; //
+
+    const {Figure2D, Mesh2D, MeshCloud, Renderer} = meshjs;
+
+    const fmtRangeWrapper = (upperLimit, bottomLimit) => () => Math.floor(Math.random() * ((upperLimit - bottomLimit) + 1)) + bottomLimit;
+    const getRangeSize = fmtRangeWrapper(10, 1);
+    const getXPosition = fmtRangeWrapper(960, 0);
+    const getYPosition = fmtRangeWrapper(512, 0);
+
+    const figure = new Figure2D();
+    figure.arc(0, 0, 10, 0, Math.PI * 2);
+
+    const canvas = document.querySelector('canvas');
+    const mesh = new Mesh2D(figure, canvas);
+    const cloud = new MeshCloud(mesh, pointNumber);
+
+    const meshList = [];
+
+    for(let i = 0; i < pointNumber; i++) {
+      const meshData = {};
+      meshData.scaleSize = getRangeSize();
+      const color = [Math.random(), Math.random(), Math.random(), 1];
+      cloud.setFillColor(i, color);
+      meshList.push(meshData);
+    }
+
+    function getData() {
+      meshList.forEach((meshData, i) => {
+        // const scaleSize = getRangeSize();
+        const xPosition = getXPosition();
+        const yPosition = getYPosition();
+        const {scaleSize} = meshData;
+        // mesh.setTransform(scaleSize, 0, 0, scaleSize, 0, 0);
+        // console.log(mesh.transformMatrix);
+        cloud.setTransform(i, [1, 0, 0, 1, 0, 0]);
+        cloud
+          // .scale(scaleSize)
+          .translate(i, [xPosition, yPosition]);
+      });
+    }
+
+    const renderer = new Renderer(canvas, {
+      antialias: true,
+      // bufferSize: 30000,
+    });
+
+    function animate() {
+      stats.update();
+      getData();
+      renderer.clear();
+      renderer.drawMeshCloud(cloud);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
