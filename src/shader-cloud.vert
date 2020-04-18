@@ -4,6 +4,7 @@ varying vec4 vColor;
 varying float flagBackground;
 attribute vec4 a_transform0;
 attribute vec4 a_transform1;
+uniform vec2 u_resolution;
 
 #ifdef TEXTURE
 attribute vec3 a_vertexTextureCoord;
@@ -39,7 +40,7 @@ varying vec3 vGradientVector2;
 #endif
 
 #ifdef GLOBALTRANSFORM
-uniform float u_globalTransform[8];
+uniform float u_globalTransform[6];
 #endif
 
 void transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {
@@ -69,24 +70,24 @@ void main() {
 #endif
 
 #ifdef GLOBALTRANSFORM
-  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);
-  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);
-  float width = u_globalTransform[3];
-  float height = u_globalTransform[7];
+  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[4]);
+  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[3], u_globalTransform[5]);
+  float width = u_resolution.x;
+  float height = u_resolution.y;
   transformPoint(xy, m3, m4, width, height);
   gl_Position = vec4(xy, 1.0, 1.0);
 #ifdef GRADIENT
   vec2 vg1 = vGradientVector1.xy;
   vec2 vg2 = vGradientVector2.xy;
-  float h = u_globalTransform[7];
+  float h = u_resolution.y;
   float y1 = h - vg1.y;
   float y2 = h - vg2.y;
 
-  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];
-  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);
+  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[4];
+  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[3] + u_globalTransform[5]);
 
-  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];
-  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);
+  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[4];
+  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[3] + u_globalTransform[5]);
 #endif
 #endif
   

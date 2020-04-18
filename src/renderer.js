@@ -162,8 +162,8 @@ export default class Renderer {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const {width, height} = this.canvas;
-      renderer.uniforms.u_globalTransform = [...m.slice(0, 3), width, ...m.slice(3), height];
-      // renderer.uniforms.u_resolution = [width, height];
+      renderer.uniforms.u_globalTransform = m;
+      renderer.uniforms.u_resolution = [width, height];
     } else {
       renderer.setTransform(m);
     }

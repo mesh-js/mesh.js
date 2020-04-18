@@ -2,6 +2,7 @@ attribute vec3 a_vertexPosition;
 attribute vec4 a_color;
 varying vec4 vColor;
 varying float flagBackground;
+uniform vec2 u_resolution;
 
 #ifdef TEXTURE
 attribute vec3 a_vertexTextureCoord;
@@ -17,13 +18,13 @@ varying vec3 vGradientVector2;
 #endif
 
 #ifdef GLOBALTRANSFORM
-uniform float u_globalTransform[8];
+uniform float u_globalTransform[6];
 
 void transformPoint(inout vec2 p) {
-  vec3 m0 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[5]);
-  vec3 m1 = vec3(u_globalTransform[1], u_globalTransform[4], u_globalTransform[6]);
-  float w = u_globalTransform[3];
-  float h = u_globalTransform[7];
+  vec3 m0 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[4]);
+  vec3 m1 = vec3(u_globalTransform[1], u_globalTransform[3], u_globalTransform[5]);
+  float w = u_resolution.x;
+  float h = u_resolution.y;
   float x = p.x;
   float y = p.y;
   x = (x + 1.0) * 0.5 * w;
@@ -51,15 +52,15 @@ void main() {
 #ifdef GRADIENT
   vec2 vg1 = vGradientVector1.xy;
   vec2 vg2 = vGradientVector2.xy;
-  float h = u_globalTransform[7];
+  float h = u_resolution.y;
   float y1 = h - vg1.y;
   float y2 = h - vg2.y;
 
-  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[5];
-  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[4] + u_globalTransform[6]);
+  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[4];
+  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[3] + u_globalTransform[5]);
 
-  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[5];
-  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[4] + u_globalTransform[6]);
+  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[4];
+  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[3] + u_globalTransform[5]);
 #endif
 #endif
   
