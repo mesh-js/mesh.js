@@ -85,6 +85,15 @@
   mesh2.setFill({
     color: [0, 1, 0, 1],
   });
+  mesh2.setLinearGradient({
+    vector: [50, 50, 150, 150],
+    colors: [
+      {color: [1, 0, 0, 1], offset: 0},
+      {color: [1, 1, 0, 1], offset: 0.1},
+      {color: [0, 0, 1, 0.1], offset: 1},
+    ],
+    type: 'fill',
+  });
 
   renderer.drawMeshes([mesh1]);
   

@@ -163,6 +163,7 @@ export default class Renderer {
     if(this[_glRenderer]) {
       const {width, height} = this.canvas;
       renderer.uniforms.u_globalTransform = [...m.slice(0, 3), width, ...m.slice(3), height];
+      // renderer.uniforms.u_resolution = [width, height];
     } else {
       renderer.setTransform(m);
     }
@@ -430,19 +431,13 @@ export default class Renderer {
   }
 
   setGlobalTransform(...m) {
-    const transform = this[_globalTransform];
-    if(!mat2d.equals(m, transform)) {
-      this[_globalTransform] = m;
-      m = mat2d(m) * mat2d.invert(transform);
-      this[_applyGlobalTransform](m);
-    }
+    this[_globalTransform] = m;
     return this;
   }
 
   globalTransform(...m) {
     const transform = this[_globalTransform];
-    this[_globalTransform] = mat2d(m) * mat2d(transform);
-    this[_applyGlobalTransform](m);
+    this[_globalTransform] = mat2d(transform) * mat2d(m);
     return this;
   }
 
