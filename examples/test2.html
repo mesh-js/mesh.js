@@ -13,7 +13,9 @@
   const {Renderer, Figure2D, Mesh2D} = meshjs;
 
   const canvas = document.querySelector('canvas');
-  const renderer = new Renderer(canvas);
+  const renderer = new Renderer(canvas, {
+    contextType: '2d',
+  });
 
   const figure = new Figure2D();
   figure.rect(0, 0, 100, 100);
@@ -86,7 +88,7 @@
     color: [0, 1, 0, 1],
   });
   mesh2.setLinearGradient({
-    vector: [50, 50, 150, 150],
+    vector: [0, 0, 150, 150],
     colors: [
       {color: [1, 0, 0, 1], offset: 0},
       {color: [1, 1, 0, 1], offset: 0.1},
@@ -95,7 +97,7 @@
     type: 'fill',
   });
 
-  renderer.globalTranslate(100, 100);
+  // renderer.globalTranslate(100, 100);
 
   renderer.drawMeshes([mesh1]);
   

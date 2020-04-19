@@ -178,8 +178,6 @@ export default class Renderer {
       const m3 = mat3(m2) * mat3(m1);
       renderer.uniforms.projectionMatrix = m3;
       renderer.uniforms.u_resolution = [width, height];
-    } else {
-      renderer.setTransform(m);
     }
   }
 
@@ -288,7 +286,7 @@ export default class Renderer {
       draw(renderer);
       if(cloud.afterRender) cloud.afterRender(gl, cloud);
     } else {
-      renderer.setTransform(this[_globalTransform]);
+      renderer.setTransform(this.globalTransformMatrix);
       renderer.drawMeshCloud(cloud, {clear, hook: false});
     }
   }
@@ -408,7 +406,7 @@ export default class Renderer {
         }
       }
     } else {
-      renderer.setTransform(this[_globalTransform]);
+      renderer.setTransform(this.globalTransformMatrix);
       renderer.drawMeshes(meshes, {clear});
     }
   }
