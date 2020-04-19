@@ -64,11 +64,6 @@ void main() {
   transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);
   gl_Position = vec4(xy, 1.0, 1.0);
 
-#ifdef GRADIENT
-  vGradientVector1 = vec3(u_radialGradientVector[0], u_radialGradientVector[1], u_radialGradientVector[2]);
-  vGradientVector2 = vec3(u_radialGradientVector[3], u_radialGradientVector[4], u_radialGradientVector[5]);
-#endif
-
 #ifdef GLOBALTRANSFORM
   vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[4]);
   vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[3], u_globalTransform[5]);
@@ -76,19 +71,16 @@ void main() {
   float height = u_resolution.y;
   transformPoint(xy, m3, m4, width, height);
   gl_Position = vec4(xy, 1.0, 1.0);
-#ifdef GRADIENT
-  vec2 vg1 = vGradientVector1.xy;
-  vec2 vg2 = vGradientVector2.xy;
-  float h = u_resolution.y;
-  float y1 = h - vg1.y;
-  float y2 = h - vg2.y;
-
-  vGradientVector1.x = vg1.x * u_globalTransform[0] + y1 * u_globalTransform[2] + u_globalTransform[4];
-  vGradientVector1.y = h - (vg1.x * u_globalTransform[1] + y1 * u_globalTransform[3] + u_globalTransform[5]);
-
-  vGradientVector2.x = vg2.x * u_globalTransform[0] + y2 * u_globalTransform[2] + u_globalTransform[4];
-  vGradientVector2.y = h - (vg2.x * u_globalTransform[1] + y2 * u_globalTransform[3] + u_globalTransform[5]);
 #endif
+
+#ifdef GRADIENT
+  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);
+  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);
+  float h = u_resolution.y;
+  vg1.y = h - vg1.y;
+  vg2.y = h - vg2.y;
+  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);
+  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);
 #endif
   
   flagBackground = a_vertexPosition.z;

@@ -1,5 +1,5 @@
 import GlRenderer from 'gl-renderer';
-import {mat2d} from 'gl-matrix';
+import {mat3} from 'gl-matrix';
 import CanvasRenderer from './canvas-renderer';
 import compress from './utils/compress';
 import {drawMesh2D, applyFilter} from './utils/canvas';
@@ -131,7 +131,7 @@ export default class Renderer {
       this[_canvasRenderer] = new CanvasRenderer(canvas, this[_options]);
     }
 
-    this[_globalTransform] = [1, 0, 0, 1, 0, 0];
+    this[_globalTransform] = [1, 0, 0, 0, 1, 0, 0, 0, 1];
   }
 
   get canvas() {
@@ -155,14 +155,28 @@ export default class Renderer {
   }
 
   get globalTransformMatrix() {
-    return this[_globalTransform];
+    const m = this[_globalTransform];
+    return [m[0], m[1], m[3], m[4], m[6], m[7]];
   }
 
   [_applyGlobalTransform](m) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const {width, height} = this.canvas;
-      renderer.uniforms.u_globalTransform = m;
+      renderer.uniforms.u_globalTransform = this.globalTransformMatrix;
+      renderer.uniforms.viewMatrix = m;
+      const m1 = [ // translation
+        1, 0, 0,
+        0, 1, 0,
+        -width / 2, -height / 2, 1,
+      ];
+      const m2 = [ // scale
+        1 / width, 0, 0,
+        0, -1 / height, 0,
+        0, 0, 1,
+      ];
+      const m3 = mat3(m2) * mat3(m1);
+      renderer.uniforms.projectionMatrix = m3;
       renderer.uniforms.u_resolution = [width, height];
     } else {
       renderer.setTransform(m);
@@ -437,43 +451,43 @@ export default class Renderer {
 
   globalTransform(...m) {
     const transform = this[_globalTransform];
-    this[_globalTransform] = mat2d(transform) * mat2d(m);
+    this[_globalTransform] = mat3(transform) * mat3(m);
     return this;
   }
 
   globalTranslate(x, y) {
-    let m = mat2d.create();
-    m = mat2d.translate(m, [x, y]);
+    let m = mat3.create();
+    m = mat3.translate(m, [x, y]);
     return this.globalTransform(...m);
   }
 
   globalRotate(rad, [ox, oy] = [0, 0]) {
-    let m = mat2d.create();
-    m = mat2d.translate(m, [ox, oy]);
-    m = mat2d.rotate(m, rad);
-    m = mat2d.translate(m, [-ox, -oy]);
+    let m = mat3.create();
+    m = mat3.translate(m, [ox, oy]);
+    m = mat3.rotate(m, rad);
+    m = mat3.translate(m, [-ox, -oy]);
     return this.globalTransform(...m);
   }
 
   globalScale(x, y = x, [ox, oy] = [0, 0]) {
-    let m = mat2d.create();
-    m = mat2d.translate(m, [ox, oy]);
-    m = mat2d.scale(m, [x, y]);
-    m = mat2d.translate(m, [-ox, -oy]);
+    let m = mat3.create();
+    m = mat3.translate(m, [ox, oy]);
+    m = mat3.scale(m, [x, y]);
+    m = mat3.translate(m, [-ox, -oy]);
     return this.globalTransform(...m);
   }
 
   globalSkew(x, y = x, [ox, oy] = [0, 0]) {
-    let m = mat2d.create();
-    m = mat2d.translate(m, [ox, oy]);
-    m = mat2d(m) * mat2d(1, Math.tan(y), Math.tan(x), 1, 0, 0);
-    m = mat2d.translate(m, [-ox, -oy]);
+    let m = mat3.create();
+    m = mat3.translate(m, [ox, oy]);
+    m = mat3(m) * mat3(1, Math.tan(y), Math.tan(x), 1, 0, 0);
+    m = mat3.translate(m, [-ox, -oy]);
     return this.globalTransform(...m);
   }
 
   transformPoint(x, y, matrix) {
     let m = this[_globalTransform];
-    if(matrix) m = mat2d(m) * mat2d(matrix);
+    if(matrix) m = mat3(m) * mat3(matrix);
     const newX = x * m[0] + y * m[2] + m[4];
     const newY = x * m[1] + y * m[3] + m[5];
     return [newX, newY];

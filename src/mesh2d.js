@@ -50,7 +50,7 @@ function normalizePoints(points, bound) {
 function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
   if(!scale) {
     x /= w;
-    y = 1 - (1 - y) / h;
+    y = 1 - y / h;
     x -= ox;
     y += oy;
   }
@@ -158,10 +158,6 @@ export default class Mesh2D {
     const meshData = this.meshData;
     if(meshData) {
       const positions = meshData.position0;
-      // const [w, h] = this[_bound][1];
-      // positions = positions.map(([x, y]) => {
-      //   return denormalize([x, y], w, h);
-      // });
       if(positions.length) meshData.boundingBox = getBounds(positions);
       else return [[0, 0], [0, 0]];
       return meshData.boundingBox;
@@ -311,7 +307,6 @@ export default class Mesh2D {
           try {
             const mesh = triangulate(contours, this[_fill]);
             mesh.positions = mesh.positions.map((p) => {
-              // p[1] = this[_bound][1][1] - p[1];
               p.push(this[_opacity]);
               return p;
             });
@@ -338,7 +333,6 @@ export default class Mesh2D {
           });
           _meshes.forEach((mesh) => {
             mesh.positions = mesh.positions.map((p) => {
-              // p[1] = this[_bound][1][1] - p[1];
               p.push(-this[_opacity]);
               return p;
             });
@@ -370,6 +364,7 @@ export default class Mesh2D {
       const transform = this[_transform];
       if(!isUnitTransform(transform)) {
         this[_applyTransform](mesh, transform);
+        if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
       }
     }
 
@@ -425,17 +420,14 @@ export default class Mesh2D {
   }
 
   [_applyGradientTransform]() {
-    const h = this[_bound][1][1];
     const m = this[_transform];
     const vector = [...this._radialGradientVector];
     if(vector) {
-      let [x1, y1, , x2, y2] = vector;
-      y1 = h - y1;
-      y2 = h - y2;
+      const [x1, y1, , x2, y2] = vector;
       vector[0] = x1 * m[0] + y1 * m[2] + m[4];
-      vector[1] = h - (x1 * m[1] + y1 * m[3] + m[5]);
+      vector[1] = x1 * m[1] + y1 * m[3] + m[5];
       vector[3] = x2 * m[0] + y2 * m[2] + m[4];
-      vector[4] = h - (x2 * m[1] + y2 * m[3] + m[5]);
+      vector[4] = x2 * m[1] + y2 * m[3] + m[5];
       this[_uniforms].u_radialGradientVector = vector;
     }
   }
@@ -463,7 +455,6 @@ export default class Mesh2D {
     if(rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
     if(rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
 
-    const [w, h] = this[_bound][1];
     if(options.hidden) {
       mesh.textureCoord = mesh.positions.map(() => [-1, -1, -1]);
     } else if(!mesh.textureCoord
@@ -481,11 +472,9 @@ export default class Mesh2D {
           if(options.rotated) {
             const x0 = x * m[0] + y * m[2] + m[4];
             const y0 = x * m[1] + y * m[3] + m[5];
-            [x, y] = [x0 / w, 1 - y0 / h];
-          } else {
-            [x, y] = [x / w, 1 - y / h];
+            [x, y] = [x0, y0];
           }
-          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2] / w, rect[3] / h], options);
+          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2], rect[3]], options);
           if(options.repeat) texCoord[2] = 1;
           return texCoord;
         }
@@ -652,10 +641,6 @@ export default class Mesh2D {
       _vector = [...vector];
     }
 
-    const [, h] = this[_bound][1];
-    _vector[1] = h - _vector[1];
-    _vector[4] = h - _vector[4];
-
     if(colorSteps.length < 40) colorSteps.push(-1);
     if(colorSteps.length > 40) throw new Error('Too many colors, should be less than 8 colors');
 
@@ -678,15 +663,6 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!mat2d.equals(m, transform)) {
       this[_transform] = m;
-      // if(this[_mesh] || this[_uniforms].u_radialGradientVector) {
-      //   m = mat2d(m) * mat2d.invert(transform);
-      // }
-      // if(this[_mesh]) {
-      //   this[_applyTransform](this[_mesh], m);
-      // }
-      // if(this[_uniforms].u_radialGradientVector) {
-      //   this[_applyGradientTransform]();
-      // }
       this._updateMatrix = true;
     }
     return this;
@@ -695,8 +671,6 @@ export default class Mesh2D {
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(transform) * mat2d(m);
-    // if(this[_mesh]) this[_applyTransform](this[_mesh], m);
-    // if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
     this._updateMatrix = true;
     return this;
   }
