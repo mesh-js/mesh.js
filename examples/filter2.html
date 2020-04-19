@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
 const {Renderer, Figure2D, Mesh2D} = meshjs;
 
 const canvas = document.querySelector('canvas');
@@ -11,7 +22,7 @@ const meshList = [];
 (async function () {
   const texture = await renderer.loadTexture(textureURL);
 
-  const NUM = 1000;
+  const NUM = 2000;
   const size = 40;
 
   const figure = new Figure2D();
@@ -30,7 +41,7 @@ const meshList = [];
       rect: [0, 0, size, size],
     });
 
-    mesh.blur(5);
+    mesh.hueRotate(180);
 
     meshList.push(mesh);
   }
@@ -51,3 +62,6 @@ const meshList = [];
   }
   update();
 }());
+  </script>
+</body>
+</html>

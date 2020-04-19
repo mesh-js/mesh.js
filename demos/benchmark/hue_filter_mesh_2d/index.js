@@ -18,7 +18,7 @@ const meshList = [];
   figure.rect(0, 0, size, size);
 
   for(let i = 0; i < NUM; i++) {
-    const mesh = new Mesh2D(figure, canvas);
+    const mesh = new Mesh2D(figure);
 
     mesh.setFill({
       color: [1, 0, 0, 0.5],

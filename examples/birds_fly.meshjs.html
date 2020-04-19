@@ -49,13 +49,9 @@
       const texture = await renderer.loadTexture(textureURL);
 
       function moveTo(bird, ang) {
-        let flip = 1;
-        if(ang > 0.5 * Math.PI && ang < 1.5 * Math.PI) {
-          flip = -1;
-        }
         const {x: x0, y: y0} = bird;
-        const x1 = flip * 350 * Math.cos(ang);
-        const y1 = flip * 350 * Math.sin(ang);
+        const x1 = 350 * Math.cos(ang);
+        const y1 = 350 * Math.sin(ang);
         const distance = Math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2);
         const startTime = Date.now(),
           T = 5 * distance + 100;

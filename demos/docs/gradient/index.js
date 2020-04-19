@@ -8,7 +8,7 @@ const renderer = new Renderer(canvas, {
 const figure = new Figure2D();
 figure.rect(0, 0, 200, 200);
 
-const mesh = new Mesh2D(figure, canvas);
+const mesh = new Mesh2D(figure);
 mesh.setLinearGradient({
   vector: [0, 0, 200, 200],
   colors: [
@@ -23,7 +23,7 @@ mesh.translate(200, 50);
 const figure2 = new Figure2D();
 figure2.arc(0, 0, 50, 0, 2 * Math.PI);
 
-const mesh2 = new Mesh2D(figure2, canvas);
+const mesh2 = new Mesh2D(figure2);
 mesh2.setRadialGradient({
   vector: [0, 0, 0, 0, 0, 50],
   colors: [

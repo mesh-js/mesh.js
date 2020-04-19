@@ -67,7 +67,7 @@ function drawFilterContext(renderer, filterContext, width, height) {
 
   const contours = [[[0, 0], [width, 0], [width, height], [0, height], [0, 0]]];
   contours.closed = true;
-  const filterMesh = new Mesh2D({contours}, {width, height});
+  const filterMesh = new Mesh2D({contours});
 
   filterMesh.setTexture(filterTexture);
   renderer.setMeshData([filterMesh.meshData]);
@@ -353,6 +353,7 @@ export default class Renderer {
               } else {
                 drawMesh2D(originalMesh, filterContext, true);
               }
+              this[_applyGlobalTransform]();
               drawFilterContext(renderer, filterContext, width, height);
             } else {
               if(hasGlobalTransform) {
@@ -365,6 +366,7 @@ export default class Renderer {
               }
               if(!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
                 applyFilter(filterContext, currentFilter);
+                this[_applyGlobalTransform]();
                 drawFilterContext(renderer, filterContext, width, height);
               }
             }

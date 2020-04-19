@@ -39,7 +39,7 @@ const filters2 = [
   figure.rect(0, 0, 64, 64);
 
   for(let i = 0; i < 6; i++) {
-    const mesh = new Mesh2D(figure, canvas);
+    const mesh = new Mesh2D(figure);
     mesh.setTexture(textures[0], {
       rect: [0, 0, 64, 64],
     });
@@ -48,7 +48,7 @@ const filters2 = [
       mesh[filters1[i][0]].call(mesh, ...filters1[i].slice(1));
     }
 
-    const mesh2 = new Mesh2D(figure, canvas);
+    const mesh2 = new Mesh2D(figure);
     mesh2.setTexture(textures[1], {
       rect: [0, 0, 64, 64],
     });

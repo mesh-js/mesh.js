@@ -9,7 +9,7 @@ const renderer = new Renderer(canvas);
   const texture = await renderer.loadTexture(url);
   const figure = new Figure2D();
   figure.rect(0, 0, 196, 256);
-  const mesh = new Mesh2D(figure, canvas);
+  const mesh = new Mesh2D(figure);
   mesh.setTexture(texture);
 
   mesh.translate(202, 22); // 300 - 196 / 2, 150 - 256 / 2

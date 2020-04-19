@@ -1,8 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
 const {Renderer, Figure2D, Mesh2D} = meshjs;
 
 const canvas = document.querySelector('canvas');
 const renderer = new Renderer(canvas, {
-  contextType: '2d',
+  // contextType: '2d',
 });
 
 const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
@@ -51,3 +62,6 @@ const meshList = [];
   }
   update();
 }());
+  </script>
+</body>
+</html>

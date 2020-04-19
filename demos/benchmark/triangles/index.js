@@ -20,7 +20,7 @@ const textureURL = 'https://p4.ssl.qhimg.com/t012170360e1552ce17.png';
 
     // console.log(figure.contours);
 
-    const mesh = new Mesh2D(figure, {width: 512, height: 512});
+    const mesh = new Mesh2D(figure);
     mesh.setStroke({
       thickness: 2,
       color: [1, 0, 1, 1],

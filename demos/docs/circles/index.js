@@ -5,9 +5,9 @@ const canvas = document.querySelector('canvas');
 const figure = new Figure2D();
 figure.arc(0, 0, 30, 0, Math.PI * 2);
 
-const mesh1 = new Mesh2D(figure, canvas);
-const mesh2 = new Mesh2D(figure, canvas);
-const mesh3 = new Mesh2D(figure, canvas);
+const mesh1 = new Mesh2D(figure);
+const mesh2 = new Mesh2D(figure);
+const mesh3 = new Mesh2D(figure);
 
 mesh1.setFill({
   color: [1, 0, 0, 0.5],
