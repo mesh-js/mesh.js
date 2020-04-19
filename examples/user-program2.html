@@ -102,7 +102,7 @@
       const figure = new Figure2D();
       figure.rect(...birdRect);
 
-      const bird = new Mesh2D(figure, canvas);
+      const bird = new Mesh2D(figure);
       bird.translate(235, 241);
       bird.setTexture(birdTexture, {
         rect: birdRect,
@@ -119,7 +119,7 @@
       const background = new Figure2D();
       background.rect(0, 0, canvas.width, canvas.height);
 
-      const sky = new Mesh2D(background, canvas);
+      const sky = new Mesh2D(background);
       sky.setUniforms({
         u_color: [1, 0, 1, 1],
         u_resolution: [canvas.width, canvas.height],

@@ -25,7 +25,7 @@
     ['brightness', 1.5],
     ['grayscale', 0.5],
     ['blur', 12],
-    ['blur', 12],
+    // ['blur', 12],
     ['hueRotate', 45],
   ];
 
@@ -41,8 +41,8 @@
     const figure = new Figure2D();
     figure.rect(0, 0, 64, 64);
 
-    for(let i = 0; i < 6; i++) {
-      const mesh = new Mesh2D(figure, canvas);
+    for(let i = 0; i < filters1.length; i++) {
+      const mesh = new Mesh2D(figure);
       mesh.setTexture(textures[0], {
         rect: [0, 0, 64, 64],
       });

@@ -30,7 +30,7 @@
     figure.arc(100, 100, 50, 0, ang, false);
     figure.arc(100, 100, 30, ang - 0.001, 0, true);
 
-    const m = new Mesh2D(figure, canvas);
+    const m = new Mesh2D(figure);
     m.setFill({color: 'red'});
     // m.translate(100, 100);
     renderer.drawMeshes([m]);

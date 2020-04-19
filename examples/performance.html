@@ -34,7 +34,7 @@
     const meshList = [];
 
     for(let i = 0; i < pointNumber; i++) {
-      const mesh = new Mesh2D(figure, canvas);
+      const mesh = new Mesh2D(figure);
       mesh.scaleSize = getRangeSize();
       mesh.setFill({color: [Math.random(), Math.random(), Math.random(), 1]});
       // mesh.setFill({color: [1, 0, 0, 1]});

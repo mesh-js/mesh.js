@@ -30,7 +30,7 @@
     figure.arc(0, 0, 10, 0, Math.PI * 2);
 
     const canvas = document.querySelector('canvas');
-    const mesh = new Mesh2D(figure, canvas);
+    const mesh = new Mesh2D(figure);
     const cloud = new MeshCloud(mesh, pointNumber);
 
     const meshList = [];

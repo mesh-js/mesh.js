@@ -34,7 +34,7 @@
         const f2 = new Figure2D();
         f2.rect(50, 50, 100, 100);
 
-        const m = new Mesh2D(f2, canvas);
+        const m = new Mesh2D(f2);
         m.setFill({
           color: [0, 0, 0, 1],
         });
@@ -42,12 +42,12 @@
         const f3 = new Figure2D();
         f3.rect(150, 150, 100, 100);
 
-        const m2 = new Mesh2D(f3, canvas);
+        const m2 = new Mesh2D(f3);
         m2.setFill({
           color: [0, 1, 0, 1],
         });
 
-        const mesh = new Mesh2D(figure, canvas);
+        const mesh = new Mesh2D(figure);
         mesh.setFill({
           color: [1, 0, 0, 1],
         });

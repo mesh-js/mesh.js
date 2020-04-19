@@ -6,7 +6,7 @@ const renderer = new Renderer(canvas);
 const figure = new Figure2D();
 figure.rect(0, 0, 200, 200);
 
-const mesh = new Mesh2D(figure, canvas);
+const mesh = new Mesh2D(figure);
 mesh.setFill({color: [1, 0, 0, 1]});
 
 renderer.drawMeshes([mesh]);
