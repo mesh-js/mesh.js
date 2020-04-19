@@ -132,6 +132,7 @@ export default class Renderer {
     }
 
     this[_globalTransform] = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+    this.updateResolution();
   }
 
   get canvas() {
@@ -159,26 +160,34 @@ export default class Renderer {
     return [m[0], m[1], m[3], m[4], m[6], m[7]];
   }
 
-  [_applyGlobalTransform](m) {
+  get viewMatrix() {
+    return this[_globalTransform];
+  }
+
+  [_applyGlobalTransform]() {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
     if(this[_glRenderer]) {
       const {width, height} = this.canvas;
-      renderer.uniforms.u_globalTransform = this.globalTransformMatrix;
-      renderer.uniforms.viewMatrix = m;
-      const m1 = [ // translation
-        1, 0, 0,
-        0, 1, 0,
-        -width / 2, -height / 2, 1,
-      ];
-      const m2 = [ // scale
-        1 / width, 0, 0,
-        0, -1 / height, 0,
-        0, 0, 1,
-      ];
-      const m3 = mat3(m2) * mat3(m1);
-      renderer.uniforms.projectionMatrix = m3;
+      renderer.uniforms.viewMatrix = this.viewMatrix;
+      renderer.uniforms.projectionMatrix = this.projectionMatrix;
       renderer.uniforms.u_resolution = [width, height];
     }
+  }
+
+  updateResolution() {
+    const {width, height} = this.canvas;
+    const m1 = [ // translation
+      1, 0, 0,
+      0, 1, 0,
+      -width / 2, -height / 2, 1,
+    ];
+    const m2 = [ // scale
+      2 / width, 0, 0,
+      0, -2 / height, 0,
+      0, 0, 1,
+    ];
+    const m3 = mat3(m2) * mat3(m1);
+    this.projectionMatrix = m3;
   }
 
   createTexture(img) {
@@ -249,14 +258,12 @@ export default class Renderer {
         const hasTexture = !!mesh.uniforms.u_texSampler;
         const hasFilter = !!mesh.uniforms.u_filterFlag;
         const hasGradient = !!mesh.uniforms.u_radialGradientVector;
-        const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
         const hasCloudColor = cloud.hasCloudColor;
         const hasCloudFilter = cloud.hasCloudFilter;
         applyCloudShader(renderer, {
           hasTexture,
           hasFilter,
           hasGradient,
-          hasGlobalTransform,
           hasCloudColor,
           hasCloudFilter,
         });
@@ -280,7 +287,7 @@ export default class Renderer {
           },
         });
       }
-      this[_applyGlobalTransform](this[_globalTransform]);
+      this[_applyGlobalTransform]();
       renderer.setMeshData([cloud.meshData]);
       if(cloud.beforeRender) cloud.beforeRender(gl, cloud);
       draw(renderer);
@@ -298,7 +305,7 @@ export default class Renderer {
       const meshData = compress(this, meshes, drawProgram == null);
       const gl = renderer.gl;
       if(clear) gl.clear(gl.COLOR_BUFFER_BIT);
-      const hasGlobalTransform = !isUnitTransform(this[_globalTransform]);
+      const hasGlobalTransform = !isUnitTransform(this.globalTransformMatrix);
       this._drawCalls = 0;
       for(const mesh of meshData) { // eslint-disable-line no-restricted-syntax
         this._drawCalls++;
@@ -339,7 +346,7 @@ export default class Renderer {
               && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
               if(hasGlobalTransform) {
                 filterContext.save();
-                filterContext.transform(...this[_globalTransform]);
+                filterContext.transform(...this.globalTransformMatrix);
                 drawMesh2D(originalMesh, filterContext, false);
                 filterContext.restore();
                 applyFilter(filterContext, currentFilter);
@@ -350,7 +357,7 @@ export default class Renderer {
             } else {
               if(hasGlobalTransform) {
                 filterContext.save();
-                filterContext.transform(...this[_globalTransform]);
+                filterContext.transform(...this.globalTransformMatrix);
               }
               drawMesh2D(originalMesh, filterContext, false);
               if(hasGlobalTransform) {
@@ -366,7 +373,7 @@ export default class Renderer {
               const hasTexture = !!mesh.uniforms.u_texSampler;
               const hasFilter = !!mesh.uniforms.u_filterFlag;
               const hasGradient = !!mesh.uniforms.u_radialGradientVector;
-              applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasGlobalTransform});
+              applyShader(renderer, {hasTexture, hasFilter, hasGradient});
             } else if(renderer.program !== program) {
               this.useProgram(program, {
                 a_color: {
@@ -378,7 +385,7 @@ export default class Renderer {
             if(mesh.filterCanvas) {
               console.warn('User program ignored some filter effects.');
             }
-            this[_applyGlobalTransform](this[_globalTransform]);
+            this[_applyGlobalTransform]();
             renderer.setMeshData([mesh]);
             draw(renderer);
           }
@@ -443,7 +450,11 @@ export default class Renderer {
   }
 
   setGlobalTransform(...m) {
-    this[_globalTransform] = m;
+    this[_globalTransform] = [
+      m[0], m[1], 0,
+      m[2], m[3], 0,
+      m[4], m[5], 1,
+    ];
     return this;
   }
 
@@ -484,7 +495,7 @@ export default class Renderer {
   }
 
   transformPoint(x, y, matrix) {
-    let m = this[_globalTransform];
+    let m = this.globalTransformMatrix;
     if(matrix) m = mat3(m) * mat3(matrix);
     const newX = x * m[0] + y * m[2] + m[4];
     const newY = x * m[1] + y * m[3] + m[5];

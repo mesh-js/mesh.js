@@ -39,12 +39,12 @@ const renderer = new Renderer(canvas);
 const figure = new Figure2D();
 figure.rect(-100, -100, 200, 200);
 
-const mesh1 = new Mesh2D(figure, canvas);
+const mesh1 = new Mesh2D(figure);
 mesh1.setFill({
   color: [1, 0, 0, 0.5],
 });
 
-const mesh2 = new Mesh2D(figure, canvas);
+const mesh2 = new Mesh2D(figure);
 mesh2.setFill({
   color: [0, 0, 1, 0.5],
 });

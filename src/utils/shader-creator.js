@@ -8,16 +8,14 @@ const _shaders = Symbol('shaders');
 
 export function createShaders(renderer) {
   renderer[_shaders] = [];
-  for(let i = 0; i < 16; i++) {
+  for(let i = 0; i < 8; i++) {
     const defines = [];
     const hasTexture = !!(i & 0x1);
     const hasFilter = !!(i & 0x2);
     const hasGradient = !!(i & 0x4);
-    const hasGlobalTransform = !!(i & 0x8);
     if(hasTexture) defines.push('#define TEXTURE 1');
     if(hasFilter) defines.push('#define FILTER 1');
     if(hasGradient) defines.push('#define GRADIENT 1');
-    if(hasGlobalTransform) defines.push('#define GLOBALTRANSFORM 1');
     const prefix = `${defines.join('\n')}\n`;
     const samplerDef = [];
     if(hasTexture) {
@@ -28,8 +26,8 @@ export function createShaders(renderer) {
   }
 }
 
-export function applyShader(renderer, {hasTexture = false, hasFilter = false, hasGradient = false, hasGlobalTransform = false} = {}) {
-  const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2) | (hasGlobalTransform << 3);
+export function applyShader(renderer, {hasTexture = false, hasFilter = false, hasGradient = false} = {}) {
+  const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2);
   let program = renderer[_shaders][idx];
   if(Array.isArray(program)) {
     program = renderer.createProgram(...program);
@@ -48,18 +46,16 @@ export function applyShader(renderer, {hasTexture = false, hasFilter = false, ha
 
 const cloudShaders = [];
 export function createCloudShaders(renderer) {
-  for(let i = 0; i < 64; i++) {
+  for(let i = 0; i < 32; i++) {
     const defines = [];
     const hasTexture = !!(i & 0x1);
     const hasFilter = !!(i & 0x2);
     const hasGradient = !!(i & 0x4);
-    const hasGlobalTransform = !!(i & 0x8);
-    const hasCloudColor = !!(i & 0x10);
-    const hasCloudFilter = !!(i & 0x20);
+    const hasCloudColor = !!(i & 0x8);
+    const hasCloudFilter = !!(i & 0x10);
     if(hasTexture) defines.push('#define TEXTURE 1');
     if(hasFilter) defines.push('#define FILTER 1');
     if(hasGradient) defines.push('#define GRADIENT 1');
-    if(hasGlobalTransform) defines.push('#define GLOBALTRANSFORM 1');
     if(hasCloudColor) defines.push('#define CLOUDCOLOR 1');
     if(hasCloudFilter) defines.push('#define CLOUDFILTER 1');
     const prefix = `${defines.join('\n')}\n`;
@@ -77,10 +73,10 @@ export function createCloudShaders(renderer) {
 
 export function applyCloudShader(renderer, {
   hasTexture = false, hasFilter = false, hasGradient = false,
-  hasGlobalTransform = false, hasCloudColor = false, hasCloudFilter = false,
+  hasCloudColor = false, hasCloudFilter = false,
 } = {}) {
-  const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2) | (hasGlobalTransform << 3)
-    | (hasCloudColor << 4) | (hasCloudFilter << 5);
+  const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2)
+    | (hasCloudColor << 3) | (hasCloudFilter << 4);
   let program = cloudShaders[idx];
   if(Array.isArray(program)) {
     program = renderer.createProgram(...program);

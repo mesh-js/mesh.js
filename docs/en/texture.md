@@ -44,7 +44,7 @@ const renderer = new Renderer(canvas);
   const figure = new Figure2D();
   figure.rect(...textureRect);
 
-  const mesh = new Mesh2D(figure, canvas);
+  const mesh = new Mesh2D(figure);
   mesh.setTexture(texture, {rect: textureRect});
 
   mesh.rotate(Math.PI / 4).translate(300, 150);

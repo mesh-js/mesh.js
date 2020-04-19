@@ -155,3 +155,7 @@ transformPoint(x, y)
 | --- | --- | --- | --- | --- |
 | x | Number |  |  |  |
 | y | Number |  |  |  |
+
+#### updateResolution
+
+updateResolution()

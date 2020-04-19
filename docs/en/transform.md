@@ -26,7 +26,7 @@ const renderer = new Renderer(canvas);
 const figure = new Figure2D();
 figure.rect(-75, -75, 150, 150);
 
-const sprite = new Mesh2D(figure, canvas);
+const sprite = new Mesh2D(figure);
 sprite.setLinearGradient({
   vector: [-75, -75, 150, 150],
   colors: [
@@ -38,7 +38,7 @@ sprite.setLinearGradient({
 const crossFigure = new Figure2D();
 crossFigure.addPath('M-5 0L5 0M0 -5L0 5');
 
-const originSign = new Mesh2D(crossFigure, canvas);
+const originSign = new Mesh2D(crossFigure);
 originSign.setStroke({
   thinckness: 2,
   color: [0, 0, 1, 1],

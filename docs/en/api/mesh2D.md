@@ -1,14 +1,12 @@
 ## Mesh2D
 
-new Mesh2D(figure, {width = 300, height = 150})
+new Mesh2D(figure)
 
 - contructor parameters
 
 | Name | Type | Attributes | Default | Description |
 | --- | --- | --- | --- | --- |
 | figure | [Figure2D](/en/api/figure2D) |  |  | |
-| width | Number | _optional_ | 300 | |
-| height | Number | _optional_ | 150 | |
 
 ### propreties
 

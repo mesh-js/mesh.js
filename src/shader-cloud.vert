@@ -5,6 +5,8 @@ varying float flagBackground;
 attribute vec4 a_transform0;
 attribute vec4 a_transform1;
 uniform vec2 u_resolution;
+uniform mat3 viewMatrix;
+uniform mat3 projectionMatrix;
 
 #ifdef TEXTURE
 attribute vec3 a_vertexTextureCoord;
@@ -39,39 +41,17 @@ varying vec3 vGradientVector1;
 varying vec3 vGradientVector2;
 #endif
 
-#ifdef GLOBALTRANSFORM
-uniform float u_globalTransform[6];
-#endif
-
-void transformPoint(inout vec2 p, vec3 m0, vec3 m1, float w, float h) {
-  float x = p.x;
-  float y = p.y;
-  x = (x + 1.0) * 0.5 * w;
-  y = (1.0 - y) * 0.5 * h;
-  p.x = x * m0.x + y * m0.y + m0.z;
-  p.y = x * m1.x + y * m1.y + m1.z;
-  p.x = 2.0 * (p.x / w - 0.5);
-  p.y = 2.0 * (0.5 - p.y / h);
-}
-
 void main() {
   gl_PointSize = 1.0;
 
-  vec3 m0 = vec3(a_transform0.x, a_transform0.z, a_transform1.y);
-  vec3 m1 = vec3(a_transform0.y, a_transform1.x, a_transform1.z);
+  mat3 modelMatrix = mat3(
+    a_transform0.x, a_transform0.y, 0, 
+    a_transform0.z, a_transform1.x, 0,
+    a_transform1.y, a_transform1.z, 1
+  );
 
-  vec2 xy = a_vertexPosition.xy;
-  transformPoint(xy, m0, m1, a_transform0.w, a_transform1.w);
-  gl_Position = vec4(xy, 1.0, 1.0);
-
-#ifdef GLOBALTRANSFORM
-  vec3 m3 = vec3(u_globalTransform[0], u_globalTransform[2], u_globalTransform[4]);
-  vec3 m4 = vec3(u_globalTransform[1], u_globalTransform[3], u_globalTransform[5]);
-  float width = u_resolution.x;
-  float height = u_resolution.y;
-  transformPoint(xy, m3, m4, width, height);
-  gl_Position = vec4(xy, 1.0, 1.0);
-#endif
+  vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);
+  gl_Position = vec4(pos.xy, 1.0, 1.0);
 
 #ifdef GRADIENT
   vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);

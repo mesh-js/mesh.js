@@ -14,13 +14,14 @@
 
   const canvas = document.querySelector('canvas');
   const renderer = new Renderer(canvas, {
-    contextType: '2d',
+    // contextType: '2d',
+    antialias: true,
   });
 
   const figure = new Figure2D();
   figure.rect(0, 0, 100, 100);
 
-  const mesh1 = new Mesh2D(figure, canvas);
+  const mesh1 = new Mesh2D(figure);
 
   function multiply(out, a, b) {
     let a00 = a[0], a01 = a[1], a02 = a[2];
@@ -83,12 +84,12 @@
     color: [1, 0, 0, 1],
   });
 
-  const mesh2 = new Mesh2D(figure, canvas);
+  const mesh2 = new Mesh2D(figure);
   mesh2.setFill({
     color: [0, 1, 0, 1],
   });
   mesh2.setLinearGradient({
-    vector: [0, 0, 150, 150],
+    vector: [50, 50, 150, 150],
     colors: [
       {color: [1, 0, 0, 1], offset: 0},
       {color: [1, 1, 0, 1], offset: 0.1},
@@ -97,7 +98,7 @@
     type: 'fill',
   });
 
-  // renderer.globalTranslate(100, 100);
+  renderer.globalTranslate(100, 100);
 
   renderer.drawMeshes([mesh1]);
   
