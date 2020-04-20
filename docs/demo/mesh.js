@@ -7855,7 +7855,7 @@ var defaultOpts = {
   // antialias: false,
   bufferSize: 1500
 };
-var defaultPassVertex = "attribute vec3 a_vertexPosition;\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);    \n  vTextureCoord = a_vertexTextureCoord;              \n}\n";
+var defaultPassVertex = "attribute vec3 a_vertexPosition;\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\nvoid main() {\n  gl_PointSize = 1.0;\n  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);    \n  vTextureCoord = a_vertexTextureCoord;              \n}\n";
 var defaultPassFragment = "precision mediump float;\nvarying vec3 vTextureCoord;\nuniform sampler2D u_texSampler;\nvoid main() {\n  gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy);\n}\n";
 
 var _glRenderer = Symbol('glRenderer');

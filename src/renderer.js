@@ -28,9 +28,13 @@ const defaultOpts = {
 const defaultPassVertex = `attribute vec3 a_vertexPosition;
 attribute vec3 a_vertexTextureCoord;
 varying vec3 vTextureCoord;
+uniform mat3 viewMatrix;
+uniform mat3 projectionMatrix;
+
 void main() {
   gl_PointSize = 1.0;
-  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);    
+  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);
+  gl_Position = vec4(pos.xy, 1.0, 1.0);    
   vTextureCoord = a_vertexTextureCoord;              
 }
 `;
