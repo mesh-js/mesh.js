@@ -26,6 +26,7 @@ const _blend = Symbol('blend');
 const _applyTexture = Symbol('applyTexture');
 const _applyTransform = Symbol('applyTransform');
 const _applyGradientTransform = Symbol('applyGradientTransform');
+const _applyProgram = Symbol('applyProgram');
 const _gradient = Symbol('gradient');
 
 const _filter = Symbol('filter');
@@ -96,6 +97,9 @@ export default class Mesh2D {
 
   setProgram(program) {
     this[_program] = program;
+    if(this[_mesh]) {
+      this[_applyProgram](program);
+    }
   }
 
   get program() {
@@ -275,6 +279,34 @@ export default class Mesh2D {
     return this[_pass];
   }
 
+  [_applyProgram](program) {
+    const attributes = this[_attributes];
+    const positions = this[_mesh].position0;
+    const attribs = Object.entries(program._attribute);
+    for(let i = 0; i < attribs.length; i++) {
+      const [name, opts] = attribs[i];
+      if(name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
+        const setter = attributes[name];
+        // console.log(opts.size);
+        this[_mesh].attributes[name] = [];
+        if(name === 'uv' && !setter) {
+          const bounds = this[_mesh].boundingBox || getBounds(positions);
+          const [w, h] = [bounds[1][0] - bounds[0][0], bounds[1][1] - bounds[0][1]];
+          for(let j = 0; j < positions.length; j++) {
+            const p = positions[j];
+            const uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+            this[_mesh].attributes[name].push(uv);
+          }
+        } else {
+          for(let j = 0; j < positions.length; j++) {
+            const p = positions[j];
+            this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
+          }
+        }
+      }
+    }
+  }
+
   // {stroke, fill}
   get meshData() { // eslint-disable-line complexity
     if(this._updateMatrix) {
@@ -355,33 +387,7 @@ export default class Mesh2D {
         if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
       }
 
-      if(this[_program]) {
-        const attributes = this[_attributes];
-        const positions = this[_mesh].position0;
-        const attribs = Object.entries(this[_program]._attribute);
-        for(let i = 0; i < attribs.length; i++) {
-          const [name, opts] = attribs[i];
-          if(name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
-            const setter = attributes[name];
-            // console.log(opts.size);
-            this[_mesh].attributes[name] = [];
-            if(name === 'uv' && !setter) {
-              const bounds = this[_mesh].boundingBox || getBounds(positions);
-              const [w, h] = [bounds[1][0] - bounds[0][0], bounds[1][1] - bounds[0][1]];
-              for(let j = 0; j < positions.length; j++) {
-                const p = positions[j];
-                const uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
-                this[_mesh].attributes[name].push(uv);
-              }
-            } else {
-              for(let j = 0; j < positions.length; j++) {
-                const p = positions[j];
-                this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
-              }
-            }
-          }
-        }
-      }
+      if(this[_program]) this[_applyProgram](this[_program]);
     }
 
     if(this._updateMatrix) {

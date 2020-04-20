@@ -16247,6 +16247,8 @@ var _applyTransform = Symbol('applyTransform');
 
 var _applyGradientTransform = Symbol('applyGradientTransform');
 
+var _applyProgram = Symbol('applyProgram');
+
 var _gradient = Symbol('gradient');
 
 var _filter = Symbol('filter');
@@ -16323,6 +16325,10 @@ function () {
     key: "setProgram",
     value: function setProgram(program) {
       this[_program] = program;
+
+      if (this[_mesh]) {
+        this[_applyProgram](program);
+      }
     }
   }, {
     key: "setAttribute",
@@ -16361,6 +16367,45 @@ function () {
     value: function getTotalLength() {
       return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getTotalLength"])(this[_contours]);
     }
+  }, {
+    key: _applyProgram,
+    value: function value(program) {
+      var attributes = this[_attributes];
+      var positions = this[_mesh].position0;
+      var attribs = Object.entries(program._attribute);
+
+      for (var i = 0; i < attribs.length; i++) {
+        var _attribs$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(attribs[i], 2),
+            name = _attribs$i[0],
+            opts = _attribs$i[1];
+
+        if (name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
+          var setter = attributes[name]; // console.log(opts.size);
+
+          this[_mesh].attributes[name] = [];
+
+          if (name === 'uv' && !setter) {
+            var bounds = this[_mesh].boundingBox || bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);
+            var w = bounds[1][0] - bounds[0][0],
+                h = bounds[1][1] - bounds[0][1];
+
+            for (var j = 0; j < positions.length; j++) {
+              var p = positions[j];
+              var uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+
+              this[_mesh].attributes[name].push(uv);
+            }
+          } else {
+            for (var _j = 0; _j < positions.length; _j++) {
+              var _p = positions[_j];
+
+              this[_mesh].attributes[name].push(setter ? setter(_p, i, positions) : Array(opts.size).fill(0));
+            }
+          }
+        }
+      }
+    } // {stroke, fill}
+
   }, {
     key: _applyTransform,
     value: function value(mesh, m) {
@@ -17224,8 +17269,7 @@ function () {
     key: "pass",
     get: function get() {
       return this[_pass];
-    } // {stroke, fill}
-
+    }
   }, {
     key: "meshData",
     get: function get() {
@@ -17335,42 +17379,7 @@ function () {
           if (this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
         }
 
-        if (this[_program]) {
-          var attributes = this[_attributes];
-          var positions = this[_mesh].position0;
-          var attribs = Object.entries(this[_program]._attribute);
-
-          for (var i = 0; i < attribs.length; i++) {
-            var _attribs$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(attribs[i], 2),
-                name = _attribs$i[0],
-                opts = _attribs$i[1];
-
-            if (name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
-              var setter = attributes[name]; // console.log(opts.size);
-
-              this[_mesh].attributes[name] = [];
-
-              if (name === 'uv' && !setter) {
-                var bounds = this[_mesh].boundingBox || bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);
-                var w = bounds[1][0] - bounds[0][0],
-                    h = bounds[1][1] - bounds[0][1];
-
-                for (var j = 0; j < positions.length; j++) {
-                  var p = positions[j];
-                  var uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
-
-                  this[_mesh].attributes[name].push(uv);
-                }
-              } else {
-                for (var _j = 0; _j < positions.length; _j++) {
-                  var _p = positions[_j];
-
-                  this[_mesh].attributes[name].push(setter ? setter(_p, i, positions) : Array(opts.size).fill(0));
-                }
-              }
-            }
-          }
-        }
+        if (this[_program]) this[_applyProgram](this[_program]);
       }
 
       if (this._updateMatrix) {
