@@ -21,16 +21,6 @@ class MeshRenderer extends Proton.CustomRenderer {
     this.meshes = [];
   }
 
-  resize(width, height) {
-    super.resize(width, height);
-    const canvas = this.element.canvas;
-    canvas.width = width;
-    canvas.height = height;
-    this.meshes.forEach((mesh) => {
-      mesh.setResolution(width, height);
-    });
-  }
-
   drawMesh(particle) {
     const mesh = particle.body;
     if(particle.color) {
@@ -42,13 +32,13 @@ class MeshRenderer extends Proton.CustomRenderer {
     mesh.setTransform(1, 0, 0, 1, x, y);
     if(!mesh.uniforms.u_texSampler && Number.isFinite(particle.radius)) {
       const r = particle.radius * 2;
-      mesh.scale(r, r, [x, y]);
+      mesh.scale(r, r);
     }
     if(Number.isFinite(particle.rotation)) {
-      mesh.rotate(Math.PI * particle.rotation / 180, [x, y]);
+      mesh.rotate(Math.PI * particle.rotation / 180);
     }
     if(Number.isFinite(particle.scale)) {
-      mesh.scale(particle.scale, particle.scale, [x, y]);
+      mesh.scale(particle.scale, particle.scale);
     }
   }
 
