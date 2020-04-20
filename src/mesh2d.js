@@ -805,8 +805,7 @@ export default class Mesh2D {
     return this.isPointCollision(x, y, 'stroke');
   }
 
-  addPass(program, uniforms = {}) {
-    const {width, height} = this;
+  addPass(program, {width, height, ...uniforms} = {}) {
     const figure = new Figure2D();
     figure.rect(0, 0, width, height);
     const mesh = new Mesh2D(figure, {width, height});

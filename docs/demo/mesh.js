@@ -7826,9 +7826,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(69);
 /* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(86);
 /* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(57);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(95);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(97);
 /* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(48);
-/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(100);
+/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(102);
 
 
 
@@ -16175,29 +16175,32 @@ function getPoint(x0, y0, a, b, theta) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Mesh2D; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(72);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(87);
-/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(56);
-/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(52);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(59);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(95);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(83);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(96);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(76);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(60);
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(69);
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(72);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(89);
+/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(56);
+/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(52);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(59);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(97);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(83);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(98);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(76);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(60);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(69);
+
 
 
 
@@ -16265,11 +16268,11 @@ var _pass = Symbol('pass'); // function normalizePoints(points, bound) {
 
 
 function getTexCoord(_ref, _ref2, _ref3) {
-  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref, 2),
+  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref, 2),
       x = _ref4[0],
       y = _ref4[1];
 
-  var _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref2, 4),
+  var _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref2, 4),
       ox = _ref5[0],
       oy = _ref5[1],
       w = _ref5[2],
@@ -16289,7 +16292,7 @@ function getTexCoord(_ref, _ref2, _ref3) {
 }
 
 function _accurate(path, scale, simplify) {
-  var contours = _svg_path_contours__WEBPACK_IMPORTED_MODULE_13___default()(path, scale, simplify);
+  var contours = _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default()(path, scale, simplify);
   contours.path = path;
   contours.simplify = simplify;
   contours.scale = scale;
@@ -16300,7 +16303,7 @@ var Mesh2D =
 /*#__PURE__*/
 function () {
   function Mesh2D(figure) {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, Mesh2D);
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Mesh2D);
 
     this[_stroke] = null;
     this[_fill] = null;
@@ -16316,7 +16319,7 @@ function () {
     this[_pass] = [];
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(Mesh2D, [{
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Mesh2D, [{
     key: "setProgram",
     value: function setProgram(program) {
       this[_program] = program;
@@ -16351,12 +16354,12 @@ function () {
   }, {
     key: "getPointAtLength",
     value: function getPointAtLength(length) {
-      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_11__["getPointAtLength"])(this[_contours], length);
+      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getPointAtLength"])(this[_contours], length);
     }
   }, {
     key: "getTotalLength",
     value: function getTotalLength() {
-      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_11__["getTotalLength"])(this[_contours]);
+      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getTotalLength"])(this[_contours]);
     }
   }, {
     key: _applyTransform,
@@ -16365,7 +16368,7 @@ function () {
           p = mesh.position0;
 
       for (var i = 0; i < positions.length; i++) {
-        var _p$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(p[i], 2),
+        var _p$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(p[i], 2),
             x = _p$i[0],
             y = _p$i[1];
 
@@ -16381,10 +16384,10 @@ function () {
     value: function value() {
       var m = this[_transform];
 
-      var vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(this._radialGradientVector);
+      var vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this._radialGradientVector);
 
       if (vector) {
-        var _vector2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(vector, 5),
+        var _vector2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(vector, 5),
             x1 = _vector2[0],
             y1 = _vector2[1],
             x2 = _vector2[3],
@@ -16429,12 +16432,12 @@ function () {
         var m = null;
 
         if (options.rotated) {
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [0, -rect[2]]);
+          m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+          m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [0, -rect[2]]);
         }
 
         mesh.textureCoord = mesh.position0.map(function (_ref6) {
-          var _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref6, 3),
+          var _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref6, 3),
               x = _ref7[0],
               y = _ref7[1],
               z = _ref7[2];
@@ -16518,14 +16521,14 @@ function () {
           roundSegments = _ref8$roundSegments === void 0 ? 20 : _ref8$roundSegments;
 
       this[_mesh] = null;
-      this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_6__["default"])({
+      this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_7__["default"])({
         thickness: thickness,
         cap: cap,
         join: join,
         miterLimit: miterLimit,
         roundSegments: roundSegments
       });
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_14__["default"])(color);
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
       this[_strokeColor] = color;
       this[_stroke].lineDash = lineDash;
       this[_stroke].lineDashOffset = lineDashOffset;
@@ -16544,7 +16547,7 @@ function () {
       this[_fill] = {
         rule: rule
       };
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_14__["default"])(color);
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
       this[_fillColor] = color;
       return this;
     }
@@ -16659,7 +16662,7 @@ function () {
       gradientColors = gradientColors.map(function (_ref14) {
         var offset = _ref14.offset,
             color = _ref14.color;
-        if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_14__["default"])(color);
+        if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
         return {
           offset: offset,
           color: color
@@ -16677,7 +16680,7 @@ function () {
       gradientColors.forEach(function (_ref15) {
         var offset = _ref15.offset,
             color = _ref15.color;
-        colorSteps.push.apply(colorSteps, [offset].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(color)));
+        colorSteps.push.apply(colorSteps, [offset].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(color)));
       });
 
       var _vector;
@@ -16686,7 +16689,7 @@ function () {
         // linear gradient;
         _vector = [vector[0], vector[1], 0, vector[2], vector[3], 0];
       } else {
-        _vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector);
+        _vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(vector);
       }
 
       if (colorSteps.length < 40) colorSteps.push(-1);
@@ -16715,7 +16718,7 @@ function () {
         m[_key] = arguments[_key];
       }
 
-      if (!gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].equals(m, transform)) {
+      if (!gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].equals(m, transform)) {
         this[_transform] = m;
         this._updateMatrix = true;
       }
@@ -16731,30 +16734,30 @@ function () {
         m[_key2] = arguments[_key2];
       }
 
-      this[_transform] = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), transform, m);
+      this[_transform] = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), transform, m);
       this._updateMatrix = true;
       return this;
     }
   }, {
     key: "translate",
     value: function translate(x, y) {
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
     }
   }, {
     key: "rotate",
     value: function rotate(rad) {
       var _ref16 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref17 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref16, 2),
+          _ref17 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref16, 2),
           ox = _ref17[0],
           oy = _ref17[1];
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
     }
   }, {
     key: "scale",
@@ -16762,15 +16765,15 @@ function () {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
       var _ref18 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref19 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref18, 2),
+          _ref19 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref18, 2),
           ox = _ref19[0],
           oy = _ref19[1];
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
     }
   }, {
     key: "skew",
@@ -16778,15 +16781,15 @@ function () {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
       var _ref20 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref21 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref20, 2),
+          _ref21 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref20, 2),
           ox = _ref21[0],
           oy = _ref21[1];
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_4__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(m));
+      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
+      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
     }
   }, {
     key: "clearFilter",
@@ -16827,12 +16830,12 @@ function () {
       }
 
       if (transform) {
-        transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["multiply"])(transform, m);
+        transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["multiply"])(transform, m);
       } else {
         transform = m;
       }
 
-      this.setColorTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(transform));
+      this.setColorTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(transform));
       return this;
     }
   }, {
@@ -16849,7 +16852,7 @@ function () {
 
       this[_filter].push("brightness(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["brightness"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["brightness"])(p)));
     }
   }, {
     key: "contrast",
@@ -16858,14 +16861,14 @@ function () {
 
       this[_filter].push("contrast(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["contrast"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["contrast"])(p)));
     }
   }, {
     key: "dropShadow",
     value: function dropShadow(offsetX, offsetY) {
       var blurRadius = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
       var color = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0, 0, 1];
-      if (Array.isArray(color)) color = Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
+      if (Array.isArray(color)) color = Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(color);
 
       this[_filter].push("drop-shadow(".concat(offsetX, "px ").concat(offsetY, "px ").concat(blurRadius, "px ").concat(color, ")"));
 
@@ -16878,7 +16881,7 @@ function () {
 
       this[_filter].push("grayscale(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["grayscale"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["grayscale"])(p)));
     } // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
 
   }, {
@@ -16888,7 +16891,7 @@ function () {
 
       this[_filter].push("hue-rotate(".concat(deg, "deg)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["hueRotate"])(deg)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["hueRotate"])(deg)));
     }
   }, {
     key: "invert",
@@ -16897,7 +16900,7 @@ function () {
 
       this[_filter].push("invert(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["invert"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["invert"])(p)));
     }
   }, {
     key: "opacity",
@@ -16906,7 +16909,7 @@ function () {
 
       this[_filter].push("opacity(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["opacity"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["opacity"])(p)));
     }
   }, {
     key: "saturate",
@@ -16915,7 +16918,7 @@ function () {
 
       this[_filter].push("saturate(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["saturate"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["saturate"])(p)));
     }
   }, {
     key: "sepia",
@@ -16924,7 +16927,7 @@ function () {
 
       this[_filter].push("sepia(".concat(100 * p, "%)"));
 
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_9__["sepia"])(p)));
+      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["sepia"])(p)));
     }
   }, {
     key: "url",
@@ -16942,15 +16945,15 @@ function () {
           cells = meshData.cells;
 
       function projectionOn(_ref22, _ref23, _ref24) {
-        var _ref25 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref22, 2),
+        var _ref25 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref22, 2),
             x0 = _ref25[0],
             y0 = _ref25[1];
 
-        var _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref23, 2),
+        var _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref23, 2),
             x1 = _ref26[0],
             y1 = _ref26[1];
 
-        var _ref27 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref24, 2),
+        var _ref27 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref24, 2),
             x2 = _ref27[0],
             y2 = _ref27[1];
 
@@ -16968,14 +16971,14 @@ function () {
         var _cell$map = cell.map(function (idx) {
           return positions[idx];
         }),
-            _cell$map2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map, 3),
-            _cell$map2$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map2[0], 2),
+            _cell$map2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map, 3),
+            _cell$map2$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[0], 2),
             x1 = _cell$map2$[0],
             y1 = _cell$map2$[1],
-            _cell$map2$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map2[1], 2),
+            _cell$map2$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[1], 2),
             x2 = _cell$map2$2[0],
             y2 = _cell$map2$2[1],
-            _cell$map2$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_cell$map2[2], 2),
+            _cell$map2$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[2], 2),
             x3 = _cell$map2$3[0],
             y3 = _cell$map2$3[1];
 
@@ -17017,10 +17020,12 @@ function () {
   }, {
     key: "addPass",
     value: function addPass(program) {
-      var uniforms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var width = this.width,
-          height = this.height;
-      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_15__["default"]();
+      var _ref28 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          width = _ref28.width,
+          height = _ref28.height,
+          uniforms = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(_ref28, ["width", "height"]);
+
+      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_16__["default"]();
       figure.rect(0, 0, width, height);
       var mesh = new Mesh2D(figure, {
         width: width,
@@ -17042,7 +17047,7 @@ function () {
       var scale = contours.scale;
       var acc = this.transformScale / scale;
 
-      if (acc > 1.5 || acc < 0.67) {
+      if (acc > 1.5) {
         this.accurate(this.transformScale);
       }
     }
@@ -17068,7 +17073,7 @@ function () {
 
       if (meshData) {
         var positions = meshData.position0;
-        if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_5___default()(positions);else return [[0, 0], [0, 0]];
+        if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);else return [[0, 0], [0, 0]];
         return meshData.boundingBox;
       }
 
@@ -17134,7 +17139,7 @@ function () {
     key: "strokeStyle",
     get: function get() {
       if (this[_strokeColor] && this[_strokeColor][3] !== 0) {
-        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__["default"])(this[_strokeColor]);
+        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(this[_strokeColor]);
       }
 
       return '';
@@ -17161,7 +17166,7 @@ function () {
     key: "fillStyle",
     get: function get() {
       if (this[_fillColor] && this[_fillColor][3] !== 0) {
-        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_8__["default"])(this[_fillColor]);
+        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(this[_fillColor]);
       }
 
       return '';
@@ -17230,7 +17235,7 @@ function () {
       if (this._updateMatrix) {
         var acc = this.transformScale / this.contours.scale;
 
-        if (acc > 1.5 || acc < 0.67) {
+        if (acc > 1.5) {
           this.accurate(this.transformScale);
         }
       }
@@ -17246,7 +17251,7 @@ function () {
         if (contours && contours.length) {
           if (this[_fill]) {
             try {
-              var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_12___default()(contours, this[_fill]);
+              var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default()(contours, this[_fill]);
 
               _mesh2.positions = _mesh2.positions.map(function (p) {
                 p.push(_this[_opacity]);
@@ -17273,11 +17278,11 @@ function () {
 
             if (lineDash) {
               var lineDashOffset = this[_stroke].lineDashOffset;
-              strokeContours = Object(_utils_contours__WEBPACK_IMPORTED_MODULE_11__["getDashContours"])(contours, lineDash, lineDashOffset);
+              strokeContours = Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getDashContours"])(contours, lineDash, lineDashOffset);
             }
 
             var _meshes = strokeContours.map(function (lines, i) {
-              var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_4__["vec2"].equals(lines[0], lines[lines.length - 1]);
+              var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_5__["vec2"].equals(lines[0], lines[lines.length - 1]);
               return _this[_stroke].build(lines, closed);
             });
 
@@ -17297,18 +17302,18 @@ function () {
               };
             });
 
-            meshes.stroke = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__["default"])(_meshes);
+            meshes.stroke = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__["default"])(_meshes);
           }
         }
 
-        var mesh = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_7__["default"])([meshes.fill, meshes.stroke]);
+        var mesh = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__["default"])([meshes.fill, meshes.stroke]);
         mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
         mesh.enableBlend = this.enableBlend;
-        mesh.position0 = mesh.positions.map(function (_ref28) {
-          var _ref29 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_ref28, 3),
-              x = _ref29[0],
-              y = _ref29[1],
-              z = _ref29[2];
+        mesh.position0 = mesh.positions.map(function (_ref29) {
+          var _ref30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref29, 3),
+              x = _ref30[0],
+              y = _ref30[1],
+              z = _ref30[2];
 
           return [x, y, z];
         });
@@ -17324,7 +17329,7 @@ function () {
 
         var transform = this[_transform];
 
-        if (!Object(_utils_transform__WEBPACK_IMPORTED_MODULE_10__["isUnitTransform"])(transform)) {
+        if (!Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
           this[_applyTransform](mesh, transform);
 
           if (this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
@@ -17336,7 +17341,7 @@ function () {
           var attribs = Object.entries(this[_program]._attribute);
 
           for (var i = 0; i < attribs.length; i++) {
-            var _attribs$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(attribs[i], 2),
+            var _attribs$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(attribs[i], 2),
                 name = _attribs$i[0],
                 opts = _attribs$i[1];
 
@@ -17346,7 +17351,7 @@ function () {
               this[_mesh].attributes[name] = [];
 
               if (name === 'uv' && !setter) {
-                var bounds = this[_mesh].boundingBox || bound_points__WEBPACK_IMPORTED_MODULE_5___default()(positions);
+                var bounds = this[_mesh].boundingBox || bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);
                 var w = bounds[1][0] - bounds[0][0],
                     h = bounds[1][1] - bounds[0][1];
 
@@ -17387,6 +17392,54 @@ function () {
 
 /***/ }),
 /* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(88);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17395,7 +17448,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(88);
+/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(90);
 /* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(as_number__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _vecutil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(79);
 
@@ -17412,7 +17465,7 @@ var lineB = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 var tangent = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 var miter = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
 
-var util = __webpack_require__(89);
+var util = __webpack_require__(91);
 
 var computeMiter = util.computeMiter,
     normal = util.normal,
@@ -17685,7 +17738,7 @@ function round(complex, point, normal, scale) {
 /* harmony default export */ __webpack_exports__["default"] = (Stroke);
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports) {
 
 module.exports = function numtype(num, def) {
@@ -17695,14 +17748,14 @@ module.exports = function numtype(num, def) {
 }
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var add = __webpack_require__(90)
-var set = __webpack_require__(91)
-var normalize = __webpack_require__(92)
-var subtract = __webpack_require__(93)
-var dot = __webpack_require__(94)
+var add = __webpack_require__(92)
+var set = __webpack_require__(93)
+var normalize = __webpack_require__(94)
+var subtract = __webpack_require__(95)
+var dot = __webpack_require__(96)
 
 var tmp = [0, 0]
 
@@ -17733,7 +17786,7 @@ module.exports.direction = function direction(out, a, b) {
 }
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports) {
 
 module.exports = add
@@ -17753,7 +17806,7 @@ function add(out, a, b) {
 }
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports) {
 
 module.exports = set
@@ -17773,7 +17826,7 @@ function set(out, x, y) {
 }
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports) {
 
 module.exports = normalize
@@ -17799,7 +17852,7 @@ function normalize(out, a) {
 }
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports) {
 
 module.exports = subtract
@@ -17819,7 +17872,7 @@ function subtract(out, a, b) {
 }
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports) {
 
 module.exports = dot
@@ -17836,7 +17889,7 @@ function dot(a, b) {
 }
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17849,7 +17902,7 @@ function isUnitTransform(m) {
 }
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -17857,9 +17910,9 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/triangulate-contours
 
 /* eslint-disable */
-var Tess2 = __webpack_require__(97);
+var Tess2 = __webpack_require__(99);
 
-var xtend = __webpack_require__(99);
+var xtend = __webpack_require__(101);
 
 module.exports = function (contours, opt) {
   opt = opt || {};
@@ -17914,13 +17967,13 @@ module.exports = function (contours, opt) {
 };
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(98);
+module.exports = __webpack_require__(100);
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21351,7 +21404,7 @@ module.exports = __webpack_require__(98);
 	};
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -21376,7 +21429,7 @@ function extend() {
 
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21387,10 +21440,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyCloudShader", function() { return applyCloudShader; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(101);
-/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(102);
-/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(103);
-/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(104);
+/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(103);
+/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(104);
+/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(105);
+/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(106);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -21522,7 +21575,7 @@ function applyCloudShader(renderer) {
 }
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21530,7 +21583,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  vSourceRect = a_sourceRect;\n#endif\n}");
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21538,7 +21591,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n  float opacity = abs(flagBackground);\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(opacity < 1.0) {\n    color.a *= opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n      float alpha = texColor.a;\n      if(opacity < 1.0) {\n        texColor.a *= opacity;\n        alpha *= mix(0.465, 1.0, opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(color.rgb, texColor.rgb, alpha);\n      // color.rgb = mix(texColor.rgb, color.rgb, color.a);\n      color.rgb = mix(texColor.rgb, color.rgb, clamp(color.a / max(0.0001, texColor.a), 0.0, 1.0));\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21546,7 +21599,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec4 a_transform0;\nattribute vec4 a_transform1;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  mat3 modelMatrix = mat3(\n    a_transform0.x, a_transform0.y, 0, \n    a_transform0.z, a_transform1.x, 0,\n    a_transform1.y, a_transform1.z, 1\n  );\n\n  vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
