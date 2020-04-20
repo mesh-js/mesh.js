@@ -13335,8 +13335,8 @@ var _buffer = Symbol('buffer');
 
 function createBuffer(buffer) {
   var oldBuffer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var transform0 = new Float32Array(4 * buffer);
-  var transform1 = new Float32Array(4 * buffer);
+  var transform0 = new Float32Array(3 * buffer);
+  var transform1 = new Float32Array(3 * buffer);
   var color0 = new Float32Array(4 * buffer);
   var color1 = new Float32Array(4 * buffer);
   var color2 = new Float32Array(4 * buffer);
@@ -13403,14 +13403,11 @@ function () {
     value: function initBuffer() {
       var offset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var amount = this[_count];
-      var mesh = this[_mesh];
-      var width = mesh.width,
-          height = mesh.height;
 
       for (var i = offset; i < amount; i++) {
-        this[_buffer].transform0.set([1, 0, 0, width], i * 4);
+        this[_buffer].transform0.set([1, 0, 0], i * 3);
 
-        this[_buffer].transform1.set([1, 0, 0, height], i * 4);
+        this[_buffer].transform1.set([0, 1, 0], i * 3);
 
         this[_buffer].frameIndex.set([-1], i);
 
@@ -13452,8 +13449,8 @@ function () {
           frameIndex = _this$_buffer.frameIndex,
           fillColor = _this$_buffer.fillColor,
           strokeColor = _this$_buffer.strokeColor;
-      transform0.set(transform0.subarray(4 * (idx + 1)), 4 * idx);
-      transform1.set(transform1.subarray(4 * (idx + 1)), 4 * idx);
+      transform0.set(transform0.subarray(3 * (idx + 1)), 3 * idx);
+      transform1.set(transform1.subarray(3 * (idx + 1)), 3 * idx);
       color0.set(color0.subarray(4 * (idx + 1)), 4 * idx);
       color1.set(color1.subarray(4 * (idx + 1)), 4 * idx);
       color2.set(color2.subarray(4 * (idx + 1)), 4 * idx);
@@ -13625,24 +13622,24 @@ function () {
     key: "setTransform",
     value: function setTransform(idx, m) {
       if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 4;
+      idx *= 3;
       if (m == null) m = [1, 0, 0, 1, 0, 0];
       var _this$_buffer5 = this[_buffer],
           transform0 = _this$_buffer5.transform0,
           transform1 = _this$_buffer5.transform1;
-      transform0.set([m[0], m[1], m[2]], idx);
-      transform1.set([m[3], m[4], m[5]], idx);
+      transform0.set([m[0], m[2], m[4]], idx);
+      transform1.set([m[1], m[3], m[5]], idx);
       return this;
     }
   }, {
     key: "getTransform",
     value: function getTransform(idx) {
       if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 4;
+      idx *= 3;
       var _this$_buffer6 = this[_buffer],
           transform0 = _this$_buffer6.transform0,
           transform1 = _this$_buffer6.transform1;
-      var m = [transform0[idx], transform0[idx + 1], transform0[idx + 2], transform1[idx], transform1[idx + 1], transform1[idx + 2]];
+      var m = [transform0[idx], transform1[idx], transform0[idx + 1], transform1[idx + 1], transform0[idx + 2], transform1[idx + 2]];
       return m;
     }
   }, {
@@ -21605,7 +21602,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec4 a_transform0;\nattribute vec4 a_transform1;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  mat3 modelMatrix = mat3(\n    a_transform0.x, a_transform0.y, 0, \n    a_transform0.z, a_transform1.x, 0,\n    a_transform1.y, a_transform1.z, 1\n  );\n\n  vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
+/* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec3 a_transform0;\nattribute vec3 a_transform1;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  mat3 modelMatrix = mat3(\n    a_transform0.x, a_transform1.x, 0, \n    a_transform0.y, a_transform1.y, 0,\n    a_transform0.z, a_transform1.z, 1\n  );\n\n  vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
 /* 106 */

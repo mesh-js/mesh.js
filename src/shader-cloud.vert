@@ -2,8 +2,8 @@ attribute vec3 a_vertexPosition;
 attribute vec4 a_color;
 varying vec4 vColor;
 varying float flagBackground;
-attribute vec4 a_transform0;
-attribute vec4 a_transform1;
+attribute vec3 a_transform0;
+attribute vec3 a_transform1;
 uniform vec2 u_resolution;
 uniform mat3 viewMatrix;
 uniform mat3 projectionMatrix;
@@ -45,9 +45,9 @@ void main() {
   gl_PointSize = 1.0;
 
   mat3 modelMatrix = mat3(
-    a_transform0.x, a_transform0.y, 0, 
-    a_transform0.z, a_transform1.x, 0,
-    a_transform1.y, a_transform1.z, 1
+    a_transform0.x, a_transform1.x, 0, 
+    a_transform0.y, a_transform1.y, 0,
+    a_transform0.z, a_transform1.z, 1
   );
 
   vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);

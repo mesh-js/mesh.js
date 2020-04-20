@@ -20,8 +20,8 @@ const _hasCloudFilter = Symbol('cloudFilter');
 const _buffer = Symbol('buffer');
 
 function createBuffer(buffer, oldBuffer = null) {
-  const transform0 = new Float32Array(4 * buffer);
-  const transform1 = new Float32Array(4 * buffer);
+  const transform0 = new Float32Array(3 * buffer);
+  const transform1 = new Float32Array(3 * buffer);
 
   const color0 = new Float32Array(4 * buffer);
   const color1 = new Float32Array(4 * buffer);
@@ -82,12 +82,10 @@ export default class {
 
   initBuffer(offset = 0) {
     const amount = this[_count];
-    const mesh = this[_mesh];
 
-    const {width, height} = mesh;
     for(let i = offset; i < amount; i++) {
-      this[_buffer].transform0.set([1, 0, 0, width], i * 4);
-      this[_buffer].transform1.set([1, 0, 0, height], i * 4);
+      this[_buffer].transform0.set([1, 0, 0], i * 3);
+      this[_buffer].transform1.set([0, 1, 0], i * 3);
       this[_buffer].frameIndex.set([-1], i);
       this[_buffer].fillColor.set([0, 0, 0, 0], i * 4);
       this[_buffer].strokeColor.set([0, 0, 0, 0], i * 4);
@@ -138,8 +136,8 @@ export default class {
   delete(idx) {
     if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
     const {transform0, transform1, color0, color1, color2, color3, color4, frameIndex, fillColor, strokeColor} = this[_buffer];
-    transform0.set(transform0.subarray(4 * (idx + 1)), 4 * idx);
-    transform1.set(transform1.subarray(4 * (idx + 1)), 4 * idx);
+    transform0.set(transform0.subarray(3 * (idx + 1)), 3 * idx);
+    transform1.set(transform1.subarray(3 * (idx + 1)), 3 * idx);
     color0.set(color0.subarray(4 * (idx + 1)), 4 * idx);
     color1.set(color1.subarray(4 * (idx + 1)), 4 * idx);
     color2.set(color2.subarray(4 * (idx + 1)), 4 * idx);
@@ -271,20 +269,21 @@ export default class {
 
   setTransform(idx, m) {
     if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-    idx *= 4;
+    idx *= 3;
     if(m == null) m = [1, 0, 0, 1, 0, 0];
     const {transform0, transform1} = this[_buffer];
-    transform0.set([m[0], m[1], m[2]], idx);
-    transform1.set([m[3], m[4], m[5]], idx);
+    transform0.set([m[0], m[2], m[4]], idx);
+    transform1.set([m[1], m[3], m[5]], idx);
     return this;
   }
 
   getTransform(idx) {
     if(idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-    idx *= 4;
+    idx *= 3;
     const {transform0, transform1} = this[_buffer];
-    const m = [transform0[idx], transform0[idx + 1], transform0[idx + 2],
-      transform1[idx], transform1[idx + 1], transform1[idx + 2]];
+    const m = [transform0[idx], transform1[idx],
+      transform0[idx + 1], transform1[idx + 1],
+      transform0[idx + 2], transform1[idx + 2]];
     return m;
   }
 
