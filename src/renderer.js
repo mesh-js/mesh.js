@@ -188,6 +188,9 @@ export default class Renderer {
     ];
     const m3 = mat3(m2) * mat3(m1);
     this.projectionMatrix = m3;
+    if(this[_glRenderer]) {
+      this[_glRenderer].gl.viewport(0, 0, width, height);
+    }
   }
 
   createTexture(img) {

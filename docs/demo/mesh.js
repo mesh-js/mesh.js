@@ -7995,6 +7995,10 @@ function () {
       2 / width, 0, 0, 0, -2 / height, 0, 0, 0, 1];
       var m3 = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m2, m1);
       this.projectionMatrix = m3;
+
+      if (this[_glRenderer]) {
+        this[_glRenderer].gl.viewport(0, 0, width, height);
+      }
     }
   }, {
     key: "createTexture",
