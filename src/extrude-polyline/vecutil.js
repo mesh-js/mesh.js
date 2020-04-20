@@ -12,6 +12,9 @@ const copy = vec2.copy;
 const scaleAndAdd = vec2.scaleAndAdd;
 const dot = vec2.dot;
 const rotate = vec2.rotate;
+const cross = vec2.cross;
+const sub = vec2.sub;
+const add = vec2.add;
 
 export {
   create,
@@ -20,4 +23,7 @@ export {
   scaleAndAdd,
   dot,
   rotate,
+  cross,
+  sub,
+  add,
 };

@@ -57,48 +57,24 @@ Stroke.prototype.build = function (points, closed = false) {
   this._started = false;
   this._normal = null;
 
-  if(this.join === 'round') {
-    for(let i = 1; i < total; i++) {
-      this._started = false;
-      this._normal = null;
-      this._lastFlip = -1;
-      const _complex = {
-        positions: [],
-        cells: [],
-      };
-      const last = points[i - 1];
-      const cur = points[i];
-      const thickness = this.mapThickness(cur, i, points);
-      if(i === 1 && this.cap !== 'round' && this.cap !== 'roundStart') {
-        this._seg(_complex, 0, last, cur, null, thickness / 2, false, false, 'roundEnd');
-      } else if(i === total - 1 && this.cap !== 'round' && this.cap !== 'roundEnd') {
-        this._seg(_complex, 0, last, cur, null, thickness / 2, false, false, 'roundStart');
-      } else {
-        this._seg(_complex, 0, last, cur, null, thickness / 2, false, false, 'round');
-      }
-      const idx = complex.positions.length;
-      complex.positions.push(..._complex.positions);
-      complex.cells.push(..._complex.cells.map(o => o.map(i => i + idx)));
-    }
-  } else {
-    // join each segment
-    for(let i = 1, count = 0; i < total; i++) {
-      const last = points[i - 1];
-      const cur = points[i];
-      const next = i < points.length - 1 ? points[i + 1] : null;
-      const thickness = this.mapThickness(cur, i, points);
-      this._seg(complex, count, last, cur, next, thickness / 2, closed, closeNext);
-      count = complex.positions.length - 2;
-    }
-    if(closed) {
-      complex.positions = complex.positions.slice(2);
-      complex.cells = complex.cells.slice(2).map(([a, b, c]) => [a - 2, b - 2, c - 2]);
-    }
+  // join each segment
+  for(let i = 1, count = 0; i < total; i++) {
+    const last = points[i - 1];
+    const cur = points[i];
+    const next = i < points.length - 1 ? points[i + 1] : null;
+    const thickness = this.mapThickness(cur, i, points);
+    this._seg(complex, count, last, cur, next, thickness / 2, closed, closeNext);
+    count = complex.positions.length - 2;
   }
+  if(closed) {
+    complex.positions = complex.positions.slice(2);
+    complex.cells = complex.cells.slice(2).map(([a, b, c]) => [a - 2, b - 2, c - 2]);
+  }
+
   return complex;
 };
 
-Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, closed, closeNext, cap = this.cap) {
+Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, closed, closeNext, cap = this.cap) { // eslint-disable-line complexity
   const cells = complex.cells;
   const positions = complex.positions;
   const capSquare = cap === 'square';
@@ -106,6 +82,7 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
   const capRoundStart = cap === 'roundStart';
   const capRoundEnd = cap === 'roundEnd';
   const joinBevel = this.join === 'bevel';
+  const joinRound = this.join === 'round';
 
   // get unit direction of line
   direction(lineA, cur, last);
@@ -183,7 +160,7 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
     // get orientation
     let flip = (vec.dot(tangent, this._normal) < 0) ? -1 : 1;
 
-    let bevel = joinBevel;
+    let bevel = joinBevel || joinRound;
     if(!bevel && this.join === 'miter') {
       const limit = miterLen / halfThick;
       if(limit > this.miterLimit) {
@@ -197,20 +174,72 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
       vec.scaleAndAdd(tmp, cur, this._normal, -halfThick * flip);
       positions.push(vec.clone(tmp));
 
-      vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
-      positions.push(vec.clone(tmp));
+      positions.push(vec.clone(cur));
+      // vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
+      // positions.push(vec.clone(tmp));
 
       cells.push(this._lastFlip !== -flip
         ? [index, index + 2, index + 3]
         : [index + 2, index + 1, index + 3]);
 
+      vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
+      positions.push(vec.clone(tmp));
+
+      if(!joinRound) {
+        cells.push(this._lastFlip !== -flip
+          ? [index, index + 3, index + 4]
+          : [index + 3, index + 1, index + 4]);
+      }
+
       if(next) {
         normal(tmp, lineB);
         vec.copy(this._normal, tmp); // store normal for next round
         vec.scaleAndAdd(tmp, cur, tmp, -halfThick * flip);
-        positions.push(vec.clone(tmp));
+        const pE2 = vec.clone(tmp);
         // now add the bevel triangle
-        cells.push([index + 2, index + 3, index + 4]);
+        if(!joinRound) {
+          cells.push([index + 2, index + 3, index + 5]);
+        } else {
+          // join round
+          const pEnd = positions.pop();
+          const o = positions[index + 3];
+          const p1 = vec.sub(vec.create(), positions[index + 2], o);
+          const p2 = vec.sub(vec.create(), pE2, o);
+
+          const delta = Math.PI / this.roundSegments;
+          for(let i = 0; i < this.roundSegments; i++) {
+            vec.rotate(p1, p1, [0, 0], flip * delta);
+            // console.log(p1, p2, vec.cross([], p1, p2)[2]);
+            if(Math.sign(vec.cross(tmp, p1, p2)[2]) !== flip) {
+              vec.add(tmp, p2, o);
+              positions.push(vec.clone(tmp));
+              if(i === 0) {
+                cells.push([index + 3, index + 2, index + 5]);
+              } else {
+                cells.push([index + 3, index + 5 + i - 1, index + 5 + i]);
+              }
+              break;
+            } else {
+              vec.add(tmp, p1, o);
+              positions.push(vec.clone(tmp));
+              if(i === 0) {
+                cells.push([index + 3, index + 2, index + 5]);
+              } else {
+                cells.push([index + 3, index + 5 + i - 1, index + 5 + i]);
+              }
+            }
+          }
+          // console.log(index, positions.length);
+          cells.push(this._lastFlip !== -flip
+            ? [index, index + 3, positions.length]
+            : [index + 3, index + 1, positions.length]);
+          positions.push(pEnd);
+        }
+
+        positions.push(pE2);
+      }
+      if(!next || !joinRound) {
+        cells.push([index + 3, index + 4, index + 5]);
       }
     } else { // miter
       // next two points for our miter join
