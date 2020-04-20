@@ -89,7 +89,7 @@ export default class Mesh2D {
     this[_contours] = contours;
     const scale = contours.scale;
     const acc = this.transformScale / scale;
-    if(acc > 1.5 || acc < 0.67) {
+    if(acc > 1.5) {
       this.accurate(this.transformScale);
     }
   }
@@ -279,7 +279,7 @@ export default class Mesh2D {
   get meshData() { // eslint-disable-line complexity
     if(this._updateMatrix) {
       const acc = this.transformScale / this.contours.scale;
-      if(acc > 1.5 || acc < 0.67) {
+      if(acc > 1.5) {
         this.accurate(this.transformScale);
       }
     }
