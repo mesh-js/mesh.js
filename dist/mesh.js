@@ -8802,7 +8802,14 @@ var uniformTypeMap = {
   mat2: 'Matrix2fv',
   mat3: 'Matrix3fv',
   mat4: 'Matrix4fv',
-  sampler2D: 'sampler2D'
+  sampler1D: 'sampler1D',
+  sampler2D: 'sampler2D',
+  sampler3D: 'sampler3D',
+  samplerCube: 'samplerCube',
+  sampler1DShadow: 'sampler1DShadow',
+  sampler2DShadow: 'sampler2DShadow',
+  sampler2DRect: 'sampler2DRect',
+  sampler2DRectShadow: 'sampler2DRectShadow'
 };
 
 var Renderer =
@@ -9118,7 +9125,7 @@ function () {
 
       // this.deleteProgram();
       // this._events = {};
-      var enableTextures = /^\s*uniform\s+sampler2D/mg.test(fragmentShader);
+      var enableTextures = /^\s*uniform\s+sampler/mg.test(fragmentShader);
       if (fragmentShader == null) fragmentShader = _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__["default"];
       if (vertexShader == null) vertexShader = enableTextures ? _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_10__["default"] : _default_vert_glsl__WEBPACK_IMPORTED_MODULE_8__["default"];
       var gl = this.gl;
