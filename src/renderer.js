@@ -197,9 +197,9 @@ export default class Renderer {
     }
   }
 
-  createTexture(img) {
+  createTexture(img, opts) {
     const renderer = this[_glRenderer] || this[_canvasRenderer];
-    return renderer.createTexture(img);
+    return renderer.createTexture(img, opts);
   }
 
   /* async */ loadTexture(textureURL, {useImageBitmap = false} = {}) {
