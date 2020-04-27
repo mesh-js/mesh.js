@@ -85,6 +85,10 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
       yield mesh;
     } else {
       const meshData = mesh.meshData;
+      if(meshData.clipPath && !meshData.uniforms.u_clipSampler) {
+        const texture = renderer.createTexture(meshData.clipPath);
+        meshData.uniforms.u_clipSampler = texture;
+      }
       let len = 0;
 
       if((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length) {

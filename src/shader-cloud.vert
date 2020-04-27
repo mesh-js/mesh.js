@@ -17,6 +17,11 @@ attribute vec4 a_sourceRect;
 varying vec4 vSourceRect;
 #endif
 
+#ifdef CLIPPATH
+attribute vec2 a_clipUV;
+varying vec2 vClipUV;
+#endif
+
 #ifdef CLOUDFILTER
 attribute vec4 a_colorCloud0;
 attribute vec4 a_colorCloud1;
@@ -79,6 +84,10 @@ void main() {
   vTextureCoord = a_vertexTextureCoord;
   frameIndex = a_frameIndex;
   vSourceRect = a_sourceRect;
+#endif
+
+#ifdef CLIPPATH
+  vClipUV = a_clipUV;
 #endif
 
 #ifdef CLOUDFILTER

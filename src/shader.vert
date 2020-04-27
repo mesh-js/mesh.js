@@ -13,6 +13,11 @@ attribute vec4 a_sourceRect;
 varying vec4 vSourceRect;
 #endif
 
+#ifdef CLIPPATH
+attribute vec2 a_clipUV;
+varying vec2 vClipUV;
+#endif
+
 #ifdef GRADIENT
 uniform float u_radialGradientVector[6];
 varying vec3 vGradientVector1;
@@ -41,5 +46,9 @@ void main() {
 #ifdef TEXTURE
   vTextureCoord = a_vertexTextureCoord;
   vSourceRect = a_sourceRect;
+#endif
+
+#ifdef CLIPPATH
+  vClipUV = a_clipUV;
 #endif
 }

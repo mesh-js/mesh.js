@@ -19,7 +19,7 @@
   });
 
   const figure = new Figure2D();
-  figure.rect(0, 0, 100, 100);
+  figure.rect(50, 50, 100, 100);
 
   const mesh1 = new Mesh2D(figure);
 
@@ -98,7 +98,8 @@
     type: 'fill',
   });
 
-  renderer.globalTranslate(100, 100);
+  // renderer.globalTranslate(100, 100);
+  mesh1.setClipPath('M0,0L100,100L100,0z');
 
   renderer.drawMeshes([mesh1]);
   

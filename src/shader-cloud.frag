@@ -9,6 +9,10 @@ varying vec3 vTextureCoord;
 varying vec4 vSourceRect;
 #endif
 
+#ifdef CLIPPATH
+varying vec2 vClipUV;
+#endif
+
 #ifdef FILTER
 uniform int u_filterFlag;
 uniform float u_colorMatrix[20];
@@ -199,6 +203,11 @@ void main() {
   float colorCloudMatrix[20];
   buildCloudColor(colorCloudMatrix);
   transformColor(color, colorCloudMatrix);
+#endif
+
+#ifdef CLIPPATH
+  float clip = texture2D(u_clipSampler, vClipUV).r;
+  color *= clip;
 #endif
 
   gl_FragColor = color;

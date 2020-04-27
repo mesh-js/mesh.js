@@ -8,26 +8,31 @@ const _shaders = Symbol('shaders');
 
 export function createShaders(renderer) {
   renderer[_shaders] = [];
-  for(let i = 0; i < 8; i++) {
+  for(let i = 0; i < 16; i++) {
     const defines = [];
     const hasTexture = !!(i & 0x1);
     const hasFilter = !!(i & 0x2);
     const hasGradient = !!(i & 0x4);
+    const hasClipPath = !!(i & 0x8);
     if(hasTexture) defines.push('#define TEXTURE 1');
     if(hasFilter) defines.push('#define FILTER 1');
     if(hasGradient) defines.push('#define GRADIENT 1');
+    if(hasClipPath) defines.push('#define CLIPPATH 1');
     const prefix = `${defines.join('\n')}\n`;
     const samplerDef = [];
     if(hasTexture) {
       samplerDef.push('uniform sampler2D u_texSampler;');
+    }
+    if(hasClipPath) {
+      samplerDef.push('uniform sampler2D u_clipSampler;');
     }
     // renderer.createProgram(prefix + samplerDef.join('\n') + fragShader, prefix + vertShader);
     renderer[_shaders][i] = [prefix + samplerDef.join('\n') + fragShader, prefix + vertShader];
   }
 }
 
-export function applyShader(renderer, {hasTexture = false, hasFilter = false, hasGradient = false} = {}) {
-  const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2);
+export function applyShader(renderer, {hasTexture = false, hasFilter = false, hasGradient = false, hasClipPath = false} = {}) {
+  const idx = hasTexture | (hasFilter << 1) | (hasGradient << 2) | (hasClipPath << 3);
   let program = renderer[_shaders][idx];
   if(Array.isArray(program)) {
     program = renderer.createProgram(...program);
@@ -46,18 +51,20 @@ export function applyShader(renderer, {hasTexture = false, hasFilter = false, ha
 
 const cloudShaders = [];
 export function createCloudShaders(renderer) {
-  for(let i = 0; i < 32; i++) {
+  for(let i = 0; i < 64; i++) {
     const defines = [];
     const hasTexture = !!(i & 0x1);
     const hasFilter = !!(i & 0x2);
     const hasGradient = !!(i & 0x4);
     const hasCloudColor = !!(i & 0x8);
     const hasCloudFilter = !!(i & 0x10);
+    const hasClipPath = !!(i & 0x20);
     if(hasTexture) defines.push('#define TEXTURE 1');
     if(hasFilter) defines.push('#define FILTER 1');
     if(hasGradient) defines.push('#define GRADIENT 1');
     if(hasCloudColor) defines.push('#define CLOUDCOLOR 1');
     if(hasCloudFilter) defines.push('#define CLOUDFILTER 1');
+    if(hasClipPath) defines.push('#define CLIPPATH 1');
     const prefix = `${defines.join('\n')}\n`;
     const samplerDef = [];
     if(hasTexture) {
@@ -66,6 +73,9 @@ export function createCloudShaders(renderer) {
         samplerDef.push(`uniform sampler2D u_texFrame${j};`);
       }
     }
+    if(hasClipPath) {
+      samplerDef.push('uniform sampler2D u_clipSampler;');
+    }
     cloudShaders[i] = [prefix + samplerDef.join('\n') + fragShaderCloud, prefix + vertShaderCloud];
     // renderer.createProgram(prefix + samplerDef.join('\n') + fragShaderCloud, prefix + vertShaderCloud);
   }
@@ -73,10 +83,10 @@ export function createCloudShaders(renderer) {
 
 export function applyCloudShader(renderer, {
   hasTexture = false, hasFilter = false, hasGradient = false,
-  hasCloudColor = false, hasCloudFilter = false,
+  hasCloudColor = false, hasCloudFilter = false, hasClipPath = false,
 } = {}) {
-  const idx = hasTexture | ((hasFilter) << 1) | (hasGradient << 2)
-    | (hasCloudColor << 3) | (hasCloudFilter << 4);
+  const idx = hasTexture | (hasFilter << 1) | (hasGradient << 2)
+    | (hasCloudColor << 3) | (hasCloudFilter << 4) | (hasClipPath << 5);
   let program = cloudShaders[idx];
   if(Array.isArray(program)) {
     program = renderer.createProgram(...program);

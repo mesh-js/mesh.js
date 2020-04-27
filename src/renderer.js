@@ -267,12 +267,14 @@ export default class Renderer {
         const hasGradient = !!mesh.uniforms.u_radialGradientVector;
         const hasCloudColor = cloud.hasCloudColor;
         const hasCloudFilter = cloud.hasCloudFilter;
+        const hasClipPath = !!mesh.uniforms.u_clipSampler;
         applyCloudShader(renderer, {
           hasTexture,
           hasFilter,
           hasGradient,
           hasCloudColor,
           hasCloudFilter,
+          hasClipPath,
         });
       } else if(renderer.program !== program) {
         this.useProgram(program, {
@@ -382,7 +384,8 @@ export default class Renderer {
               const hasTexture = !!mesh.uniforms.u_texSampler;
               const hasFilter = !!mesh.uniforms.u_filterFlag;
               const hasGradient = !!mesh.uniforms.u_radialGradientVector;
-              applyShader(renderer, {hasTexture, hasFilter, hasGradient});
+              const hasClipPath = !!mesh.uniforms.u_clipSampler;
+              applyShader(renderer, {hasTexture, hasFilter, hasGradient, hasClipPath});
             } else if(renderer.program !== program) {
               this.useProgram(program, {
                 a_color: {

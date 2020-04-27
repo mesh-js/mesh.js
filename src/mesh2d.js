@@ -12,6 +12,7 @@ import triangulate from './triangulate-contours';
 import createContours from './svg-path-contours';
 import parseColor from './utils/parse-color';
 import Figure2D from './figure2d';
+import ENV from './utils/env';
 
 const _mesh = Symbol('mesh');
 const _contours = Symbol('contours');
@@ -37,6 +38,9 @@ const _attributes = Symbol('attributes');
 
 const _pass = Symbol('pass');
 
+const _clipContext = Symbol('clipContext');
+const _applyClipPath = Symbol('applyClipPath');
+
 // function normalizePoints(points, bound) {
 //   const [w, h] = bound[1];
 //   for(let i = 0; i < points.length; i++) {
@@ -46,7 +50,18 @@ const _pass = Symbol('pass');
 //   }
 // }
 
-function getTexCoord([x, y], [ox, oy, w, h], {scale, repeat}) {
+function generateUV(bounds, positions) {
+  const [w, h] = [bounds[1][0] - bounds[0][0], bounds[1][1] - bounds[0][1]];
+  const ret = [];
+  for(let j = 0; j < positions.length; j++) {
+    const p = positions[j];
+    const uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+    ret.push(uv);
+  }
+  return ret;
+}
+
+function getTexCoord([x, y], [ox, oy, w, h], {scale}) {
   if(!scale) {
     x /= w;
     y = 1 - y / h;
@@ -126,6 +141,46 @@ export default class Mesh2D {
       });
     }
     this[_opacity] = value;
+  }
+
+  setClipPath(path) {
+    this.clipPath = path;
+    if(path == null) {
+      if(this[_uniforms].u_clipSampler) {
+        this[_uniforms].u_clipSampler.delete();
+      }
+      if(this[_mesh]) {
+        delete this[_mesh].attributes.a_clipUV;
+      }
+      this.setUniforms({
+        u_clipSampler: null,
+      });
+    } else if(this[_mesh]) {
+      this[_applyClipPath]();
+    }
+  }
+
+  [_applyClipPath]() {
+    if(this.clipPath) {
+      if(!this[_clipContext]) {
+        this[_clipContext] = ENV.createCanvas(1, 1);
+      }
+      const [[x, y], [w, h]] = this.boundingBox;
+      if(w && h) {
+        this[_clipContext].width = w - x;
+        this[_clipContext].height = h - y;
+      }
+      const context = this[_clipContext].getContext('2d');
+      const path = new Path2D(this.clipPath);
+      context.save();
+      context.translate(-x, -y);
+      context.fillStyle = 'white';
+      context.fill(path);
+      context.restore();
+      this[_mesh].clipPath = this[_clipContext];
+      const uv = generateUV(this.boundingBox, this[_mesh].position0);
+      this[_mesh].attributes.a_clipUV = uv;
+    }
   }
 
   getPointAtLength(length) {
@@ -288,16 +343,11 @@ export default class Mesh2D {
       if(name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
         const setter = attributes[name];
         // console.log(opts.size);
-        this[_mesh].attributes[name] = [];
         if(name === 'uv' && !setter) {
           const bounds = this[_mesh].boundingBox || getBounds(positions);
-          const [w, h] = [bounds[1][0] - bounds[0][0], bounds[1][1] - bounds[0][1]];
-          for(let j = 0; j < positions.length; j++) {
-            const p = positions[j];
-            const uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
-            this[_mesh].attributes[name].push(uv);
-          }
+          this[_mesh].attributes[name] = generateUV(bounds, positions);
         } else {
+          this[_mesh].attributes[name] = [];
           for(let j = 0; j < positions.length; j++) {
             const p = positions[j];
             this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
@@ -385,6 +435,10 @@ export default class Mesh2D {
       if(!isUnitTransform(transform)) {
         this[_applyTransform](mesh, transform);
         if(this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
+      }
+
+      if(this.clipPath) {
+        this[_applyClipPath]();
       }
 
       if(this[_program]) this[_applyProgram](this[_program]);

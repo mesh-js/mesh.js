@@ -11,6 +11,7 @@ function allocateBuffer(meshes, bufferCache) { // eslint-disable-line complexity
   let cellsCount = 0;
   let textureCoordCount = 0;
   let sourceRectCount = 0;
+  let clipUVCount = 0;
   let colorCount = 0;
   let count = 0;
   const program = meshes[0].program;
@@ -29,6 +30,10 @@ function allocateBuffer(meshes, bufferCache) { // eslint-disable-line complexity
       const _sourceRect = mesh.attributes.a_sourceRect;
       if(_sourceRect) {
         sourceRectCount += _sourceRect.length * 4;
+      }
+      const _clipUV = mesh.attributes.a_clipUV;
+      if(_clipUV) {
+        clipUVCount += _clipUV.length * 2;
       }
     }
   }
@@ -49,6 +54,11 @@ function allocateBuffer(meshes, bufferCache) { // eslint-disable-line complexity
   if(sourceRectCount) {
     if(!bufferCache.a_sourceRect || bufferCache.a_sourceRect.length < sourceRectCount) {
       bufferCache.a_sourceRect = new Float32Array(sourceRectCount);
+    }
+  }
+  if(clipUVCount) {
+    if(!bufferCache.a_clipUV || bufferCache.a_clipUV.length < clipUVCount) {
+      bufferCache.a_clipUV = new Float32Array(clipUVCount);
     }
   }
   if(program) {
@@ -74,7 +84,8 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
   let cells = [];
   let textureCoord = [];
   let a_color = [];
-  let a_sourceRect = [];
+  let a_sourceRect = []; // sourceRect no buffer;
+  let a_clipUV = []; // uv no buffer
 
   let idx = 0;
   let cidx = 0;
@@ -89,8 +100,11 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
     textureCoord = bufferCache.textureCoord;
     a_color = bufferCache.a_color;
     a_sourceRect = bufferCache.a_sourceRect;
+    a_clipUV = bufferCache.a_clipUV;
   }
+
   let hasSourceRect = false;
+  let hasClipPath = false;
 
   const attributes = {};
   for(let i = 0; i < meshes.length; i++) {
@@ -151,6 +165,20 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
           a_sourceRect.push(...mesh.attributes.a_sourceRect);
         }
       }
+      if(mesh.attributes.a_clipUV) {
+        hasClipPath = true;
+        if(bufferCache) {
+          const _clipUV = mesh.attributes.a_clipUV;
+          for(let j = 0; j < _clipUV.length; j++) {
+            const s = _clipUV[j];
+            const o = 2 * (idx + j);
+            a_clipUV[o] = s[0];
+            a_clipUV[o + 1] = s[1];
+          }
+        } else {
+          a_clipUV.push(...mesh.attributes.a_clipUV);
+        }
+      }
       if(mesh.textureCoord) {
         if(bufferCache) {
           const _textureCoord = mesh.textureCoord;
@@ -202,6 +230,8 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
   if(textureCoord && textureCoord.length) {
     ret.textureCoord = textureCoord;
   }
+
+  if(hasClipPath && a_clipUV.length > 0) attributes.a_clipUV = a_clipUV;
 
   return ret;
 }
