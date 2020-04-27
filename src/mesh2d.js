@@ -55,7 +55,7 @@ function generateUV(bounds, positions) {
   const ret = [];
   for(let j = 0; j < positions.length; j++) {
     const p = positions[j];
-    const uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+    const uv = [(p[0] - bounds[0][0]) / w, 1 - (p[1] - bounds[0][1]) / h];
     ret.push(uv);
   }
   return ret;
@@ -145,17 +145,16 @@ export default class Mesh2D {
 
   setClipPath(path) {
     this.clipPath = path;
-    if(path == null) {
-      if(this[_uniforms].u_clipSampler) {
-        this[_uniforms].u_clipSampler.delete();
-      }
-      if(this[_mesh]) {
-        delete this[_mesh].attributes.a_clipUV;
-      }
-      this.setUniforms({
-        u_clipSampler: null,
-      });
-    } else if(this[_mesh]) {
+    if(this[_uniforms].u_clipSampler) {
+      this[_uniforms].u_clipSampler.delete();
+    }
+    this.setUniforms({
+      u_clipSampler: null,
+    });
+    if(this[_mesh]) {
+      delete this[_mesh].attributes.a_clipUV;
+    }
+    if(path && this[_mesh]) {
       this[_applyClipPath]();
     }
   }
@@ -172,6 +171,7 @@ export default class Mesh2D {
       }
       const context = this[_clipContext].getContext('2d');
       const path = new Path2D(this.clipPath);
+      context.clearRect(0, 0, this[_clipContext].width, this[_clipContext].height);
       context.save();
       context.translate(-x, -y);
       context.fillStyle = 'white';

@@ -16410,7 +16410,7 @@ function generateUV(bounds, positions) {
 
   for (var j = 0; j < positions.length; j++) {
     var p = positions[j];
-    var uv = [(p[0] - bounds[0][0]) / w, (p[1] - bounds[0][1]) / h];
+    var uv = [(p[0] - bounds[0][0]) / w, 1 - (p[1] - bounds[0][1]) / h];
     ret.push(uv);
   }
 
@@ -16509,19 +16509,19 @@ function () {
     value: function setClipPath(path) {
       this.clipPath = path;
 
-      if (path == null) {
-        if (this[_uniforms].u_clipSampler) {
-          this[_uniforms].u_clipSampler.delete();
-        }
+      if (this[_uniforms].u_clipSampler) {
+        this[_uniforms].u_clipSampler.delete();
+      }
 
-        if (this[_mesh]) {
-          delete this[_mesh].attributes.a_clipUV;
-        }
+      this.setUniforms({
+        u_clipSampler: null
+      });
 
-        this.setUniforms({
-          u_clipSampler: null
-        });
-      } else if (this[_mesh]) {
+      if (this[_mesh]) {
+        delete this[_mesh].attributes.a_clipUV;
+      }
+
+      if (path && this[_mesh]) {
         this[_applyClipPath]();
       }
     }
@@ -16549,6 +16549,7 @@ function () {
         var context = this[_clipContext].getContext('2d');
 
         var path = new Path2D(this.clipPath);
+        context.clearRect(0, 0, this[_clipContext].width, this[_clipContext].height);
         context.save();
         context.translate(-x, -y);
         context.fillStyle = 'white';
