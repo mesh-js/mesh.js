@@ -355,7 +355,7 @@ export default class Renderer {
               && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
               if(hasGlobalTransform) {
                 filterContext.save();
-                filterContext.transform(...this.globalTransformMatrix);
+                // filterContext.transform(...this.globalTransformMatrix);
                 drawMesh2D(originalMesh, filterContext, false);
                 filterContext.restore();
                 applyFilter(filterContext, currentFilter);
@@ -367,7 +367,7 @@ export default class Renderer {
             } else {
               if(hasGlobalTransform) {
                 filterContext.save();
-                filterContext.transform(...this.globalTransformMatrix);
+                // filterContext.transform(...this.globalTransformMatrix);
               }
               drawMesh2D(originalMesh, filterContext, false);
               if(hasGlobalTransform) {
