@@ -30,7 +30,12 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
   let fill = false;
 
   context.globalAlpha = mesh.getOpacity();
-
+  if(mesh._updateMatrix) {
+    const acc = mesh.transformScale / mesh.contours.scale;
+    if(acc > 1.5) {
+      mesh.accurate(mesh.transformScale);
+    }
+  }
   if(mesh.lineWidth) {
     let gradient = mesh.gradient && mesh.gradient.stroke;
     if(gradient) {

@@ -12569,6 +12569,14 @@ function drawMesh2D(mesh, context) {
   var fill = false;
   context.globalAlpha = mesh.getOpacity();
 
+  if (mesh._updateMatrix) {
+    var acc = mesh.transformScale / mesh.contours.scale;
+
+    if (acc > 1.5) {
+      mesh.accurate(mesh.transformScale);
+    }
+  }
+
   if (mesh.lineWidth) {
     var _gradient = mesh.gradient && mesh.gradient.stroke;
 
@@ -14840,7 +14848,7 @@ function () {
     if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(options.path);else this[_path] = [];
     this[_contours] = null;
     this[_simplify] = options.simplify || 0;
-    this[_scale] = options.scale || 1;
+    this[_scale] = options.scale || 2;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Figure2D, [{
@@ -16712,7 +16720,7 @@ function () {
       if (path) {
         var simplify = this.contours.simplify;
 
-        var contours = _accurate(this.contours.path, scale, simplify);
+        var contours = _accurate(this.contours.path, 2 * scale, simplify);
 
         this[_mesh] = null;
         this[_contours] = contours;

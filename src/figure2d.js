@@ -18,7 +18,7 @@ export default class Figure2D {
     else this[_path] = [];
     this[_contours] = null;
     this[_simplify] = options.simplify || 0;
-    this[_scale] = options.scale || 1;
+    this[_scale] = options.scale || 2;
   }
 
   get contours() {

@@ -540,7 +540,7 @@ export default class Mesh2D {
     const path = this.contours.path;
     if(path) {
       const simplify = this.contours.simplify;
-      const contours = accurate(this.contours.path, scale, simplify);
+      const contours = accurate(this.contours.path, 2 * scale, simplify);
       this[_mesh] = null;
       this[_contours] = contours;
     }
