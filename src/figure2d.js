@@ -17,7 +17,7 @@ export default class Figure2D {
     if(options.path) this[_path] = parse(options.path);
     else this[_path] = [];
     this[_contours] = null;
-    this[_simplify] = options.simplify || 0;
+    this[_simplify] = options.simplify || 0.5;
     this[_scale] = options.scale || 2;
   }
 

@@ -14847,7 +14847,7 @@ function () {
     };
     if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(options.path);else this[_path] = [];
     this[_contours] = null;
-    this[_simplify] = options.simplify || 0;
+    this[_simplify] = options.simplify || 0.5;
     this[_scale] = options.scale || 2;
   }
 
