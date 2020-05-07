@@ -210,7 +210,7 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
           for(let i = 0; i < this.roundSegments; i++) {
             vec.rotate(p1, p1, [0, 0], flip * delta);
             // console.log(p1, p2, vec.cross([], p1, p2)[2]);
-            if(Math.sign(vec.cross(tmp, p1, p2)[2]) !== flip) {
+            if(i > 0 && Math.sign(vec.cross(tmp, p1, p2)[2]) !== flip) {
               vec.add(tmp, p2, o);
               positions.push(vec.clone(tmp));
               if(i === 0) {

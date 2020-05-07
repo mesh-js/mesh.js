@@ -17881,7 +17881,7 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
           for (var _i2 = 0; _i2 < this.roundSegments; _i2++) {
             _vecutil__WEBPACK_IMPORTED_MODULE_3__["rotate"](p1, p1, [0, 0], flip * delta); // console.log(p1, p2, vec.cross([], p1, p2)[2]);
 
-            if (Math.sign(_vecutil__WEBPACK_IMPORTED_MODULE_3__["cross"](tmp, p1, p2)[2]) !== flip) {
+            if (_i2 > 0 && Math.sign(_vecutil__WEBPACK_IMPORTED_MODULE_3__["cross"](tmp, p1, p2)[2]) !== flip) {
               _vecutil__WEBPACK_IMPORTED_MODULE_3__["add"](tmp, p2, o);
               positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
 
