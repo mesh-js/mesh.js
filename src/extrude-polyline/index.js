@@ -62,8 +62,9 @@ Stroke.prototype.build = function (points, closed = false) {
     const last = points[i - 1];
     const cur = points[i];
     const next = i < points.length - 1 ? points[i + 1] : null;
+    const nextnext = i < points.length - 2 ? points[i + 2] : null;
     const thickness = this.mapThickness(cur, i, points);
-    this._seg(complex, count, last, cur, next, thickness / 2, closed, closeNext);
+    this._seg(complex, count, last, cur, next, nextnext, thickness / 2, closed, closeNext);
     count = complex.positions.length - 2;
   }
   if(closed) {
@@ -74,7 +75,7 @@ Stroke.prototype.build = function (points, closed = false) {
   return complex;
 };
 
-Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, closed, closeNext, cap = this.cap) { // eslint-disable-line complexity
+Stroke.prototype._seg = function (complex, index, last, cur, next, nextnext, halfThick, closed, closeNext, cap = this.cap) { // eslint-disable-line complexity
   const cells = complex.cells;
   const positions = complex.positions;
   const capSquare = cap === 'square';
@@ -169,6 +170,9 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
       }
     }
 
+    let len = Infinity;
+    if(next && !nextnext) len = Math.hypot(next[0] - cur[0], next[1] - cur[1]);
+
     if(bevel) {
       // next two points in our first segment
       vec.scaleAndAdd(tmp, cur, this._normal, -halfThick * flip);
@@ -182,8 +186,12 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
         ? [index, index + 2, index + 3]
         : [index + 2, index + 1, index + 3]);
 
-      vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
-      positions.push(vec.clone(tmp));
+      if(len < miterLen) {
+        positions.push(vec.clone(next));
+      } else {
+        vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
+        positions.push(vec.clone(tmp));
+      }
 
       if(!joinRound) {
         cells.push(this._lastFlip !== -flip
@@ -243,7 +251,22 @@ Stroke.prototype._seg = function (complex, index, last, cur, next, halfThick, cl
       }
     } else { // miter
       // next two points for our miter join
-      extrusions(complex, cur, miter, miterLen);
+      // extrusions(complex, cur, miter, miterLen);
+
+      if(flip === -1 && len < miterLen) {
+        positions.push(vec.clone(next));
+      } else {
+        vec.scaleAndAdd(tmp, cur, miter, -miterLen);
+        positions.push(vec.clone(tmp));
+      }
+
+      if(flip === 1 && len < miterLen) {
+        positions.push(vec.clone(next));
+      } else {
+        vec.scaleAndAdd(tmp, cur, miter, miterLen);
+        positions.push(vec.clone(tmp));
+      }
+
       cells.push(this._lastFlip === 1
         ? [index, index + 2, index + 3]
         : [index + 2, index + 1, index + 3]);
