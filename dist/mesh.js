@@ -9760,7 +9760,13 @@ function () {
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
       }
 
-      if (clearBuffer) gl.clear(gl.COLOR_BUFFER_BIT);
+      var depth = this.options.depth;
+
+      if (depth) {
+        gl.enable(gl.DEPTH_TEST);
+      }
+
+      this.gl.clear(this.gl.COLOR_BUFFER_BIT | (depth ? this.gl.DEPTH_BUFFER_BIT : 0) | (this.options.stencil ? this.gl.STENCIL_BUFFER_BIT : 0));
       var lastFrameID = this._renderFrameID;
 
       this._draw();
@@ -10688,7 +10694,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
 }
 
@@ -14847,8 +14853,8 @@ function () {
     };
     if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(options.path);else this[_path] = [];
     this[_contours] = null;
-    this[_simplify] = options.simplify || 0.5;
-    this[_scale] = options.scale || 2;
+    this[_simplify] = options.simplify != null ? options.simplify : 0.05;
+    this[_scale] = options.scale != null ? options.scale : 2;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Figure2D, [{
