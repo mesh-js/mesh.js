@@ -578,7 +578,7 @@ export default class Mesh2D {
     return this;
   }
 
-  setFill({rule = 'nonzero', color = [0, 0, 0, 0]} = {}) {
+  setFill({rule = this.fillRule, color = [0, 0, 0, 0]} = {}) {
     this[_mesh] = null;
     this[_fill] = {rule};
     if(typeof color === 'string') color = parseColor(color);
