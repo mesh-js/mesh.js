@@ -16767,7 +16767,7 @@ function () {
   }, {
     key: "canIgnore",
     value: function canIgnore() {
-      var noStroke = this[_stroke] == null || this[_stroke].thickness === 0 || this[_strokeColor][3] === 0;
+      var noStroke = this[_stroke] == null || this[_stroke].lineWidth === 0 || this[_strokeColor][3] === 0;
       var noFill = this[_fill] == null || this[_fillColor][3] === 0;
       var noGradient = this[_uniforms].u_radialGradientVector == null;
       var noTexture = this[_uniforms].u_texSampler == null;
@@ -17381,7 +17381,7 @@ function () {
     key: "lineWidth",
     get: function get() {
       if (this[_stroke]) {
-        return this[_stroke].thickness;
+        return this[_stroke].lineWidth;
       }
 
       return 0;
@@ -17390,7 +17390,7 @@ function () {
     key: "lineCap",
     get: function get() {
       if (this[_stroke]) {
-        return this[_stroke].cap;
+        return this[_stroke].lineCap;
       }
 
       return '';
@@ -17399,7 +17399,7 @@ function () {
     key: "lineJoin",
     get: function get() {
       if (this[_stroke]) {
-        return this[_stroke].join;
+        return this[_stroke].lineJoin;
       }
 
       return '';

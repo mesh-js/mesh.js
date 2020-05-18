@@ -230,21 +230,21 @@ export default class Mesh2D {
 
   get lineWidth() {
     if(this[_stroke]) {
-      return this[_stroke].thickness;
+      return this[_stroke].lineWidth;
     }
     return 0;
   }
 
   get lineCap() {
     if(this[_stroke]) {
-      return this[_stroke].cap;
+      return this[_stroke].lineCap;
     }
     return '';
   }
 
   get lineJoin() {
     if(this[_stroke]) {
-      return this[_stroke].join;
+      return this[_stroke].lineJoin;
     }
     return '';
   }
@@ -548,7 +548,7 @@ export default class Mesh2D {
   }
 
   canIgnore() {
-    const noStroke = this[_stroke] == null || this[_stroke].thickness === 0 || this[_strokeColor][3] === 0;
+    const noStroke = this[_stroke] == null || this[_stroke].lineWidth === 0 || this[_strokeColor][3] === 0;
     const noFill = this[_fill] == null || this[_fillColor][3] === 0;
     const noGradient = this[_uniforms].u_radialGradientVector == null;
     const noTexture = this[_uniforms].u_texSampler == null;
