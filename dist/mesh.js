@@ -17862,7 +17862,7 @@ function () {
             maxLen = Math.min(maxLen, Math.hypot(next[0] - cur[0], next[1] - cur[1]));
           }
 
-          var len = Math.min(miterLen, maxLen);
+          var len = Math.max(halfThick, Math.min(miterLen, maxLen));
           Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, miter, len * flip);
           addPoint(contours, tmp, -flip);
 

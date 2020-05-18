@@ -142,7 +142,7 @@ export class Stroke {
         if(next) {
           maxLen = Math.min(maxLen, Math.hypot(next[0] - cur[0], next[1] - cur[1]));
         }
-        const len = Math.min(miterLen, maxLen);
+        const len = Math.max(halfThick, Math.min(miterLen, maxLen));
         scaleAndAdd(tmp, cur, miter, len * flip);
         addPoint(contours, tmp, -flip);
 

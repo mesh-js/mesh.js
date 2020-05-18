@@ -19,35 +19,26 @@
 
     const figure = new Figure2D();
     figure.beginPath();
-    // figure.moveTo(0, 87.8542335707851);
-    // figure.lineTo(19.761904761904763, 67.77716403973452);
-    // figure.lineTo(200, 300);
-    // figure.lineTo(300, 300);
-    // figure.lineTo(200, 330);
+    figure.moveTo(100, 100);
+    figure.lineTo(100, 200);
+    figure.lineTo(200, 300);
+    figure.lineTo(300, 300);
+    figure.lineTo(200, 330);
 
     // 0,
     // 87.8542335707851,
     // 19.761904761904763,
     // 67.77716403973452,
 
-    const points = [
-      [0, 87.8542335707851],
-      [19.761904761904763, 67.77716403973452],
-    ];
-
-    const d = `M${points.join('L')}`;
-    figure.addPath(d);
-
     const mesh = new Mesh2D(figure);
     mesh.setStroke({
       color: [0, 0, 1, 0.3],
-      thickness: 20,
-      // cap: 'round',
+      thickness: 30,
+      cap: 'round',
       // miterLimit: 6,
-      // join: 'round',
+      join: 'round',
       // join: 'bevel',
     });
-    mesh.translate(100, 0);
 
     const mesh2 = new Mesh2D(figure, canvas);
     mesh2.setStroke({
