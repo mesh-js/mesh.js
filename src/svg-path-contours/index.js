@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 var bezier = require('adaptive-bezier-curve')
-var vec2 = require('../extrude-polyline/vecutil')
+var {copy} = require('../extrude-contours/utils')
 var simplify = require('simplify-path')
 
 function set(out, x, y) {
@@ -29,7 +29,7 @@ module.exports = function contours(svg, scale, simp) {
     var pen = [0, 0]
     svg.forEach(function(segment, i, self) {
         if (segment[0] === 'M') {
-            vec2.copy(pen, segment.slice(1))
+            copy(pen, segment.slice(1))
             if (points.length>0) {
                 paths.push(points)
                 points = []

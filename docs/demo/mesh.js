@@ -7826,9 +7826,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(71);
 /* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(88);
 /* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(59);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(99);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(93);
 /* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(50);
-/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(104);
+/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(98);
 
 
 
@@ -15618,7 +15618,8 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 /* eslint-disable */
 var bezier = __webpack_require__(79);
 
-var vec2 = __webpack_require__(81);
+var _require = __webpack_require__(81),
+    copy = _require.copy;
 
 var simplify = __webpack_require__(82);
 
@@ -15642,7 +15643,7 @@ module.exports = function contours(svg, scale, simp) {
   var pen = [0, 0];
   svg.forEach(function (segment, i, self) {
     if (segment[0] === 'M') {
-      vec2.copy(pen, segment.slice(1));
+      copy(pen, segment.slice(1));
 
       if (points.length > 0) {
         paths.push(points);
@@ -15885,6 +15886,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cross", function() { return cross; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sub", function() { return sub; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add", function() { return add; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "computeMiter", function() { return computeMiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "normal", function() { return normal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "direction", function() { return direction; });
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
@@ -15905,6 +15909,34 @@ var rotate = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].rotate;
 var cross = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].cross;
 var sub = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].sub;
 var add = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].add;
+var normalize = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].normalize;
+var set = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].set;
+var tmp = create();
+
+function computeMiter(tangent, miter, lineA, lineB, halfThick) {
+  // get tangent line
+  add(tangent, lineA, lineB);
+  normalize(tangent, tangent); // get miter as a unit vector
+
+  set(miter, -tangent[1], tangent[0]);
+  set(tmp, -lineA[1], lineA[0]); // get the necessary length of our miter
+
+  return halfThick / dot(miter, tmp);
+}
+
+function normal(out, dir) {
+  // get perpendicular
+  set(out, -dir[1], dir[0]);
+  return out;
+}
+
+function direction(out, a, b) {
+  // get unit dir of two lines
+  sub(out, a, b);
+  normalize(out, out);
+  return out;
+}
+
 
 
 /***/ }),
@@ -16322,13 +16354,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
 /* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(74);
 /* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _extrude_polyline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(91);
+/* harmony import */ var _extrude_contours__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(91);
 /* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(58);
 /* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(54);
 /* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(61);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(99);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(93);
 /* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(85);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(100);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(94);
 /* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(78);
 /* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_14__);
@@ -16767,10 +16799,10 @@ function () {
           roundSegments = _ref8$roundSegments === void 0 ? 20 : _ref8$roundSegments;
 
       this[_mesh] = null;
-      this[_stroke] = Object(_extrude_polyline__WEBPACK_IMPORTED_MODULE_7__["default"])({
-        thickness: thickness,
-        cap: cap,
-        join: join,
+      this[_stroke] = new _extrude_contours__WEBPACK_IMPORTED_MODULE_7__["default"]({
+        lineWidth: thickness,
+        lineCap: cap,
+        lineJoin: join,
         miterLimit: miterLimit,
         roundSegments: roundSegments
       });
@@ -17528,7 +17560,10 @@ function () {
 
             var _meshes = strokeContours.map(function (lines, i) {
               var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_5__["vec2"].equals(lines[0], lines[lines.length - 1]);
-              return _this[_stroke].build(lines, closed);
+
+              var points = _this[_stroke].build(lines, closed);
+
+              return _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default()([points]);
             });
 
             _meshes.forEach(function (mesh) {
@@ -17658,486 +17693,284 @@ module.exports = _objectWithoutPropertiesLoose;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92);
-/* harmony import */ var as_number__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(as_number__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _vecutil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(81);
+/* harmony import */ var _stroke__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(92);
+__webpack_require__(1).glMatrix.setMatrixArrayType(Array);
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_stroke__WEBPACK_IMPORTED_MODULE_0__["Stroke"]);
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Stroke", function() { return Stroke; });
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(81);
+
 
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
-
-var tmp = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-var capEnd = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-var lineA = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-var lineB = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-var tangent = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-var miter = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-
-var util = __webpack_require__(93);
-
-var computeMiter = util.computeMiter,
-    normal = util.normal,
-    direction = util.direction;
+var tmp = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+var lineA = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+var lineB = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+var tangent = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+var miter = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
 var MAX_MITER_VALUE = 1e20; // infinity * 0 cause NaN, fix #7
 
-function Stroke(opt) {
-  if (!(this instanceof Stroke)) return new Stroke(opt);
-  opt = opt || {};
-  this.miterLimit = as_number__WEBPACK_IMPORTED_MODULE_2___default()(opt.miterLimit, 10);
-  this.thickness = as_number__WEBPACK_IMPORTED_MODULE_2___default()(opt.thickness, 1);
-  this.join = opt.join || 'miter';
-  this.cap = opt.cap || 'butt';
-  this.roundSegments = opt.roundSegments || 20;
-  this._normal = null;
-  this._lastFlip = -1;
-  this._started = false;
-}
+var Stroke =
+/*#__PURE__*/
+function () {
+  function Stroke() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$lineWidth = _ref.lineWidth,
+        lineWidth = _ref$lineWidth === void 0 ? 1 : _ref$lineWidth,
+        _ref$lineJoin = _ref.lineJoin,
+        lineJoin = _ref$lineJoin === void 0 ? 'miter' : _ref$lineJoin,
+        _ref$miterLimit = _ref.miterLimit,
+        miterLimit = _ref$miterLimit === void 0 ? 10 : _ref$miterLimit,
+        _ref$lineCap = _ref.lineCap,
+        lineCap = _ref$lineCap === void 0 ? 'butt' : _ref$lineCap,
+        _ref$roundSegments = _ref.roundSegments,
+        roundSegments = _ref$roundSegments === void 0 ? 20 : _ref$roundSegments;
 
-Stroke.prototype.mapThickness = function (point, i, points) {
-  return this.thickness;
-};
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, Stroke);
 
-Stroke.prototype.build = function (points) {
-  var closed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  points = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(points);
-  var complex = {
-    positions: [],
-    cells: []
-  };
-  if (points.length <= 1) return complex;
-  var closeNext = null;
-
-  if (closed) {
-    var _points = points,
-        _points2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_points, 2),
-        a = _points2[0],
-        b = _points2[1];
-
-    var v = [b[0] - a[0], b[1] - a[1]];
-    closeNext = _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](_vecutil__WEBPACK_IMPORTED_MODULE_3__["create"](), a, v, 1e-7);
-    points.unshift(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(points[points.length - 2]));
+    this.lineWidth = lineWidth;
+    this.lineJoin = lineJoin;
+    this.miterLimit = miterLimit;
+    this.lineCap = lineCap;
+    this.roundSegments = roundSegments;
+    this._normal = null;
   }
 
-  var total = points.length; // clear flags
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(Stroke, [{
+    key: "build",
+    value: function build(points) {
+      var closed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var total = points.length;
+      points = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points);
+      if (total <= 1) return points;
 
-  this._lastFlip = -1;
-  this._started = false;
-  this._normal = null; // join each segment
-
-  for (var i = 1, count = 0; i < total; i++) {
-    var last = points[i - 1];
-    var cur = points[i];
-    var next = i < points.length - 1 ? points[i + 1] : null;
-    var nextnext = i < points.length - 2 ? points[i + 2] : null;
-    var thickness = this.mapThickness(cur, i, points);
-
-    this._seg(complex, count, last, cur, next, nextnext, thickness / 2, closed, closeNext);
-
-    count = complex.positions.length - 2;
-  }
-
-  if (closed) {
-    complex.positions = complex.positions.slice(2);
-    complex.cells = complex.cells.slice(2).map(function (_ref) {
-      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 3),
-          a = _ref2[0],
-          b = _ref2[1],
-          c = _ref2[2];
-
-      return [a - 2, b - 2, c - 2];
-    });
-  }
-
-  return complex;
-};
-
-Stroke.prototype._seg = function (complex, index, last, cur, next, nextnext, halfThick, closed, closeNext) {
-  var cap = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : this.cap;
-  // eslint-disable-line complexity
-  var cells = complex.cells;
-  var positions = complex.positions;
-  var capSquare = cap === 'square';
-  var capRound = cap === 'round';
-  var capRoundStart = cap === 'roundStart';
-  var capRoundEnd = cap === 'roundEnd';
-  var joinBevel = this.join === 'bevel';
-  var joinRound = this.join === 'round'; // get unit direction of line
-
-  direction(lineA, cur, last); // if we don't yet have a normal from previous join,
-  // compute based on line start - end
-
-  if (!this._normal) {
-    this._normal = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-    normal(this._normal, lineA);
-  } // if we haven't started yet, add the first two points
-
-
-  if (!this._started) {
-    this._started = true; // if the end cap is type square, we can just push the verts out a bit
-
-    if (capSquare) {
-      _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](capEnd, last, lineA, -halfThick);
-      last = capEnd;
-    }
-
-    if (capRound || capRoundStart) {
-      round(complex, last, this._normal, halfThick, -1, this.roundSegments);
-
-      for (var i = 1; i <= this.roundSegments; i++) {
-        cells.push([index, index + i, index + i + 1]);
-      }
-
-      index += this.roundSegments + 2;
-    }
-
-    extrusions(complex, last, this._normal, halfThick);
-  }
-
-  cells.push([index + 0, index + 1, index + 2]);
-  /*
-    // now determine the type of join with next segment
-     - round (TODO)
-    - bevel
-    - miter
-    - none (i.e. no next segment, use normal)
-     */
-
-  if (!closed && !next) {
-    // no next segment, simple extrusion
-    // now reset normal to finish cap
-    normal(this._normal, lineA); // push square end cap out a bit
-
-    if (capSquare) {
-      _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](capEnd, cur, lineA, halfThick);
-      cur = capEnd;
-    }
-
-    extrusions(complex, cur, this._normal, halfThick);
-    cells.push(this._lastFlip === 1 ? [index, index + 2, index + 3] : [index + 2, index + 1, index + 3]);
-
-    if (capRound || capRoundEnd) {
-      var idx = complex.positions.length;
-      round(complex, cur, this._normal, halfThick, 1, this.roundSegments);
-
-      for (var _i = 1; _i <= this.roundSegments; _i++) {
-        cells.push([idx, idx + _i, idx + _i + 1]);
-      }
-
-      index += this.roundSegments + 2;
-    }
-  } else {
-    // we have a next segment, start with miter
-    // get unit dir of next line
-    if (!next) direction(lineB, closeNext, cur);else direction(lineB, next, cur); // stores tangent & miter
-
-    var miterLen = computeMiter(tangent, miter, lineA, lineB, halfThick); // infinity * 0 cause NaN, fix #7
-
-    miterLen = Math.min(miterLen, MAX_MITER_VALUE); // normal(tmp, lineA)
-    // get orientation
-
-    var flip = _vecutil__WEBPACK_IMPORTED_MODULE_3__["dot"](tangent, this._normal) < 0 ? -1 : 1;
-    var bevel = joinBevel || joinRound;
-
-    if (!bevel && this.join === 'miter') {
-      var limit = miterLen / halfThick;
-
-      if (limit > this.miterLimit) {
-        miterLen = this.miterLimit * halfThick;
-        bevel = true;
-      }
-    }
-
-    var len = Infinity;
-    if (next && !nextnext) len = Math.hypot(next[0] - cur[0], next[1] - cur[1]);
-
-    if (bevel) {
-      // next two points in our first segment
-      _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, cur, this._normal, -halfThick * flip);
-      positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-      positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](cur)); // vec.scaleAndAdd(tmp, cur, miter, miterLen * flip);
-      // positions.push(vec.clone(tmp));
-
-      cells.push(this._lastFlip !== -flip ? [index, index + 2, index + 3] : [index + 2, index + 1, index + 3]);
-
-      if (len < miterLen) {
-        positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](next));
-      } else {
-        _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, cur, miter, miterLen * flip);
-        positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-      }
-
-      if (!joinRound) {
-        cells.push(this._lastFlip !== -flip ? [index, index + 3, index + 4] : [index + 3, index + 1, index + 4]);
-      }
-
-      if (next) {
-        normal(tmp, lineB);
-        _vecutil__WEBPACK_IMPORTED_MODULE_3__["copy"](this._normal, tmp); // store normal for next round
-
-        _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, cur, tmp, -halfThick * flip);
-        var pE2 = _vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp); // now add the bevel triangle
-
-        if (!joinRound) {
-          cells.push([index + 2, index + 3, index + 5]);
-        } else {
-          // join round
-          var pEnd = positions.pop();
-          var o = positions[index + 3];
-          var p1 = _vecutil__WEBPACK_IMPORTED_MODULE_3__["sub"](_vecutil__WEBPACK_IMPORTED_MODULE_3__["create"](), positions[index + 2], o);
-          var p2 = _vecutil__WEBPACK_IMPORTED_MODULE_3__["sub"](_vecutil__WEBPACK_IMPORTED_MODULE_3__["create"](), pE2, o);
-          var delta = Math.PI / this.roundSegments;
-
-          for (var _i2 = 0; _i2 < this.roundSegments; _i2++) {
-            _vecutil__WEBPACK_IMPORTED_MODULE_3__["rotate"](p1, p1, [0, 0], flip * delta); // console.log(p1, p2, vec.cross([], p1, p2)[2]);
-
-            if (_i2 > 0 && Math.sign(_vecutil__WEBPACK_IMPORTED_MODULE_3__["cross"](tmp, p1, p2)[2]) !== flip) {
-              _vecutil__WEBPACK_IMPORTED_MODULE_3__["add"](tmp, p2, o);
-              positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-
-              if (_i2 === 0) {
-                cells.push([index + 3, index + 2, index + 5]);
-              } else {
-                cells.push([index + 3, index + 5 + _i2 - 1, index + 5 + _i2]);
-              }
-
-              break;
-            } else {
-              _vecutil__WEBPACK_IMPORTED_MODULE_3__["add"](tmp, p1, o);
-              positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-
-              if (_i2 === 0) {
-                cells.push([index + 3, index + 2, index + 5]);
-              } else {
-                cells.push([index + 3, index + 5 + _i2 - 1, index + 5 + _i2]);
-              }
-            }
-          } // console.log(index, positions.length);
-
-
-          cells.push(this._lastFlip !== -flip ? [index, index + 3, positions.length] : [index + 3, index + 1, positions.length]);
-          positions.push(pEnd);
+      if (closed) {
+        if (points[0][0] !== points[total - 1][0] || points[0][1] !== points[total - 1][1]) {
+          points.push(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points[0]));
         }
 
-        positions.push(pE2);
+        points.push(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points[1]));
       }
 
-      if (!next || !joinRound) {
-        cells.push([index + 3, index + 4, index + 5]);
-      }
-    } else {
-      // miter
-      // next two points for our miter join
-      // extrusions(complex, cur, miter, miterLen);
-      if (flip === -1 && len < miterLen) {
-        positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](next));
-      } else {
-        _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, cur, miter, -miterLen);
-        positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-      }
+      total = points.length; // clear flags
 
-      if (flip === 1 && len < miterLen) {
-        positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](next));
-      } else {
-        _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, cur, miter, miterLen);
-        positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
+      this._normal = null;
+      var contours = {
+        left: [],
+        right: []
+      };
+      var halfThick = this.lineWidth / 2; // join each segment
+
+      for (var i = 1; i < total; i++) {
+        var last = points[i - 1];
+        var cur = points[i];
+        var next = points[i + 1];
+
+        this._seg(contours, last, cur, next, halfThick, closed);
       }
 
-      cells.push(this._lastFlip === 1 ? [index, index + 2, index + 3] : [index + 2, index + 1, index + 3]);
-      flip = -1; // the miter is now the normal for our next join
+      var cap = this.lineCap;
 
-      _vecutil__WEBPACK_IMPORTED_MODULE_3__["copy"](this._normal, miter);
+      if (!closed && cap === 'square') {
+        capSquare(contours, halfThick);
+      } else if (!closed && cap === 'round') {
+        capRound(contours, this.roundSegments);
+      }
+
+      var ret = [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(contours.left), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(contours.right.reverse()));
+      return ret;
     }
+  }, {
+    key: "_seg",
+    value: function _seg(contours, last, cur, next, halfThick, closed) {
+      var joinBevel = this.lineJoin === 'bevel';
+      var joinRound = this.lineJoin === 'round'; // get unit direction of line
 
-    this._lastFlip = flip;
+      Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, cur, last); // if we don't yet have a normal from previous join,
+      // compute based on line start - end
+
+      if (!this._normal) {
+        this._normal = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["normal"])(this._normal, lineA);
+      }
+
+      if (!contours.left.length) {
+        // start
+        extrusions(contours, last, this._normal, halfThick);
+      }
+
+      if (!next) {
+        // no next segment, simple extrusion
+        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["normal"])(this._normal, lineA);
+
+        if (!closed) {
+          extrusions(contours, cur, this._normal, halfThick);
+        } else {
+          extrusions(contours, last, this._normal, halfThick);
+        }
+      } else {
+        // we have a next segment, start with miter
+        // get unit dir of next line
+        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineB, next, cur); // stores tangent & miter
+
+        var miterLen = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["computeMiter"])(tangent, miter, lineA, lineB, halfThick); // infinity * 0 cause NaN, fix #7
+
+        miterLen = Math.min(miterLen, MAX_MITER_VALUE); // get orientation
+
+        var flip = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["dot"])(tangent, this._normal) < 0 ? -1 : 1;
+        var bevel = joinBevel || joinRound;
+
+        if (!bevel && this.lineJoin === 'miter') {
+          var limit = miterLen / halfThick;
+
+          if (limit > this.miterLimit) {
+            // miterLen = this.miterLimit * halfThick;
+            bevel = true;
+          }
+        } // let len = Infinity;
+        // if(next && !nextnext) len = Math.hypot(next[0] - cur[0], next[1] - cur[1]);
+
+
+        if (bevel) {
+          // next two points in our first segment
+          Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, this._normal, -halfThick * flip);
+          addPoint(contours, tmp, flip);
+          var maxLen = Infinity;
+
+          if (last) {
+            maxLen = Math.min(maxLen, Math.hypot(cur[0] - last[0], cur[1] - last[1]));
+          }
+
+          if (next) {
+            maxLen = Math.min(maxLen, Math.hypot(next[0] - cur[0], next[1] - cur[1]));
+          }
+
+          var len = Math.min(miterLen, maxLen);
+          Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, miter, len * flip);
+          addPoint(contours, tmp, -flip);
+
+          if (next) {
+            Object(_utils__WEBPACK_IMPORTED_MODULE_3__["normal"])(tmp, lineB);
+            Object(_utils__WEBPACK_IMPORTED_MODULE_3__["copy"])(this._normal, tmp); // store normal for next round
+
+            Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, tmp, -halfThick * flip);
+
+            if (joinRound) {
+              var pEnd = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(tmp);
+              var pStart = flip > 0 ? contours.left[contours.left.length - 1] : contours.right[contours.right.length - 1];
+              var o = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(cur);
+              var p1 = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])(), pStart, o);
+              var p2 = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])(), pEnd, o);
+              var delta = Math.PI / this.roundSegments;
+
+              for (var i = 0; i < this.roundSegments; i++) {
+                Object(_utils__WEBPACK_IMPORTED_MODULE_3__["rotate"])(p1, p1, [0, 0], flip * delta);
+
+                if (Math.sign(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["cross"])(tmp, p1, p2)[2]) !== flip) {
+                  break;
+                } else {
+                  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["add"])(tmp, p1, o);
+                }
+
+                addPoint(contours, tmp, flip);
+              }
+
+              addPoint(contours, pEnd, flip);
+            } else {
+              addPoint(contours, tmp, flip);
+            }
+          }
+        } else {
+          extrusions(contours, cur, miter, miterLen);
+          Object(_utils__WEBPACK_IMPORTED_MODULE_3__["copy"])(this._normal, miter);
+        }
+      }
+    }
+  }]);
+
+  return Stroke;
+}();
+
+function addPoint(contours, point, flip) {
+  if (flip > 0) {
+    contours.left.push(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(point));
+  } else {
+    contours.right.push(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(point));
   }
-};
-
-function extrusions(complex, point, normal, scale) {
-  var positions = complex.positions; // next two points to end our segment
-
-  _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, point, normal, -scale);
-  positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-  _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, point, normal, scale);
-  positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
 }
 
-function round(complex, point, normal, scale) {
-  var dir = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
-  var roundSegments = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 20;
-  var positions = complex.positions; // const positions = [];
-
-  var t = _vecutil__WEBPACK_IMPORTED_MODULE_3__["create"]();
-  positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](point));
-
-  for (var i = 0; i <= roundSegments; i++) {
-    var rad = dir * Math.PI * i / roundSegments;
-    _vecutil__WEBPACK_IMPORTED_MODULE_3__["rotate"](t, normal, [0, 0], rad);
-    _vecutil__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"](tmp, point, t, -scale);
-    positions.push(_vecutil__WEBPACK_IMPORTED_MODULE_3__["clone"](tmp));
-  }
+function extrusions(contours, point, normal, scale) {
+  var flip = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : -1;
+  // next two points to end our segment
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, point, normal, -scale);
+  addPoint(contours, tmp, -flip);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, point, normal, scale);
+  addPoint(contours, tmp, flip);
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Stroke);
+function capSquare(_ref2, halfThick) {
+  var left = _ref2.left,
+      right = _ref2.right;
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, left[1], left[0]);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(left[0], left[0], lineA, -halfThick);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, right[1], right[0]);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(right[0], right[0], lineA, -halfThick);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, left[left.length - 2], left[left.length - 1]);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(left[left.length - 1], left[left.length - 1], lineA, -halfThick);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, right[right.length - 2], right[right.length - 1]);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(right[right.length - 1], right[right.length - 1], lineA, -halfThick);
+}
 
-/***/ }),
-/* 92 */
-/***/ (function(module, exports) {
+function capRound(_ref3, roundSegments) {
+  var left = _ref3.left,
+      right = _ref3.right;
+  var t = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+  var normal = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
+  var pStart = left[0];
+  var pEnd = right[0];
+  var center = [0.5 * (pStart[0] + pEnd[0]), 0.5 * (pStart[1] + pEnd[1])];
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(normal, pStart, center);
 
-module.exports = function numtype(num, def) {
-	return typeof num === 'number'
-		? num 
-		: (typeof def === 'number' ? def : 0)
+  for (var i = 1; i <= roundSegments; i++) {
+    var rad = -1 * Math.PI * i / roundSegments;
+    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["rotate"])(t, normal, [0, 0], rad);
+    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["add"])(tmp, center, t);
+    left.unshift(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(tmp));
+  }
+
+  pStart = right[right.length - 1];
+  pEnd = left[left.length - 1];
+  center = [0.5 * (pStart[0] + pEnd[0]), 0.5 * (pStart[1] + pEnd[1])];
+  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(normal, pStart, center);
+
+  for (var _i = 1; _i <= roundSegments; _i++) {
+    var _rad = -1 * Math.PI * _i / roundSegments;
+
+    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["rotate"])(t, normal, [0, 0], _rad);
+    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["add"])(tmp, center, t);
+    right.push(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(tmp));
+  }
 }
 
 /***/ }),
 /* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var add = __webpack_require__(94)
-var set = __webpack_require__(95)
-var normalize = __webpack_require__(96)
-var subtract = __webpack_require__(97)
-var dot = __webpack_require__(98)
-
-var tmp = [0, 0]
-
-module.exports.computeMiter = function computeMiter(tangent, miter, lineA, lineB, halfThick) {
-    //get tangent line
-    add(tangent, lineA, lineB)
-    normalize(tangent, tangent)
-
-    //get miter as a unit vector
-    set(miter, -tangent[1], tangent[0])
-    set(tmp, -lineA[1], lineA[0])
-
-    //get the necessary length of our miter
-    return halfThick / dot(miter, tmp)
-}
-
-module.exports.normal = function normal(out, dir) {
-    //get perpendicular
-    set(out, -dir[1], dir[0])
-    return out
-}
-
-module.exports.direction = function direction(out, a, b) {
-    //get unit dir of two lines
-    subtract(out, a, b)
-    normalize(out, out)
-    return out
-}
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports) {
-
-module.exports = add
-
-/**
- * Adds two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-function add(out, a, b) {
-    out[0] = a[0] + b[0]
-    out[1] = a[1] + b[1]
-    return out
-}
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports) {
-
-module.exports = set
-
-/**
- * Set the components of a vec2 to the given values
- *
- * @param {vec2} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} out
- */
-function set(out, x, y) {
-    out[0] = x
-    out[1] = y
-    return out
-}
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports) {
-
-module.exports = normalize
-
-/**
- * Normalize a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to normalize
- * @returns {vec2} out
- */
-function normalize(out, a) {
-    var x = a[0],
-        y = a[1]
-    var len = x*x + y*y
-    if (len > 0) {
-        //TODO: evaluate use of glm_invsqrt here?
-        len = 1 / Math.sqrt(len)
-        out[0] = a[0] * len
-        out[1] = a[1] * len
-    }
-    return out
-}
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports) {
-
-module.exports = subtract
-
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-function subtract(out, a, b) {
-    out[0] = a[0] - b[0]
-    out[1] = a[1] - b[1]
-    return out
-}
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports) {
-
-module.exports = dot
-
-/**
- * Calculates the dot product of two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} dot product of a and b
- */
-function dot(a, b) {
-    return a[0] * b[0] + a[1] * b[1]
-}
-
-/***/ }),
-/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18150,7 +17983,7 @@ function isUnitTransform(m) {
 }
 
 /***/ }),
-/* 100 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -18158,9 +17991,9 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/triangulate-contours
 
 /* eslint-disable */
-var Tess2 = __webpack_require__(101);
+var Tess2 = __webpack_require__(95);
 
-var xtend = __webpack_require__(103);
+var xtend = __webpack_require__(97);
 
 module.exports = function (contours, opt) {
   opt = opt || {};
@@ -18215,13 +18048,13 @@ module.exports = function (contours, opt) {
 };
 
 /***/ }),
-/* 101 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(102);
+module.exports = __webpack_require__(96);
 
 /***/ }),
-/* 102 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21652,7 +21485,7 @@ module.exports = __webpack_require__(102);
 	};
 
 /***/ }),
-/* 103 */
+/* 97 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -21677,7 +21510,7 @@ function extend() {
 
 
 /***/ }),
-/* 104 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21688,10 +21521,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyCloudShader", function() { return applyCloudShader; });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(105);
-/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(106);
-/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(107);
-/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(108);
+/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99);
+/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(100);
+/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(101);
+/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(102);
 
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -21839,7 +21672,7 @@ function applyCloudShader(renderer) {
 }
 
 /***/ }),
-/* 105 */
+/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21847,7 +21680,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLIPPATH\nattribute vec2 a_clipUV;\nvarying vec2 vClipUV;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLIPPATH\n  vClipUV = a_clipUV;\n#endif\n}");
 
 /***/ }),
-/* 106 */
+/* 100 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21855,7 +21688,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLIPPATH\nvarying vec2 vClipUV;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n  float opacity = abs(flagBackground);\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(opacity < 1.0) {\n    color.a *= opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n      float alpha = texColor.a;\n      if(opacity < 1.0) {\n        texColor.a *= opacity;\n        alpha *= mix(0.465, 1.0, opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(color.rgb, texColor.rgb, alpha);\n      // color.rgb = mix(texColor.rgb, color.rgb, color.a);\n      color.rgb = mix(texColor.rgb, color.rgb, clamp(color.a / max(0.0001, texColor.a), 0.0, 1.0));\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLIPPATH\n  float clip = texture2D(u_clipSampler, vClipUV).r;\n  color *= clip;\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
-/* 107 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21863,7 +21696,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec3 a_transform0;\nattribute vec3 a_transform1;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLIPPATH\nattribute vec2 a_clipUV;\nvarying vec2 vClipUV;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  mat3 modelMatrix = mat3(\n    a_transform0.x, a_transform1.x, 0, \n    a_transform0.y, a_transform1.y, 0,\n    a_transform0.z, a_transform1.z, 1\n  );\n\n  vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLIPPATH\n  vClipUV = a_clipUV;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
-/* 108 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

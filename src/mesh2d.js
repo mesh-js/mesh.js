@@ -1,6 +1,6 @@
 import {vec2, mat2d} from 'gl-matrix';
 import getBounds from 'bound-points';
-import stroke from './extrude-polyline';
+import Stroke from './extrude-contours';
 import flattenMeshes from './utils/flatten-meshes';
 import vectorToRGBA from './utils/vector-to-rgba';
 import {multiply, grayscale, brightness,
@@ -400,7 +400,8 @@ export default class Mesh2D {
           }
           const _meshes = strokeContours.map((lines, i) => {
             const closed = lines.length > 1 && vec2.equals(lines[0], lines[lines.length - 1]);
-            return this[_stroke].build(lines, closed);
+            const points = this[_stroke].build(lines, closed);
+            return triangulate([points]);
           });
           _meshes.forEach((mesh) => {
             mesh.positions = mesh.positions.map((p) => {
@@ -570,7 +571,12 @@ export default class Mesh2D {
     roundSegments = 20,
   } = {}) {
     this[_mesh] = null;
-    this[_stroke] = stroke({thickness, cap, join, miterLimit, roundSegments});
+    this[_stroke] = new Stroke({
+      lineWidth: thickness,
+      lineCap: cap,
+      lineJoin: join,
+      miterLimit,
+      roundSegments});
     if(typeof color === 'string') color = parseColor(color);
     this[_strokeColor] = color;
     this[_stroke].lineDash = lineDash;
