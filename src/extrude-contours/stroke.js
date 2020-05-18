@@ -39,7 +39,7 @@ export class Stroke {
   build(points, closed = false) {
     let total = points.length;
     points = [...points];
-    if(total <= 1) return points;
+    if(total <= 2) return points;
 
     if(closed) {
       if(points[0][0] !== points[total - 1][0] || points[0][1] !== points[total - 1][1]) {
@@ -57,6 +57,16 @@ export class Stroke {
     };
 
     const halfThick = this.lineWidth / 2;
+
+    const cap = this.lineCap;
+    if(!closed && cap === 'square') {
+      direction(lineA, points[0], points[1]);
+      scaleAndAdd(points[0], points[0], lineA, halfThick);
+      const idx = points.length - 1;
+      direction(lineA, points[idx], points[idx - 1]);
+      scaleAndAdd(points[idx], points[idx], lineA, halfThick);
+    }
+
     // join each segment
     for(let i = 1; i < total; i++) {
       const last = points[i - 1];
@@ -65,10 +75,7 @@ export class Stroke {
       this._seg(contours, last, cur, next, halfThick, closed);
     }
 
-    const cap = this.lineCap;
-    if(!closed && cap === 'square') {
-      capSquare(contours, halfThick);
-    } else if(!closed && cap === 'round') {
+    if(!closed && cap === 'round') {
       capRound(contours, this.roundSegments);
     }
 
@@ -195,22 +202,6 @@ function extrusions(contours, point, normal, scale, flip = -1) {
 
   scaleAndAdd(tmp, point, normal, scale);
   addPoint(contours, tmp, flip);
-}
-
-function capSquare({left, right}, halfThick) {
-  direction(lineA, left[1], left[0]);
-  scaleAndAdd(left[0], left[0], lineA, -halfThick);
-  direction(lineA, right[1], right[0]);
-  scaleAndAdd(right[0], right[0], lineA, -halfThick);
-
-  direction(lineA, left[left.length - 2], left[left.length - 1]);
-  scaleAndAdd(left[left.length - 1],
-    left[left.length - 1],
-    lineA, -halfThick);
-  direction(lineA, right[right.length - 2], right[right.length - 1]);
-  scaleAndAdd(right[right.length - 1],
-    right[right.length - 1],
-    lineA, -halfThick);
 }
 
 function capRound({left, right}, roundSegments) {
