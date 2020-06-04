@@ -127,12 +127,12 @@ export function getDashContours(contours, lineDash, lineDashOffset) {
   } else if(lineDashOffset < 0) {
     idx = -1;
     do {
-      lineDashOffset += lineDash[idx % lineDashLen + lineDashLen];
+      lineDashOffset += lineDash[idx % lineDashLen + lineDashLen - 1];
       idx--;
     } while(lineDashOffset < 0);
-    if(lineDashOffset > 0) {
+    if(lineDashOffset >= 0) {
       idx++;
-      dash = lineDash[idx % lineDashLen + lineDashLen] - lineDashOffset;
+      dash = lineDash[idx % lineDashLen + lineDashLen - 1] - lineDashOffset;
     }
   }
 
