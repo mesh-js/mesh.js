@@ -21,6 +21,7 @@ const _fill = Symbol('fill');
 const _strokeColor = Symbol('strokeColor');
 const _fillColor = Symbol('fillColor');
 const _transform = Symbol('transform');
+const _invertTransform = Symbol('invertTransform');
 const _uniforms = Symbol('uniforms');
 const _texOptions = Symbol('texOptions');
 const _blend = Symbol('blend');
@@ -213,27 +214,6 @@ export default class Mesh2D {
     return [[0, 0], [0, 0]];
   }
 
-  get renderBox() {
-    if(this[_mesh] && !this._updateMatrix && this[_mesh]._renderBox) return this[_mesh]._renderBox;
-    const bound = this.boundingBox;
-    if(bound) {
-      const x0 = bound[0][0];
-      const y0 = bound[0][1];
-      const x1 = bound[1][0];
-      const y1 = bound[1][1];
-      const m = this[_transform];
-
-      const box = [[m[0] * x0 + m[2] * y0 + m[4], m[1] * x0 + m[3] * y0 + m[5]],
-        [m[0] * x1 + m[2] * y1 + m[4], m[1] * x1 + m[3] * y1 + m[5]]];
-
-      if(this[_mesh]) {
-        this[_mesh]._renderBox = box;
-      }
-      return box;
-    }
-    return [[0, 0], [0, 0]];
-  }
-
   get boundingCenter() {
     const bound = this.boundingBox;
     if(bound) {
@@ -340,6 +320,14 @@ export default class Mesh2D {
 
   get transformMatrix() {
     return this[_transform];
+  }
+
+  get invertMatrix() {
+    if(!this[_invertTransform]) {
+      const m = mat2d.invert(this[_transform]);
+      this[_invertTransform] = m;
+    }
+    return this[_invertTransform];
   }
 
   get transformScale() {
@@ -715,6 +703,7 @@ export default class Mesh2D {
     const transform = this[_transform];
     if(!mat2d.equals(m, transform)) {
       this[_transform] = m;
+      delete this[_invertTransform];
       this._updateMatrix = true;
     }
     return this;
@@ -723,6 +712,7 @@ export default class Mesh2D {
   transform(...m) {
     const transform = this[_transform];
     this[_transform] = mat2d(transform) * mat2d(m);
+    delete this[_invertTransform];
     this._updateMatrix = true;
     return this;
   }
@@ -851,8 +841,11 @@ export default class Mesh2D {
     const meshData = this.meshData;
     const {positions, cells} = meshData;
 
-    const box = this.renderBox;
-    if(box && (x < box[0][0] || x > box[1][0] || y < box[0][1] || y > box[1][1])) {
+    const m = this.invertMatrix;
+    const x0 = m[0] * x + m[2] * y + m[4];
+    const y0 = m[1] * x + m[3] * y + m[5];
+    const box = this.boundingBox;
+    if(box && (x0 < box[0][0] || x0 > box[1][0] || y0 < box[0][1] || y0 > box[1][1])) {
       return false;
     }
 
