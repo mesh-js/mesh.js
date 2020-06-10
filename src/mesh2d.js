@@ -845,7 +845,7 @@ export default class Mesh2D {
     const x0 = m[0] * x + m[2] * y + m[4];
     const y0 = m[1] * x + m[3] * y + m[5];
     const box = this.boundingBox;
-    if(box && (x0 < box[0][0] || x0 > box[1][0] || y0 < box[0][1] || y0 > box[1][1])) {
+    if(x0 < box[0][0] || x0 > box[1][0] || y0 < box[0][1] || y0 > box[1][1]) {
       return false;
     }
 
