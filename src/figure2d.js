@@ -11,6 +11,8 @@ const _path = Symbol('path');
 const _simplify = Symbol('simplify');
 const _scale = Symbol('scale');
 
+const PI2 = 2 * Math.PI;
+
 export default class Figure2D {
   constructor(options = {}) {
     if(typeof options === 'string') options = {path: options};
@@ -112,7 +114,6 @@ export default class Figure2D {
     startAngle += rotation;
     endAngle += rotation;
     if(radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
-    const PI2 = 2 * Math.PI;
     if(endAngle < startAngle) {
       endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
     }
@@ -121,20 +122,18 @@ export default class Figure2D {
     }
 
     const delta = endAngle - startAngle;
+    if(delta >= PI2) {
+      endAngle -= 1e-3;
+    }
 
     let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
 
-    const direction = anticlockwise ? -1 : 1;
     const startPoint = getPoint(x, y, radiusX, radiusY, startAngle);
     const endPoint = getPoint(x, y, radiusX, radiusY, endAngle);
 
     const sweepFlag = Number(!anticlockwise);
     let largeArcFlag = delta > Math.PI ? 1 : 0;
     if(anticlockwise) largeArcFlag = 1 - largeArcFlag;
-
-    if(delta >= PI2) {
-      endPoint[1] -= direction * 1e-2;
-    }
 
     path += startPoint.join(' ');
 

@@ -1,6 +1,6 @@
 {
   "name": "@mesh.js/core",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "description": "A graphics system born for visualization.",
   "main": "dist/mesh.min.js",
   "module": "dist/mesh.js",
@@ -28,7 +28,7 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
-    "@demosify/core": "^0.5.5",
+    "@demosify/core": "^0.6.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-gl-matrix": "^0.6.0",
