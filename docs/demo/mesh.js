@@ -11741,6 +11741,13 @@ function drawMesh2D(mesh, context) {
   }
 
   context.transform.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.transformMatrix));
+
+  if (mesh.clipPath) {
+    var clipPath = mesh.clipPath;
+    var path = new Path2D(clipPath);
+    context.clip(path);
+  }
+
   var count = mesh.contours.length;
   mesh.contours.forEach(function (points, i) {
     // eslint-disable-line complexity

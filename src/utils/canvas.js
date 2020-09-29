@@ -115,6 +115,11 @@ export function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null,
     context.transform(...cloudTransform);
   }
   context.transform(...mesh.transformMatrix);
+  if(mesh.clipPath) {
+    const clipPath = mesh.clipPath;
+    const path = new Path2D(clipPath);
+    context.clip(path);
+  }
   const count = mesh.contours.length;
   mesh.contours.forEach((points, i) => { // eslint-disable-line complexity
     const len = points.length;
