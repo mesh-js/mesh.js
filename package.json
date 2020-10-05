@@ -12,7 +12,8 @@
     "demo:dev": "demosify --serve",
     "demo:prod": "demosify --prod",
     "doc": "docsify serve ./docs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "homepage": "https://meshjs.org/",
   "repository": {
@@ -36,7 +37,10 @@
     "eslint": "^5.16.0",
     "eslint-config-sprite": "^1.0.6",
     "eslint-plugin-html": "^5.0.5",
+    "jest": "^26.4.2",
+    "jest-puppeteer": "^4.4.0",
     "node-canvas-webgl": "^0.1.0",
+    "puppeteer": "^5.3.1",
     "webpack": "^4.33.0",
     "webpack-cli": "^3.3.4",
     "webpack-dev-server": "^3.11.0"
@@ -55,5 +59,8 @@
     "simplify-path": "^1.1.0",
     "tess2": "^1.0.0",
     "xtend": "^4.0.2"
+  },
+  "jest": {
+    "preset": "jest-puppeteer"
   }
 }
