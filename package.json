@@ -21,6 +21,10 @@
     "url": "https://github.com/mesh-js/mesh.js"
   },
   "types": "types/meshjs.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
   "keywords": [],
   "author": "akira-cn",
   "license": "MIT",
