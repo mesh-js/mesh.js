@@ -31,7 +31,7 @@ npm i @mesh.js/core --save;
 ```
 
 ```js
-import {Renderer, Figure2D, Mesh2D} from meshjs;
+import {Renderer, Figure2D, Mesh2D} from '@mesh.js/core';
 ```
 
 ## Usage
