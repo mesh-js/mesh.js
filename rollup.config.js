@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import babel, {getBabelOutputPlugin} from '@rollup/plugin-babel';
+import babel from '@rollup/plugin-babel';
 import {string} from 'rollup-plugin-string';
 
 const pkg = require('./package.json');
@@ -13,20 +13,6 @@ const config = {
       format: 'es',
       sourcemap: true,
       file: pkg.module,
-      plugins: [
-        // getBabelOutputPlugin({
-        //   configFile: './.babelrc',
-        //   allowAllFormats: true,
-        //   // plugins: [
-        //   //   [
-        //   //     'transform-gl-matrix',
-        //   //     {
-        //   //       // glMatrixArray: false,
-        //   //     },
-        //   //   ],
-        //   // ],
-        // }),
-      ],
     },
     {
       format: 'umd',
