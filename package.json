@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint src --fix",
     "start": "webpack-dev-server --env.server=examples --watch-poll",
-    "build": "webpack --env.mode=none && webpack --env.mode=production",
+    "build": "rollup --config",
     "prepublishOnly": "npm run build && demosify --prod",
     "demo:dev": "demosify --serve",
     "demo:prod": "demosify --prod",
