@@ -12,8 +12,8 @@
     "demo:dev": "demosify --serve",
     "demo:prod": "demosify --prod",
     "doc": "docsify serve ./docs",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "BABEL_ENV=jest jest",
+    "test:watch": "BABEL_ENV=jest jest --watch"
   },
   "homepage": "https://meshjs.org/",
   "repository": {
@@ -66,8 +66,5 @@
     "simplify-path": "^1.1.0",
     "tess2": "^1.0.0",
     "xtend": "^4.0.2"
-  },
-  "jest": {
-    "preset": "jest-puppeteer"
   }
 }

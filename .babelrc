@@ -27,5 +27,10 @@
         "useESModules": false
       }
     ]
-  ]
+  ],
+  "env": {
+    "jest": {
+      "presets": [["@babel/preset-env", {"targets": {"node": true}}]]
+    }
+  }
 }
