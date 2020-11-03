@@ -14,7 +14,7 @@ As simple as Canvas2D and as FAST as WebGL/WebGPU.
 - Support gradients and filters.
 - Support Worker and OffscreenCanvas.
 
-Learn more at [meshjs.org](http://meshjs.webgl.group).
+Learn more at [meshjs.webgl.group](http://meshjs.webgl.group).
 
 ## Installation
 
