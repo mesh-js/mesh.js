@@ -6,6 +6,10 @@ const cacheMap = {};
 
 function fontEx(info, ratio) {
   const {style, variant, weight, stretch, size, pxLineHeight, family} = info;
+  if(stretch === 'normal') {
+    // fix iOS10 bug
+    return `${style} ${variant} ${weight} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
+  }
   return `${style} ${variant} ${weight} ${stretch} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
 }
 
