@@ -8,13 +8,13 @@ As simple as Canvas2D and as FAST as WebGL/WebGPU.
 
 ## Why mesh.js
 
-- Blazing fast rendering massive sprites. See our [benchmark](http://meshjs.org/demo/#/benchmark/triangles).
+- Blazing fast rendering massive sprites. See our [benchmark](http://meshjs.webgl.group/demo/#/benchmark/triangles).
 - Cross platform. Support both canvas2d and webgl.
 - Support SVG Path.
 - Support gradients and filters.
 - Support Worker and OffscreenCanvas.
 
-Learn more at [meshjs.org](http://meshjs.org).
+Learn more at [meshjs.webgl.group](http://meshjs.webgl.group).
 
 ## Installation
 
@@ -31,7 +31,7 @@ npm i @mesh.js/core --save;
 ```
 
 ```js
-import {Renderer, Figure2D, Mesh2D} from meshjs;
+import {Renderer, Figure2D, Mesh2D} from '@mesh.js/core';
 ```
 
 ## Usage
