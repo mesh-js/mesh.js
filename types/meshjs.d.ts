@@ -7,8 +7,46 @@ interface RendererOptions {
   bufferSize?: number;
 }
 
+export type TransformMatrix =  [number, number, number, number, number, number]
+export type Matrix3 =  [number, number, number, number, number, number, number, number, number]
+
 export class Renderer {
+  get canvas(): HTMLCanvasElement;
+  get canvasRenderer(): any;
+  get glRenderer(): any;
+  get isWebGL2(): boolean;
+  get options(): RendererOptions;
+  get globalTransformMatrix(): TransformMatrix;
+  get viewMatrix(): Matrix3;
   constructor(canvas: HTMLCanvasElement, options?: RendererOptions);
+  updateResolution(): void;
+  createTexture(img: HTMLImageElement, opt?: {
+    wrapS?: number,
+    wrapT?: number,
+    minFilter?: number,
+    magFilter?: number,
+  }): WebGLTexture;
+  loadTexture(img: HTMLImageElement, opt?: {
+    useImageBitmap?: boolean
+  }): Promise<WebGLTexture>;
+  deleteTexture(texture: WebGLTexture): void;
+  createText(text: string, opt: {font?: string, fillColor?: string, strokeColor?: string, strokeWidth?: number}): any;
+  createProgram(opt: {vertex: string, fragment: string, options?: any}): WebGLProgram;
+  createPassProgram(opt: {vertex: string, fragment: string, options?: any}): WebGLProgram;
+  useProgram(program: WebGLProgram, attributeOptions: any): WebGLProgram;
+  clear(x: number, y: number, w: number, h: number): void;
+  drawMeshCloud(cloud: any, opt?: {clear?: boolean, program?: WebGLProgram}): void;
+  drawMeshes(meshes: Mesh2D[], opt?: {clear?: boolean, program?: WebGLProgram}): void;
+  drawImage(image: HTMLImageElement, dx: number, dy: number): void;
+  drawImage(image: HTMLImageElement, dx: number, dy: number, dWidth: number, dHeight: number): void;
+  drawImage(image: HTMLImageElement, sx: number, sy: number, sWidth: number, sHeight: number, dx: number, dy: number, dWidth: number, dHeight: number): void;
+  setGlobalTransform(m: TransformMatrix): Renderer;
+  globalTransform(m: TransformMatrix): Renderer;
+  globalTranslate(x: number, y: number): Renderer;
+  globalRotate(rad: number, o: [number, number]): Renderer;
+  globalScale(x: number, y: number, o: [number, number]): Renderer;
+  globalSkew(x: number, y: number, o: [number, number]): Renderer;
+  transformPoint(x: number, y: number, m: TransformMatrix): Renderer;
 }
 
 interface ContourOptions {
@@ -91,7 +129,7 @@ export class Mesh2D {
   readonly lineCap: string;
   readonly lineJoin: string;
   readonly miterLimit: number;
-  readonly transformMatrix: [number, number, number, number, number, number];
+  readonly transformMatrix: TransformMatrix;
   readonly uniforms: Object;
   readonly meshData: Object;
 
