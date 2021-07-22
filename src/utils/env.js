@@ -113,8 +113,8 @@ if(typeof navigator === 'object' && typeof navigator.userAgent === 'string') {
 function createCanvas(width, height, options = {}) {
   const offscreen = options.offscreen || !isEarlyChrome && options.offscreen !== false;
   let canvas;
-  if(typeof global.createCanvas === 'function') {
-    canvas = global.createCanvas(width, height, options);
+  if(typeof globalThis !== 'undefined' && typeof globalThis.createCanvas === 'function') {
+    canvas = globalThis.createCanvas(width, height, options);
   } else if(offscreen && typeof OffscreenCanvas === 'function') {
     canvas = new OffscreenCanvas(width, height);
   } else {

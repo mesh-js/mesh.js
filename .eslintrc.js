@@ -2,6 +2,7 @@ module.exports = {
   globals: {
     meshjs: true,
     importScripts: true,
+    globalThis: true,
   },
   extends:  "eslint-config-sprite",
   plugins: ['html'],
