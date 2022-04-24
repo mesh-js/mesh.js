@@ -15,13 +15,15 @@ function allocateBuffer(meshes, bufferCache) { // eslint-disable-line complexity
   let colorCount = 0;
   let count = 0;
   const program = meshes[0].program;
+  const hasCell = !!meshes[0].meshData.cells;
+
   for(let i = 0; i < meshes.length; i++) {
     const mesh = meshes[i].meshData;
     if(mesh) {
       count += mesh.positions.length;
       const dimension = mesh.positions[0].length;
       positionsCount += mesh.positions.length * dimension;
-      cellsCount += mesh.cells.length * 3;
+      if(hasCell) cellsCount += mesh.cells.length * 3;
       colorCount += mesh.attributes.a_color.length * 4;
       const _textureCoord = mesh.textureCoord;
       if(_textureCoord) {
@@ -40,7 +42,7 @@ function allocateBuffer(meshes, bufferCache) { // eslint-disable-line complexity
   if(!bufferCache.positions || bufferCache.positions.length < positionsCount) {
     bufferCache.positions = new Float32Array(positionsCount);
   }
-  if(!bufferCache.cells || bufferCache.cells.length < cellsCount) {
+  if(hasCell && (!bufferCache.cells || bufferCache.cells.length < cellsCount)) {
     bufferCache.cells = new Uint16Array(cellsCount);
   }
   if(textureCoordCount) {
@@ -93,6 +95,11 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
   const uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
   const program = meshes[0] ? meshes[0].program : null;
 
+  let hasCell = false;
+  if(meshes[0]) {
+    hasCell = !!meshes[0].cells || meshes[0].meshData && !!meshes[0].meshData.cells;
+  }
+
   if(bufferCache) {
     allocateBuffer(meshes, bufferCache);
     cells = bufferCache.cells;
@@ -123,16 +130,18 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
       } else {
         positions.push(...mesh.positions);
       }
-      const _cells = mesh.cells;
-      for(let j = 0; j < _cells.length; j++) {
-        const cell = _cells[j];
-        if(bufferCache) {
-          const o = 3 * (cidx + j);
-          cells[o] = cell[0] + idx;
-          cells[o + 1] = cell[1] + idx;
-          cells[o + 2] = cell[2] + idx;
-        } else {
-          cells.push([cell[0] + idx, cell[1] + idx, cell[2] + idx]);
+      if(hasCell) {
+        const _cells = mesh.cells;
+        for(let j = 0; j < _cells.length; j++) {
+          const cell = _cells[j];
+          if(bufferCache) {
+            const o = 3 * (cidx + j);
+            cells[o] = cell[0] + idx;
+            cells[o + 1] = cell[1] + idx;
+            cells[o + 2] = cell[2] + idx;
+          } else {
+            cells.push([cell[0] + idx, cell[1] + idx, cell[2] + idx]);
+          }
         }
       }
       // cells.push(...mesh.cells.map(cell => cell.map(c => c + idx)));
@@ -219,13 +228,17 @@ export default function flattenMeshes(meshes, bufferCache) { // eslint-disable-l
       }
 
       idx += mesh.positions.length;
-      cidx += mesh.cells.length;
+      if(hasCell) cidx += mesh.cells.length;
     }
   }
 
   attributes.a_color = a_color;
   if(hasSourceRect && a_sourceRect && a_sourceRect.length > 0) attributes.a_sourceRect = a_sourceRect;
-  const ret = {positions, cells, attributes, uniforms, cellsCount: cidx * 3, program};
+  const ret = {positions, attributes, uniforms, program};
+  if(hasCell) {
+    ret.cells = cells;
+    ret.cellsCount = cidx * 3;
+  }
 
   if(textureCoord && textureCoord.length) {
     ret.textureCoord = textureCoord;

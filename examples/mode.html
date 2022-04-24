@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script src="/js/mesh.js"></script>
+  <script>
+    // TODO 实现一个 Shape 的 mesh
+    const {Renderer, Figure2D, Mesh2D} = meshjs;
+
+    const vert = `attribute vec2 a_vertexPosition;
+void main() {
+  gl_PointSize = 10.0;
+  gl_Position = vec4(a_vertexPosition.xy, 1.0, 1.0);
+}`;
+
+    const fragment = `precision mediump float;
+
+void main() {
+  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}`;
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas, {
+      contextType: 'webgl2',
+      antialias: false,
+    });
+    const figure = new Figure2D();
+    figure.rect(50, 50, 50, 50);
+    const mesh1 = new Mesh2D(figure);
+    mesh1.setFill({
+      // thickness: 6,
+      color: [1, 0, 0, 0.5],
+    });
+
+    const program = renderer.createProgram({vertex: vert, fragment});
+
+    const mesh = {
+      canIgnore() {
+        return false;
+      },
+      pass: [],
+      meshData: {
+        positions: [[0, 0]],
+        attributes: {
+          a_color: [[1, 0, 0, 1]],
+        },
+      },
+      program,
+      mode: 'POINTS',
+    };
+    
+    renderer.drawMeshes([mesh]);
+  </script>
+</body>
+</html>

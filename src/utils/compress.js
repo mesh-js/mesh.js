@@ -63,6 +63,7 @@ function packData(temp, enableBlend) {
     meshData.packLength = temp.length;
     meshData.beforeRender = temp[0].beforeRender;
     meshData.pass = temp[0].pass;
+    meshData.mode = temp[0].mode;
     meshData.afterRender = temp[temp.length - 1].afterRender;
     temp.length = 0;
     return meshData;
@@ -107,6 +108,8 @@ export default function* compress(renderer, meshes, ignoreTrasnparent = false) {
             || lastMesh.pass.length
             || mesh.pass.length
             || lastMesh.program !== mesh.program
+            || lastMesh.mode !== mesh.mode
+            || !!lastMesh.meshData.cells !== !!mesh.meshData.cells
             || !compareUniform(lastMesh, mesh, temp))) {
             yield packData(temp, enableBlend);
             size = 0;
