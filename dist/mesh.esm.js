@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["meshjs"] = factory();
-	else
-		root["meshjs"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
+var meshjs =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -103,22 +94,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Renderer", function() { return _renderer__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Figure2D", function() { return _figure2d__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(73);
+/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(55);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Mesh2D", function() { return _mesh2d__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MeshCloud", function() { return _mesh_cloud__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _utils_parse_font__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(39);
+/* harmony import */ var _utils_parse_font__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseFont", function() { return _utils_parse_font__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(47);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(30);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseColor", function() { return _utils_parse_color__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37);
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ENV", function() { return _utils_env__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -7788,37 +7779,19 @@ var forEach = function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Renderer; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var gl_renderer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(25);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/* harmony import */ var _canvas_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(36);
-/* harmony import */ var _utils_compress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(43);
-/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(41);
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(56);
-/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(73);
-/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(45);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(78);
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(37);
-/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(82);
-
-
-
-
-
+/* harmony import */ var gl_renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _canvas_renderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(19);
+/* harmony import */ var _utils_compress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26);
+/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(39);
+/* harmony import */ var _mesh2d__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(55);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(28);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(58);
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(20);
+/* harmony import */ var _utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(62);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -7830,8 +7803,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-
-var defaultOpts = {
+const defaultOpts = {
   autoUpdate: false,
   // premultipliedAlpha: true,
   preserveDrawingBuffer: false,
@@ -7839,24 +7811,42 @@ var defaultOpts = {
   // antialias: false,
   bufferSize: 1500
 };
-var defaultPassVertex = "attribute vec3 a_vertexPosition;\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\nvoid main() {\n  gl_PointSize = 1.0;\n  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);    \n  vTextureCoord = a_vertexTextureCoord;              \n}\n";
-var defaultPassFragment = "precision mediump float;\nvarying vec3 vTextureCoord;\nuniform sampler2D u_texSampler;\nvoid main() {\n  gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy);\n}\n";
+const defaultPassVertex = `attribute vec3 a_vertexPosition;
+attribute vec3 a_vertexTextureCoord;
+varying vec3 vTextureCoord;
+uniform mat3 viewMatrix;
+uniform mat3 projectionMatrix;
 
-var _glRenderer = Symbol('glRenderer');
+void main() {
+  gl_PointSize = 1.0;
+  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);
+  gl_Position = vec4(pos.xy, 1.0, 1.0);    
+  vTextureCoord = a_vertexTextureCoord;              
+}
+`;
+const defaultPassFragment = `precision mediump float;
+varying vec3 vTextureCoord;
+uniform sampler2D u_texSampler;
+void main() {
+  gl_FragColor = texture2D(u_texSampler, vTextureCoord.xy);
+}
+`;
 
-var _canvasRenderer = Symbol('canvasRenderer');
+const _glRenderer = Symbol('glRenderer');
 
-var _options = Symbol('options');
+const _canvasRenderer = Symbol('canvasRenderer');
 
-var _globalTransform = Symbol('globalTransform');
+const _options = Symbol('options');
 
-var _applyGlobalTransform = Symbol('applyGlobalTransform');
+const _globalTransform = Symbol('globalTransform');
 
-var _canvas = Symbol('canvas');
+const _applyGlobalTransform = Symbol('applyGlobalTransform');
+
+const _canvas = Symbol('canvas');
 
 function draw(renderer) {
-  var gl = renderer.gl;
-  var fbo = renderer.fbo;
+  const gl = renderer.gl;
+  const fbo = renderer.fbo;
 
   if (fbo) {
     gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
@@ -7870,11 +7860,11 @@ function draw(renderer) {
 }
 
 function drawFilterContext(renderer, filterContext, width, height) {
-  var filterTexture = renderer.createTexture(filterContext.canvas);
-  var contours = [[[0, 0], [width, 0], [width, height], [0, height], [0, 0]]];
+  const filterTexture = renderer.createTexture(filterContext.canvas);
+  const contours = [[[0, 0], [width, 0], [width, height], [0, height], [0, 0]]];
   contours.closed = true;
-  var filterMesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_10__["default"]({
-    contours: contours
+  const filterMesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_6__["default"]({
+    contours
   });
   filterMesh.setTexture(filterTexture);
   renderer.setMeshData([filterMesh.meshData]);
@@ -7884,13 +7874,9 @@ function drawFilterContext(renderer, filterContext, width, height) {
   delete filterContext._filter;
 }
 
-var Renderer = /*#__PURE__*/function () {
-  function Renderer(canvas) {
-    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Renderer);
-
-    var contextType = opts.contextType;
+class Renderer {
+  constructor(canvas, opts = {}) {
+    let contextType = opts.contextType;
 
     if (!contextType) {
       if (typeof WebGL2RenderingContext === 'function') {
@@ -7904,11 +7890,12 @@ var Renderer = /*#__PURE__*/function () {
 
     if (!canvas.getContext) {
       // 小程序
-      var context = canvas;
+      const context = canvas;
       canvas = {
-        getContext: function getContext() {
+        getContext() {
           return context;
         },
+
         width: opts.width,
         height: opts.height
       };
@@ -7919,7 +7906,7 @@ var Renderer = /*#__PURE__*/function () {
     this[_canvas] = canvas;
 
     if (contextType !== 'webgl' && contextType !== 'webgl2' && contextType !== '2d') {
-      throw new Error("Unknown context type ".concat(contextType));
+      throw new Error(`Unknown context type ${contextType}`);
     }
 
     opts.contextType = contextType;
@@ -7927,852 +7914,546 @@ var Renderer = /*#__PURE__*/function () {
 
     if (contextType === 'webgl' || contextType === 'webgl2') {
       if (contextType === 'webgl2') this[_options].webgl2 = true;
-      var renderer = new gl_renderer__WEBPACK_IMPORTED_MODULE_4__["default"](canvas, this[_options]);
+      const renderer = new gl_renderer__WEBPACK_IMPORTED_MODULE_0__["default"](canvas, this[_options]);
 
       if (contextType === 'webgl2' && !renderer.isWebGL2) {
         // webgl2 may disabled by browser settings
         opts.contextType = 'webgl';
       }
 
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["createShaders"])(renderer);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer);
-      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["createCloudShaders"])(renderer);
-      var gl = renderer.gl; // gl.clearColor(1.0, 1.0, 1.0, 1.0);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__["createShaders"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__["applyShader"])(renderer);
+      Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__["createCloudShaders"])(renderer);
+      const gl = renderer.gl; // gl.clearColor(1.0, 1.0, 1.0, 1.0);
       // gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
 
       gl.clearColor(0.0, 0.0, 0.0, 0.0);
       gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       this[_glRenderer] = renderer;
     } else {
-      this[_canvasRenderer] = new _canvas_renderer__WEBPACK_IMPORTED_MODULE_6__["default"](canvas, this[_options]);
+      this[_canvasRenderer] = new _canvas_renderer__WEBPACK_IMPORTED_MODULE_2__["default"](canvas, this[_options]);
     }
 
     this[_globalTransform] = [1, 0, 0, 0, 1, 0, 0, 0, 1];
     this.updateResolution();
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Renderer, [{
-    key: _applyGlobalTransform,
-    value: function value() {
-      var renderer = this[_glRenderer] || this[_canvasRenderer];
+  get canvas() {
+    return this[_canvas];
+  }
 
-      if (this[_glRenderer]) {
-        var _this$canvas = this.canvas,
-            width = _this$canvas.width,
-            height = _this$canvas.height;
-        renderer.uniforms.viewMatrix = this.viewMatrix;
-        renderer.uniforms.projectionMatrix = this.projectionMatrix;
-        renderer.uniforms.u_resolution = [width, height];
-      }
+  get canvasRenderer() {
+    return this[_canvasRenderer];
+  }
+
+  get glRenderer() {
+    return this[_glRenderer];
+  }
+
+  get isWebGL2() {
+    return this[_glRenderer] && this[_glRenderer].isWebGL2;
+  }
+
+  get options() {
+    return this[_options];
+  }
+
+  get globalTransformMatrix() {
+    const m = this[_globalTransform];
+    return [m[0], m[1], m[3], m[4], m[6], m[7]];
+  }
+
+  get viewMatrix() {
+    return this[_globalTransform];
+  }
+
+  [_applyGlobalTransform]() {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+
+    if (this[_glRenderer]) {
+      const {
+        width,
+        height
+      } = this.canvas;
+      renderer.uniforms.viewMatrix = this.viewMatrix;
+      renderer.uniforms.projectionMatrix = this.projectionMatrix;
+      renderer.uniforms.u_resolution = [width, height];
     }
-  }, {
-    key: "updateResolution",
-    value: function updateResolution() {
-      var _this$canvas2 = this.canvas,
-          width = _this$canvas2.width,
-          height = _this$canvas2.height;
-      var m1 = [// translation
-      1, 0, 0, 0, 1, 0, -width / 2, -height / 2, 1];
-      var m2 = [// scale
-      2 / width, 0, 0, 0, -2 / height, 0, 0, 0, 1];
-      var m3 = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m2, m1);
-      this.projectionMatrix = m3;
+  }
 
-      if (this[_glRenderer]) {
-        this[_glRenderer].gl.viewport(0, 0, width, height);
-      }
+  updateResolution() {
+    const {
+      width,
+      height
+    } = this.canvas;
+    const m1 = [// translation
+    1, 0, 0, 0, 1, 0, -width / 2, -height / 2, 1];
+    const m2 = [// scale
+    2 / width, 0, 0, 0, -2 / height, 0, 0, 0, 1];
+    const m3 = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m2, m1);
+    this.projectionMatrix = m3;
+
+    if (this[_glRenderer]) {
+      this[_glRenderer].gl.viewport(0, 0, width, height);
     }
-  }, {
-    key: "createTexture",
-    value: function createTexture(img, opts) {
-      var renderer = this[_glRenderer] || this[_canvasRenderer];
-      return renderer.createTexture(img, opts);
-    }
-    /* async */
+  }
 
-  }, {
-    key: "loadTexture",
-    value: function loadTexture(textureURL) {
-      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref$useImageBitmap = _ref.useImageBitmap,
-          useImageBitmap = _ref$useImageBitmap === void 0 ? false : _ref$useImageBitmap;
+  createTexture(img, opts) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.createTexture(img, opts);
+  }
+  /* async */
 
-      var renderer = this[_glRenderer] || this[_canvasRenderer];
-      return renderer.loadTexture(textureURL, {
-        useImageBitmap: useImageBitmap
+
+  loadTexture(textureURL, {
+    useImageBitmap = false
+  } = {}) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.loadTexture(textureURL, {
+      useImageBitmap
+    });
+  }
+
+  createText(text, {
+    font = '16px arial',
+    fillColor = null,
+    strokeColor = null,
+    strokeWidth = 1
+  } = {}) {
+    if (this[_glRenderer]) {
+      const img = _utils_env__WEBPACK_IMPORTED_MODULE_9__["default"].createText(text, {
+        font,
+        fillColor,
+        strokeColor,
+        strokeWidth
       });
-    }
-  }, {
-    key: "createText",
-    value: function createText(text) {
-      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref2$font = _ref2.font,
-          font = _ref2$font === void 0 ? '16px arial' : _ref2$font,
-          _ref2$fillColor = _ref2.fillColor,
-          fillColor = _ref2$fillColor === void 0 ? null : _ref2$fillColor,
-          _ref2$strokeColor = _ref2.strokeColor,
-          strokeColor = _ref2$strokeColor === void 0 ? null : _ref2$strokeColor,
-          _ref2$strokeWidth = _ref2.strokeWidth,
-          strokeWidth = _ref2$strokeWidth === void 0 ? 1 : _ref2$strokeWidth;
-
-      if (this[_glRenderer]) {
-        var img = _utils_env__WEBPACK_IMPORTED_MODULE_13__["default"].createText(text, {
-          font: font,
-          fillColor: fillColor,
-          strokeColor: strokeColor,
-          strokeWidth: strokeWidth
-        });
-        return {
-          image: this.createTexture(img.image),
-          rect: img.rect
-        };
-      }
-
       return {
-        _img: {
-          font: font,
-          fillColor: fillColor,
-          strokeColor: strokeColor,
-          strokeWidth: strokeWidth,
-          text: text
-        }
+        image: this.createTexture(img.image),
+        rect: img.rect
       };
     }
-  }, {
-    key: "createProgram",
-    value: function createProgram() {
-      var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vertex = _ref3.vertex,
-          fragment = _ref3.fragment,
-          options = _ref3.options;
 
-      if (this[_glRenderer]) {
-        var program = this[_glRenderer].compileSync(fragment, vertex);
-
-        program._attribOpts = options;
-        return program;
+    return {
+      _img: {
+        font,
+        fillColor,
+        strokeColor,
+        strokeWidth,
+        text
       }
+    };
+  }
 
-      throw new Error('Context 2D cannot create webgl program.');
+  createProgram({
+    vertex,
+    fragment,
+    options
+  } = {}) {
+    if (this[_glRenderer]) {
+      const program = this[_glRenderer].compileSync(fragment, vertex);
+
+      program._attribOpts = options;
+      return program;
     }
-  }, {
-    key: "createPassProgram",
-    value: function createPassProgram() {
-      var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref4$vertex = _ref4.vertex,
-          vertex = _ref4$vertex === void 0 ? defaultPassVertex : _ref4$vertex,
-          _ref4$fragment = _ref4.fragment,
-          fragment = _ref4$fragment === void 0 ? defaultPassFragment : _ref4$fragment,
-          options = _ref4.options;
 
-      return this.createProgram({
-        vertex: vertex,
-        fragment: fragment,
-        options: options
-      });
+    throw new Error('Context 2D cannot create webgl program.');
+  }
+
+  createPassProgram({
+    vertex = defaultPassVertex,
+    fragment = defaultPassFragment,
+    options
+  } = {}) {
+    return this.createProgram({
+      vertex,
+      fragment,
+      options
+    });
+  }
+
+  useProgram(program, attributeOptions = {}) {
+    if (this[_glRenderer]) {
+      const attrOpts = Object.assign({}, program._attribOpts, attributeOptions);
+      return this[_glRenderer].useProgram(program, attrOpts);
     }
-  }, {
-    key: "useProgram",
-    value: function useProgram(program) {
-      var attributeOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-      if (this[_glRenderer]) {
-        var attrOpts = Object.assign({}, program._attribOpts, attributeOptions);
-        return this[_glRenderer].useProgram(program, attrOpts);
-      }
+    throw new Error('Context 2D cannot use webgl program.');
+  }
 
-      throw new Error('Context 2D cannot use webgl program.');
+  deleteTexture(texture) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+    return renderer.deleteTexture(texture);
+  }
+
+  clear(...rect) {
+    if (this[_glRenderer]) {
+      const gl = this[_glRenderer].gl;
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    } else {
+      this[_canvasRenderer].clear(...rect);
     }
-  }, {
-    key: "deleteTexture",
-    value: function deleteTexture(texture) {
-      var renderer = this[_glRenderer] || this[_canvasRenderer];
-      return renderer.deleteTexture(texture);
-    }
-  }, {
-    key: "clear",
-    value: function clear() {
-      if (this[_glRenderer]) {
-        var gl = this[_glRenderer].gl;
-        gl.clear(gl.COLOR_BUFFER_BIT);
-      } else {
-        var _this$_canvasRenderer;
+  }
 
-        (_this$_canvasRenderer = this[_canvasRenderer]).clear.apply(_this$_canvasRenderer, arguments);
-      }
-    }
-  }, {
-    key: "drawMeshCloud",
-    value: function drawMeshCloud(cloud) {
-      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref5$clear = _ref5.clear,
-          clear = _ref5$clear === void 0 ? false : _ref5$clear,
-          _ref5$program = _ref5.program,
-          drawProgram = _ref5$program === void 0 ? null : _ref5$program;
+  drawMeshCloud(cloud, {
+    clear = false,
+    program: drawProgram = null
+  } = {}) {
+    const renderer = this[_glRenderer] || this[_canvasRenderer]; // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
 
-      var renderer = this[_glRenderer] || this[_canvasRenderer]; // if(!this.isWebGL2) throw new Error('Only webgl2 context support drawMeshCloud.');
+    const program = drawProgram || cloud.program;
 
-      var program = drawProgram || cloud.program;
+    if (this[_glRenderer]) {
+      const gl = renderer.gl;
+      if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
 
-      if (this[_glRenderer]) {
-        var gl = renderer.gl;
-        if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
-
-        if (!program) {
-          var mesh = cloud.mesh.meshData;
-          var hasTexture = !!mesh.uniforms.u_texSampler;
-          var hasFilter = !!mesh.uniforms.u_filterFlag;
-          var hasGradient = !!mesh.uniforms.u_radialGradientVector;
-          var hasCloudColor = cloud.hasCloudColor;
-          var hasCloudFilter = cloud.hasCloudFilter;
-          var hasClipPath = !!mesh.uniforms.u_clipSampler;
-          Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyCloudShader"])(renderer, {
-            hasTexture: hasTexture,
-            hasFilter: hasFilter,
-            hasGradient: hasGradient,
-            hasCloudColor: hasCloudColor,
-            hasCloudFilter: hasCloudFilter,
-            hasClipPath: hasClipPath
-          });
-        } else if (renderer.program !== program) {
-          this.useProgram(program, {
-            a_color: {
-              type: 'UNSIGNED_BYTE',
-              normalize: true
-            },
-            a_fillCloudColor: {
-              type: 'UNSIGNED_BYTE',
-              normalize: true
-            },
-            a_strokeCloudColor: {
-              type: 'UNSIGNED_BYTE',
-              normalize: true
-            },
-            a_frameIndex: {
-              type: 'UNSIGNED_BYTE',
-              normalize: false
-            }
-          });
-        }
-
-        this[_applyGlobalTransform]();
-
-        renderer.setMeshData([cloud.meshData]);
-        if (cloud.beforeRender) cloud.beforeRender(gl, cloud);
-        draw(renderer);
-        if (cloud.afterRender) cloud.afterRender(gl, cloud);
-      } else {
-        renderer.setTransform(this.globalTransformMatrix);
-        renderer.drawMeshCloud(cloud, {
-          clear: clear,
-          hook: false
+      if (!program) {
+        const mesh = cloud.mesh.meshData;
+        const hasTexture = !!mesh.uniforms.u_texSampler;
+        const hasFilter = !!mesh.uniforms.u_filterFlag;
+        const hasGradient = !!mesh.uniforms.u_radialGradientVector;
+        const hasCloudColor = cloud.hasCloudColor;
+        const hasCloudFilter = cloud.hasCloudFilter;
+        const hasClipPath = !!mesh.uniforms.u_clipSampler;
+        Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__["applyCloudShader"])(renderer, {
+          hasTexture,
+          hasFilter,
+          hasGradient,
+          hasCloudColor,
+          hasCloudFilter,
+          hasClipPath
         });
-      }
-    }
-  }, {
-    key: "drawMeshes",
-    value: function drawMeshes(meshes) {
-      var _this = this;
-
-      var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref6$clear = _ref6.clear,
-          clear = _ref6$clear === void 0 ? false : _ref6$clear,
-          _ref6$program = _ref6.program,
-          drawProgram = _ref6$program === void 0 ? null : _ref6$program;
-
-      // eslint-disable-line complexity
-      var renderer = this[_glRenderer] || this[_canvasRenderer];
-
-      if (this[_glRenderer]) {
-        (function () {
-          var oldFBO = renderer.fbo;
-          var meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_7__["default"])(_this, meshes, drawProgram == null);
-          var gl = renderer.gl;
-          if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
-          var hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_12__["isUnitTransform"])(_this.globalTransformMatrix);
-          _this._drawCalls = 0;
-
-          var _iterator = _createForOfIteratorHelper(meshData),
-              _step;
-
-          try {
-            var _loop = function _loop() {
-              var mesh = _step.value;
-              // eslint-disable-line no-restricted-syntax
-              _this._drawCalls++;
-              var program = drawProgram || mesh.program;
-
-              if (mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_11__["default"]) {
-                _this.drawMeshCloud(mesh, {
-                  clear: clear,
-                  program: program
-                }); // continue; // eslint-disable-line no-continue
-
-              } else {
-                var _this$canvas3 = _this.canvas,
-                    width = _this$canvas3.width,
-                    height = _this$canvas3.height;
-                if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
-
-                if (mesh.pass.length) {
-                  if (!_this.fbo || _this.fbo.width !== width || _this.fbo.height !== height) {
-                    _this.fbo = {
-                      width: width,
-                      height: height,
-                      target: renderer.createFBO(),
-                      buffer: renderer.createFBO(),
-                      swap: function swap() {
-                        var _ref7 = [this.buffer, this.target];
-                        this.target = _ref7[0];
-                        this.buffer = _ref7[1];
-                      }
-                    };
-                  }
-
-                  renderer.bindFBO(_this.fbo.target);
-                }
-
-                if (!program && mesh.filterCanvas) {
-                  // 有一些滤镜用shader不好实现：blur、drop-shadow、url
-                  Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer, {
-                    hasTexture: true
-                  });
-                  var filterContext = _this.filterContext;
-
-                  if (!filterContext) {
-                    var canvas = _utils_env__WEBPACK_IMPORTED_MODULE_13__["default"].createCanvas(width, height);
-                    filterContext = canvas.getContext('2d');
-                    _this.filterContext = filterContext;
-                  }
-
-                  var originalMesh = meshes[mesh.packIndex];
-                  var currentFilter = originalMesh.filter;
-                  var nextMesh = meshes[mesh.packIndex + 1];
-                  var previousMesh = meshes[mesh.packIndex - 1];
-
-                  if ((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter) && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
-                    if (hasGlobalTransform) {
-                      filterContext.save(); // filterContext.transform(...this.globalTransformMatrix);
-
-                      Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["drawMesh2D"])(originalMesh, filterContext, false);
-                      filterContext.restore();
-                      Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["applyFilter"])(filterContext, currentFilter);
-                    } else {
-                      Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["drawMesh2D"])(originalMesh, filterContext, true);
-                    }
-
-                    _this[_applyGlobalTransform]();
-
-                    drawFilterContext(renderer, filterContext, width, height);
-                  } else {
-                    if (hasGlobalTransform) {
-                      filterContext.save(); // filterContext.transform(...this.globalTransformMatrix);
-                    }
-
-                    Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["drawMesh2D"])(originalMesh, filterContext, false);
-
-                    if (hasGlobalTransform) {
-                      filterContext.restore();
-                    }
-
-                    if (!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
-                      Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_8__["applyFilter"])(filterContext, currentFilter);
-
-                      _this[_applyGlobalTransform]();
-
-                      drawFilterContext(renderer, filterContext, width, height);
-                    }
-                  }
-                } else {
-                  if (!program) {
-                    var hasTexture = !!mesh.uniforms.u_texSampler;
-                    var hasFilter = !!mesh.uniforms.u_filterFlag;
-                    var hasGradient = !!mesh.uniforms.u_radialGradientVector;
-                    var hasClipPath = !!mesh.uniforms.u_clipSampler;
-                    Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_14__["applyShader"])(renderer, {
-                      hasTexture: hasTexture,
-                      hasFilter: hasFilter,
-                      hasGradient: hasGradient,
-                      hasClipPath: hasClipPath
-                    });
-                  } else if (renderer.program !== program) {
-                    _this.useProgram(program, {
-                      a_color: {
-                        type: 'UNSIGNED_BYTE',
-                        normalize: true
-                      }
-                    });
-                  }
-
-                  if (mesh.filterCanvas) {
-                    console.warn('User program ignored some filter effects.');
-                  }
-
-                  _this[_applyGlobalTransform]();
-
-                  renderer.setMeshData([mesh]);
-                  draw(renderer);
-                }
-
-                if (mesh.pass.length) {
-                  var len = mesh.pass.length;
-                  mesh.pass.forEach(function (pass, idx) {
-                    pass.blend = mesh.enableBlend;
-                    pass.setTexture(renderer.fbo.texture);
-                    if (idx === len - 1) renderer.bindFBO(oldFBO);else {
-                      _this.fbo.swap();
-
-                      renderer.bindFBO(_this.fbo.target);
-                    }
-                    if (pass.program) renderer.useProgram(pass.program);else {
-                      _this.defaultPassProgram = _this.defaultPassProgram || _this.createPassProgram();
-                      renderer.useProgram(_this.defaultPassProgram);
-                    }
-                    renderer.setMeshData([pass.meshData]);
-                    gl.clear(gl.COLOR_BUFFER_BIT);
-                    draw(renderer);
-                  });
-                }
-
-                if (mesh.afterRender) mesh.afterRender(gl, mesh);
-              }
-            };
-
-            for (_iterator.s(); !(_step = _iterator.n()).done;) {
-              _loop();
-            }
-          } catch (err) {
-            _iterator.e(err);
-          } finally {
-            _iterator.f();
+      } else if (renderer.program !== program) {
+        this.useProgram(program, {
+          a_color: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true
+          },
+          a_fillCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true
+          },
+          a_strokeCloudColor: {
+            type: 'UNSIGNED_BYTE',
+            normalize: true
+          },
+          a_frameIndex: {
+            type: 'UNSIGNED_BYTE',
+            normalize: false
           }
-        })();
-      } else {
-        renderer.setTransform(this.globalTransformMatrix);
-        renderer.drawMeshes(meshes, {
-          clear: clear
         });
       }
-    }
-  }, {
-    key: "drawImage",
-    value: function drawImage(image) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      var argLength = args.length;
+      this[_applyGlobalTransform]();
 
-      if (argLength < 2) {
-        throw new TypeError("Failed to execute 'drawImage' on 'Renderer': 3 arguments required, but only ".concat(args.length + 1, " present."));
-      }
-
-      if (argLength !== 2 && argLength !== 4 && argLength !== 8) {
-        throw new TypeError("Failed to execute 'drawImage' on 'Renderer': Valid arities are: [3, 5, 9], but ".concat(args.length + 1, " arguments provided."));
-      }
-
-      var rect = null;
-      var srcRect = null;
-
-      if (argLength === 2) {
-        // drawImage(image, dx, dy)
-        rect = [args[0], args[1], image.width, image.height];
-      } else if (argLength === 4) {
-        // drawImage(image, dx, dy, dWidth, dHeight)
-        rect = args;
-      } else if (argLength === 8) {
-        // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        srcRect = args.slice(0, 4);
-        rect = args.slice(4);
-      }
-
-      var texture = this.createTexture(image);
-      var _this$canvas4 = this.canvas,
-          width = _this$canvas4.width,
-          height = _this$canvas4.height;
-      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_9__["default"]();
-      figure.rect(rect[0], rect[1], width, height);
-      var mesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_10__["default"](figure, {
-        width: width,
-        height: height
+      renderer.setMeshData([cloud.meshData]);
+      if (cloud.beforeRender) cloud.beforeRender(gl, cloud);
+      draw(renderer);
+      if (cloud.afterRender) cloud.afterRender(gl, cloud);
+    } else {
+      renderer.setTransform(this.globalTransformMatrix);
+      renderer.drawMeshCloud(cloud, {
+        clear,
+        hook: false
       });
-      mesh.setTexture(texture, {
-        rect: rect,
-        srcRect: srcRect
-      });
-      this.drawMeshes([mesh]);
-      this.deleteTexture(texture);
     }
-  }, {
-    key: "setGlobalTransform",
-    value: function setGlobalTransform() {
-      this[_globalTransform] = [arguments.length <= 0 ? undefined : arguments[0], arguments.length <= 1 ? undefined : arguments[1], 0, arguments.length <= 2 ? undefined : arguments[2], arguments.length <= 3 ? undefined : arguments[3], 0, arguments.length <= 4 ? undefined : arguments[4], arguments.length <= 5 ? undefined : arguments[5], 1];
-      return this;
-    }
-  }, {
-    key: "globalTransform",
-    value: function globalTransform() {
-      var transform = this[_globalTransform];
+  }
 
-      for (var _len2 = arguments.length, m = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        m[_key2] = arguments[_key2];
+  drawMeshes(meshes, {
+    clear = false,
+    program: drawProgram = null
+  } = {}) {
+    // eslint-disable-line complexity
+    const renderer = this[_glRenderer] || this[_canvasRenderer];
+
+    if (this[_glRenderer]) {
+      const oldFBO = renderer.fbo;
+      const meshData = Object(_utils_compress__WEBPACK_IMPORTED_MODULE_3__["default"])(this, meshes, drawProgram == null);
+      const gl = renderer.gl;
+      if (clear) gl.clear(gl.COLOR_BUFFER_BIT);
+      const hasGlobalTransform = !Object(_utils_transform__WEBPACK_IMPORTED_MODULE_8__["isUnitTransform"])(this.globalTransformMatrix);
+      this._drawCalls = 0;
+
+      for (const mesh of meshData) {
+        // eslint-disable-line no-restricted-syntax
+        this._drawCalls++;
+        const program = drawProgram || mesh.program;
+
+        if (mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_7__["default"]) {
+          this.drawMeshCloud(mesh, {
+            clear,
+            program
+          }); // continue; // eslint-disable-line no-continue
+        } else {
+          const {
+            width,
+            height
+          } = this.canvas;
+          if (mesh.beforeRender) mesh.beforeRender(gl, mesh);
+
+          if (mesh.pass.length) {
+            if (!this.fbo || this.fbo.width !== width || this.fbo.height !== height) {
+              this.fbo = {
+                width,
+                height,
+                target: renderer.createFBO(),
+                buffer: renderer.createFBO(),
+
+                swap() {
+                  [this.target, this.buffer] = [this.buffer, this.target];
+                }
+
+              };
+            }
+
+            renderer.bindFBO(this.fbo.target);
+          }
+
+          if (!program && mesh.filterCanvas) {
+            // 有一些滤镜用shader不好实现：blur、drop-shadow、url
+            Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__["applyShader"])(renderer, {
+              hasTexture: true
+            });
+            let filterContext = this.filterContext;
+
+            if (!filterContext) {
+              const canvas = _utils_env__WEBPACK_IMPORTED_MODULE_9__["default"].createCanvas(width, height);
+              filterContext = canvas.getContext('2d');
+              this.filterContext = filterContext;
+            }
+
+            const originalMesh = meshes[mesh.packIndex];
+            const currentFilter = originalMesh.filter;
+            const nextMesh = meshes[mesh.packIndex + 1];
+            const previousMesh = meshes[mesh.packIndex - 1];
+
+            if ((!previousMesh || !previousMesh.filterCanvas || previousMesh.filter !== currentFilter) && (!nextMesh || !nextMesh.filterCanvas || nextMesh.filter !== currentFilter)) {
+              if (hasGlobalTransform) {
+                filterContext.save(); // filterContext.transform(...this.globalTransformMatrix);
+
+                Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_4__["drawMesh2D"])(originalMesh, filterContext, false);
+                filterContext.restore();
+                Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_4__["applyFilter"])(filterContext, currentFilter);
+              } else {
+                Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_4__["drawMesh2D"])(originalMesh, filterContext, true);
+              }
+
+              this[_applyGlobalTransform]();
+
+              drawFilterContext(renderer, filterContext, width, height);
+            } else {
+              if (hasGlobalTransform) {
+                filterContext.save(); // filterContext.transform(...this.globalTransformMatrix);
+              }
+
+              Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_4__["drawMesh2D"])(originalMesh, filterContext, false);
+
+              if (hasGlobalTransform) {
+                filterContext.restore();
+              }
+
+              if (!nextMesh || !nextMesh.filterCanvas || originalMesh.filter !== nextMesh.filter) {
+                Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_4__["applyFilter"])(filterContext, currentFilter);
+
+                this[_applyGlobalTransform]();
+
+                drawFilterContext(renderer, filterContext, width, height);
+              }
+            }
+          } else {
+            if (!program) {
+              const hasTexture = !!mesh.uniforms.u_texSampler;
+              const hasFilter = !!mesh.uniforms.u_filterFlag;
+              const hasGradient = !!mesh.uniforms.u_radialGradientVector;
+              const hasClipPath = !!mesh.uniforms.u_clipSampler;
+              Object(_utils_shader_creator__WEBPACK_IMPORTED_MODULE_10__["applyShader"])(renderer, {
+                hasTexture,
+                hasFilter,
+                hasGradient,
+                hasClipPath
+              });
+            } else if (renderer.program !== program) {
+              this.useProgram(program, {
+                a_color: {
+                  type: 'UNSIGNED_BYTE',
+                  normalize: true
+                }
+              });
+            }
+
+            if (mesh.filterCanvas) {
+              console.warn('User program ignored some filter effects.');
+            }
+
+            this[_applyGlobalTransform]();
+
+            renderer.setMeshData([mesh]);
+            draw(renderer);
+          }
+
+          if (mesh.pass.length) {
+            const len = mesh.pass.length;
+            mesh.pass.forEach((pass, idx) => {
+              pass.blend = mesh.enableBlend;
+              pass.setTexture(renderer.fbo.texture);
+              if (idx === len - 1) renderer.bindFBO(oldFBO);else {
+                this.fbo.swap();
+                renderer.bindFBO(this.fbo.target);
+              }
+              if (pass.program) renderer.useProgram(pass.program);else {
+                this.defaultPassProgram = this.defaultPassProgram || this.createPassProgram();
+                renderer.useProgram(this.defaultPassProgram);
+              }
+              renderer.setMeshData([pass.meshData]);
+              gl.clear(gl.COLOR_BUFFER_BIT);
+              draw(renderer);
+            });
+          }
+
+          if (mesh.afterRender) mesh.afterRender(gl, mesh);
+        }
       }
+    } else {
+      renderer.setTransform(this.globalTransformMatrix);
+      renderer.drawMeshes(meshes, {
+        clear
+      });
+    }
+  }
 
-      this[_globalTransform] = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), transform, m);
-      return this;
-    }
-  }, {
-    key: "globalTranslate",
-    value: function globalTranslate(x, y) {
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [x, y]);
-      return this.globalTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "globalRotate",
-    value: function globalRotate(rad) {
-      var _ref8 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref9 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref8, 2),
-          ox = _ref9[0],
-          oy = _ref9[1];
+  drawImage(image, ...args) {
+    const argLength = args.length;
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].rotate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, rad);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.globalTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
+    if (argLength < 2) {
+      throw new TypeError(`Failed to execute 'drawImage' on 'Renderer': 3 arguments required, but only ${args.length + 1} present.`);
     }
-  }, {
-    key: "globalScale",
-    value: function globalScale(x) {
-      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
 
-      var _ref10 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref11 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref10, 2),
-          ox = _ref11[0],
-          oy = _ref11[1];
+    if (argLength !== 2 && argLength !== 4 && argLength !== 8) {
+      throw new TypeError(`Failed to execute 'drawImage' on 'Renderer': Valid arities are: [3, 5, 9], but ${args.length + 1} arguments provided.`);
+    }
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].scale(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [x, y]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.globalTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "globalSkew",
-    value: function globalSkew(x) {
-      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+    let rect = null;
+    let srcRect = null;
 
-      var _ref12 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref12, 2),
-          ox = _ref13[0],
-          oy = _ref13[1];
+    if (argLength === 2) {
+      // drawImage(image, dx, dy)
+      rect = [args[0], args[1], image.width, image.height];
+    } else if (argLength === 4) {
+      // drawImage(image, dx, dy, dWidth, dHeight)
+      rect = args;
+    } else if (argLength === 8) {
+      // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+      srcRect = args.slice(0, 4);
+      rect = args.slice(4);
+    }
 
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.globalTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "transformPoint",
-    value: function transformPoint(x, y, matrix) {
-      var m = this.globalTransformMatrix;
-      if (matrix) m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, matrix);
-      var newX = x * m[0] + y * m[2] + m[4];
-      var newY = x * m[1] + y * m[3] + m[5];
-      return [newX, newY];
-    }
-  }, {
-    key: "canvas",
-    get: function get() {
-      return this[_canvas];
-    }
-  }, {
-    key: "canvasRenderer",
-    get: function get() {
-      return this[_canvasRenderer];
-    }
-  }, {
-    key: "glRenderer",
-    get: function get() {
-      return this[_glRenderer];
-    }
-  }, {
-    key: "isWebGL2",
-    get: function get() {
-      return this[_glRenderer] && this[_glRenderer].isWebGL2;
-    }
-  }, {
-    key: "options",
-    get: function get() {
-      return this[_options];
-    }
-  }, {
-    key: "globalTransformMatrix",
-    get: function get() {
-      var m = this[_globalTransform];
-      return [m[0], m[1], m[3], m[4], m[6], m[7]];
-    }
-  }, {
-    key: "viewMatrix",
-    get: function get() {
-      return this[_globalTransform];
-    }
-  }]);
+    const texture = this.createTexture(image);
+    const {
+      width,
+      height
+    } = this.canvas;
+    const figure = new _figure2d__WEBPACK_IMPORTED_MODULE_5__["default"]();
+    figure.rect(rect[0], rect[1], width, height);
+    const mesh = new _mesh2d__WEBPACK_IMPORTED_MODULE_6__["default"](figure, {
+      width,
+      height
+    });
+    mesh.setTexture(texture, {
+      rect,
+      srcRect
+    });
+    this.drawMeshes([mesh]);
+    this.deleteTexture(texture);
+  }
 
-  return Renderer;
-}();
+  setGlobalTransform(...m) {
+    this[_globalTransform] = [m[0], m[1], 0, m[2], m[3], 0, m[4], m[5], 1];
+    return this;
+  }
 
+  globalTransform(...m) {
+    const transform = this[_globalTransform];
+    this[_globalTransform] = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), transform, m);
+    return this;
+  }
 
+  globalTranslate(x, y) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [x, y]);
+    return this.globalTransform(...m);
+  }
+
+  globalRotate(rad, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].rotate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, rad);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.globalTransform(...m);
+  }
+
+  globalScale(x, y = x, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].scale(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [x, y]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.globalTransform(...m);
+  }
+
+  globalSkew(x, y = x, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].translate(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.globalTransform(...m);
+  }
+
+  transformPoint(x, y, matrix) {
+    let m = this.globalTransformMatrix;
+    if (matrix) m = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat3"].multiply(Array.of(0, 0, 0, 0, 0, 0, 0, 0, 0), m, matrix);
+    const newX = x * m[0] + y * m[2] + m[4];
+    const newY = x * m[1] + y * m[3] + m[5];
+    return [newX, newY];
+  }
+
+}
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithHoles = __webpack_require__(14);
-
-var iterableToArrayLimit = __webpack_require__(15);
-
-var unsupportedIterableToArray = __webpack_require__(16);
-
-var nonIterableRest = __webpack_require__(18);
-
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
-}
-
-module.exports = _slicedToArray;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-module.exports = _arrayWithHoles;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-module.exports = _iterableToArrayLimit;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeToArray = __webpack_require__(17);
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
-
-module.exports = _unsupportedIterableToArray;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-module.exports = _arrayLikeToArray;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-module.exports = _nonIterableRest;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithoutHoles = __webpack_require__(20);
-
-var iterableToArray = __webpack_require__(21);
-
-var unsupportedIterableToArray = __webpack_require__(16);
-
-var nonIterableSpread = __webpack_require__(22);
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeToArray = __webpack_require__(17);
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return arrayLikeToArray(arr);
-}
-
-module.exports = _arrayWithoutHoles;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-module.exports = _nonIterableSpread;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-module.exports = _classCallCheck;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-module.exports = _createClass;
-
-/***/ }),
-/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(26);
+/* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_renderer__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
-/* 26 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Renderer; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(30);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(31);
-/* harmony import */ var _default_vert_glsl__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(33);
-/* harmony import */ var _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(34);
-/* harmony import */ var _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(35);
-
-
-
-
-
-
-
-
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _default_vert_glsl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
+/* harmony import */ var _default_frag_glsl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17);
+/* harmony import */ var _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(18);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
-var GLSL_LIBS = {};
 
-function mapTextureCoordinate(positions) {
-  var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
-  var texVertexData = [];
-  var len = positions.length;
+const GLSL_LIBS = {};
 
-  for (var i = 0; i < len; i++) {
+function mapTextureCoordinate(positions, size = 3) {
+  const texVertexData = [];
+  const len = positions.length;
+
+  for (let i = 0; i < len; i++) {
     if (i % size < 2) texVertexData.push(0.5 * (positions[i] + 1));
   }
 
@@ -8780,8 +8461,8 @@ function mapTextureCoordinate(positions) {
 }
 
 function clearBuffers(gl, program) {
-  var buffers = program._buffers;
-  Object.values(buffers).forEach(function (buffer) {
+  const buffers = program._buffers;
+  Object.values(buffers).forEach(buffer => {
     gl.deleteBuffer(buffer);
   });
   program._buffers = {};
@@ -8799,7 +8480,7 @@ function bindTexture(gl, texture, i) {
   return texture;
 }
 
-var uniformTypeMap = {
+const uniformTypeMap = {
   int: '1i',
   ivec2: '2i',
   ivec3: '3i',
@@ -8820,56 +8501,42 @@ var uniformTypeMap = {
   sampler2DRect: 'sampler2DRect',
   sampler2DRectShadow: 'sampler2DRectShadow'
 };
+class Renderer {
+  static addLibs(libs = {}) {
+    Object.assign(GLSL_LIBS, libs);
+  }
 
-var Renderer = /*#__PURE__*/function () {
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default()(Renderer, null, [{
-    key: "addLibs",
-    value: function addLibs() {
-      var libs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      Object.assign(GLSL_LIBS, libs);
-    }
-  }, {
-    key: "FLOAT",
-    value: function FLOAT(points, buffer) {
-      return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["pointsToBuffer"])(points, Float32Array, buffer);
-    }
-  }, {
-    key: "UNSIGNED_BYTE",
-    value: function UNSIGNED_BYTE(points, buffer) {
-      return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["pointsToBuffer"])(points, Uint8Array, buffer);
-    }
-  }, {
-    key: "UNSIGNED_SHORT",
-    value: function UNSIGNED_SHORT(points, buffer) {
-      return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["pointsToBuffer"])(points, Uint16Array, buffer);
-    }
-  }, {
-    key: "BYTE",
-    value: function BYTE(points, buffer) {
-      return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["pointsToBuffer"])(points, Int8Array, buffer);
-    }
-  }, {
-    key: "SHORT",
-    value: function SHORT(points, buffer) {
-      return Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["pointsToBuffer"])(points, Int16Array, buffer);
-    }
-  }]);
+  static FLOAT(points, buffer) {
+    return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["pointsToBuffer"])(points, Float32Array, buffer);
+  }
 
-  function Renderer(canvas) {
-    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  static UNSIGNED_BYTE(points, buffer) {
+    return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["pointsToBuffer"])(points, Uint8Array, buffer);
+  }
 
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4___default()(this, Renderer);
+  static UNSIGNED_SHORT(points, buffer) {
+    return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["pointsToBuffer"])(points, Uint16Array, buffer);
+  }
 
+  static BYTE(points, buffer) {
+    return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["pointsToBuffer"])(points, Int8Array, buffer);
+  }
+
+  static SHORT(points, buffer) {
+    return Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["pointsToBuffer"])(points, Int16Array, buffer);
+  }
+
+  constructor(canvas, opts = {}) {
     this.options = Object.assign({}, Renderer.defaultOptions, opts);
     this.canvas = canvas;
-    var gl;
+    let gl;
 
     if (this.options.webgl2) {
       gl = canvas.getContext('webgl2', this.options);
     }
 
     if (gl == null) {
-      gl = Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["setupWebGL"])(canvas, this.options);
+      gl = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setupWebGL"])(canvas, this.options);
       this.aia_ext = gl.getExtension('ANGLE_instanced_arrays');
     }
 
@@ -8883,386 +8550,197 @@ var Renderer = /*#__PURE__*/function () {
     this._events = {};
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default()(Renderer, [{
-    key: "_declareUniform",
-    // WebGLRenderingContext.uniform[1234][fi][v]()
-    // WebGLRenderingContext.uniformMatrix[234]fv()
-    value: function _declareUniform(program, name) {
-      var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '1f';
-      var gl = this.gl;
-      var uniform = gl.getUniformLocation(program, name);
-      var value;
-      var that = this;
-
-      if (/^sampler/.test(type)) {
-        var samplerMap = program._samplerMap;
-        var textures = program._bindTextures;
-        Object.defineProperty(program.uniforms, name, {
-          get: function get() {
-            return value;
-          },
-          set: function set(v) {
-            value = v;
-            var idx = samplerMap[name] != null ? samplerMap[name] : textures.length;
-            textures[idx] = v;
-            bindTexture(gl, v, idx);
-
-            if (!samplerMap[name]) {
-              samplerMap[name] = idx;
-              gl.uniform1i(uniform, idx);
-            } // gl.bindTexture(gl.TEXTURE_2D, null);
+  get program() {
+    const gl = this.gl;
+    return gl.getParameter(gl.CURRENT_PROGRAM);
+  } // WebGLRenderingContext.uniform[1234][fi][v]()
+  // WebGLRenderingContext.uniformMatrix[234]fv()
 
 
-            if (that.options.autoUpdate) that.update();
-          },
-          configurable: false,
-          enumerable: true
-        });
-      } else {
-        var isMatrix = type.indexOf('Matrix') === 0;
-        var isTypeV = !isMatrix && /v$/.test(type);
-        var setUniform = gl["uniform".concat(type)].bind(gl);
-        Object.defineProperty(program.uniforms, name, {
-          get: function get() {
-            return value;
-          },
-          set: function set(v) {
-            value = v;
+  _declareUniform(program, name, type = '1f') {
+    const gl = this.gl;
+    const uniform = gl.getUniformLocation(program, name);
+    let value;
+    const that = this;
 
-            if (typeof v === 'number') {
-              v = [v];
-            }
+    if (/^sampler/.test(type)) {
+      const samplerMap = program._samplerMap;
+      const textures = program._bindTextures;
+      Object.defineProperty(program.uniforms, name, {
+        get() {
+          return value;
+        },
 
-            if (isMatrix) setUniform(uniform, false, v);else if (isTypeV) setUniform(uniform, v);else setUniform.apply(void 0, [uniform].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3___default()(v)));
-            if (that.options.autoUpdate) that.update();
-          },
-          configurable: false,
-          enumerable: true
-        });
-      }
-    }
-  }, {
-    key: "_draw",
-    value: function _draw() {
-      var _this = this;
+        set(v) {
+          value = v;
+          const idx = samplerMap[name] != null ? samplerMap[name] : textures.length;
+          textures[idx] = v;
+          bindTexture(gl, v, idx);
 
-      var program = this.program;
-      program.meshData.forEach(function (meshData, meshIndex) {
-        var positions = meshData.positions,
-            cells = meshData.cells,
-            instanceCount = meshData.instanceCount,
-            cellsCount = meshData.cellsCount,
-            attributes = meshData.attributes,
-            uniforms = meshData.uniforms,
-            textureCoord = meshData.textureCoord,
-            enableBlend = meshData.enableBlend;
-        var gl = _this.gl;
-        var mode = meshData.mode != null ? meshData.mode : gl.TRIANGLES;
+          if (!samplerMap[name]) {
+            samplerMap[name] = idx;
+            gl.uniform1i(uniform, idx);
+          } // gl.bindTexture(gl.TEXTURE_2D, null);
 
-        if (typeof mode === 'string') {
-          mode = gl[mode];
-        }
 
-        if (enableBlend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
-        gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+          if (that.options.autoUpdate) that.update();
+        },
 
-        if (cells) {
-          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, program._buffers.cellsBuffer);
-          gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, cells, gl.STATIC_DRAW);
-        }
+        configurable: false,
+        enumerable: true
+      });
+    } else {
+      const isMatrix = type.indexOf('Matrix') === 0;
+      const isTypeV = !isMatrix && /v$/.test(type);
+      const setUniform = gl[`uniform${type}`].bind(gl);
+      Object.defineProperty(program.uniforms, name, {
+        get() {
+          return value;
+        },
 
-        var locations = [];
+        set(v) {
+          value = v;
 
-        if (attributes) {
-          Object.values(attributes).forEach(function (_ref) {
-            var name = _ref.name,
-                data = _ref.data,
-                divisor = _ref.divisor;
-            gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers[name]);
-            gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-
-            if (divisor != null) {
-              var location = gl.getAttribLocation(program, name);
-
-              if (location >= 0) {
-                gl.enableVertexAttribArray(location);
-                locations.push(location);
-
-                if (gl.vertexAttribDivisor) {
-                  gl.vertexAttribDivisor(location, divisor);
-                } else if (_this.aia_ext) {
-                  _this.aia_ext.vertexAttribDivisorANGLE(location, divisor);
-                }
-              }
-            }
-          });
-        }
-
-        if (uniforms) {
-          Object.entries(uniforms).forEach(function (_ref2) {
-            var _ref3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref2, 2),
-                key = _ref3[0],
-                value = _ref3[1];
-
-            _this.uniforms[key] = value;
-          });
-        }
-
-        var count;
-
-        if (!cells) {
-          var dimension = program._dimension;
-          count = positions.length / dimension;
-        }
-
-        if (program._enableTextures && program._buffers.texCoordBuffer) {
-          var texVertexData = textureCoord || mapTextureCoordinate(positions, program._dimension);
-          gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.texCoordBuffer);
-          gl.bufferData(gl.ARRAY_BUFFER, Renderer.FLOAT(texVertexData), gl.STATIC_DRAW);
-        }
-
-        if (instanceCount != null) {
-          if (cells) {
-            if (gl.drawElementsInstanced) {
-              gl.drawElementsInstanced(mode, cellsCount, gl.UNSIGNED_SHORT, 0, instanceCount);
-            } else if (_this.aia_ext) {
-              _this.aia_ext.drawElementsInstancedANGLE(mode, cellsCount, gl.UNSIGNED_SHORT, 0, instanceCount);
-            }
-          } else if (gl.drawArraysInstanced) {
-            gl.drawArraysInstanced(mode, 0, count, instanceCount);
-          } else {
-            _this.aia_ext.drawArraysInstancedANGLE(mode, 0, count, instanceCount);
+          if (typeof v === 'number') {
+            v = [v];
           }
 
-          locations.forEach(function (location) {
-            if (gl.vertexAttribDivisor) {
-              gl.vertexAttribDivisor(location, null);
-            } else if (_this.aia_ext) {
-              _this.aia_ext.vertexAttribDivisorANGLE(location, null);
+          if (isMatrix) setUniform(uniform, false, v);else if (isTypeV) setUniform(uniform, v);else setUniform(uniform, ...v);
+          if (that.options.autoUpdate) that.update();
+        },
+
+        configurable: false,
+        enumerable: true
+      });
+    }
+  }
+
+  _draw() {
+    const program = this.program;
+    program.meshData.forEach((meshData, meshIndex) => {
+      const {
+        positions,
+        cells,
+        instanceCount,
+        cellsCount,
+        attributes,
+        uniforms,
+        textureCoord,
+        enableBlend
+      } = meshData;
+      const gl = this.gl;
+      let mode = meshData.mode != null ? meshData.mode : gl.TRIANGLES;
+
+      if (typeof mode === 'string') {
+        mode = gl[mode];
+      }
+
+      if (enableBlend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
+      gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+      if (cells) {
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, program._buffers.cellsBuffer);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, cells, gl.STATIC_DRAW);
+      }
+
+      const locations = [];
+
+      if (attributes) {
+        Object.values(attributes).forEach(({
+          name,
+          data,
+          divisor
+        }) => {
+          gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers[name]);
+          gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+
+          if (divisor != null) {
+            const location = gl.getAttribLocation(program, name);
+
+            if (location >= 0) {
+              gl.enableVertexAttribArray(location);
+              locations.push(location);
+
+              if (gl.vertexAttribDivisor) {
+                gl.vertexAttribDivisor(location, divisor);
+              } else if (this.aia_ext) {
+                this.aia_ext.vertexAttribDivisorANGLE(location, divisor);
+              }
             }
-          });
-        } else if (cells) {
-          gl.drawElements(mode, cellsCount, gl.UNSIGNED_SHORT, 0);
+          }
+        });
+      }
+
+      if (uniforms) {
+        Object.entries(uniforms).forEach(([key, value]) => {
+          this.uniforms[key] = value;
+        });
+      }
+
+      let count;
+
+      if (!cells) {
+        const dimension = program._dimension;
+        count = positions.length / dimension;
+      }
+
+      if (program._enableTextures && program._buffers.texCoordBuffer) {
+        const texVertexData = textureCoord || mapTextureCoordinate(positions, program._dimension);
+        gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.texCoordBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, Renderer.FLOAT(texVertexData), gl.STATIC_DRAW);
+      }
+
+      if (instanceCount != null) {
+        if (cells) {
+          if (gl.drawElementsInstanced) {
+            gl.drawElementsInstanced(mode, cellsCount, gl.UNSIGNED_SHORT, 0, instanceCount);
+          } else if (this.aia_ext) {
+            this.aia_ext.drawElementsInstancedANGLE(mode, cellsCount, gl.UNSIGNED_SHORT, 0, instanceCount);
+          }
+        } else if (gl.drawArraysInstanced) {
+          gl.drawArraysInstanced(mode, 0, count, instanceCount);
         } else {
-          gl.drawArrays(mode, 0, count);
-        }
-      });
-    }
-  }, {
-    key: "deleteProgram",
-    value: function deleteProgram(program) {
-      var gl = this.gl;
-
-      if (this.program === program) {
-        this.startRender = false;
-
-        if (this._renderFrameID) {
-          cancelAnimationFrame(this._renderFrameID);
-          delete this._renderFrameID;
+          this.aia_ext.drawArraysInstancedANGLE(mode, 0, count, instanceCount);
         }
 
-        gl.useProgram(null);
-      }
-
-      var idx = this.programs.indexOf(program);
-
-      if (idx >= 0) {
-        this.programs.splice(idx, 1);
-      }
-
-      clearBuffers(gl, program);
-      gl.deleteProgram(program);
-    }
-    /**
-      [{
-        positions: ...
-        cells: ...
-        textureCoord: ...
-        attributes: {name: {data:..., normalize: true}},
-        uniforms: ...
-      }]
-     */
-
-  }, {
-    key: "setMeshData",
-    value: function setMeshData(data) {
-      var _this2 = this;
-
-      if (!Array.isArray(data)) {
-        data = [data];
-      }
-
-      var program = this.program;
-      program.meshData = data.map(function (_ref4) {
-        var mode = _ref4.mode,
-            positions = _ref4.positions,
-            instanceCount = _ref4.instanceCount,
-            cells = _ref4.cells,
-            cellsCount = _ref4.cellsCount,
-            attributes = _ref4.attributes,
-            uniforms = _ref4.uniforms,
-            textureCoord = _ref4.textureCoord,
-            enableBlend = _ref4.enableBlend;
-        var meshData = {
-          positions: Renderer.FLOAT(positions),
-          uniforms: uniforms,
-          enableBlend: !!enableBlend,
-          textureCoord: Renderer.FLOAT(textureCoord)
-        };
-
-        if (cells) {
-          meshData.cells = Renderer.USHORT(cells);
-          meshData.cellsCount = cellsCount || meshData.cells.length;
-        }
-
-        if (mode != null) {
-          meshData.mode = mode;
-        }
-
-        if (instanceCount != null) {
-          if (!_this2.isWebGL2 && !_this2.aia_ext) throw new Error('Cannot use instanceCount in this rendering context, use webgl2 context instead.');else meshData.instanceCount = instanceCount;
-        }
-
-        if (attributes) {
-          var copied = {};
-          Object.entries(attributes).forEach(function (_ref5) {
-            var _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref5, 2),
-                key = _ref6[0],
-                value = _ref6[1];
-
-            if (!program._attribute[key]) {
-              // throw new Error(`Invalid attribute ${key}.`);
-              if (false) {}
-              program._attribute[key] = 'ignored';
-            } else if (program._attribute[key] !== 'ignored') {
-              var _program$_attribute$k = program._attribute[key],
-                  name = _program$_attribute$k.name,
-                  type = _program$_attribute$k.type;
-              var buffer = value.data || value;
-
-              if (Array.isArray(buffer)) {
-                buffer = Renderer[type](buffer);
-              }
-
-              copied[key] = {
-                name: name,
-                data: buffer
-              };
-
-              if (value.divisor != null) {
-                if (!_this2.isWebGL2 && !_this2.aia_ext) throw new Error('Cannot use divisor in this rendering context, use webgl2 context instead.');else copied[key].divisor = value.divisor;
-              }
-            }
-          });
-          meshData.attributes = copied;
-        }
-
-        return meshData;
-      });
-      if (this.options.autoUpdate) this.update();
-    }
-  }, {
-    key: "createProgram",
-    value: function createProgram(fragmentShader, vertexShader) {
-      var _this3 = this;
-
-      // this.deleteProgram();
-      // this._events = {};
-      var enableTextures = /^\s*uniform\s+sampler/mg.test(fragmentShader);
-      if (fragmentShader == null) fragmentShader = _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__["default"];
-      if (vertexShader == null) vertexShader = enableTextures ? _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_10__["default"] : _default_vert_glsl__WEBPACK_IMPORTED_MODULE_8__["default"];
-      var gl = this.gl;
-
-      var program = Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["createProgram"])(gl, vertexShader, fragmentShader);
-
-      program.shaderText = {
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader
-      };
-      program._buffers = {};
-      program._attribute = {};
-      program.uniforms = {};
-      program._samplerMap = {};
-      program._bindTextures = []; // console.log(vertexShader);
-
-      var pattern = new RegExp("(?:attribute|in) vec(\\d) ".concat(this.options.vertexPosition), 'im');
-      var matched = vertexShader.match(pattern);
-
-      if (matched) {
-        program._dimension = Number(matched[1]);
-      }
-
-      var texCoordPattern = new RegExp("(?:attribute|in) vec(\\d) ".concat(this.options.vertexTextureCoord), 'im');
-      matched = vertexShader.match(texCoordPattern);
-
-      if (matched) {
-        program._texCoordSize = Number(matched[1]);
-      }
-
-      var attributePattern = /^\s*(?:attribute|in) (\w+?)(\d*) (\w+)/gim;
-      matched = vertexShader.match(attributePattern);
-
-      if (matched) {
-        for (var i = 0; i < matched.length; i++) {
-          var patt = /^\s*(?:attribute|in) (\w+?)(\d*) (\w+)/im;
-
-          var _matched = matched[i].match(patt);
-
-          if (_matched && _matched[3] !== this.options.vertexPosition && _matched[3] !== this.options.vertexTextureCoord) {
-            var _matched2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_matched, 4),
-                type = _matched2[1],
-                size = _matched2[2],
-                name = _matched2[3];
-
-            if (type === 'mat') size = Math.pow(size, 2);
-            program._buffers[name] = gl.createBuffer();
-            program._attribute[name] = {
-              name: name,
-              type: type,
-              size: Number(size) || 1
-            };
+        locations.forEach(location => {
+          if (gl.vertexAttribDivisor) {
+            gl.vertexAttribDivisor(location, null);
+          } else if (this.aia_ext) {
+            this.aia_ext.vertexAttribDivisorANGLE(location, null);
           }
-        }
+        });
+      } else if (cells) {
+        gl.drawElements(mode, cellsCount, gl.UNSIGNED_SHORT, 0);
+      } else {
+        gl.drawArrays(mode, 0, count);
       }
+    });
+  }
 
-      var uniformPattern = /^\s*uniform\s+(\w+)\s+(\w+)(\[\d+\])?/mg;
-      matched = vertexShader.match(uniformPattern) || [];
-      matched = matched.concat(fragmentShader.match(uniformPattern) || []);
-      matched.forEach(function (m) {
-        var _matched = m.match(/^\s*uniform\s+(\w+)\s+(\w+)(\[\d+\])?/);
+  get isWebGL2() {
+    return typeof WebGL2RenderingContext !== 'undefined' && this.gl instanceof WebGL2RenderingContext;
+  }
 
-        var _matched$slice = _matched.slice(1),
-            _matched$slice2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_matched$slice, 3),
-            type = _matched$slice2[0],
-            name = _matched$slice2[1],
-            isTypeV = _matched$slice2[2];
+  get enableTextures() {
+    return this.program && this.program._enableTextures;
+  }
 
-        type = uniformTypeMap[type];
-        isTypeV = !!isTypeV;
+  get uniforms() {
+    const program = this.program;
 
-        if (type.indexOf('Matrix') !== 0 && isTypeV) {
-          type += 'v';
-        }
-
-        _this3._declareUniform(program, name, type);
-      });
-      program._buffers.verticesBuffer = gl.createBuffer();
-      program._buffers.cellsBuffer = gl.createBuffer();
-      var vTexCoord = gl.getAttribLocation(program, this.options.vertexTextureCoord);
-      program._enableTextures = vTexCoord >= 0;
-
-      if (program._enableTextures) {
-        program._buffers.texCoordBuffer = gl.createBuffer();
-      }
-
-      this.programs.push(program);
-      return program;
+    if (!program || !program.uniforms) {
+      throw Error('No avaliable program.');
     }
-  }, {
-    key: "useProgram",
-    value: function useProgram(program) {
-      var attrOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    return program.uniforms;
+  }
+
+  deleteProgram(program) {
+    const gl = this.gl;
+
+    if (this.program === program) {
       this.startRender = false;
 
       if (this._renderFrameID) {
@@ -9270,591 +8748,546 @@ var Renderer = /*#__PURE__*/function () {
         delete this._renderFrameID;
       }
 
-      var gl = this.gl;
-      gl.useProgram(program); // this.program = program;
+      gl.useProgram(null);
+    }
 
-      var dimension = program._dimension;
-      gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
-      var vPosition = gl.getAttribLocation(program, this.options.vertexPosition);
-      gl.vertexAttribPointer(vPosition, dimension, gl.FLOAT, false, 0, 0);
-      gl.enableVertexAttribArray(vPosition);
+    const idx = this.programs.indexOf(program);
 
-      if (program._enableTextures) {
-        gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.texCoordBuffer);
-        var vTexCoord = gl.getAttribLocation(program, this.options.vertexTextureCoord);
-        gl.vertexAttribPointer(vTexCoord, program._texCoordSize || 2, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(vTexCoord);
+    if (idx >= 0) {
+      this.programs.splice(idx, 1);
+    }
+
+    clearBuffers(gl, program);
+    gl.deleteProgram(program);
+  }
+  /**
+    [{
+      positions: ...
+      cells: ...
+      textureCoord: ...
+      attributes: {name: {data:..., normalize: true}},
+      uniforms: ...
+    }]
+   */
+
+
+  setMeshData(data) {
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
+    const program = this.program;
+    program.meshData = data.map(({
+      mode,
+      positions,
+      instanceCount,
+      cells,
+      cellsCount,
+      attributes,
+      uniforms,
+      textureCoord,
+      enableBlend
+    }) => {
+      const meshData = {
+        positions: Renderer.FLOAT(positions),
+        uniforms,
+        enableBlend: !!enableBlend,
+        textureCoord: Renderer.FLOAT(textureCoord)
+      };
+
+      if (cells) {
+        meshData.cells = Renderer.USHORT(cells);
+        meshData.cellsCount = cellsCount || meshData.cells.length;
       }
 
-      Object.entries(program._attribute).forEach(function (_ref7) {
-        var _ref8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref7, 2),
-            name = _ref8[0],
-            item = _ref8[1];
+      if (mode != null) {
+        meshData.mode = mode;
+      }
 
-        if (item !== 'ignored') {
-          var size = item.size;
-          var options = attrOptions[name] || {};
-          var normalize = !!options.normalize;
-          var bufferType = options.type || 'FLOAT';
-          var key = options.key || name;
-          if (bufferType === 'UBYTE') bufferType = 'UNSIGNED_BYTE';
-          if (bufferType === 'USHORT') bufferType = 'UNSIGNED_SHORT';
-          item.type = bufferType;
+      if (instanceCount != null) {
+        if (!this.isWebGL2 && !this.aia_ext) throw new Error('Cannot use instanceCount in this rendering context, use webgl2 context instead.');else meshData.instanceCount = instanceCount;
+      }
 
-          if (key && key !== name) {
-            program._attribute[key] = item;
+      if (attributes) {
+        const copied = {};
+        Object.entries(attributes).forEach(([key, value]) => {
+          if (!program._attribute[key]) {
+            // throw new Error(`Invalid attribute ${key}.`);
+            if (false) {}
+            program._attribute[key] = 'ignored';
+          } else if (program._attribute[key] !== 'ignored') {
+            const {
+              name,
+              type
+            } = program._attribute[key];
+            let buffer = value.data || value;
+
+            if (Array.isArray(buffer)) {
+              buffer = Renderer[type](buffer);
+            }
+
+            copied[key] = {
+              name,
+              data: buffer
+            };
+
+            if (value.divisor != null) {
+              if (!this.isWebGL2 && !this.aia_ext) throw new Error('Cannot use divisor in this rendering context, use webgl2 context instead.');else copied[key].divisor = value.divisor;
+            }
           }
+        });
+        meshData.attributes = copied;
+      }
 
-          gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers[name]);
-          var attrib = gl.getAttribLocation(program, name); // console.log(size, gl[bufferType]);
+      return meshData;
+    });
+    if (this.options.autoUpdate) this.update();
+  }
 
-          if (attrib >= 0) {
-            gl.vertexAttribPointer(attrib, size, gl[bufferType], normalize, 0, 0);
-            gl.enableVertexAttribArray(attrib);
+  createProgram(fragmentShader, vertexShader) {
+    // this.deleteProgram();
+    // this._events = {};
+    const enableTextures = /^\s*uniform\s+sampler/mg.test(fragmentShader);
+    if (fragmentShader == null) fragmentShader = _default_frag_glsl__WEBPACK_IMPORTED_MODULE_2__["default"];
+    if (vertexShader == null) vertexShader = enableTextures ? _default_feeback_vert_glsl__WEBPACK_IMPORTED_MODULE_3__["default"] : _default_vert_glsl__WEBPACK_IMPORTED_MODULE_1__["default"];
+    const gl = this.gl;
+    const program = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["createProgram"])(gl, vertexShader, fragmentShader);
+    program.shaderText = {
+      vertexShader,
+      fragmentShader
+    };
+    program._buffers = {};
+    program._attribute = {};
+    program.uniforms = {};
+    program._samplerMap = {};
+    program._bindTextures = []; // console.log(vertexShader);
+
+    const pattern = new RegExp(`(?:attribute|in) vec(\\d) ${this.options.vertexPosition}`, 'im');
+    let matched = vertexShader.match(pattern);
+
+    if (matched) {
+      program._dimension = Number(matched[1]);
+    }
+
+    const texCoordPattern = new RegExp(`(?:attribute|in) vec(\\d) ${this.options.vertexTextureCoord}`, 'im');
+    matched = vertexShader.match(texCoordPattern);
+
+    if (matched) {
+      program._texCoordSize = Number(matched[1]);
+    }
+
+    const attributePattern = /^\s*(?:attribute|in) (\w+?)(\d*) (\w+)/gim;
+    matched = vertexShader.match(attributePattern);
+
+    if (matched) {
+      for (let i = 0; i < matched.length; i++) {
+        const patt = /^\s*(?:attribute|in) (\w+?)(\d*) (\w+)/im;
+
+        const _matched = matched[i].match(patt);
+
+        if (_matched && _matched[3] !== this.options.vertexPosition && _matched[3] !== this.options.vertexTextureCoord) {
+          let [, type, size, name] = _matched;
+          if (type === 'mat') size **= 2;
+          program._buffers[name] = gl.createBuffer();
+          program._attribute[name] = {
+            name,
+            type,
+            size: Number(size) || 1
+          };
+        }
+      }
+    }
+
+    const uniformPattern = /^\s*uniform\s+(\w+)\s+(\w+)(\[\d+\])?/mg;
+    matched = vertexShader.match(uniformPattern) || [];
+    matched = matched.concat(fragmentShader.match(uniformPattern) || []);
+    matched.forEach(m => {
+      const _matched = m.match(/^\s*uniform\s+(\w+)\s+(\w+)(\[\d+\])?/);
+
+      let [type, name, isTypeV] = _matched.slice(1);
+
+      type = uniformTypeMap[type];
+      isTypeV = !!isTypeV;
+
+      if (type.indexOf('Matrix') !== 0 && isTypeV) {
+        type += 'v';
+      }
+
+      this._declareUniform(program, name, type);
+    });
+    program._buffers.verticesBuffer = gl.createBuffer();
+    program._buffers.cellsBuffer = gl.createBuffer();
+    const vTexCoord = gl.getAttribLocation(program, this.options.vertexTextureCoord);
+    program._enableTextures = vTexCoord >= 0;
+
+    if (program._enableTextures) {
+      program._buffers.texCoordBuffer = gl.createBuffer();
+    }
+
+    this.programs.push(program);
+    return program;
+  }
+
+  useProgram(program, attrOptions = {}) {
+    this.startRender = false;
+
+    if (this._renderFrameID) {
+      cancelAnimationFrame(this._renderFrameID);
+      delete this._renderFrameID;
+    }
+
+    const gl = this.gl;
+    gl.useProgram(program); // this.program = program;
+
+    const dimension = program._dimension;
+    gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.verticesBuffer);
+    const vPosition = gl.getAttribLocation(program, this.options.vertexPosition);
+    gl.vertexAttribPointer(vPosition, dimension, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+
+    if (program._enableTextures) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers.texCoordBuffer);
+      const vTexCoord = gl.getAttribLocation(program, this.options.vertexTextureCoord);
+      gl.vertexAttribPointer(vTexCoord, program._texCoordSize || 2, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(vTexCoord);
+    }
+
+    Object.entries(program._attribute).forEach(([name, item]) => {
+      if (item !== 'ignored') {
+        const size = item.size;
+        const options = attrOptions[name] || {};
+        const normalize = !!options.normalize;
+        let bufferType = options.type || 'FLOAT';
+        const key = options.key || name;
+        if (bufferType === 'UBYTE') bufferType = 'UNSIGNED_BYTE';
+        if (bufferType === 'USHORT') bufferType = 'UNSIGNED_SHORT';
+        item.type = bufferType;
+
+        if (key && key !== name) {
+          program._attribute[key] = item;
+        }
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, program._buffers[name]);
+        const attrib = gl.getAttribLocation(program, name); // console.log(size, gl[bufferType]);
+
+        if (attrib >= 0) {
+          gl.vertexAttribPointer(attrib, size, gl[bufferType], normalize, 0, 0);
+          gl.enableVertexAttribArray(attrib);
+        }
+      }
+    });
+
+    if (!program.meshData) {
+      const positions = [[-1, -1, 0, 1].slice(0, dimension), [1, -1, 0, 1].slice(0, dimension), [1, 1, 0, 1].slice(0, dimension), [-1, 1, 0, 1].slice(0, dimension)];
+      const cells = [[0, 1, 3], [3, 1, 2]];
+      this.setMeshData({
+        positions,
+        cells
+      });
+    }
+
+    return program;
+  }
+
+  compileSync(frag, vert) {
+    frag = frag || _default_frag_glsl__WEBPACK_IMPORTED_MODULE_2__["default"];
+    const loaded = {};
+
+    function _compile(content) {
+      content = content.replace(/^\s*/mg, '');
+      const includes = [];
+      const matched = content.match(/^#pragma\s+include\s+.*/mg);
+
+      if (matched) {
+        // console.log(matched, url);
+        for (let i = 0; i < matched.length; i++) {
+          const m = matched[i];
+
+          const _matched = m.match(/(?:<|")(.*)(?:>|")/);
+
+          if (_matched) {
+            const type = _matched[0].indexOf('<') === 0 ? 'lib' : 'link';
+            let name = _matched[1];
+            if (name === 'graph') name = 'graphics';
+
+            if (!loaded[name]) {
+              loaded[name] = true;
+
+              if (type === 'lib') {
+                const c = _compile(GLSL_LIBS[name]); // eslint-disable-line no-await-in-loop
+
+
+                includes.push(c);
+              } else if (type === 'link') {
+                throw new Error('Cannot load external links synchronously. Use compile instead of compileSync.');
+              }
+            } else {
+              includes.push(`/* included ${name} */`);
+            }
           }
         }
-      });
 
-      if (!program.meshData) {
-        var positions = [[-1, -1, 0, 1].slice(0, dimension), [1, -1, 0, 1].slice(0, dimension), [1, 1, 0, 1].slice(0, dimension), [-1, 1, 0, 1].slice(0, dimension)];
-        var cells = [[0, 1, 3], [3, 1, 2]];
-        this.setMeshData({
-          positions: positions,
-          cells: cells
+        includes.forEach(inc => {
+          content = content.replace(/^#pragma\s+include\s+.*/m, inc);
         });
       }
 
-      return program;
+      return content;
     }
-  }, {
-    key: "compileSync",
-    value: function compileSync(frag, vert) {
-      frag = frag || _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__["default"];
-      var loaded = {};
 
-      function _compile(content) {
-        content = content.replace(/^\s*/mg, '');
-        var includes = [];
-        var matched = content.match(/^#pragma\s+include\s+.*/mg);
+    const fragmentShader = _compile(frag);
 
-        if (matched) {
-          // console.log(matched, url);
-          for (var i = 0; i < matched.length; i++) {
-            var m = matched[i];
+    const vertexShader = vert ? _compile(vert) : null;
+    const program = this.createProgram(fragmentShader, vertexShader);
+    return program;
+  }
 
-            var _matched = m.match(/(?:<|")(.*)(?:>|")/);
+  async compile(frag, vert) {
+    frag = frag || _default_frag_glsl__WEBPACK_IMPORTED_MODULE_2__["default"];
+    const loaded = {};
 
-            if (_matched) {
-              var type = _matched[0].indexOf('<') === 0 ? 'lib' : 'link';
-              var name = _matched[1];
-              if (name === 'graph') name = 'graphics';
+    async function _compile(content) {
+      content = content.replace(/^\s*/mg, '');
+      const includes = [];
+      const matched = content.match(/^#pragma\s+include\s+.*/mg);
 
-              if (!loaded[name]) {
-                loaded[name] = true;
+      if (matched) {
+        // console.log(matched, url);
+        for (let i = 0; i < matched.length; i++) {
+          const m = matched[i];
 
-                if (type === 'lib') {
-                  var c = _compile(GLSL_LIBS[name]); // eslint-disable-line no-await-in-loop
+          const _matched = m.match(/(?:<|")(.*)(?:>|")/);
 
+          if (_matched) {
+            const type = _matched[0].indexOf('<') === 0 ? 'lib' : 'link';
+            let name = _matched[1];
+            if (name === 'graph') name = 'graphics';
 
-                  includes.push(c);
-                } else if (type === 'link') {
-                  throw new Error('Cannot load external links synchronously. Use compile instead of compileSync.');
-                }
-              } else {
-                includes.push("/* included ".concat(name, " */"));
+            if (!loaded[name]) {
+              loaded[name] = true; // TODO: 这里可以优化成异步加载
+
+              if (type === 'lib') {
+                const c = await _compile(GLSL_LIBS[name]); // eslint-disable-line no-await-in-loop
+
+                includes.push(c);
+              } else if (type === 'link') {
+                let c = await Renderer.fetchShader(name); // eslint-disable-line no-await-in-loop
+
+                c = await _compile(c); // eslint-disable-line no-await-in-loop
+
+                includes.push(c);
               }
+            } else {
+              includes.push(`/* included ${name} */`);
             }
           }
-
-          includes.forEach(function (inc) {
-            content = content.replace(/^#pragma\s+include\s+.*/m, inc);
-          });
         }
 
-        return content;
+        includes.forEach(inc => {
+          content = content.replace(/^#pragma\s+include\s+.*/m, inc);
+        });
       }
 
-      var fragmentShader = _compile(frag);
-
-      var vertexShader = vert ? _compile(vert) : null;
-      var program = this.createProgram(fragmentShader, vertexShader);
-      return program;
+      return content;
     }
-  }, {
-    key: "compile",
-    value: function () {
-      var _compile2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(frag, vert) {
-        var loaded, _compile, _compile3, fragmentShader, vertexShader, program;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _compile3 = function _compile5() {
-                  _compile3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(content) {
-                    var includes, matched, i, m, _matched, type, name, c, _c;
+    const fragmentShader = await _compile(frag);
+    const vertexShader = vert ? await _compile(vert) : null;
+    const program = this.createProgram(fragmentShader, vertexShader);
+    return program;
+  }
 
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                      while (1) {
-                        switch (_context.prev = _context.next) {
-                          case 0:
-                            content = content.replace(/^\s*/mg, '');
-                            includes = [];
-                            matched = content.match(/^#pragma\s+include\s+.*/mg);
+  async load(frag, vert = null) {
+    frag = await Renderer.fetchShader(frag);
+    if (vert) vert = await Renderer.fetchShader(vert);
+    return this.compile(frag, vert);
+  }
 
-                            if (!matched) {
-                              _context.next = 36;
-                              break;
-                            }
+  createTexture(img = null, {
+    wrapS = this.gl.CLAMP_TO_EDGE,
+    wrapT = this.gl.CLAMP_TO_EDGE,
+    minFilter = this.gl.LINEAR,
+    magFilter = this.gl.LINEAR
+  } = {}) {
+    const gl = this.gl;
+    const target = Array.isArray(img) ? gl.TEXTURE_CUBE_MAP : gl.TEXTURE_2D;
+    this._max_texture_image_units = this._max_texture_image_units || gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+    gl.activeTexture(gl.TEXTURE0 + this._max_texture_image_units - 1);
+    const texture = gl.createTexture();
+    gl.bindTexture(target, texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    const {
+      width,
+      height
+    } = this.canvas;
 
-                            i = 0;
-
-                          case 5:
-                            if (!(i < matched.length)) {
-                              _context.next = 35;
-                              break;
-                            }
-
-                            m = matched[i];
-                            _matched = m.match(/(?:<|")(.*)(?:>|")/);
-
-                            if (!_matched) {
-                              _context.next = 32;
-                              break;
-                            }
-
-                            type = _matched[0].indexOf('<') === 0 ? 'lib' : 'link';
-                            name = _matched[1];
-                            if (name === 'graph') name = 'graphics';
-
-                            if (loaded[name]) {
-                              _context.next = 31;
-                              break;
-                            }
-
-                            loaded[name] = true; // TODO: 这里可以优化成异步加载
-
-                            if (!(type === 'lib')) {
-                              _context.next = 21;
-                              break;
-                            }
-
-                            _context.next = 17;
-                            return _compile(GLSL_LIBS[name]);
-
-                          case 17:
-                            c = _context.sent;
-                            // eslint-disable-line no-await-in-loop
-                            includes.push(c);
-                            _context.next = 29;
-                            break;
-
-                          case 21:
-                            if (!(type === 'link')) {
-                              _context.next = 29;
-                              break;
-                            }
-
-                            _context.next = 24;
-                            return Renderer.fetchShader(name);
-
-                          case 24:
-                            _c = _context.sent;
-                            _context.next = 27;
-                            return _compile(_c);
-
-                          case 27:
-                            _c = _context.sent;
-                            // eslint-disable-line no-await-in-loop
-                            includes.push(_c);
-
-                          case 29:
-                            _context.next = 32;
-                            break;
-
-                          case 31:
-                            includes.push("/* included ".concat(name, " */"));
-
-                          case 32:
-                            i++;
-                            _context.next = 5;
-                            break;
-
-                          case 35:
-                            includes.forEach(function (inc) {
-                              content = content.replace(/^#pragma\s+include\s+.*/m, inc);
-                            });
-
-                          case 36:
-                            return _context.abrupt("return", content);
-
-                          case 37:
-                          case "end":
-                            return _context.stop();
-                        }
-                      }
-                    }, _callee);
-                  }));
-                  return _compile3.apply(this, arguments);
-                };
-
-                _compile = function _compile4(_x3) {
-                  return _compile3.apply(this, arguments);
-                };
-
-                frag = frag || _default_frag_glsl__WEBPACK_IMPORTED_MODULE_9__["default"];
-                loaded = {};
-                _context2.next = 6;
-                return _compile(frag);
-
-              case 6:
-                fragmentShader = _context2.sent;
-
-                if (!vert) {
-                  _context2.next = 13;
-                  break;
-                }
-
-                _context2.next = 10;
-                return _compile(vert);
-
-              case 10:
-                _context2.t0 = _context2.sent;
-                _context2.next = 14;
-                break;
-
-              case 13:
-                _context2.t0 = null;
-
-              case 14:
-                vertexShader = _context2.t0;
-                program = this.createProgram(fragmentShader, vertexShader);
-                return _context2.abrupt("return", program);
-
-              case 17:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function compile(_x, _x2) {
-        return _compile2.apply(this, arguments);
-      }
-
-      return compile;
-    }()
-  }, {
-    key: "load",
-    value: function () {
-      var _load = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(frag) {
-        var vert,
-            _args3 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                vert = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : null;
-                _context3.next = 3;
-                return Renderer.fetchShader(frag);
-
-              case 3:
-                frag = _context3.sent;
-
-                if (!vert) {
-                  _context3.next = 8;
-                  break;
-                }
-
-                _context3.next = 7;
-                return Renderer.fetchShader(vert);
-
-              case 7:
-                vert = _context3.sent;
-
-              case 8:
-                return _context3.abrupt("return", this.compile(frag, vert));
-
-              case 9:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function load(_x4) {
-        return _load.apply(this, arguments);
-      }
-
-      return load;
-    }()
-  }, {
-    key: "createTexture",
-    value: function createTexture() {
-      var _this4 = this;
-
-      var img = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-      var _ref9 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref9$wrapS = _ref9.wrapS,
-          wrapS = _ref9$wrapS === void 0 ? this.gl.CLAMP_TO_EDGE : _ref9$wrapS,
-          _ref9$wrapT = _ref9.wrapT,
-          wrapT = _ref9$wrapT === void 0 ? this.gl.CLAMP_TO_EDGE : _ref9$wrapT,
-          _ref9$minFilter = _ref9.minFilter,
-          minFilter = _ref9$minFilter === void 0 ? this.gl.LINEAR : _ref9$minFilter,
-          _ref9$magFilter = _ref9.magFilter,
-          magFilter = _ref9$magFilter === void 0 ? this.gl.LINEAR : _ref9$magFilter;
-
-      var gl = this.gl;
-      var target = Array.isArray(img) ? gl.TEXTURE_CUBE_MAP : gl.TEXTURE_2D;
-      this._max_texture_image_units = this._max_texture_image_units || gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-      gl.activeTexture(gl.TEXTURE0 + this._max_texture_image_units - 1);
-      var texture = gl.createTexture();
-      gl.bindTexture(target, texture);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      var _this$canvas = this.canvas,
-          width = _this$canvas.width,
-          height = _this$canvas.height;
-
-      if (img) {
-        if (target === gl.TEXTURE_CUBE_MAP) {
-          // For cube maps
-          for (var i = 0; i < 6; i++) {
-            gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img[i]);
-          }
-        } else {
-          gl.texImage2D(target, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-        }
-      } else if (target === gl.TEXTURE_CUBE_MAP) {
+    if (img) {
+      if (target === gl.TEXTURE_CUBE_MAP) {
         // For cube maps
-        for (var _i = 0; _i < 6; _i++) {
-          this.gl.texImage2D(this.gl.TEXTURE_CUBE_MAP_POSITIVE_X + _i, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        for (let i = 0; i < 6; i++) {
+          gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img[i]);
         }
       } else {
-        gl.texImage2D(target, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-      } // gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
-
-
-      gl.texParameteri(target, gl.TEXTURE_MIN_FILTER, minFilter);
-      gl.texParameteri(target, gl.TEXTURE_MAG_FILTER, magFilter); // Prevents s-coordinate wrapping (repeating).
-
-      gl.texParameteri(target, gl.TEXTURE_WRAP_S, wrapS); // Prevents t-coordinate wrapping (repeating).
-
-      gl.texParameteri(target, gl.TEXTURE_WRAP_T, wrapT);
-
-      if (target === gl.TEXTURE_CUBE_MAP) {
-        // gl.texParameteri(target, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
-        img.width = img[0].width;
-        img.height = img[0].height;
+        gl.texImage2D(target, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
       }
+    } else if (target === gl.TEXTURE_CUBE_MAP) {
+      // For cube maps
+      for (let i = 0; i < 6; i++) {
+        this.gl.texImage2D(this.gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      }
+    } else {
+      gl.texImage2D(target, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    } // gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
 
-      gl.bindTexture(target, null);
-      texture._img = img || {
-        width: width,
-        height: height
-      };
 
-      texture.delete = function () {
-        _this4.deleteTexture(texture);
-      };
+    gl.texParameteri(target, gl.TEXTURE_MIN_FILTER, minFilter);
+    gl.texParameteri(target, gl.TEXTURE_MAG_FILTER, magFilter); // Prevents s-coordinate wrapping (repeating).
 
-      return texture;
+    gl.texParameteri(target, gl.TEXTURE_WRAP_S, wrapS); // Prevents t-coordinate wrapping (repeating).
+
+    gl.texParameteri(target, gl.TEXTURE_WRAP_T, wrapT);
+
+    if (target === gl.TEXTURE_CUBE_MAP) {
+      // gl.texParameteri(target, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+      img.width = img[0].width;
+      img.height = img[0].height;
     }
-  }, {
-    key: "deleteTexture",
-    value: function deleteTexture(texture) {
-      var image = texture._img;
-      this.gl.deleteTexture(texture);
 
-      if (typeof image.close === 'function') {
-        // release ImageBitmap
-        image.close();
-      }
+    gl.bindTexture(target, null);
+    texture._img = img || {
+      width,
+      height
+    };
+
+    texture.delete = () => {
+      this.deleteTexture(texture);
+    };
+
+    return texture;
+  }
+
+  deleteTexture(texture) {
+    const image = texture._img;
+    this.gl.deleteTexture(texture);
+
+    if (typeof image.close === 'function') {
+      // release ImageBitmap
+      image.close();
     }
-  }, {
-    key: "loadTexture",
-    value: function () {
-      var _loadTexture = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(source) {
-        var _ref10,
-            _ref10$useImageBitmap,
-            useImageBitmap,
-            img,
-            _args4 = arguments;
+  }
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _ref10 = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : {}, _ref10$useImageBitmap = _ref10.useImageBitmap, useImageBitmap = _ref10$useImageBitmap === void 0 ? true : _ref10$useImageBitmap;
-                _context4.next = 3;
-                return Renderer.loadImage(source, {
-                  useImageBitmap: useImageBitmap
-                });
+  async loadTexture(source, {
+    useImageBitmap = true
+  } = {}) {
+    const img = await Renderer.loadImage(source, {
+      useImageBitmap
+    });
+    return this.createTexture(img);
+  }
 
-              case 3:
-                img = _context4.sent;
-                return _context4.abrupt("return", this.createTexture(img));
+  createFBO({
+    color = 1,
+    blend = false,
+    depth = this.options.depth !== false,
+    stencil = !!this.options.stencil
+  } = {}) {
+    const gl = this.gl;
+    const buffer = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, buffer);
+    const textures = [];
 
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
+    for (let i = 0; i < color; i++) {
+      const texture = this.createTexture();
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, texture, 0
+      /* level */
+      );
+      textures.push(texture);
+    }
 
-      function loadTexture(_x5) {
-        return _loadTexture.apply(this, arguments);
-      }
+    buffer.textures = textures;
+    buffer.texture = textures[0];
+    buffer.blend = blend;
+    const {
+      width,
+      height
+    } = this.canvas; // Render buffers
 
-      return loadTexture;
-    }()
-  }, {
-    key: "createFBO",
-    value: function createFBO() {
-      var _ref11 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref11$color = _ref11.color,
-          color = _ref11$color === void 0 ? 1 : _ref11$color,
-          _ref11$blend = _ref11.blend,
-          blend = _ref11$blend === void 0 ? false : _ref11$blend,
-          _ref11$depth = _ref11.depth,
-          depth = _ref11$depth === void 0 ? this.options.depth !== false : _ref11$depth,
-          _ref11$stencil = _ref11.stencil,
-          stencil = _ref11$stencil === void 0 ? !!this.options.stencil : _ref11$stencil;
+    if (depth && !stencil) {
+      buffer.depthBuffer = gl.createRenderbuffer();
+      gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.depthBuffer);
+      gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, buffer.depthBuffer);
+    }
 
-      var gl = this.gl;
-      var buffer = gl.createFramebuffer();
-      gl.bindFramebuffer(gl.FRAMEBUFFER, buffer);
-      var textures = [];
+    if (stencil && !depth) {
+      buffer.stencilBuffer = gl.createRenderbuffer();
+      gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.stencilBuffer);
+      gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, width, height);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.STENCIL_ATTACHMENT, gl.RENDERBUFFER, buffer.stencilBuffer);
+    }
 
-      for (var i = 0; i < color; i++) {
-        var texture = this.createTexture();
-        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, texture, 0
-        /* level */
-        );
-        textures.push(texture);
-      }
+    if (depth && stencil) {
+      buffer.depthStencilBuffer = gl.createRenderbuffer();
+      gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.depthStencilBuffer);
+      gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, width, height);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.RENDERBUFFER, buffer.depthStencilBuffer);
+    }
 
-      buffer.textures = textures;
-      buffer.texture = textures[0];
-      buffer.blend = blend;
-      var _this$canvas2 = this.canvas,
-          width = _this$canvas2.width,
-          height = _this$canvas2.height; // Render buffers
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    return buffer;
+  }
 
-      if (depth && !stencil) {
-        buffer.depthBuffer = gl.createRenderbuffer();
-        gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.depthBuffer);
-        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
-        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, buffer.depthBuffer);
-      }
+  bindFBO(fbo = null) {
+    this.fbo = fbo;
+  }
 
-      if (stencil && !depth) {
-        buffer.stencilBuffer = gl.createRenderbuffer();
-        gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.stencilBuffer);
-        gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, width, height);
-        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.STENCIL_ATTACHMENT, gl.RENDERBUFFER, buffer.stencilBuffer);
-      }
+  render({
+    clearBuffer = true
+  } = {}) {
+    this.startRender = true;
+    const gl = this.gl;
+    let program = this.program;
 
-      if (depth && stencil) {
-        buffer.depthStencilBuffer = gl.createRenderbuffer();
-        gl.bindRenderbuffer(gl.RENDERBUFFER, buffer.depthStencilBuffer);
-        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, width, height);
-        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.RENDERBUFFER, buffer.depthStencilBuffer);
-      }
+    if (!program) {
+      program = this.createProgram();
+      this.useProgram(program);
+    }
 
+    if (this.fbo) {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
+    }
+
+    const depth = this.options.depth;
+
+    if (depth) {
+      gl.enable(gl.DEPTH_TEST);
+    }
+
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | (depth ? this.gl.DEPTH_BUFFER_BIT : 0) | (this.options.stencil ? this.gl.STENCIL_BUFFER_BIT : 0));
+    const lastFrameID = this._renderFrameID;
+
+    this._draw();
+
+    if (this.fbo) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-      return buffer;
     }
-  }, {
-    key: "bindFBO",
-    value: function bindFBO() {
-      var fbo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      this.fbo = fbo;
+
+    if (this._renderFrameID === lastFrameID) {
+      this._renderFrameID = null;
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref12$clearBuffer = _ref12.clearBuffer,
-          clearBuffer = _ref12$clearBuffer === void 0 ? true : _ref12$clearBuffer;
+  }
 
-      this.startRender = true;
-      var gl = this.gl;
-      var program = this.program;
+  update() {
+    if (!this.startRender) return;
 
-      if (!program) {
-        program = this.createProgram();
-        this.useProgram(program);
-      }
-
-      if (this.fbo) {
-        gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
-      }
-
-      var depth = this.options.depth;
-
-      if (depth) {
-        gl.enable(gl.DEPTH_TEST);
-      }
-
-      this.gl.clear(this.gl.COLOR_BUFFER_BIT | (depth ? this.gl.DEPTH_BUFFER_BIT : 0) | (this.options.stencil ? this.gl.STENCIL_BUFFER_BIT : 0));
-      var lastFrameID = this._renderFrameID;
-
-      this._draw();
-
-      if (this.fbo) {
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-      }
-
-      if (this._renderFrameID === lastFrameID) {
-        this._renderFrameID = null;
-      }
+    if (this._renderFrameID == null) {
+      this._renderFrameID = requestAnimationFrame(this.render.bind(this));
     }
-  }, {
-    key: "update",
-    value: function update() {
-      if (!this.startRender) return;
+  }
 
-      if (this._renderFrameID == null) {
-        this._renderFrameID = requestAnimationFrame(this.render.bind(this));
-      }
-    }
-  }, {
-    key: "program",
-    get: function get() {
-      var gl = this.gl;
-      return gl.getParameter(gl.CURRENT_PROGRAM);
-    }
-  }, {
-    key: "isWebGL2",
-    get: function get() {
-      return typeof WebGL2RenderingContext !== 'undefined' && this.gl instanceof WebGL2RenderingContext;
-    }
-  }, {
-    key: "enableTextures",
-    get: function get() {
-      return this.program && this.program._enableTextures;
-    }
-  }, {
-    key: "uniforms",
-    get: function get() {
-      var program = this.program;
+}
 
-      if (!program || !program.uniforms) {
-        throw Error('No avaliable program.');
-      }
-
-      return program.uniforms;
-    }
-  }]);
-
-  return Renderer;
-}();
-
-_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(Renderer, "defaultOptions", {
+_defineProperty(Renderer, "defaultOptions", {
   preserveDrawingBuffer: true,
   autoUpdate: true,
   vertexPosition: 'a_vertexPosition',
@@ -9862,842 +9295,16 @@ _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(Ren
   webgl2: false
 });
 
-_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(Renderer, "UBYTE", Renderer.UNSIGNED_BYTE);
+_defineProperty(Renderer, "UBYTE", Renderer.UNSIGNED_BYTE);
 
-_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(Renderer, "USHORT", Renderer.UNSIGNED_SHORT);
+_defineProperty(Renderer, "USHORT", Renderer.UNSIGNED_SHORT);
 
-_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(Renderer, "fetchShader", _helpers__WEBPACK_IMPORTED_MODULE_7__["fetchShader"]);
+_defineProperty(Renderer, "fetchShader", _helpers__WEBPACK_IMPORTED_MODULE_0__["fetchShader"]);
 
-_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(Renderer, "loadImage", _helpers__WEBPACK_IMPORTED_MODULE_7__["loadImage"]);
-
-
+_defineProperty(Renderer, "loadImage", _helpers__WEBPACK_IMPORTED_MODULE_0__["loadImage"]);
 
 /***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(28);
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-    return obj[key];
-  }
-  try {
-    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
-    define({}, "");
-  } catch (err) {
-    define = function(obj, key, value) {
-      return obj[key] = value;
-    };
-  }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunction.displayName = define(
-    GeneratorFunctionPrototype,
-    toStringTagSymbol,
-    "GeneratorFunction"
-  );
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      define(prototype, method, function(arg) {
-        return this._invoke(method, arg);
-      });
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      define(genFun, toStringTagSymbol, "GeneratorFunction");
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  define(Gp, toStringTagSymbol, "Generator");
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-   true ? module.exports : undefined
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
-}
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
-module.exports = _asyncToGenerator;
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-/* 31 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10707,23 +9314,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pointsToBuffer", function() { return pointsToBuffer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadImage", function() { return loadImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShader", function() { return fetchShader; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(32);
-/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 function create3DContext(canvas, opt_attribs) {
-  var names = ['webgl', 'experimental-webgl', 'webkit-3d', 'moz-webgl'];
-  var context = null;
+  const names = ['webgl', 'experimental-webgl', 'webkit-3d', 'moz-webgl'];
+  let context = null;
 
-  for (var ii = 0; ii < names.length; ++ii) {
+  for (let ii = 0; ii < names.length; ++ii) {
     try {
       context = canvas.getContext(names[ii], opt_attribs);
     } catch (e) {// no-empty
@@ -10738,7 +9335,7 @@ function create3DContext(canvas, opt_attribs) {
 }
 
 function setupWebGL(canvas, opt_attribs) {
-  var context = create3DContext(canvas, opt_attribs);
+  const context = create3DContext(canvas, opt_attribs);
 
   if (!context) {
     throw new Error("Sorry, your browser doesn't support WebGL.");
@@ -10747,43 +9344,39 @@ function setupWebGL(canvas, opt_attribs) {
   return context;
 }
 function createProgram(gl, vertex, fragment) {
-  var vertShdr = gl.createShader(gl.VERTEX_SHADER);
+  const vertShdr = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertShdr, vertex);
   gl.compileShader(vertShdr);
 
   if (!gl.getShaderParameter(vertShdr, gl.COMPILE_STATUS)) {
-    var msg = "Vertex shader failed to compile.  The error log is:".concat(gl.getShaderInfoLog(vertShdr));
+    const msg = `Vertex shader failed to compile.  The error log is:${gl.getShaderInfoLog(vertShdr)}`;
     throw new Error(msg);
   }
 
-  var fragShdr = gl.createShader(gl.FRAGMENT_SHADER);
+  const fragShdr = gl.createShader(gl.FRAGMENT_SHADER);
   gl.shaderSource(fragShdr, fragment);
   gl.compileShader(fragShdr);
 
   if (!gl.getShaderParameter(fragShdr, gl.COMPILE_STATUS)) {
-    var _msg = "Fragment shader failed to compile.  The error log is:".concat(gl.getShaderInfoLog(fragShdr));
-
-    throw new Error(_msg);
+    const msg = `Fragment shader failed to compile.  The error log is:${gl.getShaderInfoLog(fragShdr)}`;
+    throw new Error(msg);
   }
 
-  var program = gl.createProgram();
+  const program = gl.createProgram();
   gl.attachShader(program, vertShdr);
   gl.attachShader(program, fragShdr);
   gl.linkProgram(program);
 
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    var _msg2 = "Shader program failed to link.  The error log is:".concat(gl.getProgramInfoLog(program));
-
-    throw new Error(_msg2);
+    const msg = `Shader program failed to link.  The error log is:${gl.getProgramInfoLog(program)}`;
+    throw new Error(msg);
   }
 
   gl.deleteShader(vertShdr);
   gl.deleteShader(fragShdr);
   return program;
 }
-function pointsToBuffer(points) {
-  var Type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Float32Array;
-  var buffer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+function pointsToBuffer(points, Type = Float32Array, buffer = null) {
   if (buffer && !(buffer instanceof Type)) throw new TypeError('Wrong buffer type.');
   if (points == null) return points;
   if (points instanceof Type) return points;
@@ -10797,47 +9390,44 @@ function pointsToBuffer(points) {
     return new Type(points);
   }
 
-  var deminsion = points[0].length;
-  var len = points.length;
+  const deminsion = points[0].length;
+  const len = points.length;
 
   if (!buffer) {
     buffer = new Type(deminsion * len);
   }
 
-  var idx = 0;
+  let idx = 0;
 
-  for (var i = 0; i < len; i++) {
-    for (var j = 0; j < deminsion; j++) {
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < deminsion; j++) {
       buffer[idx++] = points[i][j];
     }
   }
 
   return buffer;
 }
-var imageCache = {};
-function loadImage(src) {
-  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      _ref$useImageBitmap = _ref.useImageBitmap,
-      useImageBitmap = _ref$useImageBitmap === void 0 ? true : _ref$useImageBitmap,
-      _ref$alias = _ref.alias,
-      alias = _ref$alias === void 0 ? null : _ref$alias;
-
+const imageCache = {};
+function loadImage(src, {
+  useImageBitmap = true,
+  alias = null
+} = {}) {
   if (!imageCache[src]) {
     if (typeof Image === 'function') {
-      var img = new Image();
+      const img = new Image();
 
-      if (typeof src === 'string' && !((typeof location === "undefined" ? "undefined" : _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_2___default()(location)) === 'object' && /^file:/.test(location.href)) // eslint-disable-line no-restricted-globals
+      if (typeof src === 'string' && !(typeof location === 'object' && /^file:/.test(location.href)) // eslint-disable-line no-restricted-globals
       && !/^data:/.test(src)) {
         // base64 dont need crossOrigin - fix early webkit cross domain bug
         img.crossOrigin = 'anonymous';
       }
 
-      imageCache[src] = new Promise(function (resolve) {
+      imageCache[src] = new Promise(resolve => {
         img.onload = function () {
           if (useImageBitmap && typeof createImageBitmap === 'function') {
             createImageBitmap(img, {
               imageOrientation: 'flipY'
-            }).then(function (bitmap) {
+            }).then(bitmap => {
               imageCache[src] = bitmap;
               if (alias) imageCache[alias] = bitmap;
               resolve(bitmap);
@@ -10858,12 +9448,12 @@ function loadImage(src) {
         method: 'GET',
         mode: 'cors',
         cache: 'default'
-      }).then(function (response) {
+      }).then(response => {
         return response.blob();
-      }).then(function (blob) {
+      }).then(blob => {
         return createImageBitmap(blob, {
           imageOrientation: 'flipY'
-        }).then(function (bitmap) {
+        }).then(bitmap => {
           imageCache[src] = bitmap;
           if (alias) imageCache[alias] = bitmap;
           return bitmap;
@@ -10874,82 +9464,22 @@ function loadImage(src) {
 
   return imageCache[src];
 }
-var shaderCache = {};
-function fetchShader(_x) {
-  return _fetchShader.apply(this, arguments);
-}
+const shaderCache = {};
+async function fetchShader(url) {
+  if (shaderCache[url]) return shaderCache[url];
+  const res = await fetch(url);
 
-function _fetchShader() {
-  _fetchShader = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
-    var res, content;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (!shaderCache[url]) {
-              _context.next = 2;
-              break;
-            }
-
-            return _context.abrupt("return", shaderCache[url]);
-
-          case 2:
-            _context.next = 4;
-            return fetch(url);
-
-          case 4:
-            res = _context.sent;
-
-            if (!(res.status >= 200 && res.status < 300)) {
-              _context.next = 11;
-              break;
-            }
-
-            _context.next = 8;
-            return res.text();
-
-          case 8:
-            content = _context.sent;
-            shaderCache[url] = content;
-            return _context.abrupt("return", content);
-
-          case 11:
-            throw new Error('Shader loaded error.');
-
-          case 12:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _fetchShader.apply(this, arguments);
-}
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
+  if (res.status >= 200 && res.status < 300) {
+    const content = await res.text();
+    shaderCache[url] = content;
+    return content;
   }
 
-  return _typeof(obj);
+  throw new Error('Shader loaded error.');
 }
 
-module.exports = _typeof;
-
 /***/ }),
-/* 33 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10957,7 +9487,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = vec4(a_vertexPosition, 1);\n}");
 
 /***/ }),
-/* 34 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10965,7 +9495,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#endif\n\nvoid main() {\n  gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);\n}");
 
 /***/ }),
-/* 35 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10973,292 +9503,208 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec4 a_vertexPosition;\nattribute vec2 a_vertexTextureCoord;\nvarying vec2 vTextureCoord;\n\nvoid main() {\n  gl_PointSize = 1.0;\n  gl_Position = a_vertexPosition;\n  vTextureCoord = a_vertexTextureCoord;\n}");
 
 /***/ }),
-/* 36 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CanvasRenderer; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(29);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37);
-/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(41);
-
-
-
-
-
-
-
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
+/* harmony import */ var _utils_canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 
 
-var _transform = Symbol('transform');
+const _transform = Symbol('transform');
 
-var CanvasRenderer = /*#__PURE__*/function () {
-  function CanvasRenderer(canvas, options) {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4___default()(this, CanvasRenderer);
-
+class CanvasRenderer {
+  constructor(canvas, options) {
     this.context = canvas.getContext('2d');
     this.options = options;
     this[_transform] = [1, 0, 0, 1, 0, 0];
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5___default()(CanvasRenderer, [{
-    key: "createTexture",
-    value: function createTexture(img) {
-      var texture = {
-        _img: img
-      };
-      return texture;
+  createTexture(img) {
+    const texture = {
+      _img: img
+    };
+    return texture;
+  }
+
+  async loadTexture(textureURL) {
+    const image = await _utils_env__WEBPACK_IMPORTED_MODULE_0__["default"].loadImage(textureURL, {
+      useImageBitmap: false
+    });
+    return this.createTexture(image);
+  }
+
+  deleteTexture(texture) {
+    return texture;
+  }
+
+  clear(x, y, w, h) {
+    const context = this.context;
+    x = x || 0;
+    y = y || 0;
+    w = w || context.canvas.width - x;
+    h = h || context.canvas.height - y;
+    context.clearRect(x, y, w, h);
+  }
+
+  drawMeshCloud(cloud, {
+    clear = false
+  } = {}) {
+    const cloudMeshes = [];
+
+    for (let i = 0; i < cloud.amount; i++) {
+      const transform = cloud.getTransform(i);
+      let frame = cloud.getTextureFrame(i);
+      if (frame) frame = frame._img;
+      const filter = cloud.getFilter(i);
+      const {
+        fill,
+        stroke
+      } = cloud.getCloudRGBA(i);
+      cloudMeshes.push({
+        mesh: cloud.mesh,
+        _cloudOptions: [fill, stroke, frame, transform, filter]
+      }); // console.log(transform, colorTransform, frame);
     }
-  }, {
-    key: "loadTexture",
-    value: function () {
-      var _loadTexture = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee(textureURL) {
-        var image;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return _utils_env__WEBPACK_IMPORTED_MODULE_6__["default"].loadImage(textureURL, {
-                  useImageBitmap: false
-                });
 
-              case 2:
-                image = _context.sent;
-                return _context.abrupt("return", this.createTexture(image));
+    if (cloud.beforeRender) cloud.beforeRender(this.context, cloud);
+    this.drawMeshes(cloudMeshes, {
+      clear,
+      hook: false
+    });
+    if (cloud.afterRender) cloud.afterRender(this.context, cloud);
+  }
 
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
+  drawMeshes(meshes, {
+    clear = false,
+    hook = true
+  } = {}) {
+    const context = this.context;
 
-      function loadTexture(_x) {
-        return _loadTexture.apply(this, arguments);
+    if (clear) {
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    }
+
+    let lastFilter = null;
+    const {
+      width,
+      height
+    } = context.canvas;
+    const len = meshes.length;
+    meshes.forEach((mesh, i) => {
+      let fill, stroke, frame, transform, cloudFilter;
+      if (hook && mesh.beforeRender) mesh.beforeRender(context, mesh);
+
+      if (mesh._cloudOptions) {
+        [fill, stroke, frame, transform, cloudFilter] = mesh._cloudOptions;
+        mesh = mesh.mesh;
       }
 
-      return loadTexture;
-    }()
-  }, {
-    key: "deleteTexture",
-    value: function deleteTexture(texture) {
-      return texture;
-    }
-  }, {
-    key: "clear",
-    value: function clear(x, y, w, h) {
-      var context = this.context;
-      x = x || 0;
-      y = y || 0;
-      w = w || context.canvas.width - x;
-      h = h || context.canvas.height - y;
-      context.clearRect(x, y, w, h);
-    }
-  }, {
-    key: "drawMeshCloud",
-    value: function drawMeshCloud(cloud) {
-      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref$clear = _ref.clear,
-          clear = _ref$clear === void 0 ? false : _ref$clear;
+      let filter = mesh.filter;
+      if (cloudFilter) filter = filter ? `${filter} ${cloudFilter}` : cloudFilter;
 
-      var cloudMeshes = [];
+      if (filter && !this.filterBuffer && this.filterBuffer !== false) {
+        const canvas = _utils_env__WEBPACK_IMPORTED_MODULE_0__["default"].createCanvas(width, height);
 
-      for (var i = 0; i < cloud.amount; i++) {
-        var transform = cloud.getTransform(i);
-        var frame = cloud.getTextureFrame(i);
-        if (frame) frame = frame._img;
-        var filter = cloud.getFilter(i);
-
-        var _cloud$getCloudRGBA = cloud.getCloudRGBA(i),
-            fill = _cloud$getCloudRGBA.fill,
-            stroke = _cloud$getCloudRGBA.stroke;
-
-        cloudMeshes.push({
-          mesh: cloud.mesh,
-          _cloudOptions: [fill, stroke, frame, transform, filter]
-        }); // console.log(transform, colorTransform, frame);
-      }
-
-      if (cloud.beforeRender) cloud.beforeRender(this.context, cloud);
-      this.drawMeshes(cloudMeshes, {
-        clear: clear,
-        hook: false
-      });
-      if (cloud.afterRender) cloud.afterRender(this.context, cloud);
-    }
-  }, {
-    key: "drawMeshes",
-    value: function drawMeshes(meshes) {
-      var _this = this;
-
-      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref2$clear = _ref2.clear,
-          clear = _ref2$clear === void 0 ? false : _ref2$clear,
-          _ref2$hook = _ref2.hook,
-          hook = _ref2$hook === void 0 ? true : _ref2$hook;
-
-      var context = this.context;
-
-      if (clear) {
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      }
-
-      var lastFilter = null;
-      var _context$canvas = context.canvas,
-          width = _context$canvas.width,
-          height = _context$canvas.height;
-      var len = meshes.length;
-      meshes.forEach(function (mesh, i) {
-        var fill, stroke, frame, transform, cloudFilter;
-        if (hook && mesh.beforeRender) mesh.beforeRender(context, mesh);
-
-        if (mesh._cloudOptions) {
-          var _mesh$_cloudOptions = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(mesh._cloudOptions, 5);
-
-          fill = _mesh$_cloudOptions[0];
-          stroke = _mesh$_cloudOptions[1];
-          frame = _mesh$_cloudOptions[2];
-          transform = _mesh$_cloudOptions[3];
-          cloudFilter = _mesh$_cloudOptions[4];
-          mesh = mesh.mesh;
-        }
-
-        var filter = mesh.filter;
-        if (cloudFilter) filter = filter ? "".concat(filter, " ").concat(cloudFilter) : cloudFilter;
-
-        if (filter && !_this.filterBuffer && _this.filterBuffer !== false) {
-          var canvas = _utils_env__WEBPACK_IMPORTED_MODULE_6__["default"].createCanvas(width, height);
-
-          if (canvas) {
-            _this.filterBuffer = canvas.getContext('2d');
-          } else {
-            _this.filterBuffer = false;
-          }
-        }
-
-        if (lastFilter && lastFilter !== filter) {
-          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["applyFilter"])(_this.filterBuffer, lastFilter);
-          context.drawImage(_this.filterBuffer.canvas, 0, 0, width, height);
-
-          _this.filterBuffer.clearRect(0, 0, width, height);
-
-          lastFilter = null;
-        }
-
-        if (filter && _this.filterBuffer) {
-          var _this$filterBuffer;
-
-          _this.filterBuffer.save();
-
-          (_this$filterBuffer = _this.filterBuffer).transform.apply(_this$filterBuffer, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_this[_transform])); // console.log(this[_transform]);
-
-
-          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, _this.filterBuffer, false, fill, stroke, frame, transform);
-
-          _this.filterBuffer.restore();
-
-          if (i === len - 1) {
-            Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["applyFilter"])(_this.filterBuffer, filter);
-            context.drawImage(_this.filterBuffer.canvas, 0, 0, width, height);
-
-            _this.filterBuffer.clearRect(0, 0, width, height);
-          } else {
-            lastFilter = filter;
-          }
+        if (canvas) {
+          this.filterBuffer = canvas.getContext('2d');
         } else {
-          context.save();
-          context.transform.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_this[_transform]));
-          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_7__["drawMesh2D"])(mesh, context, false, fill, stroke, frame, transform);
-          context.restore();
+          this.filterBuffer = false;
         }
+      }
 
-        if (hook && mesh.afterRender) mesh.afterRender(context, mesh);
-      });
-    }
-  }, {
-    key: "setTransform",
-    value: function setTransform(transform) {
-      this[_transform] = transform;
-    }
-  }]);
+      if (lastFilter && lastFilter !== filter) {
+        Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_1__["applyFilter"])(this.filterBuffer, lastFilter);
+        context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
+        this.filterBuffer.clearRect(0, 0, width, height);
+        lastFilter = null;
+      }
 
-  return CanvasRenderer;
-}();
+      if (filter && this.filterBuffer) {
+        this.filterBuffer.save();
+        this.filterBuffer.transform(...this[_transform]); // console.log(this[_transform]);
 
+        Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_1__["drawMesh2D"])(mesh, this.filterBuffer, false, fill, stroke, frame, transform);
+        this.filterBuffer.restore();
 
+        if (i === len - 1) {
+          Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_1__["applyFilter"])(this.filterBuffer, filter);
+          context.drawImage(this.filterBuffer.canvas, 0, 0, width, height);
+          this.filterBuffer.clearRect(0, 0, width, height);
+        } else {
+          lastFilter = filter;
+        }
+      } else {
+        context.save();
+        context.transform(...this[_transform]);
+        Object(_utils_canvas__WEBPACK_IMPORTED_MODULE_1__["drawMesh2D"])(mesh, context, false, fill, stroke, frame, transform);
+        context.restore();
+      }
+
+      if (hook && mesh.afterRender) mesh.afterRender(context, mesh);
+    });
+  }
+
+  setTransform(transform) {
+    this[_transform] = transform;
+  }
+
+}
 
 /***/ }),
-/* 37 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
-/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var gl_renderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
-/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(39);
-/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(40);
-
-
-
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var gl_renderer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
+/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 
 
-var cacheMap = {};
+const cacheMap = {};
 
 function fontEx(info, ratio) {
-  var style = info.style,
-      variant = info.variant,
-      weight = info.weight,
-      stretch = info.stretch,
-      size = info.size,
-      pxLineHeight = info.pxLineHeight,
-      family = info.family;
+  const {
+    style,
+    variant,
+    weight,
+    stretch,
+    size,
+    pxLineHeight,
+    family
+  } = info;
 
   if (stretch === 'normal') {
     // fix iOS10 bug
-    return "".concat(style, " ").concat(variant, " ").concat(weight, " ").concat(size * ratio, "px/").concat(pxLineHeight * ratio, "px ").concat(family);
+    return `${style} ${variant} ${weight} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
   }
 
-  return "".concat(style, " ").concat(variant, " ").concat(weight, " ").concat(stretch, " ").concat(size * ratio, "px/").concat(pxLineHeight * ratio, "px ").concat(family);
+  return `${style} ${variant} ${weight} ${stretch} ${size * ratio}px/${pxLineHeight * ratio}px ${family}`;
 }
 
-function createText(text, _ref) {
-  var font = _ref.font,
-      fillColor = _ref.fillColor,
-      strokeColor = _ref.strokeColor,
-      strokeWidth = _ref.strokeWidth,
-      _ref$ratio = _ref.ratio,
-      ratio = _ref$ratio === void 0 ? 1 : _ref$ratio,
-      textCanvas = _ref.textCanvas,
-      _ref$cachable = _ref.cachable,
-      cachable = _ref$cachable === void 0 ? false : _ref$cachable;
-  var key;
+function createText(text, {
+  font,
+  fillColor,
+  strokeColor,
+  strokeWidth,
+  ratio = 1,
+  textCanvas,
+  cachable = false
+}) {
+  let key;
 
   if (cachable) {
     key = [text, font, String(fillColor), String(strokeColor), String(strokeWidth)].join('###');
-    var cachedCanvas = cacheMap[key];
+    const cachedCanvas = cacheMap[key];
     if (cachedCanvas) return cachedCanvas;
   }
 
@@ -11266,50 +9712,51 @@ function createText(text, _ref) {
     textCanvas = createCanvas(1, 1);
   }
 
-  var textContext = textCanvas.getContext('2d');
+  const textContext = textCanvas.getContext('2d');
   textContext.save();
   textContext.font = font;
-
-  var _textContext$measureT = textContext.measureText(text),
-      width = _textContext$measureT.width;
-
+  let {
+    width
+  } = textContext.measureText(text);
   textContext.restore();
-  var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_3__["default"])(font);
-  var height = Math.max(fontInfo.pxLineHeight, fontInfo.pxHeight * 1.13);
+  const fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_1__["default"])(font);
+  const height = Math.max(fontInfo.pxLineHeight, fontInfo.pxHeight * 1.13);
 
   if (/italic|oblique/.test(font)) {
     width += height * Math.tan(15 * Math.PI / 180);
   }
 
   if (!fillColor && !strokeColor) fillColor = '#000';
-  var canvas = textContext.canvas;
-  var w = Math.ceil(width);
-  var h = Math.ceil(height);
+  const canvas = textContext.canvas;
+  const w = Math.ceil(width);
+  const h = Math.ceil(height);
   canvas.width = Math.round(w * ratio);
   canvas.height = Math.round(h * ratio);
   textContext.save();
   textContext.font = fontEx(fontInfo, ratio);
   textContext.textAlign = 'center';
   textContext.textBaseline = 'middle';
-  var top = canvas.height * 0.5 + fontInfo.pxHeight * 0.05 * ratio;
-  var left = canvas.width * 0.5;
+  const top = canvas.height * 0.5 + fontInfo.pxHeight * 0.05 * ratio;
+  const left = canvas.width * 0.5;
 
   if (fillColor) {
-    if (Array.isArray(fillColor)) fillColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__["default"])(fillColor);else if (fillColor.vector) {
-      var gradient;
-      var _fillColor = fillColor,
-          vector = _fillColor.vector,
-          colors = _fillColor.colors;
+    if (Array.isArray(fillColor)) fillColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(fillColor);else if (fillColor.vector) {
+      let gradient;
+      const {
+        vector,
+        colors
+      } = fillColor;
 
       if (vector.length === 6) {
-        gradient = textContext.createRadialGradient.apply(textContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(vector));
+        gradient = textContext.createRadialGradient(...vector);
       } else {
-        gradient = textContext.createLinearGradient.apply(textContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(vector));
+        gradient = textContext.createLinearGradient(...vector);
       }
 
-      colors.forEach(function (_ref2) {
-        var offset = _ref2.offset,
-            color = _ref2.color;
+      colors.forEach(({
+        offset,
+        color
+      }) => {
         gradient.addColorStop(offset, color);
       });
       fillColor = gradient;
@@ -11320,34 +9767,33 @@ function createText(text, _ref) {
 
   if (strokeColor) {
     textContext.lineWidth = strokeWidth * ratio;
-    if (Array.isArray(strokeColor)) strokeColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__["default"])(strokeColor);else if (strokeColor.vector) {
-      var _gradient;
+    if (Array.isArray(strokeColor)) strokeColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(strokeColor);else if (strokeColor.vector) {
+      let gradient;
+      const {
+        vector,
+        colors
+      } = strokeColor;
 
-      var _strokeColor = strokeColor,
-          _vector = _strokeColor.vector,
-          _colors = _strokeColor.colors;
-
-      if (_vector.length === 6) {
-        _gradient = textContext.createRadialGradient.apply(textContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(_vector));
+      if (vector.length === 6) {
+        gradient = textContext.createRadialGradient(...vector);
       } else {
-        _gradient = textContext.createLinearGradient.apply(textContext, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(_vector));
+        gradient = textContext.createLinearGradient(...vector);
       }
 
-      _colors.forEach(function (_ref3) {
-        var offset = _ref3.offset,
-            color = _ref3.color;
-
-        _gradient.addColorStop(offset, color);
+      colors.forEach(({
+        offset,
+        color
+      }) => {
+        gradient.addColorStop(offset, color);
       });
-
-      strokeColor = _gradient;
+      strokeColor = gradient;
     }
     textContext.strokeStyle = strokeColor;
     textContext.strokeText(text, left, top);
   }
 
   textContext.restore();
-  var ret = {
+  const ret = {
     image: textCanvas,
     rect: [0, 0, w, h]
   };
@@ -11360,20 +9806,19 @@ function createText(text, _ref) {
 } // Fixed: use offscreen canvas as texture will fail in early chrome.
 
 
-var isEarlyChrome = false;
+let isEarlyChrome = false;
 
-if ((typeof navigator === "undefined" ? "undefined" : _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(navigator)) === 'object' && typeof navigator.userAgent === 'string') {
-  var matched = navigator.userAgent.toLowerCase().match(/chrome\/(\d+)/);
+if (typeof navigator === 'object' && typeof navigator.userAgent === 'string') {
+  const matched = navigator.userAgent.toLowerCase().match(/chrome\/(\d+)/);
 
   if (matched) {
     isEarlyChrome = Number(matched[1]) < 70;
   }
 }
 
-function createCanvas(width, height) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var offscreen = options.offscreen || !isEarlyChrome && options.offscreen !== false;
-  var canvas;
+function createCanvas(width, height, options = {}) {
+  const offscreen = options.offscreen || !isEarlyChrome && options.offscreen !== false;
+  let canvas;
 
   if (typeof global !== 'undefined' && typeof global.createCanvas === 'function') {
     canvas = global.createCanvas(width, height, options);
@@ -11388,16 +9833,16 @@ function createCanvas(width, height) {
   return canvas;
 }
 
-var ENV = {
-  createCanvas: createCanvas,
-  createText: createText,
-  loadImage: gl_renderer__WEBPACK_IMPORTED_MODULE_2__["default"].loadImage
+const ENV = {
+  createCanvas,
+  createText,
+  loadImage: gl_renderer__WEBPACK_IMPORTED_MODULE_0__["default"].loadImage
 };
 /* harmony default export */ __webpack_exports__["default"] = (ENV);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(38)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(21)))
 
 /***/ }),
-/* 38 */
+/* 21 */
 /***/ (function(module, exports) {
 
 var g;
@@ -11423,7 +9868,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 39 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11434,7 +9879,7 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 function sizeToPixel(value, defaultWidth) {
   // eslint-disable-line complexity
   if (typeof value === 'string') {
-    var matched = value.trim().match(/^([\d.]+)(px|pt|pc|in|cm|mm|em|ex|rem|q|vw|vh|vmax|vmin|%)$/);
+    const matched = value.trim().match(/^([\d.]+)(px|pt|pc|in|cm|mm|em|ex|rem|q|vw|vh|vmax|vmin|%)$/);
 
     if (matched) {
       value = {
@@ -11449,9 +9894,10 @@ function sizeToPixel(value, defaultWidth) {
     }
   }
 
-  var _value = value,
-      size = _value.size,
-      unit = _value.unit;
+  let {
+    size,
+    unit
+  } = value;
 
   if (unit === 'pt') {
     size /= 0.75;
@@ -11465,7 +9911,7 @@ function sizeToPixel(value, defaultWidth) {
     size *= 96.0 / 25.4;
   } else if (unit === 'em' || unit === 'rem' || unit === 'ex') {
     if (!defaultWidth && typeof getComputedStyle === 'function' && typeof document !== 'undefined') {
-      var root = getComputedStyle(document.documentElement).fontSize;
+      const root = getComputedStyle(document.documentElement).fontSize;
       defaultWidth = sizeToPixel(root, 16);
     }
 
@@ -11475,13 +9921,13 @@ function sizeToPixel(value, defaultWidth) {
     size *= 96.0 / 25.4 / 4;
   } else if (unit === 'vw' || unit === 'vh') {
     if (typeof document !== 'undefined') {
-      var val = unit === 'vw' ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+      const val = unit === 'vw' ? document.documentElement.clientWidth : document.documentElement.clientHeight;
       size *= val / 100;
     }
   } else if (unit === 'vmax' || unit === 'vmin') {
     if (typeof document !== 'undefined') {
-      var width = document.documentElement.clientWidth;
-      var height = document.documentElement.clientHeight;
+      const width = document.documentElement.clientWidth;
+      const height = document.documentElement.clientHeight;
 
       if (unit === 'vmax') {
         size *= Math.max(width, height) / 100;
@@ -11499,22 +9945,22 @@ function sizeToPixel(value, defaultWidth) {
  */
 
 
-var weights = 'bold|bolder|lighter|[1-9]00',
-    styles = 'italic|oblique',
-    variants = 'small-caps',
-    stretches = 'ultra-condensed|extra-condensed|condensed|semi-condensed|semi-expanded|expanded|extra-expanded|ultra-expanded',
-    units = 'px|pt|pc|in|cm|mm|em|ex|rem|q|vw|vh|vmax|vmin|%',
-    string = "'([^']+)'|\"([^\"]+)\"|([\\w-]|[\u4E00-\u9FA5])+"; // [ [ <‘font-style’> || <font-variant-css21> || <‘font-weight’> || <‘font-stretch’> ]?
+const weights = 'bold|bolder|lighter|[1-9]00',
+      styles = 'italic|oblique',
+      variants = 'small-caps',
+      stretches = 'ultra-condensed|extra-condensed|condensed|semi-condensed|semi-expanded|expanded|extra-expanded|ultra-expanded',
+      units = 'px|pt|pc|in|cm|mm|em|ex|rem|q|vw|vh|vmax|vmin|%',
+      string = '\'([^\']+)\'|"([^"]+)"|([\\w-]|[\u4e00-\u9fa5])+'; // [ [ <‘font-style’> || <font-variant-css21> || <‘font-weight’> || <‘font-stretch’> ]?
 //    <‘font-size’> [ / <‘line-height’> ]? <‘font-family’> ]
 // https://drafts.csswg.org/css-fonts-3/#font-prop
 
-var weightRe = new RegExp("(".concat(weights, ") +"), 'i');
-var styleRe = new RegExp("(".concat(styles, ") +"), 'i');
-var variantRe = new RegExp("(".concat(variants, ") +"), 'i');
-var stretchRe = new RegExp("(".concat(stretches, ") +"), 'i');
+const weightRe = new RegExp(`(${weights}) +`, 'i');
+const styleRe = new RegExp(`(${styles}) +`, 'i');
+const variantRe = new RegExp(`(${variants}) +`, 'i');
+const stretchRe = new RegExp(`(${stretches}) +`, 'i');
 /* eslint-disable prefer-template */
 
-var sizeFamilyRe = new RegExp('([\\d\\.]+)(' + units + ')(?:\\/([\\d\\.]+)(' + units + '))? *' + '((?:' + string + ')( *, *(?:' + string + '))*)');
+const sizeFamilyRe = new RegExp('([\\d\\.]+)(' + units + ')(?:\\/([\\d\\.]+)(' + units + '))? *' + '((?:' + string + ')( *, *(?:' + string + '))*)');
 /* eslint-enable prefer-template */
 
 /**
@@ -11528,12 +9974,12 @@ var sizeFamilyRe = new RegExp('([\\d\\.]+)(' + units + ')(?:\\/([\\d\\.]+)(' + u
 
 function parseFont(str, defaultHeight) {
   // Try for required properties first.
-  var sizeFamily = sizeFamilyRe.exec(str);
+  const sizeFamily = sizeFamilyRe.exec(str);
   if (!sizeFamily) return; // invalid
 
-  var lineHeight = parseFloat(sizeFamily[3]); // Default values and required properties
+  const lineHeight = parseFloat(sizeFamily[3]); // Default values and required properties
 
-  var font = {
+  const font = {
     weight: 'normal',
     style: 'normal',
     stretch: 'normal',
@@ -11545,12 +9991,12 @@ function parseFont(str, defaultHeight) {
     family: sizeFamily[5].replace(/ *, */g, ',')
   }; // Stop search at `sizeFamily.index`
 
-  var substr = str.substring(0, sizeFamily.index); // Optional, unordered properties.
+  const substr = str.substring(0, sizeFamily.index); // Optional, unordered properties.
 
-  var weight = weightRe.exec(substr),
-      style = styleRe.exec(substr),
-      variant = variantRe.exec(substr),
-      stretch = stretchRe.exec(substr);
+  const weight = weightRe.exec(substr),
+        style = styleRe.exec(substr),
+        variant = variantRe.exec(substr),
+        stretch = stretchRe.exec(substr);
   if (weight) font.weight = weight[1];
   if (style) font.style = style[1];
   if (variant) font.variant = variant[1];
@@ -11567,7 +10013,7 @@ function parseFont(str, defaultHeight) {
 }
 
 /***/ }),
-/* 40 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11576,28 +10022,24 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 function vectorToRGBA(vector) {
-  return "rgba(".concat(vector.map(function (c, i) {
+  return `rgba(${vector.map((c, i) => {
     if (i < 3) return Math.round(c * 255);
     return c;
-  }).join(), ")");
+  }).join()})`;
 }
 
 /***/ }),
-/* 41 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyFilter", function() { return applyFilter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drawMesh2D", function() { return drawMesh2D; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
-/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(39);
-/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(42);
-
-
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var _parse_font__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
@@ -11605,7 +10047,7 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 function applyFilter(context, filter) {
-  var canvas = context.canvas;
+  const canvas = context.canvas;
   context.save();
   context.filter = filter;
   context.drawImage(canvas, 0, 0, canvas.width, canvas.height);
@@ -11613,32 +10055,27 @@ function applyFilter(context, filter) {
 }
 
 function mixRGBA(a, b) {
-  var pattern = /rgba\((\d+),(\d+),(\d+),(\d+)\)/;
+  const pattern = /rgba\((\d+),(\d+),(\d+),(\d+)\)/;
   a = a.match(pattern).slice(1, 5).map(Number);
   b = b.match(pattern).slice(1, 5).map(Number);
-  var c = [];
-  var alpha = b[3];
+  const c = [];
+  const alpha = b[3];
 
-  for (var i = 0; i < 4; i++) {
-    c[i] = Object(_math__WEBPACK_IMPORTED_MODULE_4__["mix"])(a[i], b[i], alpha);
+  for (let i = 0; i < 4; i++) {
+    c[i] = Object(_math__WEBPACK_IMPORTED_MODULE_3__["mix"])(a[i], b[i], alpha);
   }
 
-  return "rgba(".concat(c.join(), ")");
+  return `rgba(${c.join()})`;
 }
 
-function drawMesh2D(mesh, context) {
-  var enableFilter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var cloudFill = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-  var cloudStroke = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-  var cloudFrame = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
-  var cloudTransform = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+function drawMesh2D(mesh, context, enableFilter = true, cloudFill = null, cloudStroke = null, cloudFrame = null, cloudTransform = null) {
   context.save();
-  var stroke = false;
-  var fill = false;
+  let stroke = false;
+  let fill = false;
   context.globalAlpha = mesh.getOpacity();
 
   if (mesh._updateMatrix) {
-    var acc = mesh.transformScale / mesh.contours.scale;
+    const acc = mesh.transformScale / mesh.contours.scale;
 
     if (acc > 1.5) {
       mesh.accurate(mesh.transformScale);
@@ -11646,32 +10083,33 @@ function drawMesh2D(mesh, context) {
   }
 
   if (mesh.lineWidth) {
-    var _gradient = mesh.gradient && mesh.gradient.stroke;
+    let gradient = mesh.gradient && mesh.gradient.stroke;
 
-    if (_gradient) {
-      var _gradient2 = _gradient,
-          vector = _gradient2.vector,
-          colors = _gradient2.colors;
+    if (gradient) {
+      const {
+        vector,
+        colors
+      } = gradient;
 
       if (vector.length === 6) {
-        _gradient = context.createRadialGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
+        gradient = context.createRadialGradient(...vector);
       } else if (vector.length === 4) {
-        _gradient = context.createLinearGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
+        gradient = context.createLinearGradient(...vector);
       } else if (vector.length === 3) {
-        _gradient = context.createCircularGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(vector));
+        gradient = context.createCircularGradient(...vector);
       } else {
         throw new TypeError('Invalid vector dimension.');
       }
 
-      colors.forEach(function (_ref) {
-        var offset = _ref.offset,
-            color = _ref.color;
-        var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(color);
+      colors.forEach(({
+        offset,
+        color
+      }) => {
+        let rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__["default"])(color);
         if (cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
-
-        _gradient.addColorStop(offset, rgba);
+        gradient.addColorStop(offset, rgba);
       });
-      context.strokeStyle = _gradient;
+      context.strokeStyle = gradient;
       stroke = true;
     } else if (mesh.strokeStyle) {
       if (cloudStroke) {
@@ -11699,31 +10137,32 @@ function drawMesh2D(mesh, context) {
     }
   }
 
-  var gradient = mesh.gradient && mesh.gradient.fill;
+  let gradient = mesh.gradient && mesh.gradient.fill;
 
   if (gradient) {
-    var _gradient3 = gradient,
-        _vector = _gradient3.vector,
-        _colors = _gradient3.colors;
+    const {
+      vector,
+      colors
+    } = gradient;
 
-    if (_vector.length === 6) {
-      gradient = context.createRadialGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
-    } else if (_vector.length === 4) {
-      gradient = context.createLinearGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
-    } else if (_vector.length === 3) {
-      gradient = context.createCircularGradient.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_vector));
+    if (vector.length === 6) {
+      gradient = context.createRadialGradient(...vector);
+    } else if (vector.length === 4) {
+      gradient = context.createLinearGradient(...vector);
+    } else if (vector.length === 3) {
+      gradient = context.createCircularGradient(...vector);
     } else {
       throw new TypeError('Invalid vector dimension.');
     }
 
-    _colors.forEach(function (_ref2) {
-      var offset = _ref2.offset,
-          color = _ref2.color;
-      var rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(color);
+    colors.forEach(({
+      offset,
+      color
+    }) => {
+      let rgba = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__["default"])(color);
       if (cloudStroke) rgba = mixRGBA(rgba, cloudStroke);
       gradient.addColorStop(offset, rgba);
     });
-
     context.fillStyle = gradient;
     fill = true;
   } else if (mesh.fillStyle) {
@@ -11743,34 +10182,34 @@ function drawMesh2D(mesh, context) {
 
 
   if (cloudTransform) {
-    context.transform.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(cloudTransform));
+    context.transform(...cloudTransform);
   }
 
-  context.transform.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.transformMatrix));
+  context.transform(...mesh.transformMatrix);
 
   if (mesh.clipPath) {
-    var clipPath = mesh.clipPath;
-    var path = new Path2D(clipPath);
+    const clipPath = mesh.clipPath;
+    const path = new Path2D(clipPath);
     context.clip(path);
   }
 
-  var count = mesh.contours.length;
-  mesh.contours.forEach(function (points, i) {
+  const count = mesh.contours.length;
+  mesh.contours.forEach((points, i) => {
     // eslint-disable-line complexity
-    var len = points.length;
-    var closed = len > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec2"].equals(points[0], points[len - 1]);
-    var drawTexture = i === count - 1 && mesh.texture;
+    const len = points.length;
+    const closed = len > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].equals(points[0], points[len - 1]);
+    const drawTexture = i === count - 1 && mesh.texture;
 
     if (points && len > 0) {
       if (fill || stroke || drawTexture) {
         context.beginPath();
-        context.moveTo.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points[0]));
+        context.moveTo(...points[0]);
 
-        for (var _i = 1; _i < len; _i++) {
-          if (_i === len - 1 && closed) {
+        for (let i = 1; i < len; i++) {
+          if (i === len - 1 && closed) {
             context.closePath();
           } else {
-            context.lineTo.apply(context, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points[_i]));
+            context.lineTo(...points[i]);
           }
         }
       }
@@ -11782,37 +10221,38 @@ function drawMesh2D(mesh, context) {
       if (drawTexture) {
         context.save();
         context.clip();
-        var _mesh$texture = mesh.texture,
-            image = _mesh$texture.image,
-            options = _mesh$texture.options;
+        let {
+          image,
+          options
+        } = mesh.texture;
         if (cloudFrame) image = cloudFrame;
         if (options.repeat) console.warn('Context 2D not supported image repeat yet.');
 
         if (image.font) {
           if (options.scale) console.warn('Context 2D not supported text scale yet.');
           if (options.srcRect) console.warn('Context 2D not supported text srcRect yet.');
-          var _image = image,
-              font = _image.font,
-              fillColor = _image.fillColor,
-              strokeColor = _image.strokeColor,
-              strokeWidth = _image.strokeWidth,
-              text = _image.text;
+          let {
+            font,
+            fillColor,
+            strokeColor,
+            strokeWidth,
+            text
+          } = image;
           if (!fillColor && !strokeColor) fillColor = '#000';
-          if (Array.isArray(fillColor)) fillColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(fillColor);
-          if (Array.isArray(strokeColor)) strokeColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_2__["default"])(strokeColor);
+          if (Array.isArray(fillColor)) fillColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__["default"])(fillColor);
+          if (Array.isArray(strokeColor)) strokeColor = Object(_vector_to_rgba__WEBPACK_IMPORTED_MODULE_1__["default"])(strokeColor);
           context.font = font;
-
-          var _context$measureText = context.measureText(text),
-              width = _context$measureText.width;
-
-          var fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_3__["default"])(font);
-          var height = Math.max(fontInfo.pxLineHeight, fontInfo.pxHeight * 1.13);
+          const {
+            width
+          } = context.measureText(text);
+          const fontInfo = Object(_parse_font__WEBPACK_IMPORTED_MODULE_2__["default"])(font);
+          const height = Math.max(fontInfo.pxLineHeight, fontInfo.pxHeight * 1.13);
           context.textAlign = 'center';
           context.textBaseline = 'middle'; // text ignore rect scale
 
-          var rect = options.rect;
-          var top = rect[0] + height * 0.5 + fontInfo.pxHeight * 0.06;
-          var left = rect[1] + width * 0.5;
+          const rect = options.rect;
+          const top = rect[0] + height * 0.5 + fontInfo.pxHeight * 0.06;
+          const left = rect[1] + width * 0.5;
 
           if (rect[2] != null) {
             context.scale(rect[2] / width, rect[3] / height);
@@ -11829,30 +10269,30 @@ function drawMesh2D(mesh, context) {
             context.strokeText(text, left, top);
           }
         } else {
-          var _rect = options.rect;
-          var srcRect = options.srcRect;
+          let rect = options.rect;
+          const srcRect = options.srcRect;
 
           if (options.scale) {
-            _rect = [0, 0, context.canvas.width, context.canvas.height];
+            rect = [0, 0, context.canvas.width, context.canvas.height];
           }
 
-          if (options.rotated && _rect) {
-            _rect = [-_rect[1], _rect[0], _rect[3], _rect[2]];
+          if (options.rotated && rect) {
+            rect = [-rect[1], rect[0], rect[3], rect[2]];
           }
 
           if (srcRect) {
-            _rect = _rect || [0, 0, srcRect[2], srcRect[3]];
+            rect = rect || [0, 0, srcRect[2], srcRect[3]];
           }
 
           if (options.rotated) {
-            context.translate(0, _rect ? _rect[2] : image.width);
+            context.translate(0, rect ? rect[2] : image.width);
             context.rotate(-0.5 * Math.PI);
           }
 
           if (srcRect) {
-            context.drawImage.apply(context, [image].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(srcRect), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_rect)));
-          } else if (_rect) {
-            context.drawImage.apply(context, [image].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(_rect)));
+            context.drawImage(image, ...srcRect, ...rect);
+          } else if (rect) {
+            context.drawImage(image, ...rect);
           } else {
             context.drawImage(image, 0, 0);
           }
@@ -11869,7 +10309,7 @@ function drawMesh2D(mesh, context) {
   context.restore();
 
   if (enableFilter) {
-    var filter = mesh.filter;
+    const filter = mesh.filter;
 
     if (filter) {
       applyFilter(context, filter);
@@ -11878,7 +10318,7 @@ function drawMesh2D(mesh, context) {
 }
 
 /***/ }),
-/* 42 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11886,19 +10326,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clamp", function() { return clamp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mix", function() { return mix; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transformPoint", function() { return transformPoint; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-
-
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 function clamp(value, min, max) {
-  if (min > max) {
-    var _ref = [max, min];
-    min = _ref[0];
-    max = _ref[1];
-  }
-
+  if (min > max) [min, max] = [max, min];
   if (value < min) return min;
   if (value > max) return max;
   return value;
@@ -11907,52 +10338,43 @@ function mix(src, dest, p) {
   return src * (1 - p) + dest * p;
 }
 function transformPoint(p, m) {
-  var _p = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(p, 2),
-      x = _p[0],
-      y = _p[1];
-
+  const [x, y] = p;
   return [x * m[0] + y * m[2] + m[4], x * m[1] + y * m[3] + m[5]];
 }
 
 /***/ }),
-/* 43 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return compress; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _flatten_meshes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
-/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
-
-
+/* harmony import */ var _flatten_meshes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _mesh_cloud__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
-
-var _marked = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(compress);
 
 
 
 
 function compareUniform(a, b, temp) {
-  var ua = a.uniforms || {};
-  var ub = b.uniforms || {};
+  const ua = a.uniforms || {};
+  const ub = b.uniforms || {};
   if (ua.u_texSampler && ub.u_texSampler && ua.u_texSampler !== ub.u_texSampler) return false;
-  var keysA = Object.keys(ua),
-      keysB = Object.keys(ub); // console.log(keysA, keysB);
+  const keysA = Object.keys(ua),
+        keysB = Object.keys(ub); // console.log(keysA, keysB);
 
-  var idx1 = keysA.indexOf('u_texSampler');
-  var idx2 = keysB.indexOf('u_texSampler');
+  const idx1 = keysA.indexOf('u_texSampler');
+  const idx2 = keysB.indexOf('u_texSampler');
   if (idx1 >= 0) keysA.splice(idx1, 1);
   if (idx2 >= 0) keysB.splice(idx2, 1);
   if (keysA.length !== keysB.length) return false;
-  var ret = keysA.every(function (key) {
-    var va = ua[key],
-        vb = ub[key];
+  const ret = keysA.every(key => {
+    const va = ua[key],
+          vb = ub[key];
     if (va === vb) return true;
 
     if (va.length && vb.length && va.length === vb.length) {
-      for (var i = 0; i < va.length; i++) {
+      for (let i = 0; i < va.length; i++) {
         if (va[i] !== vb[i]) return false;
       }
 
@@ -11969,7 +10391,7 @@ function compareUniform(a, b, temp) {
       });
     } else if (!ua.u_texSampler && ub.u_texSampler) {
       // a.setTexture(ub.u_texSampler, {hidden: true});
-      for (var i = 0; i < temp.length; i++) {
+      for (let i = 0; i < temp.length; i++) {
         temp[i].setTexture(ub.u_texSampler, {
           hidden: true
         });
@@ -11980,11 +10402,11 @@ function compareUniform(a, b, temp) {
   return ret;
 }
 
-var bufferCache = {};
+const bufferCache = {};
 
 function packData(temp, enableBlend) {
   if (temp.length) {
-    var meshData = Object(_flatten_meshes__WEBPACK_IMPORTED_MODULE_1__["default"])(temp, bufferCache);
+    const meshData = Object(_flatten_meshes__WEBPACK_IMPORTED_MODULE_0__["default"])(temp, bufferCache);
     meshData.enableBlend = enableBlend;
 
     if (temp[0].filterCanvas) {
@@ -12002,169 +10424,74 @@ function packData(temp, enableBlend) {
   }
 }
 
-function compress(renderer, meshes) {
-  var ignoreTrasnparent,
-      temp,
-      maxSize,
-      size,
-      enableBlend,
-      i,
-      mesh,
-      meshData,
-      texture,
-      len,
-      filterCanvas,
-      lastMesh,
-      _args = arguments;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function compress$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          ignoreTrasnparent = _args.length > 2 && _args[2] !== undefined ? _args[2] : false;
-          temp = [];
-          maxSize = renderer.options.bufferSize;
+function* compress(renderer, meshes, ignoreTrasnparent = false) {
+  const temp = [];
+  const maxSize = renderer.options.bufferSize;
+  let size = 0;
+  let enableBlend = false;
+
+  for (let i = 0; i < meshes.length; i++) {
+    const mesh = meshes[i];
+
+    if (mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+      if (temp.length) yield packData(temp, enableBlend);
+      size = 0;
+      enableBlend = false;
+      yield mesh;
+    } else {
+      const meshData = mesh.meshData;
+
+      if (meshData.clipPath && !meshData.uniforms.u_clipSampler) {
+        const texture = renderer.createTexture(meshData.clipPath);
+        meshData.uniforms.u_clipSampler = texture;
+      }
+
+      let len = 0;
+
+      if ((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length) {
+        mesh.packIndex = i;
+        const filterCanvas = mesh.filterCanvas;
+        len = meshData.positions.length;
+
+        if (filterCanvas || size + len > maxSize) {
+          // cannot merge
+          if (temp.length) yield packData(temp, enableBlend);
           size = 0;
           enableBlend = false;
-          i = 0;
+        } else if (size) {
+          const lastMesh = temp[temp.length - 1];
 
-        case 6:
-          if (!(i < meshes.length)) {
-            _context.next = 50;
-            break;
+          if (lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || lastMesh.pass.length || mesh.pass.length || lastMesh.program !== mesh.program || lastMesh.mode !== mesh.mode || !!lastMesh.meshData.cells !== !!mesh.meshData.cells || !compareUniform(lastMesh, mesh, temp))) {
+            yield packData(temp, enableBlend);
+            size = 0;
+            enableBlend = false;
           }
+        }
 
-          mesh = meshes[i];
+        temp.push(mesh);
+        enableBlend = enableBlend || mesh.enableBlend;
+        size += len;
+      }
 
-          if (!(mesh instanceof _mesh_cloud__WEBPACK_IMPORTED_MODULE_2__["default"])) {
-            _context.next = 18;
-            break;
-          }
-
-          if (!temp.length) {
-            _context.next = 12;
-            break;
-          }
-
-          _context.next = 12;
-          return packData(temp, enableBlend);
-
-        case 12:
-          size = 0;
-          enableBlend = false;
-          _context.next = 16;
-          return mesh;
-
-        case 16:
-          _context.next = 47;
-          break;
-
-        case 18:
-          meshData = mesh.meshData;
-
-          if (meshData.clipPath && !meshData.uniforms.u_clipSampler) {
-            texture = renderer.createTexture(meshData.clipPath);
-            meshData.uniforms.u_clipSampler = texture;
-          }
-
-          len = 0;
-
-          if (!((!ignoreTrasnparent || !mesh.canIgnore()) && meshData && meshData.positions.length)) {
-            _context.next = 43;
-            break;
-          }
-
-          mesh.packIndex = i;
-          filterCanvas = mesh.filterCanvas;
-          len = meshData.positions.length;
-
-          if (!(filterCanvas || size + len > maxSize)) {
-            _context.next = 33;
-            break;
-          }
-
-          if (!temp.length) {
-            _context.next = 29;
-            break;
-          }
-
-          _context.next = 29;
-          return packData(temp, enableBlend);
-
-        case 29:
-          size = 0;
-          enableBlend = false;
-          _context.next = 40;
-          break;
-
-        case 33:
-          if (!size) {
-            _context.next = 40;
-            break;
-          }
-
-          lastMesh = temp[temp.length - 1];
-
-          if (!(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || lastMesh.pass.length || mesh.pass.length || lastMesh.program !== mesh.program || lastMesh.mode !== mesh.mode || !!lastMesh.meshData.cells !== !!mesh.meshData.cells || !compareUniform(lastMesh, mesh, temp)))) {
-            _context.next = 40;
-            break;
-          }
-
-          _context.next = 38;
-          return packData(temp, enableBlend);
-
-        case 38:
-          size = 0;
-          enableBlend = false;
-
-        case 40:
-          temp.push(mesh);
-          enableBlend = enableBlend || mesh.enableBlend;
-          size += len;
-
-        case 43:
-          if (!(i === meshes.length - 1)) {
-            _context.next = 47;
-            break;
-          }
-
-          if (!temp.length) {
-            _context.next = 47;
-            break;
-          }
-
-          _context.next = 47;
-          return packData(temp, enableBlend);
-
-        case 47:
-          i++;
-          _context.next = 6;
-          break;
-
-        case 50:
-        case "end":
-          return _context.stop();
+      if (i === meshes.length - 1) {
+        if (temp.length) {
+          yield packData(temp, enableBlend);
+        }
       }
     }
-  }, _marked);
+  }
 }
 
 /***/ }),
-/* 44 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return flattenMeshes; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
-var typeMap = {
+const typeMap = {
   UNSIGNED_BYTE: Uint8Array,
   UNSIGNED_SHORT: Uint16Array,
   BYTE: Int8Array,
@@ -12174,38 +10501,38 @@ var typeMap = {
 
 function allocateBuffer(meshes, bufferCache) {
   // eslint-disable-line complexity
-  var positionsCount = 0;
-  var cellsCount = 0;
-  var textureCoordCount = 0;
-  var sourceRectCount = 0;
-  var clipUVCount = 0;
-  var colorCount = 0;
-  var count = 0;
-  var program = meshes[0].program;
-  var hasCell = !!meshes[0].meshData.cells;
+  let positionsCount = 0;
+  let cellsCount = 0;
+  let textureCoordCount = 0;
+  let sourceRectCount = 0;
+  let clipUVCount = 0;
+  let colorCount = 0;
+  let count = 0;
+  const program = meshes[0].program;
+  const hasCell = !!meshes[0].meshData.cells;
 
-  for (var i = 0; i < meshes.length; i++) {
-    var mesh = meshes[i].meshData;
+  for (let i = 0; i < meshes.length; i++) {
+    const mesh = meshes[i].meshData;
 
     if (mesh) {
       count += mesh.positions.length;
-      var dimension = mesh.positions[0].length;
+      const dimension = mesh.positions[0].length;
       positionsCount += mesh.positions.length * dimension;
       if (hasCell) cellsCount += mesh.cells.length * 3;
       colorCount += mesh.attributes.a_color.length * 4;
-      var _textureCoord = mesh.textureCoord;
+      const _textureCoord = mesh.textureCoord;
 
       if (_textureCoord) {
         textureCoordCount += _textureCoord.length * _textureCoord[0].length;
       }
 
-      var _sourceRect = mesh.attributes.a_sourceRect;
+      const _sourceRect = mesh.attributes.a_sourceRect;
 
       if (_sourceRect) {
         sourceRectCount += _sourceRect.length * 4;
       }
 
-      var _clipUV = mesh.attributes.a_clipUV;
+      const _clipUV = mesh.attributes.a_clipUV;
 
       if (_clipUV) {
         clipUVCount += _clipUV.length * 2;
@@ -12244,18 +10571,16 @@ function allocateBuffer(meshes, bufferCache) {
   }
 
   if (program) {
-    var attribs = Object.entries(program._attribute);
-    var meta = program._attribOpts || {};
+    const attribs = Object.entries(program._attribute);
+    const meta = program._attribOpts || {};
 
-    for (var _i = 0; _i < attribs.length; _i++) {
-      var _attribs$_i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(attribs[_i], 2),
-          key = _attribs$_i[0],
-          opts = _attribs$_i[1];
+    for (let i = 0; i < attribs.length; i++) {
+      const [key, opts] = attribs[i];
 
       if (key !== 'a_color' && key !== 'a_sourceRect' && opts !== 'ignored') {
-        var type = meta[key] ? meta[key].type : 'FLOAT';
-        var TypeArray = typeMap[type];
-        var attribCount = opts.size * count;
+        const type = meta[key] ? meta[key].type : 'FLOAT';
+        const TypeArray = typeMap[type];
+        const attribCount = opts.size * count;
 
         if (!bufferCache[key] || bufferCache[key].length < attribCount) {
           bufferCache[key] = new TypeArray(attribCount);
@@ -12269,19 +10594,19 @@ function allocateBuffer(meshes, bufferCache) {
 
 function flattenMeshes(meshes, bufferCache) {
   // eslint-disable-line complexity
-  var positions = [];
-  var cells = [];
-  var textureCoord = [];
-  var a_color = [];
-  var a_sourceRect = []; // sourceRect no buffer;
+  let positions = [];
+  let cells = [];
+  let textureCoord = [];
+  let a_color = [];
+  let a_sourceRect = []; // sourceRect no buffer;
 
-  var a_clipUV = []; // uv no buffer
+  let a_clipUV = []; // uv no buffer
 
-  var idx = 0;
-  var cidx = 0;
-  var uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
-  var program = meshes[0] ? meshes[0].program : null;
-  var hasCell = false;
+  let idx = 0;
+  let cidx = 0;
+  const uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
+  const program = meshes[0] ? meshes[0].program : null;
+  let hasCell = false;
 
   if (meshes[0]) {
     hasCell = !!meshes[0].cells || meshes[0].meshData && !!meshes[0].meshData.cells;
@@ -12297,45 +10622,42 @@ function flattenMeshes(meshes, bufferCache) {
     a_clipUV = bufferCache.a_clipUV;
   }
 
-  var hasSourceRect = false;
-  var hasClipPath = false;
-  var attributes = {};
+  let hasSourceRect = false;
+  let hasClipPath = false;
+  const attributes = {};
 
-  for (var i = 0; i < meshes.length; i++) {
-    var mesh = meshes[i];
+  for (let i = 0; i < meshes.length; i++) {
+    let mesh = meshes[i];
 
     if (mesh) {
       if (mesh.meshData) mesh = mesh.meshData;
 
       if (bufferCache) {
-        var _positions = mesh.positions;
+        const _positions = mesh.positions;
 
-        for (var j = 0; j < _positions.length; j++) {
-          var p = _positions[j];
-          var o = 3 * (idx + j);
+        for (let j = 0; j < _positions.length; j++) {
+          const p = _positions[j];
+          const o = 3 * (idx + j);
 
-          for (var k = 0; k < p.length; k++) {
+          for (let k = 0; k < p.length; k++) {
             positions[o + k] = p[k];
           }
         }
       } else {
-        var _positions2;
-
-        (_positions2 = positions).push.apply(_positions2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.positions));
+        positions.push(...mesh.positions);
       }
 
       if (hasCell) {
-        var _cells = mesh.cells;
+        const _cells = mesh.cells;
 
-        for (var _j = 0; _j < _cells.length; _j++) {
-          var cell = _cells[_j];
+        for (let j = 0; j < _cells.length; j++) {
+          const cell = _cells[j];
 
           if (bufferCache) {
-            var _o = 3 * (cidx + _j);
-
-            cells[_o] = cell[0] + idx;
-            cells[_o + 1] = cell[1] + idx;
-            cells[_o + 2] = cell[2] + idx;
+            const o = 3 * (cidx + j);
+            cells[o] = cell[0] + idx;
+            cells[o + 1] = cell[1] + idx;
+            cells[o + 2] = cell[2] + idx;
           } else {
             cells.push([cell[0] + idx, cell[1] + idx, cell[2] + idx]);
           }
@@ -12344,44 +10666,36 @@ function flattenMeshes(meshes, bufferCache) {
 
 
       if (bufferCache) {
-        var _colors = mesh.attributes.a_color;
+        const _colors = mesh.attributes.a_color;
 
-        for (var _j2 = 0; _j2 < _colors.length; _j2++) {
-          var c = _colors[_j2];
-
-          var _o2 = 4 * (idx + _j2);
-
-          a_color[_o2] = c[0];
-          a_color[_o2 + 1] = c[1];
-          a_color[_o2 + 2] = c[2];
-          a_color[_o2 + 3] = c[3];
+        for (let j = 0; j < _colors.length; j++) {
+          const c = _colors[j];
+          const o = 4 * (idx + j);
+          a_color[o] = c[0];
+          a_color[o + 1] = c[1];
+          a_color[o + 2] = c[2];
+          a_color[o + 3] = c[3];
         }
       } else {
-        var _a_color;
-
-        (_a_color = a_color).push.apply(_a_color, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes.a_color));
+        a_color.push(...mesh.attributes.a_color);
       }
 
       if (mesh.attributes.a_sourceRect) {
         hasSourceRect = true;
 
         if (bufferCache) {
-          var _sourceRect = mesh.attributes.a_sourceRect;
+          const _sourceRect = mesh.attributes.a_sourceRect;
 
-          for (var _j3 = 0; _j3 < _sourceRect.length; _j3++) {
-            var s = _sourceRect[_j3];
-
-            var _o3 = 4 * (idx + _j3);
-
-            a_sourceRect[_o3] = s[0];
-            a_sourceRect[_o3 + 1] = s[1];
-            a_sourceRect[_o3 + 2] = s[2];
-            a_sourceRect[_o3 + 3] = s[3];
+          for (let j = 0; j < _sourceRect.length; j++) {
+            const s = _sourceRect[j];
+            const o = 4 * (idx + j);
+            a_sourceRect[o] = s[0];
+            a_sourceRect[o + 1] = s[1];
+            a_sourceRect[o + 2] = s[2];
+            a_sourceRect[o + 3] = s[3];
           }
         } else {
-          var _a_sourceRect;
-
-          (_a_sourceRect = a_sourceRect).push.apply(_a_sourceRect, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes.a_sourceRect));
+          a_sourceRect.push(...mesh.attributes.a_sourceRect);
         }
       }
 
@@ -12389,72 +10703,60 @@ function flattenMeshes(meshes, bufferCache) {
         hasClipPath = true;
 
         if (bufferCache) {
-          var _clipUV = mesh.attributes.a_clipUV;
+          const _clipUV = mesh.attributes.a_clipUV;
 
-          for (var _j4 = 0; _j4 < _clipUV.length; _j4++) {
-            var _s = _clipUV[_j4];
-
-            var _o4 = 2 * (idx + _j4);
-
-            a_clipUV[_o4] = _s[0];
-            a_clipUV[_o4 + 1] = _s[1];
+          for (let j = 0; j < _clipUV.length; j++) {
+            const s = _clipUV[j];
+            const o = 2 * (idx + j);
+            a_clipUV[o] = s[0];
+            a_clipUV[o + 1] = s[1];
           }
         } else {
-          var _a_clipUV;
-
-          (_a_clipUV = a_clipUV).push.apply(_a_clipUV, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes.a_clipUV));
+          a_clipUV.push(...mesh.attributes.a_clipUV);
         }
       }
 
       if (mesh.textureCoord) {
         if (bufferCache) {
-          var _textureCoord = mesh.textureCoord;
+          const _textureCoord = mesh.textureCoord;
 
-          for (var _j5 = 0; _j5 < _textureCoord.length; _j5++) {
-            var t = _textureCoord[_j5];
+          for (let j = 0; j < _textureCoord.length; j++) {
+            const t = _textureCoord[j];
+            const o = 3 * (idx + j);
 
-            var _o5 = 3 * (idx + _j5);
-
-            for (var _k = 0; _k < t.length; _k++) {
-              textureCoord[_o5 + _k] = t[_k];
+            for (let k = 0; k < t.length; k++) {
+              textureCoord[o + k] = t[k];
             }
           }
         } else {
-          var _textureCoord2;
-
-          (_textureCoord2 = textureCoord).push.apply(_textureCoord2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.textureCoord));
+          textureCoord.push(...mesh.textureCoord);
         }
       }
 
       if (program) {
-        var attribs = Object.entries(program._attribute);
+        const attribs = Object.entries(program._attribute);
 
-        for (var _j6 = 0; _j6 < attribs.length; _j6++) {
-          var _attribs$_j = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(attribs[_j6], 2),
-              name = _attribs$_j[0],
-              opts = _attribs$_j[1];
+        for (let j = 0; j < attribs.length; j++) {
+          const [name, opts] = attribs[j];
 
           if (name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
             attributes[name] = [];
 
             if (bufferCache) {
               attributes[name] = bufferCache[name];
-              var _attr = mesh.attributes[name];
-              var size = _attr[0].length;
+              const _attr = mesh.attributes[name];
+              const size = _attr[0].length;
 
-              for (var _k2 = 0; _k2 < _attr.length; _k2++) {
-                var _t = _attr[_k2];
+              for (let k = 0; k < _attr.length; k++) {
+                const t = _attr[k];
+                const o = size * (idx + k);
 
-                var _o6 = size * (idx + _k2);
-
-                for (var w = 0; w < _t.length; w++) {
-                  attributes[name][_o6 + w] = _t[w];
+                for (let w = 0; w < t.length; w++) {
+                  attributes[name][o + w] = t[w];
                 }
               }
             } else {
-              var _attributes$name;
-
-              (_attributes$name = attributes[name]).push.apply(_attributes$name, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.attributes[name]));
+              attributes[name].push(...mesh.attributes[name]);
             }
           }
         }
@@ -12467,11 +10769,11 @@ function flattenMeshes(meshes, bufferCache) {
 
   attributes.a_color = a_color;
   if (hasSourceRect && a_sourceRect && a_sourceRect.length > 0) attributes.a_sourceRect = a_sourceRect;
-  var ret = {
-    positions: positions,
-    attributes: attributes,
-    uniforms: uniforms,
-    program: program
+  const ret = {
+    positions,
+    attributes,
+    uniforms,
+    program
   };
 
   if (hasCell) {
@@ -12488,73 +10790,57 @@ function flattenMeshes(meshes, bufferCache) {
 }
 
 /***/ }),
-/* 45 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(46);
-/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(42);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(47);
-
-
-
-
-
-
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
+/* harmony import */ var _utils_math__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
 
 
-var _mesh = Symbol('mesh');
+const _mesh = Symbol('mesh');
 
-var _count = Symbol('count');
+const _count = Symbol('count');
 
-var _blend = Symbol('blend');
+const _blend = Symbol('blend');
 
-var _filters = Symbol('filter');
+const _filters = Symbol('filter');
 
-var _textures = Symbol('textures');
+const _textures = Symbol('textures');
 
-var _textureOptions = Symbol('textureOptions');
+const _textureOptions = Symbol('textureOptions');
 
-var _hasCloudColor = Symbol('cloudColor');
+const _hasCloudColor = Symbol('cloudColor');
 
-var _hasCloudFilter = Symbol('cloudFilter');
+const _hasCloudFilter = Symbol('cloudFilter');
 
-var _buffer = Symbol('buffer');
+const _buffer = Symbol('buffer');
 
-function createBuffer(buffer) {
-  var oldBuffer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var transform0 = new Float32Array(3 * buffer);
-  var transform1 = new Float32Array(3 * buffer);
-  var color0 = new Float32Array(4 * buffer);
-  var color1 = new Float32Array(4 * buffer);
-  var color2 = new Float32Array(4 * buffer);
-  var color3 = new Float32Array(4 * buffer);
-  var color4 = new Float32Array(4 * buffer);
-  var frameIndex = new Uint8Array(buffer);
-  var fillColor = new Uint8Array(4 * buffer);
-  var strokeColor = new Uint8Array(4 * buffer);
+function createBuffer(buffer, oldBuffer = null) {
+  const transform0 = new Float32Array(3 * buffer);
+  const transform1 = new Float32Array(3 * buffer);
+  const color0 = new Float32Array(4 * buffer);
+  const color1 = new Float32Array(4 * buffer);
+  const color2 = new Float32Array(4 * buffer);
+  const color3 = new Float32Array(4 * buffer);
+  const color4 = new Float32Array(4 * buffer);
+  const frameIndex = new Uint8Array(buffer);
+  const fillColor = new Uint8Array(4 * buffer);
+  const strokeColor = new Uint8Array(4 * buffer);
 
   if (oldBuffer) {
     transform0.set(oldBuffer.transform0, 0);
@@ -12571,29 +10857,23 @@ function createBuffer(buffer) {
 
   return {
     bufferSize: buffer,
-    transform0: transform0,
-    transform1: transform1,
-    color0: color0,
-    color1: color1,
-    color2: color2,
-    color3: color3,
-    color4: color4,
-    frameIndex: frameIndex,
-    fillColor: fillColor,
-    strokeColor: strokeColor
+    transform0,
+    transform1,
+    color0,
+    color1,
+    color2,
+    color3,
+    color4,
+    frameIndex,
+    fillColor,
+    strokeColor
   };
 }
 
-var _default = /*#__PURE__*/function () {
-  function _default(mesh) {
-    var amount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-    var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        _ref$buffer = _ref.buffer,
-        buffer = _ref$buffer === void 0 ? 1000 : _ref$buffer;
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3___default()(this, _default);
-
+/* harmony default export */ __webpack_exports__["default"] = (class {
+  constructor(mesh, amount = 1, {
+    buffer = 1000
+  } = {}) {
     buffer = Math.max(buffer, amount);
     this[_count] = amount;
     this[_mesh] = mesh;
@@ -12606,542 +10886,454 @@ var _default = /*#__PURE__*/function () {
     this.initBuffer();
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4___default()(_default, [{
-    key: "initBuffer",
-    value: function initBuffer() {
-      var offset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var amount = this[_count];
+  initBuffer(offset = 0) {
+    const amount = this[_count];
 
-      for (var i = offset; i < amount; i++) {
-        this[_buffer].transform0.set([1, 0, 0], i * 3);
+    for (let i = offset; i < amount; i++) {
+      this[_buffer].transform0.set([1, 0, 0], i * 3);
 
-        this[_buffer].transform1.set([0, 1, 0], i * 3);
+      this[_buffer].transform1.set([0, 1, 0], i * 3);
 
-        this[_buffer].frameIndex.set([-1], i);
+      this[_buffer].frameIndex.set([-1], i);
 
-        this[_buffer].fillColor.set([0, 0, 0, 0], i * 4);
+      this[_buffer].fillColor.set([0, 0, 0, 0], i * 4);
 
-        this[_buffer].strokeColor.set([0, 0, 0, 0], i * 4);
+      this[_buffer].strokeColor.set([0, 0, 0, 0], i * 4);
 
-        this.setColorTransform(i, null);
+      this.setColorTransform(i, null);
+    }
+  }
+
+  get bufferSize() {
+    return this[_buffer].bufferSize;
+  }
+
+  get mesh() {
+    return this[_mesh];
+  }
+
+  set mesh(mesh) {
+    this[_mesh] = mesh;
+
+    if (this[_textures]) {
+      this.setTextureFrames(this[_textures], this[_textureOptions]);
+    }
+  }
+
+  get hasCloudColor() {
+    return this[_hasCloudColor];
+  }
+
+  get hasCloudFilter() {
+    return this[_hasCloudFilter];
+  }
+
+  _getFilter(idx) {
+    this[_filters][idx] = this[_filters][idx] || [];
+    return this[_filters][idx];
+  }
+
+  getFilter(idx) {
+    return this._getFilter(idx).join(' ');
+  }
+
+  get enableBlend() {
+    return this[_mesh].enableBlend || this[_blend];
+  }
+
+  canIgnore() {
+    return this[_mesh].canIgnore();
+  }
+
+  delete(idx) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    const {
+      transform0,
+      transform1,
+      color0,
+      color1,
+      color2,
+      color3,
+      color4,
+      frameIndex,
+      fillColor,
+      strokeColor
+    } = this[_buffer];
+    transform0.set(transform0.subarray(3 * (idx + 1)), 3 * idx);
+    transform1.set(transform1.subarray(3 * (idx + 1)), 3 * idx);
+    color0.set(color0.subarray(4 * (idx + 1)), 4 * idx);
+    color1.set(color1.subarray(4 * (idx + 1)), 4 * idx);
+    color2.set(color2.subarray(4 * (idx + 1)), 4 * idx);
+    color3.set(color3.subarray(4 * (idx + 1)), 4 * idx);
+    color4.set(color4.subarray(4 * (idx + 1)), 4 * idx);
+    frameIndex.set(frameIndex.subarray(idx + 1), idx);
+    fillColor.set(fillColor.subarray(4 * (idx + 1)), 4 * idx);
+    strokeColor.set(strokeColor.subarray(4 * (idx + 1)), 4 * idx);
+
+    for (const i in this[_filters]) {
+      // eslint-disable-line no-restricted-syntax
+      if (i === idx) {
+        delete this[_filters][i];
+      } else if (i > idx) {
+        this[_filters][i - 1] = this[_filters][i];
+        delete this[_filters][i];
       }
     }
-  }, {
-    key: "_getFilter",
-    value: function _getFilter(idx) {
-      this[_filters][idx] = this[_filters][idx] || [];
-      return this[_filters][idx];
-    }
-  }, {
-    key: "getFilter",
-    value: function getFilter(idx) {
-      return this._getFilter(idx).join(' ');
-    }
-  }, {
-    key: "canIgnore",
-    value: function canIgnore() {
-      return this[_mesh].canIgnore();
-    }
-  }, {
-    key: "delete",
-    value: function _delete(idx) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      var _this$_buffer = this[_buffer],
-          transform0 = _this$_buffer.transform0,
-          transform1 = _this$_buffer.transform1,
-          color0 = _this$_buffer.color0,
-          color1 = _this$_buffer.color1,
-          color2 = _this$_buffer.color2,
-          color3 = _this$_buffer.color3,
-          color4 = _this$_buffer.color4,
-          frameIndex = _this$_buffer.frameIndex,
-          fillColor = _this$_buffer.fillColor,
-          strokeColor = _this$_buffer.strokeColor;
-      transform0.set(transform0.subarray(3 * (idx + 1)), 3 * idx);
-      transform1.set(transform1.subarray(3 * (idx + 1)), 3 * idx);
-      color0.set(color0.subarray(4 * (idx + 1)), 4 * idx);
-      color1.set(color1.subarray(4 * (idx + 1)), 4 * idx);
-      color2.set(color2.subarray(4 * (idx + 1)), 4 * idx);
-      color3.set(color3.subarray(4 * (idx + 1)), 4 * idx);
-      color4.set(color4.subarray(4 * (idx + 1)), 4 * idx);
-      frameIndex.set(frameIndex.subarray(idx + 1), idx);
-      fillColor.set(fillColor.subarray(4 * (idx + 1)), 4 * idx);
-      strokeColor.set(strokeColor.subarray(4 * (idx + 1)), 4 * idx);
 
-      for (var i in this[_filters]) {
-        // eslint-disable-line no-restricted-syntax
-        if (i === idx) {
-          delete this[_filters][i];
-        } else if (i > idx) {
-          this[_filters][i - 1] = this[_filters][i];
-          delete this[_filters][i];
-        }
-      }
+    this[_count]--;
+  }
 
-      this[_count]--;
-    }
-  }, {
-    key: "setColorTransform",
-    value: function setColorTransform(idx, m) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 4;
-      var _this$_buffer2 = this[_buffer],
-          color0 = _this$_buffer2.color0,
-          color1 = _this$_buffer2.color1,
-          color2 = _this$_buffer2.color2,
-          color3 = _this$_buffer2.color3,
-          color4 = _this$_buffer2.color4;
+  setColorTransform(idx, m) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    idx *= 4;
+    const {
+      color0,
+      color1,
+      color2,
+      color3,
+      color4
+    } = this[_buffer];
 
-      if (m != null) {
-        color0.set([m[0], m[5], m[10], m[15]], idx);
-        color1.set([m[1], m[6], m[11], m[16]], idx);
-        color2.set([m[2], m[7], m[12], m[17]], idx);
-        color3.set([m[3], m[8], m[13], m[18]], idx);
-        color4.set([m[4], m[9], m[14], m[19]], idx);
-        this[_blend] = this[_blend] || m[18] < 1.0;
-        this[_hasCloudFilter] = true;
-      } else {
-        color0.set([1, 0, 0, 0], idx);
-        color1.set([0, 1, 0, 0], idx);
-        color2.set([0, 0, 1, 0], idx);
-        color3.set([0, 0, 0, 1], idx);
-        color4.set([0, 0, 0, 0], idx);
-      }
+    if (m != null) {
+      color0.set([m[0], m[5], m[10], m[15]], idx);
+      color1.set([m[1], m[6], m[11], m[16]], idx);
+      color2.set([m[2], m[7], m[12], m[17]], idx);
+      color3.set([m[3], m[8], m[13], m[18]], idx);
+      color4.set([m[4], m[9], m[14], m[19]], idx);
+      this[_blend] = this[_blend] || m[18] < 1.0;
+      this[_hasCloudFilter] = true;
+    } else {
+      color0.set([1, 0, 0, 0], idx);
+      color1.set([0, 1, 0, 0], idx);
+      color2.set([0, 0, 1, 0], idx);
+      color3.set([0, 0, 0, 1], idx);
+      color4.set([0, 0, 0, 0], idx);
+    }
 
-      return this;
-    }
-  }, {
-    key: "getColorTransform",
-    value: function getColorTransform(idx) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 4;
-      var _this$_buffer3 = this[_buffer],
-          color0 = _this$_buffer3.color0,
-          color1 = _this$_buffer3.color1,
-          color2 = _this$_buffer3.color2,
-          color3 = _this$_buffer3.color3,
-          color4 = _this$_buffer3.color4;
-      return [color0[idx], color1[idx], color2[idx], color3[idx], color4[idx], color0[idx + 1], color1[idx + 1], color2[idx + 1], color3[idx + 1], color4[idx + 1], color0[idx + 2], color1[idx + 2], color2[idx + 2], color3[idx + 2], color4[idx + 2], color0[idx + 3], color1[idx + 3], color2[idx + 3], color3[idx + 3], color4[idx + 3]];
-    }
-  }, {
-    key: "transformColor",
-    value: function transformColor(idx, m) {
-      var transform = this.getColorTransform(idx);
-      transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["multiply"])(transform, m);
-      this.setColorTransform(idx, transform);
-      return this;
-    }
-  }, {
-    key: "setFillColor",
-    value: function setFillColor(idx, color) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
-      if (color[3] > 0.0) this[_hasCloudColor] = true;
+    return this;
+  }
 
-      this[_buffer].fillColor.set(color.map(function (c) {
-        return Math.round(255 * c);
-      }), 4 * idx);
-    }
-  }, {
-    key: "setStrokeColor",
-    value: function setStrokeColor(idx, color) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_8__["default"])(color);
-      if (color[3] > 0.0) this[_hasCloudColor] = true;
+  getColorTransform(idx) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    idx *= 4;
+    const {
+      color0,
+      color1,
+      color2,
+      color3,
+      color4
+    } = this[_buffer];
+    return [color0[idx], color1[idx], color2[idx], color3[idx], color4[idx], color0[idx + 1], color1[idx + 1], color2[idx + 1], color3[idx + 1], color4[idx + 1], color0[idx + 2], color1[idx + 2], color2[idx + 2], color3[idx + 2], color4[idx + 2], color0[idx + 3], color1[idx + 3], color2[idx + 3], color3[idx + 3], color4[idx + 3]];
+  }
 
-      this[_buffer].strokeColor.set(color.map(function (c) {
-        return Math.round(255 * c);
-      }), 4 * idx);
-    }
-  }, {
-    key: "getCloudRGBA",
-    value: function getCloudRGBA(idx) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 4;
-      var _this$_buffer4 = this[_buffer],
-          fillColor = _this$_buffer4.fillColor,
-          strokeColor = _this$_buffer4.strokeColor;
-      var _fillColor = [fillColor[idx], fillColor[idx + 1], fillColor[idx + 2], fillColor[idx + 3]];
-      var _strokeColor = [strokeColor[idx], strokeColor[idx + 1], strokeColor[idx + 2], strokeColor[idx + 3]];
-      _fillColor[3] /= 255;
-      _strokeColor[3] /= 255;
-      return {
-        fill: "rgba(".concat(_fillColor.join(), ")"),
-        stroke: "rgba(".concat(_strokeColor.join(), ")")
-      };
-    }
-  }, {
-    key: "grayscale",
-    value: function grayscale(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["grayscale"])(p));
+  transformColor(idx, m) {
+    let transform = this.getColorTransform(idx);
+    transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["multiply"])(transform, m);
+    this.setColorTransform(idx, transform);
+    return this;
+  }
 
-      this._getFilter(idx).push("grayscale(".concat(100 * p, "%)"));
+  setFillColor(idx, color) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_3__["default"])(color);
+    if (color[3] > 0.0) this[_hasCloudColor] = true;
+
+    this[_buffer].fillColor.set(color.map(c => Math.round(255 * c)), 4 * idx);
+  }
+
+  setStrokeColor(idx, color) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_3__["default"])(color);
+    if (color[3] > 0.0) this[_hasCloudColor] = true;
+
+    this[_buffer].strokeColor.set(color.map(c => Math.round(255 * c)), 4 * idx);
+  }
+
+  getCloudRGBA(idx) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    idx *= 4;
+    const {
+      fillColor,
+      strokeColor
+    } = this[_buffer];
+    const _fillColor = [fillColor[idx], fillColor[idx + 1], fillColor[idx + 2], fillColor[idx + 3]];
+    const _strokeColor = [strokeColor[idx], strokeColor[idx + 1], strokeColor[idx + 2], strokeColor[idx + 3]];
+    _fillColor[3] /= 255;
+    _strokeColor[3] /= 255;
+    return {
+      fill: `rgba(${_fillColor.join()})`,
+      stroke: `rgba(${_strokeColor.join()})`
+    };
+  }
+
+  grayscale(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["grayscale"])(p));
+
+    this._getFilter(idx).push(`grayscale(${100 * p}%)`);
+  }
+
+  brightness(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["brightness"])(p));
+
+    this._getFilter(idx).push(`brightness(${100 * p}%)`);
+  }
+
+  saturate(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["saturate"])(p));
+
+    this._getFilter(idx).push(`saturate(${100 * p}%)`);
+  }
+
+  contrast(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["contrast"])(p));
+
+    this._getFilter(idx).push(`contrast(${100 * p}%)`);
+  }
+
+  invert(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["invert"])(p));
+
+    this._getFilter(idx).push(`invert(${100 * p}%)`);
+  }
+
+  sepia(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["sepia"])(p));
+
+    this._getFilter(idx).push(`sepia(${100 * p}%)`);
+  }
+
+  opacity(idx, p) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["opacity"])(p));
+
+    this._getFilter(idx).push(`opacity(${100 * p}%)`);
+  }
+
+  hueRotate(idx, deg) {
+    this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_1__["hueRotate"])(deg));
+
+    this._getFilter(idx).push(`hue-rotate(${deg}deg)`);
+  }
+
+  setTransform(idx, m) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    idx *= 3;
+    if (m == null) m = [1, 0, 0, 1, 0, 0];
+    const {
+      transform0,
+      transform1
+    } = this[_buffer];
+    transform0.set([m[0], m[2], m[4]], idx);
+    transform1.set([m[1], m[3], m[5]], idx);
+    return this;
+  }
+
+  getTransform(idx) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    idx *= 3;
+    const {
+      transform0,
+      transform1
+    } = this[_buffer];
+    const m = [transform0[idx], transform1[idx], transform0[idx + 1], transform1[idx + 1], transform0[idx + 2], transform1[idx + 2]];
+    return m;
+  }
+
+  getTextureFrame(idx) {
+    return this[_textures][this[_buffer].frameIndex[idx]];
+  }
+
+  setTextureFrames(frames = [], options = {}) {
+    if (frames.length > 12) {
+      throw new Error('Max frames exceed. Allow 12 frames.');
     }
-  }, {
-    key: "brightness",
-    value: function brightness(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["brightness"])(p));
 
-      this._getFilter(idx).push("brightness(".concat(100 * p, "%)"));
+    if (frames.length) {
+      const mesh = this[_mesh];
+      mesh.setTexture(frames[0], options);
     }
-  }, {
-    key: "saturate",
-    value: function saturate(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["saturate"])(p));
 
-      this._getFilter(idx).push("saturate(".concat(100 * p, "%)"));
+    this[_textures] = frames;
+    this[_textureOptions] = options;
+  }
+
+  setFrameIndex(idx, frameIndex) {
+    if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
+    const len = this[_textures].length;
+    if (len <= 0) throw new Error('No frames');
+    this[_buffer].frameIndex[idx] = frameIndex % len;
+  }
+
+  get amount() {
+    return this[_count];
+  }
+
+  set amount(value) {
+    const amount = this[_count];
+    if (value === amount) return;
+
+    if (value > this[_buffer].bufferSize) {
+      this[_buffer] = createBuffer(Math.max(value, this[_buffer].bufferSize + 1000), this[_buffer]);
     }
-  }, {
-    key: "contrast",
-    value: function contrast(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["contrast"])(p));
 
-      this._getFilter(idx).push("contrast(".concat(100 * p, "%)"));
+    this[_count] = value;
+
+    if (value > amount) {
+      this.initBuffer(amount);
     }
-  }, {
-    key: "invert",
-    value: function invert(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["invert"])(p));
+  }
 
-      this._getFilter(idx).push("invert(".concat(100 * p, "%)"));
+  get meshData() {
+    const {
+      attributes,
+      cells,
+      positions,
+      textureCoord,
+      uniforms
+    } = this[_mesh].meshData;
+    const frames = this[_textures];
+    const meshData = {
+      attributes: _objectSpread({}, attributes),
+      cells,
+      positions,
+      textureCoord,
+      uniforms: _objectSpread({}, uniforms),
+      instanceCount: this[_count],
+      enableBlend: this.enableBlend
+    };
+
+    if (frames.length) {
+      frames.forEach((frame, i) => {
+        meshData.uniforms[`u_texFrame${i}`] = frame;
+      });
     }
-  }, {
-    key: "sepia",
-    value: function sepia(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["sepia"])(p));
 
-      this._getFilter(idx).push("sepia(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "opacity",
-    value: function opacity(idx, p) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["opacity"])(p));
+    const {
+      transform0,
+      transform1,
+      color0,
+      color1,
+      color2,
+      color3,
+      color4,
+      fillColor,
+      strokeColor,
+      frameIndex
+    } = this[_buffer];
 
-      this._getFilter(idx).push("opacity(".concat(100 * p, "%)"));
-    }
-  }, {
-    key: "hueRotate",
-    value: function hueRotate(idx, deg) {
-      this.transformColor(idx, Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_6__["hueRotate"])(deg));
-
-      this._getFilter(idx).push("hue-rotate(".concat(deg, "deg)"));
-    }
-  }, {
-    key: "setTransform",
-    value: function setTransform(idx, m) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 3;
-      if (m == null) m = [1, 0, 0, 1, 0, 0];
-      var _this$_buffer5 = this[_buffer],
-          transform0 = _this$_buffer5.transform0,
-          transform1 = _this$_buffer5.transform1;
-      transform0.set([m[0], m[2], m[4]], idx);
-      transform1.set([m[1], m[3], m[5]], idx);
-      return this;
-    }
-  }, {
-    key: "getTransform",
-    value: function getTransform(idx) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      idx *= 3;
-      var _this$_buffer6 = this[_buffer],
-          transform0 = _this$_buffer6.transform0,
-          transform1 = _this$_buffer6.transform1;
-      var m = [transform0[idx], transform1[idx], transform0[idx + 1], transform1[idx + 1], transform0[idx + 2], transform1[idx + 2]];
-      return m;
-    }
-  }, {
-    key: "getTextureFrame",
-    value: function getTextureFrame(idx) {
-      return this[_textures][this[_buffer].frameIndex[idx]];
-    }
-  }, {
-    key: "setTextureFrames",
-    value: function setTextureFrames() {
-      var frames = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      if (frames.length > 12) {
-        throw new Error('Max frames exceed. Allow 12 frames.');
-      }
-
-      if (frames.length) {
-        var mesh = this[_mesh];
-        mesh.setTexture(frames[0], options);
-      }
-
-      this[_textures] = frames;
-      this[_textureOptions] = options;
-    }
-  }, {
-    key: "setFrameIndex",
-    value: function setFrameIndex(idx, frameIndex) {
-      if (idx >= this[_count] || idx < 0) throw new Error('Out of range.');
-      var len = this[_textures].length;
-      if (len <= 0) throw new Error('No frames');
-      this[_buffer].frameIndex[idx] = frameIndex % len;
-    }
-  }, {
-    key: "setProgram",
-    value: function setProgram(program) {
-      this[_mesh].setProgram(program);
-    }
-  }, {
-    key: "transform",
-    value: function transform(idx, m) {
-      var transform = this.getTransform(idx);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), transform, m);
-      this.setTransform(idx, m);
-      return this;
-    }
-  }, {
-    key: "translate",
-    value: function translate(idx, _ref2) {
-      var _ref3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref2, 2),
-          x = _ref3[0],
-          y = _ref3[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "rotate",
-    value: function rotate(idx, rad) {
-      var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref4, 2),
-          ox = _ref5[0],
-          oy = _ref5[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "scale",
-    value: function scale(idx, _ref6) {
-      var _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref6, 2),
-          x = _ref7[0],
-          _ref7$ = _ref7[1],
-          y = _ref7$ === void 0 ? x : _ref7$;
-
-      var _ref8 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref9 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref8, 2),
-          ox = _ref9[0],
-          oy = _ref9[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "skew",
-    value: function skew(idx, _ref10) {
-      var _ref11 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref10, 2),
-          x = _ref11[0],
-          _ref11$ = _ref11[1],
-          y = _ref11$ === void 0 ? x : _ref11$;
-
-      var _ref12 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref13 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref12, 2),
-          ox = _ref13[0],
-          oy = _ref13[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform(idx, m);
-    }
-  }, {
-    key: "isPointCollision",
-    value: function isPointCollision(idx, _ref14) {
-      var _this$_mesh;
-
-      var _ref15 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref14, 2),
-          x = _ref15[0],
-          y = _ref15[1];
-
-      var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'both';
-      var m = this.getTransform(idx);
-      var p = Object(_utils_math__WEBPACK_IMPORTED_MODULE_7__["transformPoint"])([x, y], gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), m));
-      return (_this$_mesh = this[_mesh]).isPointCollision.apply(_this$_mesh, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(p).concat([type]));
-    }
-  }, {
-    key: "isPointInFill",
-    value: function isPointInFill(idx, _ref16) {
-      var _ref17 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref16, 2),
-          x = _ref17[0],
-          y = _ref17[1];
-
-      return this.isPointCollision(idx, [x, y], 'fill');
-    }
-  }, {
-    key: "isPointInStroke",
-    value: function isPointInStroke(idx, _ref18) {
-      var _ref19 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_ref18, 2),
-          x = _ref19[0],
-          y = _ref19[1];
-
-      return this.isPointCollision(idx, [x, y], 'stroke');
-    }
-  }, {
-    key: "bufferSize",
-    get: function get() {
-      return this[_buffer].bufferSize;
-    }
-  }, {
-    key: "mesh",
-    get: function get() {
-      return this[_mesh];
-    },
-    set: function set(mesh) {
-      this[_mesh] = mesh;
-
-      if (this[_textures]) {
-        this.setTextureFrames(this[_textures], this[_textureOptions]);
-      }
-    }
-  }, {
-    key: "hasCloudColor",
-    get: function get() {
-      return this[_hasCloudColor];
-    }
-  }, {
-    key: "hasCloudFilter",
-    get: function get() {
-      return this[_hasCloudFilter];
-    }
-  }, {
-    key: "enableBlend",
-    get: function get() {
-      return this[_mesh].enableBlend || this[_blend];
-    }
-  }, {
-    key: "amount",
-    get: function get() {
-      return this[_count];
-    },
-    set: function set(value) {
-      var amount = this[_count];
-      if (value === amount) return;
-
-      if (value > this[_buffer].bufferSize) {
-        this[_buffer] = createBuffer(Math.max(value, this[_buffer].bufferSize + 1000), this[_buffer]);
-      }
-
-      this[_count] = value;
-
-      if (value > amount) {
-        this.initBuffer(amount);
-      }
-    }
-  }, {
-    key: "meshData",
-    get: function get() {
-      var _this$_mesh$meshData = this[_mesh].meshData,
-          attributes = _this$_mesh$meshData.attributes,
-          cells = _this$_mesh$meshData.cells,
-          positions = _this$_mesh$meshData.positions,
-          textureCoord = _this$_mesh$meshData.textureCoord,
-          uniforms = _this$_mesh$meshData.uniforms;
-      var frames = this[_textures];
-      var meshData = {
-        attributes: _objectSpread({}, attributes),
-        cells: cells,
-        positions: positions,
-        textureCoord: textureCoord,
-        uniforms: _objectSpread({}, uniforms),
-        instanceCount: this[_count],
-        enableBlend: this.enableBlend
-      };
-
-      if (frames.length) {
-        frames.forEach(function (frame, i) {
-          meshData.uniforms["u_texFrame".concat(i)] = frame;
-        });
-      }
-
-      var _this$_buffer7 = this[_buffer],
-          transform0 = _this$_buffer7.transform0,
-          transform1 = _this$_buffer7.transform1,
-          color0 = _this$_buffer7.color0,
-          color1 = _this$_buffer7.color1,
-          color2 = _this$_buffer7.color2,
-          color3 = _this$_buffer7.color3,
-          color4 = _this$_buffer7.color4,
-          fillColor = _this$_buffer7.fillColor,
-          strokeColor = _this$_buffer7.strokeColor,
-          frameIndex = _this$_buffer7.frameIndex;
-
-      if (this[_mesh].uniforms.u_texSampler) {
-        meshData.attributes.a_frameIndex = {
-          data: frameIndex,
-          divisor: 1
-        };
-      } // console.log(this[_mesh].meshData)
-
-
-      meshData.attributes.a_transform0 = {
-        data: transform0,
+    if (this[_mesh].uniforms.u_texSampler) {
+      meshData.attributes.a_frameIndex = {
+        data: frameIndex,
         divisor: 1
       };
-      meshData.attributes.a_transform1 = {
-        data: transform1,
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud0 = {
-        data: color0,
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud1 = {
-        data: color1,
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud2 = {
-        data: color2,
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud3 = {
-        data: color3,
-        divisor: 1
-      };
-      meshData.attributes.a_colorCloud4 = {
-        data: color4,
-        divisor: 1
-      };
+    } // console.log(this[_mesh].meshData)
 
-      if (this.hasCloudColor) {
-        meshData.attributes.a_fillCloudColor = {
-          data: fillColor,
-          divisor: 1
-        };
-        meshData.attributes.a_strokeCloudColor = {
-          data: strokeColor,
-          divisor: 1
-        };
-      }
 
-      return meshData;
+    meshData.attributes.a_transform0 = {
+      data: transform0,
+      divisor: 1
+    };
+    meshData.attributes.a_transform1 = {
+      data: transform1,
+      divisor: 1
+    };
+    meshData.attributes.a_colorCloud0 = {
+      data: color0,
+      divisor: 1
+    };
+    meshData.attributes.a_colorCloud1 = {
+      data: color1,
+      divisor: 1
+    };
+    meshData.attributes.a_colorCloud2 = {
+      data: color2,
+      divisor: 1
+    };
+    meshData.attributes.a_colorCloud3 = {
+      data: color3,
+      divisor: 1
+    };
+    meshData.attributes.a_colorCloud4 = {
+      data: color4,
+      divisor: 1
+    };
+
+    if (this.hasCloudColor) {
+      meshData.attributes.a_fillCloudColor = {
+        data: fillColor,
+        divisor: 1
+      };
+      meshData.attributes.a_strokeCloudColor = {
+        data: strokeColor,
+        divisor: 1
+      };
     }
-  }, {
-    key: "program",
-    get: function get() {
-      return this[_mesh].program;
-    }
-  }]);
 
-  return _default;
-}();
+    return meshData;
+  }
 
+  setProgram(program) {
+    this[_mesh].setProgram(program);
+  }
 
+  get program() {
+    return this[_mesh].program;
+  }
+
+  transform(idx, m) {
+    const transform = this.getTransform(idx);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), transform, m);
+    this.setTransform(idx, m);
+    return this;
+  }
+
+  translate(idx, [x, y]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+    return this.transform(idx, m);
+  }
+
+  rotate(idx, rad, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.transform(idx, m);
+  }
+
+  scale(idx, [x, y = x], [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.transform(idx, m);
+  }
+
+  skew(idx, [x, y = x], [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.transform(idx, m);
+  }
+
+  isPointCollision(idx, [x, y], type = 'both') {
+    const m = this.getTransform(idx);
+    const p = Object(_utils_math__WEBPACK_IMPORTED_MODULE_2__["transformPoint"])([x, y], gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), m));
+    return this[_mesh].isPointCollision(...p, type);
+  }
+
+  isPointInFill(idx, [x, y]) {
+    return this.isPointCollision(idx, [x, y], 'fill');
+  }
+
+  isPointInStroke(idx, [x, y]) {
+    return this.isPointCollision(idx, [x, y], 'stroke');
+  }
+
+});
 
 /***/ }),
-/* 46 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13155,38 +11347,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sepia", function() { return sepia; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "opacity", function() { return opacity; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hueRotate", function() { return hueRotate; });
-/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42);
+/* harmony import */ var _math__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 function multiply(a, b) {
-  var out = [];
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3],
-      a04 = a[4]; // eslint-disable-line one-var-declaration-per-line
+  const out = [];
+  const a00 = a[0],
+        a01 = a[1],
+        a02 = a[2],
+        a03 = a[3],
+        a04 = a[4]; // eslint-disable-line one-var-declaration-per-line
 
-  var a10 = a[5],
-      a11 = a[6],
-      a12 = a[7],
-      a13 = a[8],
-      a14 = a[9]; // eslint-disable-line one-var-declaration-per-line
+  const a10 = a[5],
+        a11 = a[6],
+        a12 = a[7],
+        a13 = a[8],
+        a14 = a[9]; // eslint-disable-line one-var-declaration-per-line
 
-  var a20 = a[10],
-      a21 = a[11],
-      a22 = a[12],
-      a23 = a[13],
-      a24 = a[14]; // eslint-disable-line one-var-declaration-per-line
+  const a20 = a[10],
+        a21 = a[11],
+        a22 = a[12],
+        a23 = a[13],
+        a24 = a[14]; // eslint-disable-line one-var-declaration-per-line
 
-  var a30 = a[15],
-      a31 = a[16],
-      a32 = a[17],
-      a33 = a[18],
-      a34 = a[19]; // eslint-disable-line one-var-declaration-per-line
+  const a30 = a[15],
+        a31 = a[16],
+        a32 = a[17],
+        a33 = a[18],
+        a34 = a[19]; // eslint-disable-line one-var-declaration-per-line
   // Cache only the current line of the second matrix
 
-  var b0 = b[0],
+  let b0 = b[0],
       b1 = b[1],
       b2 = b[2],
       b3 = b[3],
@@ -13239,9 +11431,9 @@ function multiply(a, b) {
 
 function grayscale(p) {
   p = Object(_math__WEBPACK_IMPORTED_MODULE_0__["clamp"])(0, 1, p);
-  var r = 0.2126 * p;
-  var g = 0.7152 * p;
-  var b = 0.0722 * p;
+  const r = 0.2126 * p;
+  const g = 0.7152 * p;
+  const b = 0.0722 * p;
   return [r + 1 - p, g, b, 0, 0, r, g + 1 - p, b, 0, 0, r, g, b + 1 - p, 0, 0, 0, 0, 0, 1, 0];
 }
 function brightness(p) {
@@ -13249,17 +11441,17 @@ function brightness(p) {
 }
 function saturate(p) {
   // p = clamp(0, 1, p);
-  var r = 0.2126 * (1 - p);
-  var g = 0.7152 * (1 - p);
-  var b = 0.0722 * (1 - p);
+  const r = 0.2126 * (1 - p);
+  const g = 0.7152 * (1 - p);
+  const b = 0.0722 * (1 - p);
   return [r + p, g, b, 0, 0, r, g + p, b, 0, 0, r, g, b + p, 0, 0, 0, 0, 0, 1, 0];
 }
 function contrast(p) {
-  var d = 0.5 * (1 - p);
+  const d = 0.5 * (1 - p);
   return [p, 0, 0, 0, d, 0, p, 0, 0, d, 0, 0, p, 0, d, 0, 0, 0, 1, 0];
 }
 function invert(p) {
-  var d = 1 - 2 * p;
+  const d = 1 - 2 * p;
   return [d, 0, 0, 0, p, 0, d, 0, 0, p, 0, 0, d, 0, p, 0, 0, 0, 1, 0];
 }
 function sepia(p) {
@@ -13269,35 +11461,35 @@ function opacity(p) {
   return [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, p, 0];
 }
 function hueRotate(deg) {
-  var rotation = deg / 180 * Math.PI;
-  var cos = Math.cos(rotation),
-      sin = Math.sin(rotation),
-      lumR = 0.2126,
-      lumG = 0.7152,
-      lumB = 0.0722;
+  const rotation = deg / 180 * Math.PI;
+  const cos = Math.cos(rotation),
+        sin = Math.sin(rotation),
+        lumR = 0.2126,
+        lumG = 0.7152,
+        lumB = 0.0722;
   return [lumR + cos * (1 - lumR) + sin * -lumR, lumG + cos * -lumG + sin * -lumG, lumB + cos * -lumB + sin * (1 - lumB), 0, 0, lumR + cos * -lumR + sin * 0.143, lumG + cos * (1 - lumG) + sin * 0.140, lumB + cos * -lumB + sin * -0.283, 0, 0, lumR + cos * -lumR + sin * -(1 - lumR), lumG + cos * -lumG + sin * lumG, lumB + cos * (1 - lumB) + sin * lumB, 0, 0, 0, 0, 0, 1, 0];
 }
 
 /***/ }),
-/* 47 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return parseColor; });
-/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(48);
+/* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var color_rgba__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(color_rgba__WEBPACK_IMPORTED_MODULE_0__);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 function parseColor(colorStr) {
-  var ret = color_rgba__WEBPACK_IMPORTED_MODULE_0___default()(colorStr);
+  const ret = color_rgba__WEBPACK_IMPORTED_MODULE_0___default()(colorStr);
   if (!ret || !ret.length) throw new TypeError('Invalid color value.');
   return [ret[0] / 255, ret[1] / 255, ret[2] / 255, ret[3]];
 }
 
 /***/ }),
-/* 48 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13305,9 +11497,9 @@ function parseColor(colorStr) {
 
 
 
-var parse = __webpack_require__(49)
-var hsl = __webpack_require__(53)
-var clamp = __webpack_require__(55)
+var parse = __webpack_require__(32)
+var hsl = __webpack_require__(36)
+var clamp = __webpack_require__(38)
 
 module.exports = function rgba (color) {
 	var values, i, l
@@ -13333,7 +11525,7 @@ module.exports = function rgba (color) {
 
 
 /***/ }),
-/* 49 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13343,9 +11535,9 @@ module.exports = function rgba (color) {
 
 
 
-var names = __webpack_require__(50)
-var isObject = __webpack_require__(51)
-var defined = __webpack_require__(52)
+var names = __webpack_require__(33)
+var isObject = __webpack_require__(34)
+var defined = __webpack_require__(35)
 
 module.exports = parse
 
@@ -13513,10 +11705,10 @@ function parse (cstr) {
 	}
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(38)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(21)))
 
 /***/ }),
-/* 50 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13675,7 +11867,7 @@ module.exports = {
 
 
 /***/ }),
-/* 51 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13689,7 +11881,7 @@ module.exports = function (x) {
 
 
 /***/ }),
-/* 52 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = function () {
@@ -13700,7 +11892,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 53 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13709,7 +11901,7 @@ module.exports = function () {
  */
 
 
-var rgb = __webpack_require__(54);
+var rgb = __webpack_require__(37);
 
 module.exports = {
 	name: 'hsl',
@@ -13814,7 +12006,7 @@ rgb.hsl = function(rgb) {
 
 
 /***/ }),
-/* 54 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13835,7 +12027,7 @@ module.exports = {
 
 
 /***/ }),
-/* 55 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = clamp
@@ -13848,36 +12040,23 @@ function clamp(value, min, max) {
 
 
 /***/ }),
-/* 56 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Figure2D; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57);
-/* harmony import */ var _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(58);
-/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(parse_svg_path__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(59);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(60);
-/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(abs_svg_path__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(61);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(63);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(70);
-/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(72);
-
-
-
-
-
+/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
+/* harmony import */ var parse_svg_path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(parse_svg_path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42);
+/* harmony import */ var abs_svg_path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(abs_svg_path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _normalize_svg_path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(43);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(45);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(52);
+/* harmony import */ var _utils_ellipse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
@@ -13888,286 +12067,219 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 
-var _contours = Symbol('contours');
+const _contours = Symbol('contours');
 
-var _path = Symbol('path');
+const _path = Symbol('path');
 
-var _simplify = Symbol('simplify');
+const _simplify = Symbol('simplify');
 
-var _scale = Symbol('scale');
+const _scale = Symbol('scale');
 
-var PI2 = 2 * Math.PI;
-
-var Figure2D = /*#__PURE__*/function () {
-  function Figure2D() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Figure2D);
-
+const PI2 = 2 * Math.PI;
+class Figure2D {
+  constructor(options = {}) {
     if (typeof options === 'string') options = {
       path: options
     };
-    if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(options.path);else this[_path] = [];
+    if (options.path) this[_path] = parse_svg_path__WEBPACK_IMPORTED_MODULE_0___default()(options.path);else this[_path] = [];
     this[_contours] = null;
     this[_simplify] = options.simplify != null ? options.simplify : 0;
     this[_scale] = options.scale != null ? options.scale : 2;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Figure2D, [{
-    key: "normalize",
-    value: function normalize() {
-      var _this$_path;
+  get contours() {
+    let ret = null;
 
-      var x0 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var y0 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    if (!this[_contours] && this[_path]) {
+      const path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_3__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_2___default()(this[_path]));
+      this[_contours] = _svg_path_contours__WEBPACK_IMPORTED_MODULE_4___default()(path, this[_scale], this[_simplify]);
+      this[_contours].path = path;
+      this[_contours].simplify = this[_simplify];
+      this[_contours].scale = this[_scale];
+    }
 
-      var path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default()(this[_path])).map(function (_ref) {
-        var _ref2 = _babel_runtime_helpers_toArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref),
-            cmd = _ref2[0],
-            args = _ref2.slice(1);
+    if (this[_contours]) {
+      ret = this[_contours].map(c => [...c]);
+      ret.path = this[_contours].path;
+      ret.simplify = this[_contours].simplify;
+      ret.scale = this[_contours].scale;
+    }
 
-        var transformed = [cmd];
+    return ret;
+  }
 
-        for (var i = 0; i < args.length; i += 2) {
-          var x = args[i] - x0,
+  get path() {
+    return this[_path];
+  }
+
+  get simplify() {
+    return this[_simplify];
+  }
+
+  get boundingBox() {
+    const contours = this.contours;
+
+    if (contours && contours.length) {
+      const points = contours.reduce((a, b) => [...a, ...b]);
+      return bound_points__WEBPACK_IMPORTED_MODULE_1___default()(points);
+    }
+
+    return [[0, 0], [0, 0]];
+  }
+
+  get boundingCenter() {
+    const bound = this.boundingBox;
+
+    if (bound) {
+      return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
+    }
+
+    return [0, 0];
+  }
+
+  normalize(x0 = 0, y0 = 0) {
+    const path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_3__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_2___default()(this[_path])).map(([cmd, ...args]) => {
+      const transformed = [cmd];
+
+      for (let i = 0; i < args.length; i += 2) {
+        const x = args[i] - x0,
               y = args[i + 1] - y0;
-          transformed.push(x, y);
-        }
-
-        return transformed;
-      });
-
-      this.beginPath();
-
-      (_this$_path = this[_path]).push.apply(_this$_path, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(path));
-
-      return this;
-    }
-  }, {
-    key: "getPointAtLength",
-    value: function getPointAtLength(length) {
-      if (this.contours) {
-        return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_9__["getPointAtLength"])(this[_contours], length);
+        transformed.push(x, y);
       }
 
-      return null;
+      return transformed;
+    });
+    this.beginPath();
+
+    this[_path].push(...path);
+
+    return this;
+  }
+
+  getPointAtLength(length) {
+    if (this.contours) {
+      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_5__["getPointAtLength"])(this[_contours], length);
     }
-  }, {
-    key: "getTotalLength",
-    value: function getTotalLength() {
-      if (this.contours) {
-        return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_9__["getTotalLength"])(this[_contours]);
-      }
 
-      return 0;
+    return null;
+  }
+
+  getTotalLength() {
+    if (this.contours) {
+      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_5__["getTotalLength"])(this[_contours]);
     }
-  }, {
-    key: "addPath",
-    value: function addPath(path) {
-      var _this$_path2;
 
-      this[_contours] = null;
-      if (typeof path === 'string') path = parse_svg_path__WEBPACK_IMPORTED_MODULE_4___default()(path);
+    return 0;
+  }
 
-      (_this$_path2 = this[_path]).push.apply(_this$_path2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(path));
+  addPath(path) {
+    this[_contours] = null;
+    if (typeof path === 'string') path = parse_svg_path__WEBPACK_IMPORTED_MODULE_0___default()(path);
+
+    this[_path].push(...path);
+  }
+
+  beginPath() {
+    this[_path] = [];
+    this[_contours] = null;
+  }
+
+  clear() {
+    this.beginPath();
+  }
+
+  ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise = 0) {
+    startAngle += rotation;
+    endAngle += rotation;
+    if (radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
+
+    if (endAngle < startAngle) {
+      endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
     }
-  }, {
-    key: "beginPath",
-    value: function beginPath() {
-      this[_path] = [];
-      this[_contours] = null;
+
+    if (endAngle - startAngle > PI2) {
+      endAngle = startAngle + PI2;
     }
-  }, {
-    key: "clear",
-    value: function clear() {
-      this.beginPath();
+
+    const delta = endAngle - startAngle;
+
+    if (delta >= PI2) {
+      endAngle -= 1e-3;
     }
-  }, {
-    key: "ellipse",
-    value: function ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle) {
-      var anticlockwise = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0;
-      startAngle += rotation;
-      endAngle += rotation;
-      if (radiusX <= 0 || radiusY <= 0 || endAngle === startAngle) return;
 
-      if (endAngle < startAngle) {
-        endAngle = startAngle + PI2 + (endAngle - startAngle) % PI2;
-      }
+    let path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
+    const startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_6__["getPoint"])(x, y, radiusX, radiusY, startAngle);
+    const endPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_6__["getPoint"])(x, y, radiusX, radiusY, endAngle);
+    const sweepFlag = Number(!anticlockwise);
+    let largeArcFlag = delta > Math.PI ? 1 : 0;
+    if (anticlockwise) largeArcFlag = 1 - largeArcFlag;
+    path += startPoint.join(' ');
+    path += `A${radiusX} ${radiusY} 0 ${largeArcFlag} ${sweepFlag} ${endPoint.join(' ')}`;
 
-      if (endAngle - startAngle > PI2) {
-        endAngle = startAngle + PI2;
-      }
-
-      var delta = endAngle - startAngle;
-
-      if (delta >= PI2) {
-        endAngle -= 1e-3;
-      }
-
-      var path = this[_path].length > 0 && delta < PI2 ? 'L' : 'M';
-      var startPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_10__["getPoint"])(x, y, radiusX, radiusY, startAngle);
-      var endPoint = Object(_utils_ellipse__WEBPACK_IMPORTED_MODULE_10__["getPoint"])(x, y, radiusX, radiusY, endAngle);
-      var sweepFlag = Number(!anticlockwise);
-      var largeArcFlag = delta > Math.PI ? 1 : 0;
-      if (anticlockwise) largeArcFlag = 1 - largeArcFlag;
-      path += startPoint.join(' ');
-      path += "A".concat(radiusX, " ").concat(radiusY, " 0 ").concat(largeArcFlag, " ").concat(sweepFlag, " ").concat(endPoint.join(' '));
-
-      if (delta >= PI2) {
-        path += 'Z';
-      }
-
-      this.addPath(path);
+    if (delta >= PI2) {
+      path += 'Z';
     }
-  }, {
-    key: "arc",
-    value: function arc(x, y, radius, startAngle, endAngle) {
-      var anticlockwise = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-      return this.ellipse(x, y, radius, radius, 0, startAngle, endAngle, anticlockwise);
+
+    this.addPath(path);
+  }
+
+  arc(x, y, radius, startAngle, endAngle, anticlockwise = 0) {
+    return this.ellipse(x, y, radius, radius, 0, startAngle, endAngle, anticlockwise);
+  }
+
+  arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
+    this[_contours] = null;
+
+    this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
+  }
+
+  moveTo(x, y) {
+    this[_contours] = null;
+
+    this[_path].push(['M', x, y]);
+  }
+
+  lineTo(x, y) {
+    this[_contours] = null;
+
+    this[_path].push(['L', x, y]);
+  }
+
+  bezierCurveTo(x1, y1, x2, y2, x, y) {
+    this[_contours] = null;
+
+    this[_path].push(['C', x1, y1, x2, y2, x, y]);
+  }
+
+  quadraticCurveTo(x1, y1, x, y) {
+    this[_contours] = null;
+
+    this[_path].push(['Q', x1, y1, x, y]);
+  }
+
+  rect(x, y, width, height) {
+    const path = `M${x} ${y}L${x + width} ${y}L${x + width} ${y + height}L${x} ${y + height}Z`;
+    this.addPath(path);
+  }
+
+  closePath() {
+    this[_contours] = null;
+    let lastPath = [];
+    const len = this[_path].length;
+
+    if (len > 0) {
+      lastPath = this[_path][len - 1];
     }
-  }, {
-    key: "arcTo",
-    value: function arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) {
-      this[_contours] = null;
 
-      this[_path].push(['A', rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y]);
+    if (lastPath[0] !== 'Z' && lastPath[0] !== 'z') {
+      this[_path].push(['Z']);
     }
-  }, {
-    key: "moveTo",
-    value: function moveTo(x, y) {
-      this[_contours] = null;
+  }
 
-      this[_path].push(['M', x, y]);
-    }
-  }, {
-    key: "lineTo",
-    value: function lineTo(x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['L', x, y]);
-    }
-  }, {
-    key: "bezierCurveTo",
-    value: function bezierCurveTo(x1, y1, x2, y2, x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['C', x1, y1, x2, y2, x, y]);
-    }
-  }, {
-    key: "quadraticCurveTo",
-    value: function quadraticCurveTo(x1, y1, x, y) {
-      this[_contours] = null;
-
-      this[_path].push(['Q', x1, y1, x, y]);
-    }
-  }, {
-    key: "rect",
-    value: function rect(x, y, width, height) {
-      var path = "M".concat(x, " ").concat(y, "L").concat(x + width, " ").concat(y, "L").concat(x + width, " ").concat(y + height, "L").concat(x, " ").concat(y + height, "Z");
-      this.addPath(path);
-    }
-  }, {
-    key: "closePath",
-    value: function closePath() {
-      this[_contours] = null;
-      var lastPath = [];
-      var len = this[_path].length;
-
-      if (len > 0) {
-        lastPath = this[_path][len - 1];
-      }
-
-      if (lastPath[0] !== 'Z' && lastPath[0] !== 'z') {
-        this[_path].push(['Z']);
-      }
-    }
-  }, {
-    key: "contours",
-    get: function get() {
-      var ret = null;
-
-      if (!this[_contours] && this[_path]) {
-        var path = Object(_normalize_svg_path__WEBPACK_IMPORTED_MODULE_7__["default"])(abs_svg_path__WEBPACK_IMPORTED_MODULE_6___default()(this[_path]));
-
-        this[_contours] = _svg_path_contours__WEBPACK_IMPORTED_MODULE_8___default()(path, this[_scale], this[_simplify]);
-        this[_contours].path = path;
-        this[_contours].simplify = this[_simplify];
-        this[_contours].scale = this[_scale];
-      }
-
-      if (this[_contours]) {
-        ret = this[_contours].map(function (c) {
-          return _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(c);
-        });
-        ret.path = this[_contours].path;
-        ret.simplify = this[_contours].simplify;
-        ret.scale = this[_contours].scale;
-      }
-
-      return ret;
-    }
-  }, {
-    key: "path",
-    get: function get() {
-      return this[_path];
-    }
-  }, {
-    key: "simplify",
-    get: function get() {
-      return this[_simplify];
-    }
-  }, {
-    key: "boundingBox",
-    get: function get() {
-      var contours = this.contours;
-
-      if (contours && contours.length) {
-        var points = contours.reduce(function (a, b) {
-          return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(a), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(b));
-        });
-        return bound_points__WEBPACK_IMPORTED_MODULE_5___default()(points);
-      }
-
-      return [[0, 0], [0, 0]];
-    }
-  }, {
-    key: "boundingCenter",
-    get: function get() {
-      var bound = this.boundingBox;
-
-      if (bound) {
-        return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
-      }
-
-      return [0, 0];
-    }
-  }]);
-
-  return Figure2D;
-}();
-
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithHoles = __webpack_require__(14);
-
-var iterableToArray = __webpack_require__(21);
-
-var unsupportedIterableToArray = __webpack_require__(16);
-
-var nonIterableRest = __webpack_require__(18);
-
-function _toArray(arr) {
-  return arrayWithHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableRest();
 }
 
-module.exports = _toArray;
-
 /***/ }),
-/* 58 */
+/* 40 */
 /***/ (function(module, exports) {
 
 
@@ -14230,7 +12342,7 @@ function parseValues(args) {
 
 
 /***/ }),
-/* 59 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14258,7 +12370,7 @@ function findBounds(points) {
 }
 
 /***/ }),
-/* 60 */
+/* 42 */
 /***/ (function(module, exports) {
 
 
@@ -14331,17 +12443,13 @@ function absolutize(path){
 
 
 /***/ }),
-/* 61 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalize; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _a2c__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62);
-
-
+/* harmony import */ var _a2c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 // https://github.com/jkroso/normalize-svg-path
@@ -14372,26 +12480,17 @@ function normalize(path) {
         break;
 
       case 'A':
-        var curves = Object(_a2c__WEBPACK_IMPORTED_MODULE_1__["default"])(x, y, seg[6], seg[7], seg[4], seg[5], seg[1], seg[2], seg[3]);
+        var curves = Object(_a2c__WEBPACK_IMPORTED_MODULE_0__["default"])(x, y, seg[6], seg[7], seg[4], seg[5], seg[1], seg[2], seg[3]);
         if (!curves.length) continue;
-        curves = curves.map(function (curve) {
-          var _curve = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(curve, 8),
-              x0 = _curve[0],
-              y0 = _curve[1],
-              x1 = _curve[2],
-              y1 = _curve[3],
-              x2 = _curve[4],
-              y2 = _curve[5],
-              x = _curve[6],
-              y = _curve[7];
-
+        curves = curves.map(curve => {
+          const [x0, y0, x1, y1, x2, y2, x, y] = curve;
           return {
-            x1: x1,
-            y1: y1,
-            x2: x2,
-            y2: y2,
-            x: x,
-            y: y
+            x1,
+            y1,
+            x2,
+            y2,
+            x,
+            y
           };
         });
 
@@ -14482,7 +12581,7 @@ function quadratic(x1, y1, cx, cy, x2, y2) {
 /* eslint-enable */
 
 /***/ }),
-/* 62 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14494,7 +12593,7 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 //
 // Convert an arc to a sequence of cubic bézier curves
 //
-var TAU = Math.PI * 2;
+const TAU = Math.PI * 2;
 /* eslint-disable space-infix-ops */
 // Calculate an angle between two unit vectors
 //
@@ -14503,8 +12602,8 @@ var TAU = Math.PI * 2;
 //
 
 function unit_vector_angle(ux, uy, vx, vy) {
-  var sign = ux * vy - uy * vx < 0 ? -1 : 1;
-  var dot = ux * vx + uy * vy; // Add this to work with arbitrary vectors:
+  const sign = ux * vy - uy * vx < 0 ? -1 : 1;
+  let dot = ux * vx + uy * vy; // Add this to work with arbitrary vectors:
   // dot /= Math.sqrt(ux * ux + uy * uy) * Math.sqrt(vx * vx + vy * vy);
   // rounding errors, e.g. -1.0000000000000002 can screw up this
 
@@ -14531,18 +12630,18 @@ function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
   // points. After that, rotate it to line up ellipse axes with coordinate
   // axes.
   //
-  var x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
-  var y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
-  var rx_sq = rx * rx;
-  var ry_sq = ry * ry;
-  var x1p_sq = x1p * x1p;
-  var y1p_sq = y1p * y1p; // Step 2.
+  const x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
+  const y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
+  const rx_sq = rx * rx;
+  const ry_sq = ry * ry;
+  const x1p_sq = x1p * x1p;
+  const y1p_sq = y1p * y1p; // Step 2.
   //
   // Compute coordinates of the centre of this ellipse (cx', cy')
   // in the new coordinate system.
   //
 
-  var radicant = rx_sq * ry_sq - rx_sq * y1p_sq - ry_sq * x1p_sq;
+  let radicant = rx_sq * ry_sq - rx_sq * y1p_sq - ry_sq * x1p_sq;
 
   if (radicant < 0) {
     // due to rounding errors it might be e.g. -1.3877787807814457e-17
@@ -14551,25 +12650,25 @@ function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
 
   radicant /= rx_sq * y1p_sq + ry_sq * x1p_sq;
   radicant = Math.sqrt(radicant) * (fa === fs ? -1 : 1);
-  var cxp = radicant * rx / ry * y1p;
-  var cyp = radicant * -ry / rx * x1p; // Step 3.
+  const cxp = radicant * rx / ry * y1p;
+  const cyp = radicant * -ry / rx * x1p; // Step 3.
   //
   // Transform back to get centre coordinates (cx, cy) in the original
   // coordinate system.
   //
 
-  var cx = cos_phi * cxp - sin_phi * cyp + (x1 + x2) / 2;
-  var cy = sin_phi * cxp + cos_phi * cyp + (y1 + y2) / 2; // Step 4.
+  const cx = cos_phi * cxp - sin_phi * cyp + (x1 + x2) / 2;
+  const cy = sin_phi * cxp + cos_phi * cyp + (y1 + y2) / 2; // Step 4.
   //
   // Compute angles (theta1, delta_theta).
   //
 
-  var v1x = (x1p - cxp) / rx;
-  var v1y = (y1p - cyp) / ry;
-  var v2x = (-x1p - cxp) / rx;
-  var v2y = (-y1p - cyp) / ry;
-  var theta1 = unit_vector_angle(1, 0, v1x, v1y);
-  var delta_theta = unit_vector_angle(v1x, v1y, v2x, v2y);
+  const v1x = (x1p - cxp) / rx;
+  const v1y = (y1p - cyp) / ry;
+  const v2x = (-x1p - cxp) / rx;
+  const v2y = (-y1p - cyp) / ry;
+  const theta1 = unit_vector_angle(1, 0, v1x, v1y);
+  let delta_theta = unit_vector_angle(v1x, v1y, v2x, v2y);
 
   if (fs === 0 && delta_theta > 0) {
     delta_theta -= TAU;
@@ -14587,21 +12686,21 @@ function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
 
 
 function approximate_unit_arc(theta1, delta_theta) {
-  var alpha = 4 / 3 * Math.tan(delta_theta / 4);
-  var x1 = Math.cos(theta1);
-  var y1 = Math.sin(theta1);
-  var x2 = Math.cos(theta1 + delta_theta);
-  var y2 = Math.sin(theta1 + delta_theta);
+  const alpha = 4 / 3 * Math.tan(delta_theta / 4);
+  const x1 = Math.cos(theta1);
+  const y1 = Math.sin(theta1);
+  const x2 = Math.cos(theta1 + delta_theta);
+  const y2 = Math.sin(theta1 + delta_theta);
   return [x1, y1, x1 - y1 * alpha, y1 + x1 * alpha, x2 + y2 * alpha, y2 - x2 * alpha, x2, y2];
 }
 
 function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
-  var sin_phi = Math.sin(phi * TAU / 360);
-  var cos_phi = Math.cos(phi * TAU / 360); // Make sure radii are valid
+  const sin_phi = Math.sin(phi * TAU / 360);
+  const cos_phi = Math.cos(phi * TAU / 360); // Make sure radii are valid
   //
 
-  var x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
-  var y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
+  const x1p = cos_phi * (x1 - x2) / 2 + sin_phi * (y1 - y2) / 2;
+  const y1p = -sin_phi * (x1 - x2) / 2 + cos_phi * (y1 - y2) / 2;
 
   if (x1p === 0 && y1p === 0) {
     // we're asked to draw line to itself
@@ -14617,7 +12716,7 @@ function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
 
   rx = Math.abs(rx);
   ry = Math.abs(ry);
-  var lambda = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
+  const lambda = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
 
   if (lambda > 1) {
     rx *= Math.sqrt(lambda);
@@ -14626,17 +12725,17 @@ function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
   //
 
 
-  var cc = get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi);
-  var result = [];
-  var theta1 = cc[2];
-  var delta_theta = cc[3]; // Split an arc to multiple segments, so each segment
+  const cc = get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi);
+  const result = [];
+  let theta1 = cc[2];
+  let delta_theta = cc[3]; // Split an arc to multiple segments, so each segment
   // will be less than τ/4 (= 90°)
   //
 
-  var segments = Math.max(Math.ceil(Math.abs(delta_theta) / (TAU / 4)), 1);
+  const segments = Math.max(Math.ceil(Math.abs(delta_theta) / (TAU / 4)), 1);
   delta_theta /= segments;
 
-  for (var i = 0; i < segments; i++) {
+  for (let i = 0; i < segments; i++) {
     result.push(approximate_unit_arc(theta1, delta_theta));
     theta1 += delta_theta;
   } // We have a bezier approximation of a unit circle,
@@ -14644,19 +12743,19 @@ function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
   //
 
 
-  return result.map(function (curve) {
-    for (var _i = 0; _i < curve.length; _i += 2) {
-      var x = curve[_i + 0];
-      var y = curve[_i + 1]; // scale
+  return result.map(curve => {
+    for (let i = 0; i < curve.length; i += 2) {
+      let x = curve[i + 0];
+      let y = curve[i + 1]; // scale
 
       x *= rx;
       y *= ry; // rotate
 
-      var xp = cos_phi * x - sin_phi * y;
-      var yp = sin_phi * x + cos_phi * y; // translate
+      const xp = cos_phi * x - sin_phi * y;
+      const yp = sin_phi * x + cos_phi * y; // translate
 
-      curve[_i + 0] = xp + cc[0];
-      curve[_i + 1] = yp + cc[1];
+      curve[i + 0] = xp + cc[0];
+      curve[i + 1] = yp + cc[1];
     }
 
     return curve;
@@ -14664,7 +12763,7 @@ function a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi) {
 }
 
 /***/ }),
-/* 63 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -14672,12 +12771,13 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/svg-path-contours
 
 /* eslint-disable */
-var bezier = __webpack_require__(64);
+var bezier = __webpack_require__(46);
 
-var _require = __webpack_require__(66),
-    copy = _require.copy;
+var {
+  copy
+} = __webpack_require__(48);
 
-var simplify = __webpack_require__(67);
+var simplify = __webpack_require__(49);
 
 function set(out, x, y) {
   out[0] = x;
@@ -14719,13 +12819,13 @@ module.exports = function contours(svg, scale, simp) {
 };
 
 /***/ }),
-/* 64 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(65)()
+module.exports = __webpack_require__(47)()
 
 /***/ }),
-/* 65 */
+/* 47 */
 /***/ (function(module, exports) {
 
 function clone(point) { //TODO: use gl-vec2 for this
@@ -14928,7 +13028,7 @@ module.exports = function createBezierBuilder(opt) {
 
 
 /***/ }),
-/* 66 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14958,16 +13058,16 @@ function create() {
   return [0, 0];
 }
 
-var copy = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].copy;
-var scaleAndAdd = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].scaleAndAdd;
-var dot = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].dot;
-var rotate = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].rotate;
-var cross = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].cross;
-var sub = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].sub;
-var add = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].add;
-var normalize = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].normalize;
-var set = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].set;
-var tmp = create();
+const copy = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].copy;
+const scaleAndAdd = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].scaleAndAdd;
+const dot = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].dot;
+const rotate = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].rotate;
+const cross = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].cross;
+const sub = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].sub;
+const add = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].add;
+const normalize = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].normalize;
+const set = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].set;
+const tmp = create();
 
 function computeMiter(tangent, miter, lineA, lineB, halfThick) {
   // get tangent line
@@ -14977,7 +13077,7 @@ function computeMiter(tangent, miter, lineA, lineB, halfThick) {
   set(miter, -tangent[1], tangent[0]);
   set(tmp, -lineA[1], lineA[0]); // get the necessary length of our miter
 
-  var miterLen = halfThick / dot(miter, tmp);
+  const miterLen = halfThick / dot(miter, tmp);
   return Math.abs(miterLen); // avoid -Infinity
 }
 
@@ -14997,11 +13097,11 @@ function direction(out, a, b) {
 
 
 /***/ }),
-/* 67 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var simplifyRadialDist = __webpack_require__(68)
-var simplifyDouglasPeucker = __webpack_require__(69)
+var simplifyRadialDist = __webpack_require__(50)
+var simplifyDouglasPeucker = __webpack_require__(51)
 
 //simplifies using both algorithms
 module.exports = function simplify(points, tolerance) {
@@ -15014,7 +13114,7 @@ module.exports.radialDistance = simplifyRadialDist;
 module.exports.douglasPeucker = simplifyDouglasPeucker;
 
 /***/ }),
-/* 68 */
+/* 50 */
 /***/ (function(module, exports) {
 
 function getSqDist(p1, p2) {
@@ -15050,7 +13150,7 @@ module.exports = function simplifyRadialDist(points, tolerance) {
 }
 
 /***/ }),
-/* 69 */
+/* 51 */
 /***/ (function(module, exports) {
 
 // square distance from a point to a segment
@@ -15118,7 +13218,7 @@ module.exports = function simplifyDouglasPeucker(points, tolerance) {
 
 
 /***/ }),
-/* 70 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15126,23 +13226,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTotalLength", function() { return getTotalLength; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPointAtLength", function() { return getPointAtLength; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDashContours", function() { return getDashContours; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _positions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(71);
-
-
+/* harmony import */ var _positions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 function getTotalLength(contours) {
   if (contours.totalLength != null) return contours.totalLength;
-  var length = 0;
-  contours.forEach(function (points) {
-    var s = points[0];
+  let length = 0;
+  contours.forEach(points => {
+    let s = points[0];
 
-    for (var i = 1; i < points.length; i++) {
-      var p = points[i];
-      length += Object(_positions__WEBPACK_IMPORTED_MODULE_1__["distance"])(s, p);
+    for (let i = 1; i < points.length; i++) {
+      const p = points[i];
+      length += Object(_positions__WEBPACK_IMPORTED_MODULE_0__["distance"])(s, p);
       s = p;
     }
   });
@@ -15150,8 +13246,7 @@ function getTotalLength(contours) {
   return length;
 }
 
-function splitContours(contours, length) {
-  var rest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+function splitContours(contours, length, rest = true) {
   length = Number(length);
 
   if (!Number.isFinite(length)) {
@@ -15162,80 +13257,76 @@ function splitContours(contours, length) {
     throw new TypeError('Length must > 0');
   }
 
-  var contoursLength = getTotalLength(contours);
+  const contoursLength = getTotalLength(contours);
 
   if (length >= contoursLength) {
-    var points = contours[contours.length - 1];
-    var p0 = points[points.length - 2];
-    var p1 = points[points.length - 1];
-    var angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+    const points = contours[contours.length - 1];
+    const p0 = points[points.length - 2];
+    const p1 = points[points.length - 1];
+    const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
     return {
-      current: contours.map(function (c) {
-        return _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(c);
-      }),
+      current: contours.map(c => [...c]),
       point: {
         x: p1[0],
         y: p1[1],
-        angle: angle
+        angle
       }
     };
   }
 
-  var current = [];
+  const current = [];
 
-  for (var i = 0; i < contours.length; i++) {
+  for (let i = 0; i < contours.length; i++) {
     current[i] = [];
-    var _points = contours[i];
-    var _p = _points[0];
+    const points = contours[i];
+    let p0 = points[0];
 
-    for (var j = 1; j < _points.length; j++) {
-      var _p2 = _points[j];
-      var d = Object(_positions__WEBPACK_IMPORTED_MODULE_1__["distance"])(_p, _p2);
+    for (let j = 1; j < points.length; j++) {
+      const p1 = points[j];
+      const d = Object(_positions__WEBPACK_IMPORTED_MODULE_0__["distance"])(p0, p1);
 
       if (length < d) {
-        var p = length / d;
-
-        var _angle = Math.atan2(_p2[1] - _p[1], _p2[0] - _p[0]);
-
-        var point = {
-          x: _p[0] * (1 - p) + _p2[0] * p,
-          y: _p[1] * (1 - p) + _p2[1] * p,
-          angle: _angle
+        const p = length / d;
+        const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+        const point = {
+          x: p0[0] * (1 - p) + p1[0] * p,
+          y: p0[1] * (1 - p) + p1[1] * p,
+          angle
         };
-        current[i].push(_p);
+        current[i].push(p0);
         if (length > 0) current[i].push([point.x, point.y]);
 
         if (!rest) {
           return {
-            current: current,
-            point: point
+            current,
+            point
           };
         }
 
-        var restContours = [];
-        var o = i;
+        const restContours = [];
+        const o = i;
 
         for (; i < contours.length; i++) {
           restContours[i - o] = [];
           if (i === o) restContours[0].push([point.x, point.y]);
 
-          for (; j < _points.length; j++) {
-            restContours[i - o].push(_points[j]);
+          for (; j < points.length; j++) {
+            restContours[i - o].push(points[j]);
           }
 
           j = 0;
         }
 
         return {
-          current: current,
-          point: point,
+          current,
+          point,
           rest: restContours
         };
       }
 
       length -= d;
-      current[i].push(_p);
-      _p = _p2;
+      current[i].push(p0);
+      p0 = p1;
     }
   }
 }
@@ -15254,24 +13345,24 @@ function getPointAtLength(contours, length) {
   };
 
   if (length <= 0) {
-    var p0 = contours[0][0];
-    var p1 = contours[0][1];
-    var angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+    const p0 = contours[0][0];
+    const p1 = contours[0][1];
+    const angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
     return {
       x: p0[0],
       y: p0[1],
-      angle: angle
+      angle
     };
   }
 
   return splitContours(contours, length, false).point;
 }
 function getDashContours(contours, lineDash, lineDashOffset) {
-  var idx = 0;
-  var dash = lineDash[0];
-  var rest = contours;
-  var splitedContours = [];
-  var lineDashLen = lineDash.length;
+  let idx = 0;
+  let dash = lineDash[0];
+  let rest = contours;
+  const splitedContours = [];
+  const lineDashLen = lineDash.length;
 
   if (lineDashOffset > 0) {
     do {
@@ -15298,10 +13389,10 @@ function getDashContours(contours, lineDash, lineDashOffset) {
   }
 
   do {
-    var splited = splitContours(rest, dash);
+    const splited = splitContours(rest, dash);
     rest = splited.rest;
-    if (++idx % 2) splitedContours.push.apply(splitedContours, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(splited.current));
-    var dashIndex = idx % lineDashLen;
+    if (++idx % 2) splitedContours.push(...splited.current);
+    let dashIndex = idx % lineDashLen;
     if (dashIndex < 0) dashIndex += lineDashLen;
     dash = lineDash[dashIndex];
   } while (rest);
@@ -15310,25 +13401,16 @@ function getDashContours(contours, lineDash, lineDashOffset) {
 }
 
 /***/ }),
-/* 71 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "normalize", function() { return normalize; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "distance", function() { return distance; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-
-
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
-function normalize(_ref, w, h, d) {
-  var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 3),
-      x = _ref2[0],
-      y = _ref2[1],
-      z = _ref2[2];
-
+function normalize([x, y, z], w, h, d) {
   x = x * 2 / w - 1;
   y = 1 - y * 2 / h;
 
@@ -15339,24 +13421,12 @@ function normalize(_ref, w, h, d) {
 
   return [x, y];
 }
-function distance(_ref3, _ref4) {
-  var _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 3),
-      x1 = _ref5[0],
-      y1 = _ref5[1],
-      _ref5$ = _ref5[2],
-      z1 = _ref5$ === void 0 ? 0 : _ref5$;
-
-  var _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref4, 3),
-      x2 = _ref6[0],
-      y2 = _ref6[1],
-      _ref6$ = _ref6[2],
-      z2 = _ref6$ === void 0 ? 0 : _ref6$;
-
+function distance([x1, y1, z1 = 0], [x2, y2, z2 = 0]) {
   return Math.hypot(x2 - x1, y2 - y1, z2 - z1);
 }
 
 /***/ }),
-/* 72 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15365,22 +13435,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 // 根据椭圆旋转角度求椭圆上的点
-var PI2 = Math.PI * 2;
+const PI2 = Math.PI * 2;
 function getPoint(x0, y0, a, b, theta) {
   theta %= PI2;
   if (theta < 0) theta += PI2;
-  var k = Math.tan(theta);
+  const k = Math.tan(theta);
 
   if (Math.abs(k) < 1e5) {
     // y - y0 = k (x - x0)
     // y = k x + (y0 - k x0)
     // (x - x0) ** 2 / a ** 2 + (y - y0) ** 2 / b ** 2 = 1
-    var c = y0 - k * x0;
-    var t = 1 / Math.pow(a, 2) + Math.pow(k, 2) / Math.pow(b, 2);
-    var d = -1;
+    const c = y0 - k * x0;
+    const t = 1 / a ** 2 + k ** 2 / b ** 2;
+    let d = -1;
     if (theta <= Math.PI / 2 || theta > 3 * Math.PI / 2) d = 1;
-    var x = d * Math.sqrt(1 / t) + x0;
-    var y = k * x + c;
+    const x = d * Math.sqrt(1 / t) + x0;
+    const y = k * x + c;
     return [x, y];
   }
 
@@ -15392,46 +13462,33 @@ function getPoint(x0, y0, a, b, theta) {
 }
 
 /***/ }),
-/* 73 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Mesh2D; });
-/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74);
-/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(59);
-/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _extrude_contours__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(76);
-/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(44);
-/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(40);
-/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(46);
-/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(78);
-/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(70);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(79);
-/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(63);
-/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(47);
-/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(56);
-/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(37);
-
-
-
-
-
-
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
+/* harmony import */ var bound_points__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bound_points__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _extrude_contours__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var _utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
+/* harmony import */ var _utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23);
+/* harmony import */ var _utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(29);
+/* harmony import */ var _utils_transform__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(58);
+/* harmony import */ var _utils_contours__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(52);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(59);
+/* harmony import */ var _triangulate_contours__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_triangulate_contours__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(45);
+/* harmony import */ var _svg_path_contours__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_svg_path_contours__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_parse_color__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(30);
+/* harmony import */ var _figure2d__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(39);
+/* harmony import */ var _utils_env__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(20);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -15446,51 +13503,52 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 
-var _mesh = Symbol('mesh');
 
-var _contours = Symbol('contours');
+const _mesh = Symbol('mesh');
 
-var _stroke = Symbol('stroke');
+const _contours = Symbol('contours');
 
-var _fill = Symbol('fill');
+const _stroke = Symbol('stroke');
 
-var _strokeColor = Symbol('strokeColor');
+const _fill = Symbol('fill');
 
-var _fillColor = Symbol('fillColor');
+const _strokeColor = Symbol('strokeColor');
 
-var _transform = Symbol('transform');
+const _fillColor = Symbol('fillColor');
 
-var _invertTransform = Symbol('invertTransform');
+const _transform = Symbol('transform');
 
-var _uniforms = Symbol('uniforms');
+const _invertTransform = Symbol('invertTransform');
 
-var _texOptions = Symbol('texOptions');
+const _uniforms = Symbol('uniforms');
 
-var _blend = Symbol('blend');
+const _texOptions = Symbol('texOptions');
 
-var _applyTexture = Symbol('applyTexture');
+const _blend = Symbol('blend');
 
-var _applyTransform = Symbol('applyTransform');
+const _applyTexture = Symbol('applyTexture');
 
-var _applyGradientTransform = Symbol('applyGradientTransform');
+const _applyTransform = Symbol('applyTransform');
 
-var _applyProgram = Symbol('applyProgram');
+const _applyGradientTransform = Symbol('applyGradientTransform');
 
-var _gradient = Symbol('gradient');
+const _applyProgram = Symbol('applyProgram');
 
-var _filter = Symbol('filter');
+const _gradient = Symbol('gradient');
 
-var _opacity = Symbol('opacity');
+const _filter = Symbol('filter');
 
-var _program = Symbol('program');
+const _opacity = Symbol('opacity');
 
-var _attributes = Symbol('attributes');
+const _program = Symbol('program');
 
-var _pass = Symbol('pass');
+const _attributes = Symbol('attributes');
 
-var _clipContext = Symbol('clipContext');
+const _pass = Symbol('pass');
 
-var _applyClipPath = Symbol('applyClipPath'); // function normalizePoints(points, bound) {
+const _clipContext = Symbol('clipContext');
+
+const _applyClipPath = Symbol('applyClipPath'); // function normalizePoints(points, bound) {
 //   const [w, h] = bound[1];
 //   for(let i = 0; i < points.length; i++) {
 //     const point = points[i];
@@ -15501,32 +13559,21 @@ var _applyClipPath = Symbol('applyClipPath'); // function normalizePoints(points
 
 
 function generateUV(bounds, positions) {
-  var w = bounds[1][0] - bounds[0][0],
-      h = bounds[1][1] - bounds[0][1];
-  var ret = [];
+  const [w, h] = [bounds[1][0] - bounds[0][0], bounds[1][1] - bounds[0][1]];
+  const ret = [];
 
-  for (var j = 0; j < positions.length; j++) {
-    var p = positions[j];
-    var uv = [(p[0] - bounds[0][0]) / w, 1 - (p[1] - bounds[0][1]) / h];
+  for (let j = 0; j < positions.length; j++) {
+    const p = positions[j];
+    const uv = [(p[0] - bounds[0][0]) / w, 1 - (p[1] - bounds[0][1]) / h];
     ret.push(uv);
   }
 
   return ret;
 }
 
-function getTexCoord(_ref, _ref2, _ref3) {
-  var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref, 2),
-      x = _ref4[0],
-      y = _ref4[1];
-
-  var _ref5 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref2, 4),
-      ox = _ref5[0],
-      oy = _ref5[1],
-      w = _ref5[2],
-      h = _ref5[3];
-
-  var scale = _ref3.scale;
-
+function getTexCoord([x, y], [ox, oy, w, h], {
+  scale
+}) {
   if (!scale) {
     x /= w;
     y = 1 - y / h;
@@ -15537,18 +13584,16 @@ function getTexCoord(_ref, _ref2, _ref3) {
   return [x, y, 0];
 }
 
-function _accurate(path, scale, simplify) {
-  var contours = _svg_path_contours__WEBPACK_IMPORTED_MODULE_14___default()(path, scale, simplify);
+function accurate(path, scale, simplify) {
+  const contours = _svg_path_contours__WEBPACK_IMPORTED_MODULE_9___default()(path, scale, simplify);
   contours.path = path;
   contours.simplify = simplify;
   contours.scale = scale;
   return contours;
 }
 
-var Mesh2D = /*#__PURE__*/function () {
-  function Mesh2D(figure) {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Mesh2D);
-
+class Mesh2D {
+  constructor(figure) {
     this[_stroke] = null;
     this[_fill] = null;
     this[_transform] = [1, 0, 0, 1, 0, 0];
@@ -15563,1263 +13608,980 @@ var Mesh2D = /*#__PURE__*/function () {
     this[_pass] = [];
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Mesh2D, [{
-    key: "setProgram",
-    value: function setProgram(program) {
-      this[_program] = program;
+  get contours() {
+    return this[_contours];
+  }
 
-      if (this[_mesh]) {
-        this[_applyProgram](program);
-      }
+  set contours(contours) {
+    this[_mesh] = null;
+    this[_contours] = contours;
+    const scale = contours.scale;
+    const acc = this.transformScale / scale;
+
+    if (acc > 1.5) {
+      this.accurate(this.transformScale);
     }
-  }, {
-    key: "setAttribute",
-    value: function setAttribute(key, setter) {
-      if (setter == null) {
-        delete this[_attributes][key];
-      } else {
-        this[_attributes][key] = setter;
-      }
+  }
+
+  setProgram(program) {
+    this[_program] = program;
+
+    if (this[_mesh]) {
+      this[_applyProgram](program);
     }
-  }, {
-    key: "getOpacity",
-    value: function getOpacity() {
-      return this[_opacity];
+  }
+
+  get program() {
+    return this[_program];
+  }
+
+  setAttribute(key, setter) {
+    if (setter == null) {
+      delete this[_attributes][key];
+    } else {
+      this[_attributes][key] = setter;
     }
-  }, {
-    key: "setOpacity",
-    value: function setOpacity(value) {
-      if (value < 0 || value > 1.0) throw new TypeError('Invalid opacity value.');
+  }
 
-      if (this[_mesh]) {
-        this[_mesh].positions.forEach(function (p) {
-          p[2] = 1 / p[2] > 0 ? value : -value;
-        });
-      }
+  getOpacity() {
+    return this[_opacity];
+  }
 
-      this[_opacity] = value;
-    }
-  }, {
-    key: "setClipPath",
-    value: function setClipPath(path) {
-      this.clipPath = path;
+  setOpacity(value) {
+    if (value < 0 || value > 1.0) throw new TypeError('Invalid opacity value.');
 
-      if (this[_uniforms].u_clipSampler) {
-        this[_uniforms].u_clipSampler.delete();
-      }
-
-      this.setUniforms({
-        u_clipSampler: null
+    if (this[_mesh]) {
+      this[_mesh].positions.forEach(p => {
+        p[2] = 1 / p[2] > 0 ? value : -value;
       });
-
-      if (this[_mesh]) {
-        delete this[_mesh].attributes.a_clipUV;
-      }
-
-      if (path && this[_mesh]) {
-        this[_applyClipPath]();
-      }
     }
-  }, {
-    key: _applyClipPath,
-    value: function value() {
-      if (this.clipPath) {
-        if (!this[_clipContext]) {
-          this[_clipContext] = _utils_env__WEBPACK_IMPORTED_MODULE_17__["default"].createCanvas(1, 1);
-        }
 
-        var _this$boundingBox = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(this.boundingBox, 2),
-            _this$boundingBox$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_this$boundingBox[0], 2),
-            _x = _this$boundingBox$[0],
-            y = _this$boundingBox$[1],
-            _this$boundingBox$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_this$boundingBox[1], 2),
-            w = _this$boundingBox$2[0],
-            h = _this$boundingBox$2[1];
+    this[_opacity] = value;
+  }
 
-        if (w && h) {
-          this[_clipContext].width = w - _x;
-          this[_clipContext].height = h - y;
-        }
+  setClipPath(path) {
+    this.clipPath = path;
 
-        var context = this[_clipContext].getContext('2d');
-
-        var path = new Path2D(this.clipPath);
-        context.clearRect(0, 0, this[_clipContext].width, this[_clipContext].height);
-        context.save();
-        context.translate(-_x, -y);
-        context.fillStyle = 'white';
-        context.fill(path);
-        context.restore();
-        this[_mesh].clipPath = this[_clipContext];
-        var uv = generateUV(this.boundingBox, this[_mesh].position0);
-        this[_mesh].attributes.a_clipUV = uv;
-      }
+    if (this[_uniforms].u_clipSampler) {
+      this[_uniforms].u_clipSampler.delete();
     }
-  }, {
-    key: "getPointAtLength",
-    value: function getPointAtLength(length) {
-      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getPointAtLength"])(this[_contours], length);
+
+    this.setUniforms({
+      u_clipSampler: null
+    });
+
+    if (this[_mesh]) {
+      delete this[_mesh].attributes.a_clipUV;
     }
-  }, {
-    key: "getTotalLength",
-    value: function getTotalLength() {
-      return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getTotalLength"])(this[_contours]);
+
+    if (path && this[_mesh]) {
+      this[_applyClipPath]();
     }
-  }, {
-    key: _applyProgram,
-    value: function value(program) {
-      var attributes = this[_attributes];
-      var positions = this[_mesh].position0;
-      var attribs = Object.entries(program._attribute);
+  }
 
-      for (var i = 0; i < attribs.length; i++) {
-        var _attribs$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(attribs[i], 2),
-            name = _attribs$i[0],
-            opts = _attribs$i[1];
-
-        if (name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
-          var setter = attributes[name]; // console.log(opts.size);
-
-          if (name === 'uv' && !setter) {
-            var bounds = this[_mesh].boundingBox || bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);
-            this[_mesh].attributes[name] = generateUV(bounds, positions);
-          } else {
-            this[_mesh].attributes[name] = [];
-
-            for (var j = 0; j < positions.length; j++) {
-              var p = positions[j];
-
-              this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
-            }
-          }
-        }
-      }
-    } // {stroke, fill}
-
-  }, {
-    key: _applyTransform,
-    value: function value(mesh, m) {
-      var positions = mesh.positions,
-          p = mesh.position0;
-
-      for (var i = 0; i < positions.length; i++) {
-        var _p$i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(p[i], 2),
-            _x2 = _p$i[0],
-            y = _p$i[1];
-
-        var position = positions[i];
-        position[0] = _x2 * m[0] + y * m[2] + m[4];
-        position[1] = _x2 * m[1] + y * m[3] + m[5];
+  [_applyClipPath]() {
+    if (this.clipPath) {
+      if (!this[_clipContext]) {
+        this[_clipContext] = _utils_env__WEBPACK_IMPORTED_MODULE_12__["default"].createCanvas(1, 1);
       }
 
-      this._updateMatrix = false;
+      const [[x, y], [w, h]] = this.boundingBox;
+
+      if (w && h) {
+        this[_clipContext].width = w - x;
+        this[_clipContext].height = h - y;
+      }
+
+      const context = this[_clipContext].getContext('2d');
+
+      const path = new Path2D(this.clipPath);
+      context.clearRect(0, 0, this[_clipContext].width, this[_clipContext].height);
+      context.save();
+      context.translate(-x, -y);
+      context.fillStyle = 'white';
+      context.fill(path);
+      context.restore();
+      this[_mesh].clipPath = this[_clipContext];
+      const uv = generateUV(this.boundingBox, this[_mesh].position0);
+      this[_mesh].attributes.a_clipUV = uv;
     }
-  }, {
-    key: _applyGradientTransform,
-    value: function value() {
-      var m = this[_transform];
+  }
 
-      var vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(this._radialGradientVector);
+  getPointAtLength(length) {
+    return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_7__["getPointAtLength"])(this[_contours], length);
+  }
 
-      if (vector) {
-        var _vector2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(vector, 5),
-            x1 = _vector2[0],
-            y1 = _vector2[1],
-            x2 = _vector2[3],
-            y2 = _vector2[4];
+  getTotalLength() {
+    return Object(_utils_contours__WEBPACK_IMPORTED_MODULE_7__["getTotalLength"])(this[_contours]);
+  }
 
-        vector[0] = x1 * m[0] + y1 * m[2] + m[4];
-        vector[1] = x1 * m[1] + y1 * m[3] + m[5];
-        vector[3] = x2 * m[0] + y2 * m[2] + m[4];
-        vector[4] = x2 * m[1] + y2 * m[3] + m[5];
-        this[_uniforms].u_radialGradientVector = vector;
-      }
+  get blend() {
+    return this[_blend] == null ? 'auto' : this[_blend];
+  }
+
+  set blend(blend) {
+    this[_blend] = blend;
+    if (this[_mesh]) this[_mesh].enableBlend = this.enableBlend;
+  }
+
+  get boundingBox() {
+    if (this[_mesh] && this[_mesh].boundingBox) return this[_mesh].boundingBox;
+    const meshData = this.meshData;
+
+    if (meshData) {
+      const positions = meshData.position0;
+      if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_1___default()(positions);else return [[0, 0], [0, 0]];
+      return meshData.boundingBox;
     }
-  }, {
-    key: _applyTexture,
-    value: function value(mesh, options) {
-      function compareRect(r1, r2) {
-        if (r1 == null && r2 == null) return true;
-        if (r1 == null || r2 == null) return false;
-        return r1[0] === r2[0] && r1[1] === r2[1] && r1[2] === r2[2] && r1[3] === r2[3];
-      }
 
-      var texture = this[_uniforms].u_texSampler;
-      if (!texture) return;
-      var _texture$_img = texture._img,
-          imgWidth = _texture$_img.width,
-          imgHeight = _texture$_img.height;
-      var srcRect = options.srcRect;
-      var rect = options.rect || [0, 0];
+    return [[0, 0], [0, 0]];
+  }
 
-      if (options.rotated) {
-        rect = [-rect[1], rect[0], rect[3], rect[2]];
-      }
+  get boundingCenter() {
+    const bound = this.boundingBox;
 
-      if (rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
-      if (rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
-
-      if (options.hidden) {
-        mesh.textureCoord = mesh.positions.map(function () {
-          return [-1, -1, -1];
-        });
-      } else if (!mesh.textureCoord || !compareRect(this[_texOptions].rect, options.rect) || this[_texOptions].hidden !== options.hidden || this[_texOptions].rotated !== options.rotated) {
-        var m = null;
-
-        if (options.rotated) {
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
-          m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [0, -rect[2]]);
-        }
-
-        mesh.textureCoord = mesh.position0.map(function (_ref6) {
-          var _ref7 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref6, 3),
-              x = _ref7[0],
-              y = _ref7[1],
-              z = _ref7[2];
-
-          if (1 / z > 0) {
-            // fillTag
-            if (options.rotated) {
-              var x0 = x * m[0] + y * m[2] + m[4];
-              var y0 = x * m[1] + y * m[3] + m[5];
-              x = x0;
-              y = y0;
-            }
-
-            var texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2], rect[3]], options);
-            if (options.repeat) texCoord[2] = 1;
-            return texCoord;
-          }
-
-          return [-1, -1, -1];
-        });
-      }
-
-      if (srcRect) {
-        var sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
-        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
-          return [].concat(sRect);
-        });
-      } else {
-        mesh.attributes.a_sourceRect = mesh.positions.map(function () {
-          return [0, 0, 0, 0];
-        });
-      }
+    if (bound) {
+      return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
     }
-  }, {
-    key: "accurate",
-    value: function accurate(scale) {
-      if (!this.contours) return;
-      var path = this.contours.path;
 
-      if (path) {
-        var simplify = this.contours.simplify;
+    return [0, 0];
+  }
 
-        var contours = _accurate(this.contours.path, 2 * scale, simplify);
-
-        this[_mesh] = null;
-        this[_contours] = contours;
-      }
+  get fillRule() {
+    if (this[_fill]) {
+      return this[_fill].rule;
     }
-  }, {
-    key: "canIgnore",
-    value: function canIgnore() {
-      var noStroke = this[_stroke] == null || this[_stroke].lineWidth === 0 || this[_strokeColor][3] === 0;
-      var noFill = this[_fill] == null || this[_fillColor][3] === 0;
-      var noGradient = this[_uniforms].u_radialGradientVector == null;
-      var noTexture = this[_uniforms].u_texSampler == null;
-      return this[_opacity] === 0 || this[_program] == null && noStroke && noFill && noGradient && noTexture && !this.beforeRender && !this.afterRender;
-    } // join: 'miter' or 'bevel'
-    // cap: 'butt' or 'square'
-    // lineDash: null
-    // lineDashOffset: 0
 
-  }, {
-    key: "setStroke",
-    value: function setStroke() {
-      var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref8$thickness = _ref8.thickness,
-          thickness = _ref8$thickness === void 0 ? 1 : _ref8$thickness,
-          _ref8$cap = _ref8.cap,
-          cap = _ref8$cap === void 0 ? 'butt' : _ref8$cap,
-          _ref8$join = _ref8.join,
-          join = _ref8$join === void 0 ? 'miter' : _ref8$join,
-          _ref8$miterLimit = _ref8.miterLimit,
-          miterLimit = _ref8$miterLimit === void 0 ? 10 : _ref8$miterLimit,
-          _ref8$color = _ref8.color,
-          color = _ref8$color === void 0 ? [0, 0, 0, 0] : _ref8$color,
-          _ref8$lineDash = _ref8.lineDash,
-          lineDash = _ref8$lineDash === void 0 ? null : _ref8$lineDash,
-          _ref8$lineDashOffset = _ref8.lineDashOffset,
-          lineDashOffset = _ref8$lineDashOffset === void 0 ? 0 : _ref8$lineDashOffset,
-          _ref8$roundSegments = _ref8.roundSegments,
-          roundSegments = _ref8$roundSegments === void 0 ? 20 : _ref8$roundSegments;
+    return 'nonzero';
+  }
 
-      this[_mesh] = null;
-      this[_stroke] = new _extrude_contours__WEBPACK_IMPORTED_MODULE_7__["default"]({
-        lineWidth: thickness,
-        lineCap: cap,
-        lineJoin: join,
-        miterLimit: miterLimit,
-        roundSegments: roundSegments
-      });
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
-      this[_strokeColor] = color;
-      this[_stroke].lineDash = lineDash;
-      this[_stroke].lineDashOffset = lineDashOffset;
-      return this;
+  get lineWidth() {
+    if (this[_stroke]) {
+      return this[_stroke].lineWidth;
     }
-  }, {
-    key: "setFill",
-    value: function setFill() {
-      var _ref9 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref9$rule = _ref9.rule,
-          rule = _ref9$rule === void 0 ? this.fillRule : _ref9$rule,
-          _ref9$color = _ref9.color,
-          color = _ref9$color === void 0 ? [0, 0, 0, 0] : _ref9$color;
 
-      this[_mesh] = null;
-      this[_fill] = {
-        rule: rule
+    return 0;
+  }
+
+  get lineCap() {
+    if (this[_stroke]) {
+      return this[_stroke].lineCap;
+    }
+
+    return '';
+  }
+
+  get lineJoin() {
+    if (this[_stroke]) {
+      return this[_stroke].lineJoin;
+    }
+
+    return '';
+  }
+
+  get miterLimit() {
+    if (this[_stroke]) {
+      return this[_stroke].miterLimit;
+    }
+
+    return 0;
+  }
+
+  get strokeStyle() {
+    if (this[_strokeColor] && this[_strokeColor][3] !== 0) {
+      return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__["default"])(this[_strokeColor]);
+    }
+
+    return '';
+  }
+
+  get lineDash() {
+    if (this[_stroke]) {
+      return this[_stroke].lineDash;
+    }
+
+    return null;
+  }
+
+  get lineDashOffset() {
+    if (this[_stroke]) {
+      return this[_stroke].lineDashOffset;
+    }
+
+    return 0;
+  }
+
+  get fillStyle() {
+    if (this[_fillColor] && this[_fillColor][3] !== 0) {
+      return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__["default"])(this[_fillColor]);
+    }
+
+    return '';
+  }
+
+  get gradient() {
+    return this[_gradient];
+  }
+
+  get texture() {
+    if (this[_uniforms].u_texSampler) {
+      return {
+        image: this[_uniforms].u_texSampler._img,
+        options: this[_texOptions]
       };
-      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
-      this[_fillColor] = color;
-      return this;
     }
-    /**
-      options: {
-        scale: false,
-        repeat: false,
-        rotated: false,
-        rect: [10, 10],
-        srcRect: [...],
-        hidden: false,
-      }
-     */
 
-  }, {
-    key: "setTexture",
-    value: function setTexture(texture) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    return null;
+  }
 
-      if (texture && texture.image) {
-        var _texture = texture,
-            image = _texture.image,
-            rect = _texture.rect;
-        texture = image;
+  get enableBlend() {
+    if (this[_blend] === true || this[_blend] === false) return this[_blend];
+    return this[_opacity] < 1.0 || this[_strokeColor] != null && this[_strokeColor][3] < 1.0 || this[_fillColor] != null && this[_fillColor][3] < 1.0 || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0 || this[_uniforms].u_radialGradientVector != null || this.beforeRender || this.afterRender;
+  }
 
-        if (options.rect) {
-          for (var i = 0; i < options.rect.length; i++) {
-            rect[i] = options.rect[i];
+  get filterCanvas() {
+    return /blur|drop-shadow|url/.test(this.filter);
+  }
+
+  get filter() {
+    return this[_filter].join(' ');
+  }
+
+  get transformMatrix() {
+    return this[_transform];
+  }
+
+  get invertMatrix() {
+    if (!this[_invertTransform]) {
+      const m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), this[_transform]);
+      this[_invertTransform] = m;
+    }
+
+    return this[_invertTransform];
+  }
+
+  get transformScale() {
+    const m = this[_transform];
+    return Math.max(Math.hypot(m[0], m[1]), Math.hypot(m[2], m[3]));
+  }
+
+  get uniforms() {
+    return this[_uniforms];
+  }
+
+  get pass() {
+    return this[_pass];
+  }
+
+  [_applyProgram](program) {
+    const attributes = this[_attributes];
+    const positions = this[_mesh].position0;
+    const attribs = Object.entries(program._attribute);
+
+    for (let i = 0; i < attribs.length; i++) {
+      const [name, opts] = attribs[i];
+
+      if (name !== 'a_color' && name !== 'a_sourceRect' && opts !== 'ignored') {
+        const setter = attributes[name]; // console.log(opts.size);
+
+        if (name === 'uv' && !setter) {
+          const bounds = this[_mesh].boundingBox || bound_points__WEBPACK_IMPORTED_MODULE_1___default()(positions);
+          this[_mesh].attributes[name] = generateUV(bounds, positions);
+        } else {
+          this[_mesh].attributes[name] = [];
+
+          for (let j = 0; j < positions.length; j++) {
+            const p = positions[j];
+
+            this[_mesh].attributes[name].push(setter ? setter(p, i, positions) : Array(opts.size).fill(0));
           }
         }
-
-        options.rect = rect;
       }
-
-      if (!this[_fill]) {
-        this.setFill();
-      }
-
-      this.setUniforms({
-        u_texSampler: texture
-      });
-
-      if (this[_mesh]) {
-        this[_applyTexture](this[_mesh], options);
-      }
-
-      this[_texOptions] = options;
-      return this;
     }
-  }, {
-    key: "setCircularGradient",
-    value: function setCircularGradient() {
-      var _ref10 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref10.vector,
-          gradientColors = _ref10.colors,
-          _ref10$type = _ref10.type,
-          type = _ref10$type === void 0 ? 'fill' : _ref10$type;
+  } // {stroke, fill}
 
-      if (vector.length !== 3) throw new TypeError('Invalid linearGradient.');
-      this.setGradient({
-        vector: vector,
-        colors: gradientColors,
-        type: type
-      });
-    }
-  }, {
-    key: "setLinearGradient",
-    value: function setLinearGradient() {
-      var _ref11 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref11.vector,
-          gradientColors = _ref11.colors,
-          _ref11$type = _ref11.type,
-          type = _ref11$type === void 0 ? 'fill' : _ref11$type;
 
-      if (vector.length !== 4) throw new TypeError('Invalid linearGradient.');
-      this.setGradient({
-        vector: vector,
-        colors: gradientColors,
-        type: type
-      });
-    }
-  }, {
-    key: "setRadialGradient",
-    value: function setRadialGradient() {
-      var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref12.vector,
-          gradientColors = _ref12.colors,
-          _ref12$type = _ref12.type,
-          type = _ref12$type === void 0 ? 'fill' : _ref12$type;
-
-      if (vector.length !== 6) throw new TypeError('Invalid radialGradient.');
-      this.setGradient({
-        vector: vector,
-        colors: gradientColors,
-        type: type
-      });
-    }
-    /**
-      vector: [x0, y0, r0, x1, y1, r1],
-      colors: [{offset:0, color}, {offset:1, color}, ...],
-     */
-
-  }, {
-    key: "setGradient",
-    value: function setGradient() {
-      var _ref13 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          vector = _ref13.vector,
-          gradientColors = _ref13.colors,
-          _ref13$type = _ref13.type,
-          type = _ref13$type === void 0 ? 'fill' : _ref13$type;
-
-      gradientColors = gradientColors.map(function (_ref14) {
-        var offset = _ref14.offset,
-            color = _ref14.color;
-        if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_15__["default"])(color);
-        return {
-          offset: offset,
-          color: color
-        };
-      });
-      this[_gradient] = this[_gradient] || {};
-      this[_gradient][type] = {
-        vector: vector,
-        colors: gradientColors
-      };
-      gradientColors.sort(function (a, b) {
-        return a.offset - b.offset;
-      });
-      var colorSteps = [];
-      gradientColors.forEach(function (_ref15) {
-        var offset = _ref15.offset,
-            color = _ref15.color;
-        colorSteps.push.apply(colorSteps, [offset].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(color)));
-      });
-
-      var _vector;
-
-      if (vector.length === 4) {
-        // linear gradient;
-        _vector = [vector[0], vector[1], 0, vector[2], vector[3], 0];
-      } else {
-        _vector = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(vector);
-      }
-
-      if (colorSteps.length < 40) colorSteps.push(-1);
-      if (colorSteps.length > 40) throw new Error('Too many colors, should be less than 8 colors');
-      this._radialGradientVector = _vector;
-      this[_uniforms].u_colorSteps = colorSteps;
-      if (type === 'fill') this[_uniforms].u_gradientType = 1;else this[_uniforms].u_gradientType = 0;
-
-      this[_applyGradientTransform]();
-
-      return this;
-    }
-  }, {
-    key: "setUniforms",
-    value: function setUniforms() {
-      var uniforms = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      Object.assign(this[_uniforms], uniforms);
-      return this;
-    }
-  }, {
-    key: "setTransform",
-    value: function setTransform() {
-      var transform = this[_transform];
-
-      for (var _len = arguments.length, m = new Array(_len), _key = 0; _key < _len; _key++) {
-        m[_key] = arguments[_key];
-      }
-
-      if (!gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].equals(m, transform)) {
-        this[_transform] = m;
-        delete this[_invertTransform];
-        this._updateMatrix = true;
-      }
-
-      return this;
-    }
-  }, {
-    key: "transform",
-    value: function transform() {
-      var transform = this[_transform];
-
-      for (var _len2 = arguments.length, m = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        m[_key2] = arguments[_key2];
-      }
-
-      this[_transform] = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), transform, m);
-      delete this[_invertTransform];
-      this._updateMatrix = true;
-      return this;
-    }
-  }, {
-    key: "translate",
-    value: function translate(x, y) {
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "rotate",
-    value: function rotate(rad) {
-      var _ref16 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0],
-          _ref17 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref16, 2),
-          ox = _ref17[0],
-          oy = _ref17[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "scale",
-    value: function scale(x) {
-      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
-
-      var _ref18 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref19 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref18, 2),
-          ox = _ref19[0],
-          oy = _ref19[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "skew",
-    value: function skew(x) {
-      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
-
-      var _ref20 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [0, 0],
-          _ref21 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref20, 2),
-          ox = _ref21[0],
-          oy = _ref21[1];
-
-      var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].create();
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
-      m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
-      return this.transform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(m));
-    }
-  }, {
-    key: "clearFilter",
-    value: function clearFilter() {
-      this.setColorTransform(null);
-      this[_filter].length = 0;
-      return this;
-    }
-  }, {
-    key: "setColorTransform",
-    value: function setColorTransform() {
-      for (var _len3 = arguments.length, m = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        m[_key3] = arguments[_key3];
-      }
-
-      if (m[0] === null) {
-        this.setUniforms({
-          u_filterFlag: 0,
-          u_colorMatrix: 0
-        });
-      } else {
-        this.setUniforms({
-          u_filterFlag: 1,
-          u_colorMatrix: m
-        });
-      }
-
-      return this;
-    } // apply linear color transform
-
-  }, {
-    key: "transformColor",
-    value: function transformColor() {
-      var transform = this.uniforms.u_colorMatrix;
-
-      for (var _len4 = arguments.length, m = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-        m[_key4] = arguments[_key4];
-      }
-
-      if (transform) {
-        transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["multiply"])(transform, m);
-      } else {
-        transform = m;
-      }
-
-      this.setColorTransform.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(transform));
-      return this;
-    }
-  }, {
-    key: "blur",
-    value: function blur(length) {
-      this[_filter].push("blur(".concat(length, "px)"));
-
-      return this;
-    }
-  }, {
-    key: "brightness",
-    value: function brightness() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("brightness(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["brightness"])(p)));
-    }
-  }, {
-    key: "contrast",
-    value: function contrast() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("contrast(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["contrast"])(p)));
-    }
-  }, {
-    key: "dropShadow",
-    value: function dropShadow(offsetX, offsetY) {
-      var blurRadius = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-      var color = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0, 0, 1];
-      if (Array.isArray(color)) color = Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(color);
-
-      this[_filter].push("drop-shadow(".concat(offsetX, "px ").concat(offsetY, "px ").concat(blurRadius, "px ").concat(color, ")"));
-
-      return this;
-    }
-  }, {
-    key: "grayscale",
-    value: function grayscale() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("grayscale(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["grayscale"])(p)));
-    } // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
-
-  }, {
-    key: "hueRotate",
-    value: function hueRotate() {
-      var deg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      this[_filter].push("hue-rotate(".concat(deg, "deg)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["hueRotate"])(deg)));
-    }
-  }, {
-    key: "invert",
-    value: function invert() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("invert(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["invert"])(p)));
-    }
-  }, {
-    key: "opacity",
-    value: function opacity() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("opacity(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["opacity"])(p)));
-    }
-  }, {
-    key: "saturate",
-    value: function saturate() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("saturate(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["saturate"])(p)));
-    }
-  }, {
-    key: "sepia",
-    value: function sepia() {
-      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
-
-      this[_filter].push("sepia(".concat(100 * p, "%)"));
-
-      return this.transformColor.apply(this, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_10__["sepia"])(p)));
-    }
-  }, {
-    key: "url",
-    value: function url(svgFilter) {
-      this[_filter].push("url(".concat(svgFilter, ")"));
-
-      return this;
-    }
-  }, {
-    key: "isPointCollision",
-    value: function isPointCollision(x, y) {
-      var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'both';
-      var meshData = this.meshData;
-      var positions = meshData.positions,
-          cells = meshData.cells;
-      var m = this.invertMatrix;
-      var x0 = m[0] * x + m[2] * y + m[4];
-      var y0 = m[1] * x + m[3] * y + m[5];
-      var box = this.boundingBox;
-
-      if (x0 < box[0][0] || x0 > box[1][0] || y0 < box[0][1] || y0 > box[1][1]) {
-        return false;
-      }
-
-      function projectionOn(_ref22, _ref23, _ref24) {
-        var _ref25 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref22, 2),
-            x0 = _ref25[0],
-            y0 = _ref25[1];
-
-        var _ref26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref23, 2),
-            x1 = _ref26[0],
-            y1 = _ref26[1];
-
-        var _ref27 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref24, 2),
-            x2 = _ref27[0],
-            y2 = _ref27[1];
-
-        var v2x = x2 - x1;
-        var v2y = y2 - y1;
-        var p = ((x0 - x1) * v2x + (y0 - y1) * v2y) / (Math.pow(v2x, 2) + Math.pow(v2y, 2));
-        return p >= 0 && p <= 1;
-      }
-
-      for (var i = 0; i < cells.length; i++) {
-        var cell = cells[i];
-        if (type === 'fill' && cell[0] >= meshData.fillPointCount) break;
-        if (type === 'stroke' && cell[0] < meshData.fillPointCount) continue; // eslint-disable-line no-continue
-
-        var _cell$map = cell.map(function (idx) {
-          return positions[idx];
-        }),
-            _cell$map2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map, 3),
-            _cell$map2$ = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[0], 2),
-            x1 = _cell$map2$[0],
-            y1 = _cell$map2$[1],
-            _cell$map2$2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[1], 2),
-            x2 = _cell$map2$2[0],
-            y2 = _cell$map2$2[1],
-            _cell$map2$3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_cell$map2[2], 2),
-            x3 = _cell$map2$3[0],
-            y3 = _cell$map2$3[1];
-
-        var s1 = Math.sign((x - x1) * (y2 - y1) - (x2 - x1) * (y - y1));
-
-        if (s1 === 0 && projectionOn([x, y], [x1, y1], [x2, y2])) {
-          return true;
-        }
-
-        var s2 = Math.sign((x - x2) * (y3 - y2) - (x3 - x2) * (y - y2));
-
-        if (s2 === 0 && projectionOn([x, y], [x2, y2], [x3, y3])) {
-          return true;
-        }
-
-        var s3 = Math.sign((x - x3) * (y1 - y3) - (x1 - x3) * (y - y3));
-
-        if (s3 === 0 && projectionOn([x, y], [x3, y3], [x1, y1])) {
-          return true;
-        }
-
-        if (s1 === 1 && s2 === 1 && s3 === 1 || s1 === -1 && s2 === -1 && s3 === -1) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-  }, {
-    key: "isPointInFill",
-    value: function isPointInFill(x, y) {
-      return this.isPointCollision(x, y, 'fill');
-    }
-  }, {
-    key: "isPointInStroke",
-    value: function isPointInStroke(x, y) {
-      return this.isPointCollision(x, y, 'stroke');
-    }
-  }, {
-    key: "addPass",
-    value: function addPass(program) {
-      var _ref28 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          width = _ref28.width,
-          height = _ref28.height,
-          uniforms = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(_ref28, ["width", "height"]);
-
-      var figure = new _figure2d__WEBPACK_IMPORTED_MODULE_16__["default"]();
-      figure.rect(0, 0, width, height);
-      var mesh = new Mesh2D(figure, {
-        width: width,
-        height: height
-      });
-      mesh.setUniforms(uniforms);
-      mesh.setProgram(program);
-
-      this[_pass].push(mesh);
-    }
-  }, {
-    key: "contours",
-    get: function get() {
-      return this[_contours];
-    },
-    set: function set(contours) {
-      this[_mesh] = null;
-      this[_contours] = contours;
-      var scale = contours.scale;
-      var acc = this.transformScale / scale;
+  get meshData() {
+    // eslint-disable-line complexity
+    if (this._updateMatrix) {
+      const acc = this.transformScale / this.contours.scale;
 
       if (acc > 1.5) {
         this.accurate(this.transformScale);
       }
     }
-  }, {
-    key: "program",
-    get: function get() {
-      return this[_program];
-    }
-  }, {
-    key: "blend",
-    get: function get() {
-      return this[_blend] == null ? 'auto' : this[_blend];
-    },
-    set: function set(blend) {
-      this[_blend] = blend;
-      if (this[_mesh]) this[_mesh].enableBlend = this.enableBlend;
-    }
-  }, {
-    key: "boundingBox",
-    get: function get() {
-      if (this[_mesh] && this[_mesh].boundingBox) return this[_mesh].boundingBox;
-      var meshData = this.meshData;
 
-      if (meshData) {
-        var positions = meshData.position0;
-        if (positions.length) meshData.boundingBox = bound_points__WEBPACK_IMPORTED_MODULE_6___default()(positions);else return [[0, 0], [0, 0]];
-        return meshData.boundingBox;
+    if (!this[_mesh]) {
+      if (!this[_fill] && !this[_stroke]) {
+        this.setFill();
       }
 
-      return [[0, 0], [0, 0]];
-    }
-  }, {
-    key: "boundingCenter",
-    get: function get() {
-      var bound = this.boundingBox;
+      const contours = this[_contours];
+      const meshes = {};
 
-      if (bound) {
-        return [0.5 * (bound[0][0] + bound[1][0]), 0.5 * (bound[0][1] + bound[1][1])];
-      }
-
-      return [0, 0];
-    }
-  }, {
-    key: "fillRule",
-    get: function get() {
-      if (this[_fill]) {
-        return this[_fill].rule;
-      }
-
-      return 'nonzero';
-    }
-  }, {
-    key: "lineWidth",
-    get: function get() {
-      if (this[_stroke]) {
-        return this[_stroke].lineWidth;
-      }
-
-      return 0;
-    }
-  }, {
-    key: "lineCap",
-    get: function get() {
-      if (this[_stroke]) {
-        return this[_stroke].lineCap;
-      }
-
-      return '';
-    }
-  }, {
-    key: "lineJoin",
-    get: function get() {
-      if (this[_stroke]) {
-        return this[_stroke].lineJoin;
-      }
-
-      return '';
-    }
-  }, {
-    key: "miterLimit",
-    get: function get() {
-      if (this[_stroke]) {
-        return this[_stroke].miterLimit;
-      }
-
-      return 0;
-    }
-  }, {
-    key: "strokeStyle",
-    get: function get() {
-      if (this[_strokeColor] && this[_strokeColor][3] !== 0) {
-        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(this[_strokeColor]);
-      }
-
-      return '';
-    }
-  }, {
-    key: "lineDash",
-    get: function get() {
-      if (this[_stroke]) {
-        return this[_stroke].lineDash;
-      }
-
-      return null;
-    }
-  }, {
-    key: "lineDashOffset",
-    get: function get() {
-      if (this[_stroke]) {
-        return this[_stroke].lineDashOffset;
-      }
-
-      return 0;
-    }
-  }, {
-    key: "fillStyle",
-    get: function get() {
-      if (this[_fillColor] && this[_fillColor][3] !== 0) {
-        return Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_9__["default"])(this[_fillColor]);
-      }
-
-      return '';
-    }
-  }, {
-    key: "gradient",
-    get: function get() {
-      return this[_gradient];
-    }
-  }, {
-    key: "texture",
-    get: function get() {
-      if (this[_uniforms].u_texSampler) {
-        return {
-          image: this[_uniforms].u_texSampler._img,
-          options: this[_texOptions]
-        };
-      }
-
-      return null;
-    }
-  }, {
-    key: "enableBlend",
-    get: function get() {
-      if (this[_blend] === true || this[_blend] === false) return this[_blend];
-      return this[_opacity] < 1.0 || this[_strokeColor] != null && this[_strokeColor][3] < 1.0 || this[_fillColor] != null && this[_fillColor][3] < 1.0 || this[_uniforms].u_colorMatrix != null && this[_uniforms].u_colorMatrix[18] < 1.0 || this[_uniforms].u_radialGradientVector != null || this.beforeRender || this.afterRender;
-    }
-  }, {
-    key: "filterCanvas",
-    get: function get() {
-      return /blur|drop-shadow|url/.test(this.filter);
-    }
-  }, {
-    key: "filter",
-    get: function get() {
-      return this[_filter].join(' ');
-    }
-  }, {
-    key: "transformMatrix",
-    get: function get() {
-      return this[_transform];
-    }
-  }, {
-    key: "invertMatrix",
-    get: function get() {
-      if (!this[_invertTransform]) {
-        var m = gl_matrix__WEBPACK_IMPORTED_MODULE_5__["mat2d"].invert(Array.of(0, 0, 0, 0, 0, 0), this[_transform]);
-        this[_invertTransform] = m;
-      }
-
-      return this[_invertTransform];
-    }
-  }, {
-    key: "transformScale",
-    get: function get() {
-      var m = this[_transform];
-      return Math.max(Math.hypot(m[0], m[1]), Math.hypot(m[2], m[3]));
-    }
-  }, {
-    key: "uniforms",
-    get: function get() {
-      return this[_uniforms];
-    }
-  }, {
-    key: "pass",
-    get: function get() {
-      return this[_pass];
-    }
-  }, {
-    key: "meshData",
-    get: function get() {
-      var _this = this;
-
-      // eslint-disable-line complexity
-      if (this._updateMatrix) {
-        var acc = this.transformScale / this.contours.scale;
-
-        if (acc > 1.5) {
-          this.accurate(this.transformScale);
-        }
-      }
-
-      if (!this[_mesh]) {
-        if (!this[_fill] && !this[_stroke]) {
-          this.setFill();
-        }
-
-        var contours = this[_contours];
-        var meshes = {};
-
-        if (contours && contours.length) {
-          if (this[_fill]) {
-            try {
-              var _mesh2 = _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default()(contours, this[_fill]);
-
-              _mesh2.positions = _mesh2.positions.map(function (p) {
-                p.push(_this[_opacity]);
-                return p;
-              });
-              _mesh2.attributes = {
-                a_color: Array.from({
-                  length: _mesh2.positions.length
-                }).map(function () {
-                  return _this[_fillColor].map(function (c) {
-                    return Math.round(255 * c);
-                  });
-                }) // a_sourceRect: Array.from({length: mesh.positions.length}).map(() => [0, 0, 0, 0]),
-
-              };
-              meshes.fill = _mesh2;
-            } catch (ex) {// ignore this[_fill]
-            }
-          }
-
-          if (this[_stroke]) {
-            var lineDash = this[_stroke].lineDash;
-            var strokeContours = contours;
-
-            if (lineDash) {
-              var lineDashOffset = this[_stroke].lineDashOffset;
-              strokeContours = Object(_utils_contours__WEBPACK_IMPORTED_MODULE_12__["getDashContours"])(contours, lineDash, lineDashOffset);
-            }
-
-            var _meshes = strokeContours.map(function (lines, i) {
-              var closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_5__["vec2"].equals(lines[0], lines[lines.length - 1]);
-
-              var points = _this[_stroke].build(lines, closed);
-
-              return _triangulate_contours__WEBPACK_IMPORTED_MODULE_13___default()([points]);
+      if (contours && contours.length) {
+        if (this[_fill]) {
+          try {
+            const mesh = _triangulate_contours__WEBPACK_IMPORTED_MODULE_8___default()(contours, this[_fill]);
+            mesh.positions = mesh.positions.map(p => {
+              p.push(this[_opacity]);
+              return p;
             });
+            mesh.attributes = {
+              a_color: Array.from({
+                length: mesh.positions.length
+              }).map(() => this[_fillColor].map(c => Math.round(255 * c))) // a_sourceRect: Array.from({length: mesh.positions.length}).map(() => [0, 0, 0, 0]),
 
-            _meshes.forEach(function (mesh) {
-              mesh.positions = mesh.positions.map(function (p) {
-                p.push(-_this[_opacity]);
-                return p;
-              });
-              mesh.attributes = {
-                a_color: Array.from({
-                  length: mesh.positions.length
-                }).map(function () {
-                  return _this[_strokeColor].map(function (c) {
-                    return Math.round(255 * c);
-                  });
-                })
-              };
-            });
-
-            meshes.stroke = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__["default"])(_meshes);
+            };
+            meshes.fill = mesh;
+          } catch (ex) {// ignore this[_fill]
           }
         }
 
-        var mesh = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_8__["default"])([meshes.fill, meshes.stroke]);
-        mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
-        mesh.enableBlend = this.enableBlend;
-        mesh.position0 = mesh.positions.map(function (_ref29) {
-          var _ref30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_ref29, 3),
-              x = _ref30[0],
-              y = _ref30[1],
-              z = _ref30[2];
+        if (this[_stroke]) {
+          const lineDash = this[_stroke].lineDash;
+          let strokeContours = contours;
 
-          return [x, y, z];
-        });
-        mesh.uniforms = this[_uniforms]; // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
-        // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
+          if (lineDash) {
+            const lineDashOffset = this[_stroke].lineDashOffset;
+            strokeContours = Object(_utils_contours__WEBPACK_IMPORTED_MODULE_7__["getDashContours"])(contours, lineDash, lineDashOffset);
+          }
 
-        this[_mesh] = mesh;
+          const _meshes = strokeContours.map((lines, i) => {
+            const closed = lines.length > 1 && gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec2"].equals(lines[0], lines[lines.length - 1]);
 
-        if (!this[_uniforms].u_texSampler) {// mesh.textureCoord = mesh.positions.map(() => [0, 0]);
-        } else {
-          this[_applyTexture](mesh, this[_texOptions]);
+            const points = this[_stroke].build(lines, closed);
+
+            return _triangulate_contours__WEBPACK_IMPORTED_MODULE_8___default()([points]);
+          });
+
+          _meshes.forEach(mesh => {
+            mesh.positions = mesh.positions.map(p => {
+              p.push(-this[_opacity]);
+              return p;
+            });
+            mesh.attributes = {
+              a_color: Array.from({
+                length: mesh.positions.length
+              }).map(() => this[_strokeColor].map(c => Math.round(255 * c)))
+            };
+          });
+
+          meshes.stroke = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_3__["default"])(_meshes);
         }
-
-        var transform = this[_transform];
-
-        if (!Object(_utils_transform__WEBPACK_IMPORTED_MODULE_11__["isUnitTransform"])(transform)) {
-          this[_applyTransform](mesh, transform);
-
-          if (this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
-        }
-
-        if (this.clipPath) {
-          this[_applyClipPath]();
-        }
-
-        if (this[_program]) this[_applyProgram](this[_program]);
       }
 
-      if (this._updateMatrix) {
-        this[_mesh].matrix = this[_transform];
+      const mesh = Object(_utils_flatten_meshes__WEBPACK_IMPORTED_MODULE_3__["default"])([meshes.fill, meshes.stroke]);
+      mesh.fillPointCount = meshes.fill ? meshes.fill.positions.length : 0;
+      mesh.enableBlend = this.enableBlend;
+      mesh.position0 = mesh.positions.map(([x, y, z]) => [x, y, z]);
+      mesh.uniforms = this[_uniforms]; // if(!mesh.uniforms.u_filterFlag) mesh.uniforms.u_filterFlag = 0;
+      // if(!mesh.uniforms.u_radialGradientVector) mesh.uniforms.u_radialGradientVector = [0, 0, 0, 0, 0, 0];
 
-        this[_applyTransform](this[_mesh], this[_transform]);
+      this[_mesh] = mesh;
+
+      if (!this[_uniforms].u_texSampler) {// mesh.textureCoord = mesh.positions.map(() => [0, 0]);
+      } else {
+        this[_applyTexture](mesh, this[_texOptions]);
+      }
+
+      const transform = this[_transform];
+
+      if (!Object(_utils_transform__WEBPACK_IMPORTED_MODULE_6__["isUnitTransform"])(transform)) {
+        this[_applyTransform](mesh, transform);
 
         if (this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
       }
 
-      return this[_mesh];
+      if (this.clipPath) {
+        this[_applyClipPath]();
+      }
+
+      if (this[_program]) this[_applyProgram](this[_program]);
     }
-  }]);
 
-  return Mesh2D;
-}();
+    if (this._updateMatrix) {
+      this[_mesh].matrix = this[_transform];
 
+      this[_applyTransform](this[_mesh], this[_transform]);
 
+      if (this[_uniforms].u_radialGradientVector) this[_applyGradientTransform]();
+    }
 
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
+    return this[_mesh];
+  }
 
-var objectWithoutPropertiesLoose = __webpack_require__(75);
+  [_applyTransform](mesh, m) {
+    const {
+      positions,
+      position0: p
+    } = mesh;
 
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
+    for (let i = 0; i < positions.length; i++) {
+      const [x, y] = p[i];
+      const position = positions[i];
+      position[0] = x * m[0] + y * m[2] + m[4];
+      position[1] = x * m[1] + y * m[3] + m[5];
+    }
 
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    this._updateMatrix = false;
+  }
 
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
+  [_applyGradientTransform]() {
+    const m = this[_transform];
+    const vector = [...this._radialGradientVector];
+
+    if (vector) {
+      const [x1, y1,, x2, y2] = vector;
+      vector[0] = x1 * m[0] + y1 * m[2] + m[4];
+      vector[1] = x1 * m[1] + y1 * m[3] + m[5];
+      vector[3] = x2 * m[0] + y2 * m[2] + m[4];
+      vector[4] = x2 * m[1] + y2 * m[3] + m[5];
+      this[_uniforms].u_radialGradientVector = vector;
     }
   }
 
-  return target;
-}
+  [_applyTexture](mesh, options) {
+    function compareRect(r1, r2) {
+      if (r1 == null && r2 == null) return true;
+      if (r1 == null || r2 == null) return false;
+      return r1[0] === r2[0] && r1[1] === r2[1] && r1[2] === r2[2] && r1[3] === r2[3];
+    }
 
-module.exports = _objectWithoutProperties;
+    const texture = this[_uniforms].u_texSampler;
+    if (!texture) return;
+    const {
+      width: imgWidth,
+      height: imgHeight
+    } = texture._img;
+    const srcRect = options.srcRect;
+    let rect = options.rect || [0, 0];
 
-/***/ }),
-/* 75 */
-/***/ (function(module, exports) {
+    if (options.rotated) {
+      rect = [-rect[1], rect[0], rect[3], rect[2]];
+    }
 
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
+    if (rect[2] == null) rect[2] = srcRect ? srcRect[2] : imgWidth;
+    if (rect[3] == null) rect[3] = srcRect ? srcRect[3] : imgHeight;
 
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+    if (options.hidden) {
+      mesh.textureCoord = mesh.positions.map(() => [-1, -1, -1]);
+    } else if (!mesh.textureCoord || !compareRect(this[_texOptions].rect, options.rect) || this[_texOptions].hidden !== options.hidden || this[_texOptions].rotated !== options.rotated) {
+      let m = null;
+
+      if (options.rotated) {
+        m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].fromValues(1, 0, 0, 1, 0, 0), 0.5 * Math.PI);
+        m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [0, -rect[2]]);
+      }
+
+      mesh.textureCoord = mesh.position0.map(([x, y, z]) => {
+        if (1 / z > 0) {
+          // fillTag
+          if (options.rotated) {
+            const x0 = x * m[0] + y * m[2] + m[4];
+            const y0 = x * m[1] + y * m[3] + m[5];
+            [x, y] = [x0, y0];
+          }
+
+          const texCoord = getTexCoord([x, y], [rect[0] / rect[2], rect[1] / rect[3], rect[2], rect[3]], options);
+          if (options.repeat) texCoord[2] = 1;
+          return texCoord;
+        }
+
+        return [-1, -1, -1];
+      });
+    }
+
+    if (srcRect) {
+      const sRect = [srcRect[0] / imgWidth, srcRect[1] / imgHeight, srcRect[2] / imgWidth, srcRect[3] / imgHeight];
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [...sRect]);
+    } else {
+      mesh.attributes.a_sourceRect = mesh.positions.map(() => [0, 0, 0, 0]);
+    }
   }
 
-  return target;
+  accurate(scale) {
+    if (!this.contours) return;
+    const path = this.contours.path;
+
+    if (path) {
+      const simplify = this.contours.simplify;
+      const contours = accurate(this.contours.path, 2 * scale, simplify);
+      this[_mesh] = null;
+      this[_contours] = contours;
+    }
+  }
+
+  canIgnore() {
+    const noStroke = this[_stroke] == null || this[_stroke].lineWidth === 0 || this[_strokeColor][3] === 0;
+    const noFill = this[_fill] == null || this[_fillColor][3] === 0;
+    const noGradient = this[_uniforms].u_radialGradientVector == null;
+    const noTexture = this[_uniforms].u_texSampler == null;
+    return this[_opacity] === 0 || this[_program] == null && noStroke && noFill && noGradient && noTexture && !this.beforeRender && !this.afterRender;
+  } // join: 'miter' or 'bevel'
+  // cap: 'butt' or 'square'
+  // lineDash: null
+  // lineDashOffset: 0
+
+
+  setStroke({
+    thickness = 1,
+    cap = 'butt',
+    join = 'miter',
+    miterLimit = 10,
+    color = [0, 0, 0, 0],
+    lineDash = null,
+    lineDashOffset = 0,
+    roundSegments = 20
+  } = {}) {
+    this[_mesh] = null;
+    this[_stroke] = new _extrude_contours__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      lineWidth: thickness,
+      lineCap: cap,
+      lineJoin: join,
+      miterLimit,
+      roundSegments
+    });
+    if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_10__["default"])(color);
+    this[_strokeColor] = color;
+    this[_stroke].lineDash = lineDash;
+    this[_stroke].lineDashOffset = lineDashOffset;
+    return this;
+  }
+
+  setFill({
+    rule = this.fillRule,
+    color = [0, 0, 0, 0]
+  } = {}) {
+    this[_mesh] = null;
+    this[_fill] = {
+      rule
+    };
+    if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_10__["default"])(color);
+    this[_fillColor] = color;
+    return this;
+  }
+  /**
+    options: {
+      scale: false,
+      repeat: false,
+      rotated: false,
+      rect: [10, 10],
+      srcRect: [...],
+      hidden: false,
+    }
+   */
+
+
+  setTexture(texture, options = {}) {
+    if (texture && texture.image) {
+      const {
+        image,
+        rect
+      } = texture;
+      texture = image;
+
+      if (options.rect) {
+        for (let i = 0; i < options.rect.length; i++) {
+          rect[i] = options.rect[i];
+        }
+      }
+
+      options.rect = rect;
+    }
+
+    if (!this[_fill]) {
+      this.setFill();
+    }
+
+    this.setUniforms({
+      u_texSampler: texture
+    });
+
+    if (this[_mesh]) {
+      this[_applyTexture](this[_mesh], options);
+    }
+
+    this[_texOptions] = options;
+    return this;
+  }
+
+  setCircularGradient({
+    vector,
+    colors: gradientColors,
+    type = 'fill'
+  } = {}) {
+    if (vector.length !== 3) throw new TypeError('Invalid linearGradient.');
+    this.setGradient({
+      vector,
+      colors: gradientColors,
+      type
+    });
+  }
+
+  setLinearGradient({
+    vector,
+    colors: gradientColors,
+    type = 'fill'
+  } = {}) {
+    if (vector.length !== 4) throw new TypeError('Invalid linearGradient.');
+    this.setGradient({
+      vector,
+      colors: gradientColors,
+      type
+    });
+  }
+
+  setRadialGradient({
+    vector,
+    colors: gradientColors,
+    type = 'fill'
+  } = {}) {
+    if (vector.length !== 6) throw new TypeError('Invalid radialGradient.');
+    this.setGradient({
+      vector,
+      colors: gradientColors,
+      type
+    });
+  }
+  /**
+    vector: [x0, y0, r0, x1, y1, r1],
+    colors: [{offset:0, color}, {offset:1, color}, ...],
+   */
+
+
+  setGradient({
+    vector,
+    colors: gradientColors,
+    type = 'fill'
+  } = {}) {
+    gradientColors = gradientColors.map(({
+      offset,
+      color
+    }) => {
+      if (typeof color === 'string') color = Object(_utils_parse_color__WEBPACK_IMPORTED_MODULE_10__["default"])(color);
+      return {
+        offset,
+        color
+      };
+    });
+    this[_gradient] = this[_gradient] || {};
+    this[_gradient][type] = {
+      vector,
+      colors: gradientColors
+    };
+    gradientColors.sort((a, b) => {
+      return a.offset - b.offset;
+    });
+    const colorSteps = [];
+    gradientColors.forEach(({
+      offset,
+      color
+    }) => {
+      colorSteps.push(offset, ...color);
+    });
+
+    let _vector;
+
+    if (vector.length === 4) {
+      // linear gradient;
+      _vector = [vector[0], vector[1], 0, vector[2], vector[3], 0];
+    } else {
+      _vector = [...vector];
+    }
+
+    if (colorSteps.length < 40) colorSteps.push(-1);
+    if (colorSteps.length > 40) throw new Error('Too many colors, should be less than 8 colors');
+    this._radialGradientVector = _vector;
+    this[_uniforms].u_colorSteps = colorSteps;
+    if (type === 'fill') this[_uniforms].u_gradientType = 1;else this[_uniforms].u_gradientType = 0;
+
+    this[_applyGradientTransform]();
+
+    return this;
+  }
+
+  setUniforms(uniforms = {}) {
+    Object.assign(this[_uniforms], uniforms);
+    return this;
+  }
+
+  setTransform(...m) {
+    const transform = this[_transform];
+
+    if (!gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].equals(m, transform)) {
+      this[_transform] = m;
+      delete this[_invertTransform];
+      this._updateMatrix = true;
+    }
+
+    return this;
+  }
+
+  transform(...m) {
+    const transform = this[_transform];
+    this[_transform] = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), transform, m);
+    delete this[_invertTransform];
+    this._updateMatrix = true;
+    return this;
+  }
+
+  translate(x, y) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+    return this.transform(...m);
+  }
+
+  rotate(rad, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].rotate(Array.of(0, 0, 0, 0, 0, 0), m, rad);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.transform(...m);
+  }
+
+  scale(x, y = x, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].scale(Array.of(0, 0, 0, 0, 0, 0), m, [x, y]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.transform(...m);
+  }
+
+  skew(x, y = x, [ox, oy] = [0, 0]) {
+    let m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].create();
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [ox, oy]);
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].multiply(Array.of(0, 0, 0, 0, 0, 0), m, gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].fromValues(1, Math.tan(y), Math.tan(x), 1, 0, 0));
+    m = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat2d"].translate(Array.of(0, 0, 0, 0, 0, 0), m, [-ox, -oy]);
+    return this.transform(...m);
+  }
+
+  clearFilter() {
+    this.setColorTransform(null);
+    this[_filter].length = 0;
+    return this;
+  }
+
+  setColorTransform(...m) {
+    if (m[0] === null) {
+      this.setUniforms({
+        u_filterFlag: 0,
+        u_colorMatrix: 0
+      });
+    } else {
+      this.setUniforms({
+        u_filterFlag: 1,
+        u_colorMatrix: m
+      });
+    }
+
+    return this;
+  } // apply linear color transform
+
+
+  transformColor(...m) {
+    let transform = this.uniforms.u_colorMatrix;
+
+    if (transform) {
+      transform = Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["multiply"])(transform, m);
+    } else {
+      transform = m;
+    }
+
+    this.setColorTransform(...transform);
+    return this;
+  }
+
+  blur(length) {
+    this[_filter].push(`blur(${length}px)`);
+
+    return this;
+  }
+
+  brightness(p = 1.0) {
+    this[_filter].push(`brightness(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["brightness"])(p));
+  }
+
+  contrast(p = 1.0) {
+    this[_filter].push(`contrast(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["contrast"])(p));
+  }
+
+  dropShadow(offsetX, offsetY, blurRadius = 0, color = [0, 0, 0, 1]) {
+    if (Array.isArray(color)) color = Object(_utils_vector_to_rgba__WEBPACK_IMPORTED_MODULE_4__["default"])(color);
+
+    this[_filter].push(`drop-shadow(${offsetX}px ${offsetY}px ${blurRadius}px ${color})`);
+
+    return this;
+  }
+
+  grayscale(p = 1.0) {
+    this[_filter].push(`grayscale(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["grayscale"])(p));
+  } // https://github.com/phoboslab/WebGLImageFilter/blob/master/webgl-image-filter.js#L371
+
+
+  hueRotate(deg = 0) {
+    this[_filter].push(`hue-rotate(${deg}deg)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["hueRotate"])(deg));
+  }
+
+  invert(p = 1.0) {
+    this[_filter].push(`invert(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["invert"])(p));
+  }
+
+  opacity(p = 1.0) {
+    this[_filter].push(`opacity(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["opacity"])(p));
+  }
+
+  saturate(p = 1.0) {
+    this[_filter].push(`saturate(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["saturate"])(p));
+  }
+
+  sepia(p = 1.0) {
+    this[_filter].push(`sepia(${100 * p}%)`);
+
+    return this.transformColor(...Object(_utils_color_matrix__WEBPACK_IMPORTED_MODULE_5__["sepia"])(p));
+  }
+
+  url(svgFilter) {
+    this[_filter].push(`url(${svgFilter})`);
+
+    return this;
+  }
+
+  isPointCollision(x, y, type = 'both') {
+    const meshData = this.meshData;
+    const {
+      positions,
+      cells
+    } = meshData;
+    const m = this.invertMatrix;
+    const x0 = m[0] * x + m[2] * y + m[4];
+    const y0 = m[1] * x + m[3] * y + m[5];
+    const box = this.boundingBox;
+
+    if (x0 < box[0][0] || x0 > box[1][0] || y0 < box[0][1] || y0 > box[1][1]) {
+      return false;
+    }
+
+    function projectionOn([x0, y0], [x1, y1], [x2, y2]) {
+      const v2x = x2 - x1;
+      const v2y = y2 - y1;
+      const p = ((x0 - x1) * v2x + (y0 - y1) * v2y) / (v2x ** 2 + v2y ** 2);
+      return p >= 0 && p <= 1;
+    }
+
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i];
+      if (type === 'fill' && cell[0] >= meshData.fillPointCount) break;
+      if (type === 'stroke' && cell[0] < meshData.fillPointCount) continue; // eslint-disable-line no-continue
+
+      const [[x1, y1], [x2, y2], [x3, y3]] = cell.map(idx => positions[idx]);
+      const s1 = Math.sign((x - x1) * (y2 - y1) - (x2 - x1) * (y - y1));
+
+      if (s1 === 0 && projectionOn([x, y], [x1, y1], [x2, y2])) {
+        return true;
+      }
+
+      const s2 = Math.sign((x - x2) * (y3 - y2) - (x3 - x2) * (y - y2));
+
+      if (s2 === 0 && projectionOn([x, y], [x2, y2], [x3, y3])) {
+        return true;
+      }
+
+      const s3 = Math.sign((x - x3) * (y1 - y3) - (x1 - x3) * (y - y3));
+
+      if (s3 === 0 && projectionOn([x, y], [x3, y3], [x1, y1])) {
+        return true;
+      }
+
+      if (s1 === 1 && s2 === 1 && s3 === 1 || s1 === -1 && s2 === -1 && s3 === -1) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  isPointInFill(x, y) {
+    return this.isPointCollision(x, y, 'fill');
+  }
+
+  isPointInStroke(x, y) {
+    return this.isPointCollision(x, y, 'stroke');
+  }
+
+  addPass(program, _ref = {}) {
+    let {
+      width,
+      height
+    } = _ref,
+        uniforms = _objectWithoutProperties(_ref, ["width", "height"]);
+
+    const figure = new _figure2d__WEBPACK_IMPORTED_MODULE_11__["default"]();
+    figure.rect(0, 0, width, height);
+    const mesh = new Mesh2D(figure, {
+      width,
+      height
+    });
+    mesh.setUniforms(uniforms);
+    mesh.setProgram(program);
+
+    this[_pass].push(mesh);
+  }
+
 }
 
-module.exports = _objectWithoutPropertiesLoose;
-
 /***/ }),
-/* 76 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _stroke__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(77);
+/* harmony import */ var _stroke__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_stroke__WEBPACK_IMPORTED_MODULE_0__["Stroke"]);
 
 /***/ }),
-/* 77 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Stroke", function() { return Stroke; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66);
-
-
-
-
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(48);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
-var tmp = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-var lineA = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-var lineB = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-var tangent = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-var miter = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-var MAX_MITER_VALUE = 1e20; // infinity * 0 cause NaN, fix #7
+const tmp = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+const lineA = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+const lineB = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+const tangent = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+const miter = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+const MAX_MITER_VALUE = 1e20; // infinity * 0 cause NaN, fix #7
 
-var Stroke = /*#__PURE__*/function () {
-  function Stroke() {
-    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        _ref$lineWidth = _ref.lineWidth,
-        lineWidth = _ref$lineWidth === void 0 ? 1 : _ref$lineWidth,
-        _ref$lineJoin = _ref.lineJoin,
-        lineJoin = _ref$lineJoin === void 0 ? 'miter' : _ref$lineJoin,
-        _ref$miterLimit = _ref.miterLimit,
-        miterLimit = _ref$miterLimit === void 0 ? 10 : _ref$miterLimit,
-        _ref$lineCap = _ref.lineCap,
-        lineCap = _ref$lineCap === void 0 ? 'butt' : _ref$lineCap,
-        _ref$roundSegments = _ref.roundSegments,
-        roundSegments = _ref$roundSegments === void 0 ? 20 : _ref$roundSegments;
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, Stroke);
-
+class Stroke {
+  constructor({
+    lineWidth = 1,
+    lineJoin = 'miter',
+    miterLimit = 10,
+    lineCap = 'butt',
+    roundSegments = 20
+  } = {}) {
     this.lineWidth = lineWidth;
     this.lineJoin = lineJoin;
     this.miterLimit = miterLimit;
@@ -16828,217 +14590,210 @@ var Stroke = /*#__PURE__*/function () {
     this._normal = null;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(Stroke, [{
-    key: "build",
-    value: function build(points) {
-      var closed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var total = points.length;
-      points = _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points);
-      if (total < 2) return points;
+  build(points, closed = false) {
+    let total = points.length;
+    points = [...points];
+    if (total < 2) return points;
 
-      if (closed) {
-        if (points[0][0] !== points[total - 1][0] || points[0][1] !== points[total - 1][1]) {
-          points.push(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points[0]));
-        }
-
-        points.push(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(points[1]));
+    if (closed) {
+      if (points[0][0] !== points[total - 1][0] || points[0][1] !== points[total - 1][1]) {
+        points.push([...points[0]]);
       }
 
-      total = points.length; // clear flags
-
-      this._normal = null;
-      var contours = {
-        left: [],
-        right: []
-      };
-      var halfThick = this.lineWidth / 2;
-      var cap = this.lineCap;
-
-      if (!closed && cap === 'square') {
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, points[0], points[1]);
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(points[0], points[0], lineA, halfThick);
-        var idx = points.length - 1;
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, points[idx], points[idx - 1]);
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(points[idx], points[idx], lineA, halfThick);
-      } // join each segment
-
-
-      for (var i = 1; i < total; i++) {
-        var last = points[i - 1];
-        var cur = points[i];
-        var next = points[i + 1];
-
-        this._seg(contours, last, cur, next, halfThick, closed);
-      }
-
-      if (!closed && cap === 'round') {
-        capRound(contours, this.roundSegments);
-      }
-
-      var ret = [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(contours.left), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(contours.right.reverse()));
-      return ret;
+      points.push([...points[1]]);
     }
-  }, {
-    key: "_seg",
-    value: function _seg(contours, last, cur, next, halfThick, closed) {
-      var joinBevel = this.lineJoin === 'bevel';
-      var joinRound = this.lineJoin === 'round'; // get unit direction of line
 
-      Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineA, cur, last); // if we don't yet have a normal from previous join,
-      // compute based on line start - end
+    total = points.length; // clear flags
 
-      if (!this._normal) {
-        this._normal = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["normal"])(this._normal, lineA);
-      }
+    this._normal = null;
+    const contours = {
+      left: [],
+      right: []
+    };
+    const halfThick = this.lineWidth / 2;
+    const cap = this.lineCap;
 
-      if (!contours.left.length) {
-        // start
+    if (!closed && cap === 'square') {
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["direction"])(lineA, points[0], points[1]);
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(points[0], points[0], lineA, halfThick);
+      const idx = points.length - 1;
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["direction"])(lineA, points[idx], points[idx - 1]);
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(points[idx], points[idx], lineA, halfThick);
+    } // join each segment
+
+
+    for (let i = 1; i < total; i++) {
+      const last = points[i - 1];
+      const cur = points[i];
+      const next = points[i + 1];
+
+      this._seg(contours, last, cur, next, halfThick, closed);
+    }
+
+    if (!closed && cap === 'round') {
+      capRound(contours, this.roundSegments);
+    }
+
+    const ret = [...contours.left, ...contours.right.reverse()];
+    return ret;
+  }
+
+  _seg(contours, last, cur, next, halfThick, closed) {
+    const joinBevel = this.lineJoin === 'bevel';
+    const joinRound = this.lineJoin === 'round'; // get unit direction of line
+
+    Object(_utils__WEBPACK_IMPORTED_MODULE_0__["direction"])(lineA, cur, last); // if we don't yet have a normal from previous join,
+    // compute based on line start - end
+
+    if (!this._normal) {
+      this._normal = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["normal"])(this._normal, lineA);
+    }
+
+    if (!contours.left.length) {
+      // start
+      extrusions(contours, last, this._normal, halfThick);
+    }
+
+    if (!next) {
+      // no next segment, simple extrusion
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["normal"])(this._normal, lineA);
+
+      if (!closed) {
+        extrusions(contours, cur, this._normal, halfThick);
+      } else {
         extrusions(contours, last, this._normal, halfThick);
       }
+    } else {
+      // we have a next segment, start with miter
+      // get unit dir of next line
+      Object(_utils__WEBPACK_IMPORTED_MODULE_0__["direction"])(lineB, next, cur); // stores tangent & miter
 
-      if (!next) {
-        // no next segment, simple extrusion
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["normal"])(this._normal, lineA);
+      let miterLen = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["computeMiter"])(tangent, miter, lineA, lineB, halfThick); // infinity * 0 cause NaN, fix #7
 
-        if (!closed) {
-          extrusions(contours, cur, this._normal, halfThick);
-        } else {
-          extrusions(contours, last, this._normal, halfThick);
+      miterLen = Math.min(miterLen, MAX_MITER_VALUE); // get orientation
+
+      const flip = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["dot"])(tangent, this._normal) < 0 ? -1 : 1;
+      let bevel = joinBevel || joinRound;
+
+      if (!bevel && this.lineJoin === 'miter') {
+        const limit = miterLen / halfThick;
+
+        if (limit > this.miterLimit) {
+          // miterLen = this.miterLimit * halfThick;
+          bevel = true;
         }
-      } else {
-        // we have a next segment, start with miter
-        // get unit dir of next line
-        Object(_utils__WEBPACK_IMPORTED_MODULE_3__["direction"])(lineB, next, cur); // stores tangent & miter
-
-        var miterLen = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["computeMiter"])(tangent, miter, lineA, lineB, halfThick); // infinity * 0 cause NaN, fix #7
-
-        miterLen = Math.min(miterLen, MAX_MITER_VALUE); // get orientation
-
-        var flip = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["dot"])(tangent, this._normal) < 0 ? -1 : 1;
-        var bevel = joinBevel || joinRound;
-
-        if (!bevel && this.lineJoin === 'miter') {
-          var limit = miterLen / halfThick;
-
-          if (limit > this.miterLimit) {
-            // miterLen = this.miterLimit * halfThick;
-            bevel = true;
-          }
-        } // let len = Infinity;
-        // if(next && !nextnext) len = Math.hypot(next[0] - cur[0], next[1] - cur[1]);
+      } // let len = Infinity;
+      // if(next && !nextnext) len = Math.hypot(next[0] - cur[0], next[1] - cur[1]);
 
 
-        if (bevel) {
-          // next two points in our first segment
-          Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, this._normal, -halfThick * flip);
-          addPoint(contours, tmp, flip);
-          var maxLen = Infinity;
+      if (bevel) {
+        // next two points in our first segment
+        Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(tmp, cur, this._normal, -halfThick * flip);
+        addPoint(contours, tmp, flip);
+        let maxLen = Infinity;
 
-          if (last) {
-            maxLen = Math.min(maxLen, Math.hypot(cur[0] - last[0], cur[1] - last[1]));
-          }
+        if (last) {
+          maxLen = Math.min(maxLen, Math.hypot(cur[0] - last[0], cur[1] - last[1]));
+        }
 
-          if (next) {
-            maxLen = Math.min(maxLen, Math.hypot(next[0] - cur[0], next[1] - cur[1]));
-          }
+        if (next) {
+          maxLen = Math.min(maxLen, Math.hypot(next[0] - cur[0], next[1] - cur[1]));
+        }
 
-          var len = Math.max(halfThick, Math.min(miterLen, maxLen));
-          Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, miter, len * flip);
-          addPoint(contours, tmp, -flip);
+        const len = Math.max(halfThick, Math.min(miterLen, maxLen));
+        Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(tmp, cur, miter, len * flip);
+        addPoint(contours, tmp, -flip);
 
-          if (next) {
-            Object(_utils__WEBPACK_IMPORTED_MODULE_3__["normal"])(tmp, lineB);
-            Object(_utils__WEBPACK_IMPORTED_MODULE_3__["copy"])(this._normal, tmp); // store normal for next round
+        if (next) {
+          Object(_utils__WEBPACK_IMPORTED_MODULE_0__["normal"])(tmp, lineB);
+          Object(_utils__WEBPACK_IMPORTED_MODULE_0__["copy"])(this._normal, tmp); // store normal for next round
 
-            Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, cur, tmp, -halfThick * flip);
+          Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(tmp, cur, tmp, -halfThick * flip);
 
-            if (joinRound) {
-              var pEnd = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(tmp);
-              var pStart = flip > 0 ? contours.left[contours.left.length - 1] : contours.right[contours.right.length - 1];
-              var o = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(cur);
-              var p1 = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])(), pStart, o);
-              var p2 = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])(), pEnd, o);
-              var delta = Math.PI / this.roundSegments;
+          if (joinRound) {
+            const pEnd = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["clone"])(tmp);
+            const pStart = flip > 0 ? contours.left[contours.left.length - 1] : contours.right[contours.right.length - 1];
+            const o = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["clone"])(cur);
+            const p1 = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["sub"])(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])(), pStart, o);
+            const p2 = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["sub"])(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])(), pEnd, o);
+            const delta = Math.PI / this.roundSegments;
 
-              for (var i = 0; i < this.roundSegments; i++) {
-                Object(_utils__WEBPACK_IMPORTED_MODULE_3__["rotate"])(p1, p1, [0, 0], flip * delta);
+            for (let i = 0; i < this.roundSegments; i++) {
+              Object(_utils__WEBPACK_IMPORTED_MODULE_0__["rotate"])(p1, p1, [0, 0], flip * delta);
 
-                if (Math.sign(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["cross"])(tmp, p1, p2)[2]) !== flip) {
-                  break;
-                } else {
-                  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["add"])(tmp, p1, o);
-                }
-
-                addPoint(contours, tmp, flip);
+              if (Math.sign(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["cross"])(tmp, p1, p2)[2]) !== flip) {
+                break;
+              } else {
+                Object(_utils__WEBPACK_IMPORTED_MODULE_0__["add"])(tmp, p1, o);
               }
 
-              addPoint(contours, pEnd, flip);
-            } else {
               addPoint(contours, tmp, flip);
             }
+
+            addPoint(contours, pEnd, flip);
+          } else {
+            addPoint(contours, tmp, flip);
           }
-        } else {
-          extrusions(contours, cur, miter, miterLen);
-          Object(_utils__WEBPACK_IMPORTED_MODULE_3__["copy"])(this._normal, miter);
         }
+      } else {
+        extrusions(contours, cur, miter, miterLen);
+        Object(_utils__WEBPACK_IMPORTED_MODULE_0__["copy"])(this._normal, miter);
       }
     }
-  }]);
+  }
 
-  return Stroke;
-}();
+}
 
 function addPoint(contours, point, flip) {
   if (flip > 0) {
-    contours.left.push(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(point));
+    contours.left.push(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["clone"])(point));
   } else {
-    contours.right.push(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(point));
+    contours.right.push(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["clone"])(point));
   }
 }
 
-function extrusions(contours, point, normal, scale) {
-  var flip = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : -1;
+function extrusions(contours, point, normal, scale, flip = -1) {
   // next two points to end our segment
-  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, point, normal, -scale);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(tmp, point, normal, -scale);
   addPoint(contours, tmp, -flip);
-  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["scaleAndAdd"])(tmp, point, normal, scale);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_0__["scaleAndAdd"])(tmp, point, normal, scale);
   addPoint(contours, tmp, flip);
 }
 
-function capRound(_ref2, roundSegments) {
-  var left = _ref2.left,
-      right = _ref2.right;
-  var t = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-  var normal = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["create"])();
-  var pStart = left[0];
-  var pEnd = right[0];
-  var center = [0.5 * (pStart[0] + pEnd[0]), 0.5 * (pStart[1] + pEnd[1])];
-  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(normal, pStart, center);
+function capRound({
+  left,
+  right
+}, roundSegments) {
+  const t = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+  const normal = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["create"])();
+  let pStart = left[0];
+  let pEnd = right[0];
+  let center = [0.5 * (pStart[0] + pEnd[0]), 0.5 * (pStart[1] + pEnd[1])];
+  Object(_utils__WEBPACK_IMPORTED_MODULE_0__["sub"])(normal, pStart, center);
 
-  for (var i = 1; i <= roundSegments; i++) {
-    var rad = -1 * Math.PI * i / roundSegments;
-    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["rotate"])(t, normal, [0, 0], rad);
-    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["add"])(tmp, center, t);
-    left.unshift(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(tmp));
+  for (let i = 1; i <= roundSegments; i++) {
+    const rad = -1 * Math.PI * i / roundSegments;
+    Object(_utils__WEBPACK_IMPORTED_MODULE_0__["rotate"])(t, normal, [0, 0], rad);
+    Object(_utils__WEBPACK_IMPORTED_MODULE_0__["add"])(tmp, center, t);
+    left.unshift(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["clone"])(tmp));
   }
 
   pStart = right[right.length - 1];
   pEnd = left[left.length - 1];
   center = [0.5 * (pStart[0] + pEnd[0]), 0.5 * (pStart[1] + pEnd[1])];
-  Object(_utils__WEBPACK_IMPORTED_MODULE_3__["sub"])(normal, pStart, center);
+  Object(_utils__WEBPACK_IMPORTED_MODULE_0__["sub"])(normal, pStart, center);
 
-  for (var _i = 1; _i <= roundSegments; _i++) {
-    var _rad = -1 * Math.PI * _i / roundSegments;
-
-    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["rotate"])(t, normal, [0, 0], _rad);
-    Object(_utils__WEBPACK_IMPORTED_MODULE_3__["add"])(tmp, center, t);
-    right.push(Object(_utils__WEBPACK_IMPORTED_MODULE_3__["clone"])(tmp));
+  for (let i = 1; i <= roundSegments; i++) {
+    const rad = -1 * Math.PI * i / roundSegments;
+    Object(_utils__WEBPACK_IMPORTED_MODULE_0__["rotate"])(t, normal, [0, 0], rad);
+    Object(_utils__WEBPACK_IMPORTED_MODULE_0__["add"])(tmp, center, t);
+    right.push(Object(_utils__WEBPACK_IMPORTED_MODULE_0__["clone"])(tmp));
   }
 }
 
 /***/ }),
-/* 78 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17051,7 +14806,7 @@ function isUnitTransform(m) {
 }
 
 /***/ }),
-/* 79 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
@@ -17059,9 +14814,9 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 // https://github.com/mattdesl/triangulate-contours
 
 /* eslint-disable */
-var Tess2 = __webpack_require__(80);
+var Tess2 = __webpack_require__(60);
 
-var xtend = __webpack_require__(81);
+var xtend = __webpack_require__(61);
 
 module.exports = function (contours, opt) {
   opt = opt || {};
@@ -17083,11 +14838,11 @@ module.exports = function (contours, opt) {
       return a.concat(b);
     });
   });
-  var windingRule = opt.rule === 'evenodd' ? Tess2.WINDING_ODD : Tess2.WINDING_NONZERO; // Tesselate
+  const windingRule = opt.rule === 'evenodd' ? Tess2.WINDING_ODD : Tess2.WINDING_NONZERO; // Tesselate
 
   var res = Tess2.tesselate(xtend({
     contours: contours,
-    windingRule: windingRule,
+    windingRule,
     elementType: Tess2.POLYGONS,
     polySize: 3,
     vertexSize: 2
@@ -17116,7 +14871,7 @@ module.exports = function (contours, opt) {
 };
 
 /***/ }),
-/* 80 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17192,7 +14947,7 @@ Tess2.tesselate = function (opts) {
 /* Internal */
 
 
-var assert = function assert(cond) {
+var assert = function (cond) {
   if (!cond) {
     throw "Assertion Failed!";
   }
@@ -17557,7 +15312,7 @@ TESSmesh.prototype = {
   * before the current edge operation is completed.
   */
   //static TESShalfEdge *MakeEdge( TESSmesh* mesh, TESShalfEdge *eNext )
-  makeEdge_: function makeEdge_(eNext) {
+  makeEdge_: function (eNext) {
     var e = new TESShalfEdge(0);
     var eSym = new TESShalfEdge(1);
     /* Make sure eNext points to the first edge of the edge pair */
@@ -17599,7 +15354,7 @@ TESSmesh.prototype = {
   * For more explanation see tessMeshSplice() below.
   */
   // static void Splice( TESShalfEdge *a, TESShalfEdge *b )
-  splice_: function splice_(a, b) {
+  splice_: function (a, b) {
     var aOnext = a.Onext;
     var bOnext = b.Onext;
     aOnext.Sym.Lnext = b;
@@ -17615,7 +15370,7 @@ TESSmesh.prototype = {
   * list will not see the newly created vertices.
   */
   //static void MakeVertex( TESSvertex *newVertex, TESShalfEdge *eOrig, TESSvertex *vNext )
-  makeVertex_: function makeVertex_(newVertex, eOrig, vNext) {
+  makeVertex_: function (newVertex, eOrig, vNext) {
     var vNew = newVertex;
     assert(vNew !== null);
     /* insert in circular doubly-linked list before vNext */
@@ -17645,7 +15400,7 @@ TESSmesh.prototype = {
   * list will not see the newly created faces.
   */
   // static void MakeFace( TESSface *newFace, TESShalfEdge *eOrig, TESSface *fNext )
-  makeFace_: function makeFace_(newFace, eOrig, fNext) {
+  makeFace_: function (newFace, eOrig, fNext) {
     var fNew = newFace;
     assert(fNew !== null);
     /* insert in circular doubly-linked list before fNext */
@@ -17677,7 +15432,7 @@ TESSmesh.prototype = {
   * and removes from the global edge list.
   */
   //static void KillEdge( TESSmesh *mesh, TESShalfEdge *eDel )
-  killEdge_: function killEdge_(eDel) {
+  killEdge_: function (eDel) {
     /* Half-edges are allocated in pairs, see EdgePair above */
     if (eDel.Sym.side < eDel.side) {
       eDel = eDel.Sym;
@@ -17695,7 +15450,7 @@ TESSmesh.prototype = {
   * vertex list.  It updates the vertex loop to point to a given new vertex.
   */
   //static void KillVertex( TESSmesh *mesh, TESSvertex *vDel, TESSvertex *newOrg )
-  killVertex_: function killVertex_(vDel, newOrg) {
+  killVertex_: function (vDel, newOrg) {
     var eStart = vDel.anEdge;
     /* change the origin of all affected edges */
 
@@ -17718,7 +15473,7 @@ TESSmesh.prototype = {
   * list.  It updates the face loop to point to a given new face.
   */
   //static void KillFace( TESSmesh *mesh, TESSface *fDel, TESSface *newLface )
-  killFace_: function killFace_(fDel, newLface) {
+  killFace_: function (fDel, newLface) {
     var eStart = fDel.anEdge;
     /* change the left face of all affected edges */
 
@@ -17743,7 +15498,7 @@ TESSmesh.prototype = {
   * The loop consists of the two new half-edges.
   */
   //TESShalfEdge *tessMeshMakeEdge( TESSmesh *mesh )
-  makeEdge: function makeEdge() {
+  makeEdge: function () {
     var newVertex1 = new TESSvertex();
     var newVertex2 = new TESSvertex();
     var newFace = new TESSface();
@@ -17778,7 +15533,7 @@ TESSmesh.prototype = {
   * If eDst == eOrg->Oprev, the old vertex will have a single edge.
   */
   //int tessMeshSplice( TESSmesh* mesh, TESShalfEdge *eOrg, TESShalfEdge *eDst )
-  splice: function splice(eOrg, eDst) {
+  splice: function (eOrg, eDst) {
     var joiningLoops = false;
     var joiningVertices = false;
     if (eOrg === eDst) return;
@@ -17831,7 +15586,7 @@ TESSmesh.prototype = {
   * unnecessary vertices and faces.
   */
   //int tessMeshDelete( TESSmesh *mesh, TESShalfEdge *eDel )
-  delete: function _delete(eDel) {
+  delete: function (eDel) {
     var eDelSym = eDel.Sym;
     var joiningLoops = false;
     /* First step: disconnect the origin vertex eDel->Org.  We make all
@@ -17890,7 +15645,7 @@ TESSmesh.prototype = {
   * eOrg and eNew will have the same left face.
   */
   // TESShalfEdge *tessMeshAddEdgeVertex( TESSmesh *mesh, TESShalfEdge *eOrg );
-  addEdgeVertex: function addEdgeVertex(eOrg) {
+  addEdgeVertex: function (eOrg) {
     var eNew = this.makeEdge_(eOrg);
     var eNewSym = eNew.Sym;
     /* Connect the new edge appropriately */
@@ -17910,7 +15665,7 @@ TESSmesh.prototype = {
   * eOrg and eNew will have the same left face.
   */
   // TESShalfEdge *tessMeshSplitEdge( TESSmesh *mesh, TESShalfEdge *eOrg );
-  splitEdge: function splitEdge(eOrg, eDst) {
+  splitEdge: function (eOrg, eDst) {
     var tempHalfEdge = this.addEdgeVertex(eOrg);
     var eNew = tempHalfEdge.Sym;
     /* Disconnect eOrg from eOrg->Dst and connect it to eNew->Org */
@@ -17942,7 +15697,7 @@ TESSmesh.prototype = {
   * If (eOrg->Lnext->Lnext == eDst), the old face is reduced to two edges.
   */
   // TESShalfEdge *tessMeshConnect( TESSmesh *mesh, TESShalfEdge *eOrg, TESShalfEdge *eDst );
-  connect: function connect(eOrg, eDst) {
+  connect: function (eOrg, eDst) {
     var joiningLoops = false;
     var eNew = this.makeEdge_(eOrg);
     var eNewSym = eNew.Sym;
@@ -17983,7 +15738,7 @@ TESSmesh.prototype = {
   * An entire mesh can be deleted by zapping its faces, one at a time,
   * in any order.  Zapped faces cannot be used in further mesh operations!
   */
-  zapFace: function zapFace(fZap) {
+  zapFace: function (fZap) {
     var eStart = fZap.anEdge;
     var e, eNext, eSym;
     var fPrev, fNext;
@@ -18027,7 +15782,7 @@ TESSmesh.prototype = {
     fNext.prev = fPrev;
     fPrev.next = fNext;
   },
-  countFaceVerts_: function countFaceVerts_(f) {
+  countFaceVerts_: function (f) {
     var eCur = f.anEdge;
     var n = 0;
 
@@ -18039,7 +15794,7 @@ TESSmesh.prototype = {
     return n;
   },
   //int tessMeshMergeConvexFaces( TESSmesh *mesh, int maxVertsPerFace )
-  mergeConvexFaces: function mergeConvexFaces(maxVertsPerFace) {
+  mergeConvexFaces: function (maxVertsPerFace) {
     var f;
     var eCur, eNext, eSym;
     var vStart;
@@ -18083,7 +15838,7 @@ TESSmesh.prototype = {
 
   /* tessMeshCheckMesh( mesh ) checks a mesh for self-consistency.
   */
-  check: function check() {
+  check: function () {
     var fHead = this.fHead;
     var vHead = this.vHead;
     var eHead = this.eHead;
@@ -18450,16 +16205,16 @@ function Dict(frame, leq) {
 
 ;
 Dict.prototype = {
-  min: function min() {
+  min: function () {
     return this.head.next;
   },
-  max: function max() {
+  max: function () {
     return this.head.prev;
   },
-  insert: function insert(k) {
+  insert: function (k) {
     return this.insertBefore(this.head, k);
   },
-  search: function search(key) {
+  search: function (key) {
     /* Search returns the node with the smallest key greater than or equal
     * to the given key.  If there is no such key, returns a node whose
     * key is NULL.  Similarly, Succ(Max(d)) has a NULL key, etc.
@@ -18472,7 +16227,7 @@ Dict.prototype = {
 
     return node;
   },
-  insertBefore: function insertBefore(node, key) {
+  insertBefore: function (node, key) {
     do {
       node = node.prev;
     } while (node.key !== null && !this.leq(this.frame, node.key, key));
@@ -18485,7 +16240,7 @@ Dict.prototype = {
     node.next = newNode;
     return newNode;
   },
-  delete: function _delete(node) {
+  delete: function (node) {
     node.next.prev = node.prev;
     node.prev.next = node.next;
   }
@@ -18507,16 +16262,12 @@ function PriorityQ(size, leq) {
   this.nodes.length = size + 1;
   var i;
 
-  for (i = 0; i < this.nodes.length; i++) {
-    this.nodes[i] = new PQnode();
-  }
+  for (i = 0; i < this.nodes.length; i++) this.nodes[i] = new PQnode();
 
   this.handles = [];
   this.handles.length = size + 1;
 
-  for (i = 0; i < this.handles.length; i++) {
-    this.handles[i] = new PQhandleElem();
-  }
+  for (i = 0; i < this.handles.length; i++) this.handles[i] = new PQhandleElem();
 
   this.initialized = false;
   this.freeList = 0;
@@ -18529,7 +16280,7 @@ function PriorityQ(size, leq) {
 
 ;
 PriorityQ.prototype = {
-  floatDown_: function floatDown_(curr) {
+  floatDown_: function (curr) {
     var n = this.nodes;
     var h = this.handles;
     var hCurr, hChild;
@@ -18557,7 +16308,7 @@ PriorityQ.prototype = {
       curr = child;
     }
   },
-  floatUp_: function floatUp_(curr) {
+  floatUp_: function (curr) {
     var n = this.nodes;
     var h = this.handles;
     var hCurr, hParent;
@@ -18579,7 +16330,7 @@ PriorityQ.prototype = {
       curr = parent;
     }
   },
-  init: function init() {
+  init: function () {
     /* This method of building a heap is O(n), rather than O(n lg n). */
     for (var i = this.size; i >= 1; --i) {
       this.floatDown_(i);
@@ -18587,7 +16338,7 @@ PriorityQ.prototype = {
 
     this.initialized = true;
   },
-  min: function min() {
+  min: function () {
     return this.handles[this.nodes[1].handle].key;
   },
 
@@ -18595,7 +16346,7 @@ PriorityQ.prototype = {
 
   /* returns INV_HANDLE iff out of memory */
   //PQhandle pqHeapInsert( TESSalloc* alloc, PriorityQHeap *pq, PQkey keyNew )
-  insert: function insert(keyNew) {
+  insert: function (keyNew) {
     var curr;
     var free;
     curr = ++this.size;
@@ -18607,16 +16358,12 @@ PriorityQ.prototype = {
       s = this.nodes.length;
       this.nodes.length = this.max + 1;
 
-      for (i = s; i < this.nodes.length; i++) {
-        this.nodes[i] = new PQnode();
-      }
+      for (i = s; i < this.nodes.length; i++) this.nodes[i] = new PQnode();
 
       s = this.handles.length;
       this.handles.length = this.max + 1;
 
-      for (i = s; i < this.handles.length; i++) {
-        this.handles[i] = new PQhandleElem();
-      }
+      for (i = s; i < this.handles.length; i++) this.handles[i] = new PQhandleElem();
     }
 
     if (this.freeList === 0) {
@@ -18637,7 +16384,7 @@ PriorityQ.prototype = {
     return free;
   },
   //PQkey pqHeapExtractMin( PriorityQHeap *pq )
-  extractMin: function extractMin() {
+  extractMin: function () {
     var n = this.nodes;
     var h = this.handles;
     var hMin = n[1].handle;
@@ -18658,7 +16405,7 @@ PriorityQ.prototype = {
 
     return min;
   },
-  delete: function _delete(hCurr) {
+  delete: function (hCurr) {
     var n = this.nodes;
     var h = this.handles;
     var curr;
@@ -20056,10 +17803,10 @@ function Tesselator() {
 
 ;
 Tesselator.prototype = {
-  dot_: function dot_(u, v) {
+  dot_: function (u, v) {
     return u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
   },
-  normalize_: function normalize_(v) {
+  normalize_: function (v) {
     var len = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
     assert(len > 0.0);
     len = Math.sqrt(len);
@@ -20067,7 +17814,7 @@ Tesselator.prototype = {
     v[1] /= len;
     v[2] /= len;
   },
-  longAxis_: function longAxis_(v) {
+  longAxis_: function (v) {
     var i = 0;
 
     if (Math.abs(v[1]) > Math.abs(v[0])) {
@@ -20080,7 +17827,7 @@ Tesselator.prototype = {
 
     return i;
   },
-  computeNormal_: function computeNormal_(norm) {
+  computeNormal_: function (norm) {
     var v, v1, v2;
     var c, tLen2, maxLen2;
     var maxVal = [0, 0, 0],
@@ -20174,7 +17921,7 @@ Tesselator.prototype = {
       norm[this.longAxis_(d1)] = 1;
     }
   },
-  checkOrientation_: function checkOrientation_() {
+  checkOrientation_: function () {
     var area;
     var f,
         fHead = this.mesh.fHead;
@@ -20238,7 +17985,7 @@ Tesselator.prototype = {
   /* Determine the polygon normal and project vertices onto the plane
   * of the polygon.
   */
-  projectPolygon_: function projectPolygon_() {
+  projectPolygon_: function () {
     var v,
         vHead = this.mesh.vHead;
     var norm = [0, 0, 0];
@@ -20319,7 +18066,7 @@ Tesselator.prototype = {
       }
     }
   },
-  addWinding_: function addWinding_(eDst, eSrc) {
+  addWinding_: function (eDst, eSrc) {
     eDst.winding += eSrc.winding;
     eDst.Sym.winding += eSrc.Sym.winding;
   },
@@ -20352,7 +18099,7 @@ Tesselator.prototype = {
   * as possible, we restore the invariant (check it yourself).
   */
   //	int tessMeshTessellateMonoRegion( TESSmesh *mesh, TESSface *face )
-  tessellateMonoRegion_: function tessellateMonoRegion_(mesh, face) {
+  tessellateMonoRegion_: function (mesh, face) {
     var up, lo;
     /* All edges are oriented CCW around the boundary of the region.
     * First, find the half-edge whose origin vertex is rightmost.
@@ -20363,13 +18110,9 @@ Tesselator.prototype = {
     up = face.anEdge;
     assert(up.Lnext !== up && up.Lnext.Lnext !== up);
 
-    for (; Geom.vertLeq(up.Dst, up.Org); up = up.Lprev) {
-      ;
-    }
+    for (; Geom.vertLeq(up.Dst, up.Org); up = up.Lprev);
 
-    for (; Geom.vertLeq(up.Org, up.Dst); up = up.Lnext) {
-      ;
-    }
+    for (; Geom.vertLeq(up.Org, up.Dst); up = up.Lnext);
 
     lo = up.Lprev;
 
@@ -20418,7 +18161,7 @@ Tesselator.prototype = {
   * must be monotone.
   */
   //int tessMeshTessellateInterior( TESSmesh *mesh )
-  tessellateInterior_: function tessellateInterior_(mesh) {
+  tessellateInterior_: function (mesh) {
     var f, next;
     /*LINTED*/
 
@@ -20440,7 +18183,7 @@ Tesselator.prototype = {
   * mesh so that exterior loops are not represented in the data structure.
   */
   //void tessMeshDiscardExterior( TESSmesh *mesh )
-  discardExterior_: function discardExterior_(mesh) {
+  discardExterior_: function (mesh) {
     var f, next;
     /*LINTED*/
 
@@ -20463,7 +18206,7 @@ Tesselator.prototype = {
   * separate an interior region from an exterior one.
   */
   //	int tessMeshSetWindingNumber( TESSmesh *mesh, int value, int keepOnlyBoundary )
-  setWindingNumber_: function setWindingNumber_(mesh, value, keepOnlyBoundary) {
+  setWindingNumber_: function (mesh, value, keepOnlyBoundary) {
     var e, eNext;
 
     for (e = mesh.eHead.next; e !== mesh.eHead; e = eNext) {
@@ -20482,12 +18225,12 @@ Tesselator.prototype = {
       }
     }
   },
-  getNeighbourFace_: function getNeighbourFace_(edge) {
+  getNeighbourFace_: function (edge) {
     if (!edge.Rface) return -1;
     if (!edge.Rface.inside) return -1;
     return edge.Rface.n;
   },
-  outputPolymesh_: function outputPolymesh_(mesh, elementType, polySize, vertexSize) {
+  outputPolymesh_: function (mesh, elementType, polySize, vertexSize) {
     var v;
     var f;
     var edge;
@@ -20503,9 +18246,7 @@ Tesselator.prototype = {
     } // Mark unused
 
 
-    for (v = mesh.vHead.next; v !== mesh.vHead; v = v.next) {
-      v.n = -1;
-    } // Create unique IDs for all vertices and faces.
+    for (v = mesh.vHead.next; v !== mesh.vHead; v = v.next) v.n = -1; // Create unique IDs for all vertices and faces.
 
 
     for (f = mesh.fHead.next; f !== mesh.fHead; f = f.next) {
@@ -20594,9 +18335,7 @@ Tesselator.prototype = {
       } while (edge !== f.anEdge); // Fill unused.
 
 
-      for (i = faceVerts; i < polySize; ++i) {
-        this.elements[nel++] = -1;
-      } // Store polygon connectivity
+      for (i = faceVerts; i < polySize; ++i) this.elements[nel++] = -1; // Store polygon connectivity
 
 
       if (elementType === Tess2.CONNECTED_POLYGONS) {
@@ -20608,14 +18347,12 @@ Tesselator.prototype = {
         } while (edge !== f.anEdge); // Fill unused.
 
 
-        for (i = faceVerts; i < polySize; ++i) {
-          this.elements[nel++] = -1;
-        }
+        for (i = faceVerts; i < polySize; ++i) this.elements[nel++] = -1;
       }
     }
   },
   //	void OutputContours( TESStesselator *tess, TESSmesh *mesh, int vertexSize )
-  outputContours_: function outputContours_(mesh, vertexSize) {
+  outputContours_: function (mesh, vertexSize) {
     var f;
     var edge;
     var start;
@@ -20693,7 +18430,7 @@ Tesselator.prototype = {
       startVert += vertCount;
     }
   },
-  addContour: function addContour(size, vertices) {
+  addContour: function (size, vertices) {
     var e;
     var i;
     if (this.mesh === null) this.mesh = new TESSmesh();
@@ -20743,7 +18480,7 @@ Tesselator.prototype = {
     }
   },
   //	int tessTesselate( TESStesselator *tess, int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal )
-  tesselate: function tesselate(windingRule, elementType, polySize, vertexSize, normal) {
+  tesselate: function (windingRule, elementType, polySize, vertexSize, normal) {
     this.vertices = [];
     this.elements = [];
     this.vertexIndices = [];
@@ -20809,7 +18546,7 @@ Tesselator.prototype = {
 };
 
 /***/ }),
-/* 81 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -20834,7 +18571,7 @@ function extend() {
 
 
 /***/ }),
-/* 82 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20843,14 +18580,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyShader", function() { return applyShader; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCloudShaders", function() { return createCloudShaders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyCloudShader", function() { return applyCloudShader; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83);
-/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(84);
-/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(85);
-/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(86);
-
-
+/* harmony import */ var _shader_vert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _shader_frag__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(64);
+/* harmony import */ var _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65);
+/* harmony import */ var _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66);
 __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
@@ -20858,23 +18591,23 @@ __webpack_require__(1).glMatrix.setMatrixArrayType(Array);
 
 
 
-var _shaders = Symbol('shaders');
+const _shaders = Symbol('shaders');
 
 function createShaders(renderer) {
   renderer[_shaders] = [];
 
-  for (var i = 0; i < 16; i++) {
-    var defines = [];
-    var hasTexture = !!(i & 0x1);
-    var hasFilter = !!(i & 0x2);
-    var hasGradient = !!(i & 0x4);
-    var hasClipPath = !!(i & 0x8);
+  for (let i = 0; i < 16; i++) {
+    const defines = [];
+    const hasTexture = !!(i & 0x1);
+    const hasFilter = !!(i & 0x2);
+    const hasGradient = !!(i & 0x4);
+    const hasClipPath = !!(i & 0x8);
     if (hasTexture) defines.push('#define TEXTURE 1');
     if (hasFilter) defines.push('#define FILTER 1');
     if (hasGradient) defines.push('#define GRADIENT 1');
     if (hasClipPath) defines.push('#define CLIPPATH 1');
-    var prefix = "".concat(defines.join('\n'), "\n");
-    var samplerDef = [];
+    const prefix = `${defines.join('\n')}\n`;
+    const samplerDef = [];
 
     if (hasTexture) {
       samplerDef.push('uniform sampler2D u_texSampler;');
@@ -20885,25 +18618,20 @@ function createShaders(renderer) {
     } // renderer.createProgram(prefix + samplerDef.join('\n') + fragShader, prefix + vertShader);
 
 
-    renderer[_shaders][i] = [prefix + samplerDef.join('\n') + _shader_frag__WEBPACK_IMPORTED_MODULE_2__["default"], prefix + _shader_vert__WEBPACK_IMPORTED_MODULE_1__["default"]];
+    renderer[_shaders][i] = [prefix + samplerDef.join('\n') + _shader_frag__WEBPACK_IMPORTED_MODULE_1__["default"], prefix + _shader_vert__WEBPACK_IMPORTED_MODULE_0__["default"]];
   }
 }
-function applyShader(renderer) {
-  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      _ref$hasTexture = _ref.hasTexture,
-      hasTexture = _ref$hasTexture === void 0 ? false : _ref$hasTexture,
-      _ref$hasFilter = _ref.hasFilter,
-      hasFilter = _ref$hasFilter === void 0 ? false : _ref$hasFilter,
-      _ref$hasGradient = _ref.hasGradient,
-      hasGradient = _ref$hasGradient === void 0 ? false : _ref$hasGradient,
-      _ref$hasClipPath = _ref.hasClipPath,
-      hasClipPath = _ref$hasClipPath === void 0 ? false : _ref$hasClipPath;
-
-  var idx = hasTexture | hasFilter << 1 | hasGradient << 2 | hasClipPath << 3;
-  var program = renderer[_shaders][idx];
+function applyShader(renderer, {
+  hasTexture = false,
+  hasFilter = false,
+  hasGradient = false,
+  hasClipPath = false
+} = {}) {
+  const idx = hasTexture | hasFilter << 1 | hasGradient << 2 | hasClipPath << 3;
+  let program = renderer[_shaders][idx];
 
   if (Array.isArray(program)) {
-    program = renderer.createProgram.apply(renderer, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(program));
+    program = renderer.createProgram(...program);
     renderer[_shaders][idx] = program;
   }
 
@@ -20916,30 +18644,30 @@ function applyShader(renderer) {
     });
   }
 }
-var cloudShaders = [];
+const cloudShaders = [];
 function createCloudShaders(renderer) {
-  for (var i = 0; i < 64; i++) {
-    var defines = [];
-    var hasTexture = !!(i & 0x1);
-    var hasFilter = !!(i & 0x2);
-    var hasGradient = !!(i & 0x4);
-    var hasCloudColor = !!(i & 0x8);
-    var hasCloudFilter = !!(i & 0x10);
-    var hasClipPath = !!(i & 0x20);
+  for (let i = 0; i < 64; i++) {
+    const defines = [];
+    const hasTexture = !!(i & 0x1);
+    const hasFilter = !!(i & 0x2);
+    const hasGradient = !!(i & 0x4);
+    const hasCloudColor = !!(i & 0x8);
+    const hasCloudFilter = !!(i & 0x10);
+    const hasClipPath = !!(i & 0x20);
     if (hasTexture) defines.push('#define TEXTURE 1');
     if (hasFilter) defines.push('#define FILTER 1');
     if (hasGradient) defines.push('#define GRADIENT 1');
     if (hasCloudColor) defines.push('#define CLOUDCOLOR 1');
     if (hasCloudFilter) defines.push('#define CLOUDFILTER 1');
     if (hasClipPath) defines.push('#define CLIPPATH 1');
-    var prefix = "".concat(defines.join('\n'), "\n");
-    var samplerDef = [];
+    const prefix = `${defines.join('\n')}\n`;
+    const samplerDef = [];
 
     if (hasTexture) {
       samplerDef.push('uniform sampler2D u_texSampler;');
 
-      for (var j = 0; j < 12; j++) {
-        samplerDef.push("uniform sampler2D u_texFrame".concat(j, ";"));
+      for (let j = 0; j < 12; j++) {
+        samplerDef.push(`uniform sampler2D u_texFrame${j};`);
       }
     }
 
@@ -20947,29 +18675,22 @@ function createCloudShaders(renderer) {
       samplerDef.push('uniform sampler2D u_clipSampler;');
     }
 
-    cloudShaders[i] = [prefix + samplerDef.join('\n') + _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_4__["default"], prefix + _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_3__["default"]]; // renderer.createProgram(prefix + samplerDef.join('\n') + fragShaderCloud, prefix + vertShaderCloud);
+    cloudShaders[i] = [prefix + samplerDef.join('\n') + _shader_cloud_frag__WEBPACK_IMPORTED_MODULE_3__["default"], prefix + _shader_cloud_vert__WEBPACK_IMPORTED_MODULE_2__["default"]]; // renderer.createProgram(prefix + samplerDef.join('\n') + fragShaderCloud, prefix + vertShaderCloud);
   }
 }
-function applyCloudShader(renderer) {
-  var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      _ref2$hasTexture = _ref2.hasTexture,
-      hasTexture = _ref2$hasTexture === void 0 ? false : _ref2$hasTexture,
-      _ref2$hasFilter = _ref2.hasFilter,
-      hasFilter = _ref2$hasFilter === void 0 ? false : _ref2$hasFilter,
-      _ref2$hasGradient = _ref2.hasGradient,
-      hasGradient = _ref2$hasGradient === void 0 ? false : _ref2$hasGradient,
-      _ref2$hasCloudColor = _ref2.hasCloudColor,
-      hasCloudColor = _ref2$hasCloudColor === void 0 ? false : _ref2$hasCloudColor,
-      _ref2$hasCloudFilter = _ref2.hasCloudFilter,
-      hasCloudFilter = _ref2$hasCloudFilter === void 0 ? false : _ref2$hasCloudFilter,
-      _ref2$hasClipPath = _ref2.hasClipPath,
-      hasClipPath = _ref2$hasClipPath === void 0 ? false : _ref2$hasClipPath;
-
-  var idx = hasTexture | hasFilter << 1 | hasGradient << 2 | hasCloudColor << 3 | hasCloudFilter << 4 | hasClipPath << 5;
-  var program = cloudShaders[idx];
+function applyCloudShader(renderer, {
+  hasTexture = false,
+  hasFilter = false,
+  hasGradient = false,
+  hasCloudColor = false,
+  hasCloudFilter = false,
+  hasClipPath = false
+} = {}) {
+  const idx = hasTexture | hasFilter << 1 | hasGradient << 2 | hasCloudColor << 3 | hasCloudFilter << 4 | hasClipPath << 5;
+  let program = cloudShaders[idx];
 
   if (Array.isArray(program)) {
-    program = renderer.createProgram.apply(renderer, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(program));
+    program = renderer.createProgram(...program);
     cloudShaders[idx] = program;
   }
 
@@ -20996,7 +18717,7 @@ function applyCloudShader(renderer) {
 }
 
 /***/ }),
-/* 83 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21004,7 +18725,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLIPPATH\nattribute vec2 a_clipUV;\nvarying vec2 vClipUV;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  vec3 pos = projectionMatrix * viewMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n  vColor = a_color;\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLIPPATH\n  vClipUV = a_clipUV;\n#endif\n}");
 
 /***/ }),
-/* 84 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21012,7 +18733,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("precision mediump float;\n\nvarying vec4 vColor;\nvarying float flagBackground;\n\n#ifdef TEXTURE\nvarying vec3 vTextureCoord;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLIPPATH\nvarying vec2 vClipUV;\n#endif\n\n#ifdef FILTER\nuniform int u_filterFlag;\nuniform float u_colorMatrix[20];\n#endif\n\n#ifdef GRADIENT\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\nuniform float u_colorSteps[40];\nuniform int u_gradientType;\n// uniform float u_radialGradientVector[6];\n\nvoid gradient(inout vec4 color, vec3 gv1, vec3 gv2, float colorSteps[40]) {\n  float t;\n  // center circle radius\n  float cr = gv1.z;\n  // focal circle radius\n  float fr = gv2.z;\n\n  if(cr > 0.0 || fr > 0.0) {\n    // radial gradient\n    vec2 center = gv1.xy;\n    vec2 focal = gv2.xy;\n    float x = focal.x - gl_FragCoord.x;\n    float y = focal.y - gl_FragCoord.y;\n    float dx = focal.x - center.x;\n    float dy = focal.y - center.y;\n    float dr = cr - fr;\n    float a = dx * dx + dy * dy - dr * dr;\n    float b = -2.0 * (y * dy + x * dx + fr * dr);\n    float c = x * x + y * y - fr * fr;\n    t = 1.0 - 0.5 * (1.0 / a) * (-b + sqrt(b * b - 4.0 * a * c));\n  } else {\n    // linear gradient\n    vec2 v1 = gl_FragCoord.xy - gv1.xy;\n    vec2 v2 = gv2.xy - gv1.xy;\n    t = (v1.x * v2.x + v1.y * v2.y) / (v2.x * v2.x + v2.y * v2.y);\n  }\n\n  vec4 colors[8];\n  colors[0] = vec4(colorSteps[1], colorSteps[2], colorSteps[3], colorSteps[4]);\n  colors[1] = vec4(colorSteps[6], colorSteps[7], colorSteps[8], colorSteps[9]);\n  colors[2] = vec4(colorSteps[11], colorSteps[12], colorSteps[13], colorSteps[14]);\n  colors[3] = vec4(colorSteps[16], colorSteps[17], colorSteps[18], colorSteps[19]);\n  colors[4] = vec4(colorSteps[21], colorSteps[22], colorSteps[23], colorSteps[24]);\n  colors[5] = vec4(colorSteps[26], colorSteps[27], colorSteps[28], colorSteps[29]);\n  colors[6] = vec4(colorSteps[31], colorSteps[32], colorSteps[33], colorSteps[34]);\n  colors[7] = vec4(colorSteps[36], colorSteps[37], colorSteps[38], colorSteps[39]);\n  \n  float steps[8];\n  steps[0] = colorSteps[0];\n  steps[1] = colorSteps[5];\n  steps[2] = colorSteps[10];\n  steps[3] = colorSteps[15];\n  steps[4] = colorSteps[20];\n  steps[5] = colorSteps[25];\n  steps[6] = colorSteps[30];\n  steps[7] = colorSteps[35];\n\n  color = colors[0];\n  for (int i = 1; i < 8; i++) {\n    if (steps[i] < 0.0 || steps[i] > 1.0) {\n      break;\n    }\n    if(steps[i] == steps[i - 1]) {\n      color = colors[i];\n    } else {\n      color = mix(color, colors[i], clamp((t - steps[i - 1]) / (steps[i] - steps[i - 1]), 0.0, 1.0));\n    }\n    if (steps[i] >= t) {\n      break;\n    }\n  }\n}\n#endif\n\n#ifdef FILTER\nvoid transformColor(inout vec4 color, in float colorMatrix[20]) {\n  float r = color.r, g = color.g, b = color.b, a = color.a;\n  color[0] = colorMatrix[0] * r + colorMatrix[1] * g + colorMatrix[2] * b + colorMatrix[3] * a + colorMatrix[4];\n  color[1] = colorMatrix[5] * r + colorMatrix[6] * g + colorMatrix[7] * b + colorMatrix[8] * a + colorMatrix[9];\n  color[2] = colorMatrix[10] * r + colorMatrix[11] * g + colorMatrix[12] * b + colorMatrix[13] * a + colorMatrix[14];\n  color[3] = colorMatrix[15] * r + colorMatrix[16] * g + colorMatrix[17] * b + colorMatrix[18] * a + colorMatrix[19];\n}\n#endif\n\nvoid main() {\n  vec4 color = vColor;\n  float opacity = abs(flagBackground);\n\n#ifdef GRADIENT\n  if(u_gradientType > 0 && flagBackground > 0.0 || u_gradientType == 0 && flagBackground <= 0.0) {\n    gradient(color, vGradientVector1, vGradientVector2, u_colorSteps);\n  }\n#endif\n\n  if(opacity < 1.0) {\n    color.a *= opacity;\n  }\n\n#ifdef TEXTURE\n  if(flagBackground > 0.0) {\n    vec3 texCoord = vTextureCoord;\n\n    if(texCoord.z == 1.0) {\n      texCoord = fract(texCoord);\n    }\n\n    if(texCoord.x <= 1.0 && texCoord.x >= 0.0\n      && texCoord.y <= 1.0 && texCoord.y >= 0.0) {\n      if(vSourceRect.z > 0.0) {\n        texCoord.x = vSourceRect.x + texCoord.x * vSourceRect.z;\n        texCoord.y = 1.0 - (vSourceRect.y + (1.0 - texCoord.y) * vSourceRect.w);\n      }\n      vec4 texColor = texture2D(u_texSampler, texCoord.xy);\n      float alpha = texColor.a;\n      if(opacity < 1.0) {\n        texColor.a *= opacity;\n        alpha *= mix(0.465, 1.0, opacity);\n      }\n      // color = mix(color, texColor, texColor.a);\n      color.rgb = mix(color.rgb, texColor.rgb, alpha);\n      // color.rgb = mix(texColor.rgb, color.rgb, color.a);\n      color.rgb = mix(texColor.rgb, color.rgb, clamp(color.a / max(0.0001, texColor.a), 0.0, 1.0));\n      color.a = texColor.a + (1.0 - texColor.a) * color.a;\n    }\n  }\n#endif\n\n#ifdef FILTER\n  if(u_filterFlag > 0) {\n    transformColor(color, u_colorMatrix);\n  }\n#endif\n\n#ifdef CLIPPATH\n  float clip = texture2D(u_clipSampler, vClipUV).r;\n  color *= clip;\n#endif\n\n  gl_FragColor = color;\n}");
 
 /***/ }),
-/* 85 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21020,7 +18741,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("attribute vec3 a_vertexPosition;\nattribute vec4 a_color;\nvarying vec4 vColor;\nvarying float flagBackground;\nattribute vec3 a_transform0;\nattribute vec3 a_transform1;\nuniform vec2 u_resolution;\nuniform mat3 viewMatrix;\nuniform mat3 projectionMatrix;\n\n#ifdef TEXTURE\nattribute vec3 a_vertexTextureCoord;\nvarying vec3 vTextureCoord;\nattribute float a_frameIndex;\nvarying float frameIndex;\nattribute vec4 a_sourceRect;\nvarying vec4 vSourceRect;\n#endif\n\n#ifdef CLIPPATH\nattribute vec2 a_clipUV;\nvarying vec2 vClipUV;\n#endif\n\n#ifdef CLOUDFILTER\nattribute vec4 a_colorCloud0;\nattribute vec4 a_colorCloud1;\nattribute vec4 a_colorCloud2;\nattribute vec4 a_colorCloud3;\nattribute vec4 a_colorCloud4;\nvarying vec4 colorCloud0;\nvarying vec4 colorCloud1;\nvarying vec4 colorCloud2;\nvarying vec4 colorCloud3;\nvarying vec4 colorCloud4;\n#endif\n\n#ifdef CLOUDCOLOR\nattribute vec4 a_fillCloudColor;\nattribute vec4 a_strokeCloudColor;\n#endif\n\n#ifdef GRADIENT\nuniform float u_radialGradientVector[6];\nvarying vec3 vGradientVector1;\nvarying vec3 vGradientVector2;\n#endif\n\nvoid main() {\n  gl_PointSize = 1.0;\n\n  mat3 modelMatrix = mat3(\n    a_transform0.x, a_transform1.x, 0, \n    a_transform0.y, a_transform1.y, 0,\n    a_transform0.z, a_transform1.z, 1\n  );\n\n  vec3 pos = projectionMatrix * viewMatrix * modelMatrix * vec3(a_vertexPosition.xy, 1.0);\n  gl_Position = vec4(pos.xy, 1.0, 1.0);\n\n#ifdef GRADIENT\n  vec3 vg1 = viewMatrix * vec3(u_radialGradientVector[0], u_radialGradientVector[1], 1.0);\n  vec3 vg2 = viewMatrix * vec3(u_radialGradientVector[3], u_radialGradientVector[4], 1.0);\n  float h = u_resolution.y;\n  vg1.y = h - vg1.y;\n  vg2.y = h - vg2.y;\n  vGradientVector1 = vec3(vg1.xy, u_radialGradientVector[2]);\n  vGradientVector2 = vec3(vg2.xy, u_radialGradientVector[5]);\n#endif\n  \n  flagBackground = a_vertexPosition.z;\n\n#ifdef CLOUDCOLOR\n  if(flagBackground > 0.0) {\n    vColor = mix(a_color, a_fillCloudColor, a_fillCloudColor.a);\n  } else {\n    vColor = mix(a_color, a_strokeCloudColor, a_strokeCloudColor.a);\n  }\n#else\n  vColor = a_color;\n#endif\n\n#ifdef TEXTURE\n  vTextureCoord = a_vertexTextureCoord;\n  frameIndex = a_frameIndex;\n  vSourceRect = a_sourceRect;\n#endif\n\n#ifdef CLIPPATH\n  vClipUV = a_clipUV;\n#endif\n\n#ifdef CLOUDFILTER\n  colorCloud0 = a_colorCloud0;\n  colorCloud1 = a_colorCloud1;\n  colorCloud2 = a_colorCloud2;\n  colorCloud3 = a_colorCloud3;\n  colorCloud4 = a_colorCloud4;\n#endif\n}");
 
 /***/ }),
-/* 86 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21029,4 +18750,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 /******/ ]);
-});
+
+
+meshjs === undefined && console.error('esm-webpack-plugin: nothing exported!');
+const _meshjs$Renderer = meshjs['Renderer'];
+const _meshjs$Figure2D = meshjs['Figure2D'];
+const _meshjs$Mesh2D = meshjs['Mesh2D'];
+const _meshjs$MeshCloud = meshjs['MeshCloud'];
+const _meshjs$parseFont = meshjs['parseFont'];
+const _meshjs$parseColor = meshjs['parseColor'];
+const _meshjs$ENV = meshjs['ENV'];
+
+export {
+    _meshjs$Renderer as Renderer,
+    _meshjs$Figure2D as Figure2D,
+    _meshjs$Mesh2D as Mesh2D,
+    _meshjs$MeshCloud as MeshCloud,
+    _meshjs$parseFont as parseFont,
+    _meshjs$parseColor as parseColor,
+    _meshjs$ENV as ENV
+}

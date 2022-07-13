@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const EsmWebpackPlugin = require('@purtuga/esm-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 
@@ -11,7 +12,6 @@ module.exports = function (env = {}) {
     babelConf.babelrc = false;
   }
 
-  const filename = env.mode === 'production' ? 'mesh.min.js' : 'mesh.js';
   const plugins = [];
 
   if(env.mode === 'development') {
@@ -19,6 +19,15 @@ module.exports = function (env = {}) {
       multiStep: true,
     }));
   }
+  if(env.module) {
+    plugins.push(new EsmWebpackPlugin());
+  }
+
+  let filename = 'mesh';
+  if(env.esnext) filename += '.es';
+  if(env.module) filename += 'm';
+  if(env.mode === 'production') filename += '.min';
+  filename += '.js';
 
   plugins.push(new webpack.DefinePlugin({
     __DEV__: env.mode === 'development',
@@ -32,7 +41,7 @@ module.exports = function (env = {}) {
       filename,
       publicPath: '/js/',
       library: 'meshjs',
-      libraryTarget: 'umd',
+      libraryTarget: env.module ? 'var' : 'umd',
       globalObject: 'this',
       // libraryExport: 'default',
     },

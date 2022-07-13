@@ -11995,6 +11995,7 @@ function packData(temp, enableBlend) {
     meshData.packLength = temp.length;
     meshData.beforeRender = temp[0].beforeRender;
     meshData.pass = temp[0].pass;
+    meshData.mode = temp[0].mode;
     meshData.afterRender = temp[temp.length - 1].afterRender;
     temp.length = 0;
     return meshData;
@@ -12103,7 +12104,7 @@ function compress(renderer, meshes) {
 
           lastMesh = temp[temp.length - 1];
 
-          if (!(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || lastMesh.pass.length || mesh.pass.length || lastMesh.program !== mesh.program || !compareUniform(lastMesh, mesh, temp)))) {
+          if (!(lastMesh && (lastMesh.filterCanvas || lastMesh.afterRender || mesh.beforeRender || lastMesh.pass.length || mesh.pass.length || lastMesh.program !== mesh.program || lastMesh.mode !== mesh.mode || !!lastMesh.meshData.cells !== !!mesh.meshData.cells || !compareUniform(lastMesh, mesh, temp)))) {
             _context.next = 40;
             break;
           }
@@ -12181,6 +12182,7 @@ function allocateBuffer(meshes, bufferCache) {
   var colorCount = 0;
   var count = 0;
   var program = meshes[0].program;
+  var hasCell = !!meshes[0].meshData.cells;
 
   for (var i = 0; i < meshes.length; i++) {
     var mesh = meshes[i].meshData;
@@ -12189,7 +12191,7 @@ function allocateBuffer(meshes, bufferCache) {
       count += mesh.positions.length;
       var dimension = mesh.positions[0].length;
       positionsCount += mesh.positions.length * dimension;
-      cellsCount += mesh.cells.length * 3;
+      if (hasCell) cellsCount += mesh.cells.length * 3;
       colorCount += mesh.attributes.a_color.length * 4;
       var _textureCoord = mesh.textureCoord;
 
@@ -12215,7 +12217,7 @@ function allocateBuffer(meshes, bufferCache) {
     bufferCache.positions = new Float32Array(positionsCount);
   }
 
-  if (!bufferCache.cells || bufferCache.cells.length < cellsCount) {
+  if (hasCell && (!bufferCache.cells || bufferCache.cells.length < cellsCount)) {
     bufferCache.cells = new Uint16Array(cellsCount);
   }
 
@@ -12279,6 +12281,11 @@ function flattenMeshes(meshes, bufferCache) {
   var cidx = 0;
   var uniforms = meshes[0] ? meshes[0].uniforms || {} : {};
   var program = meshes[0] ? meshes[0].program : null;
+  var hasCell = false;
+
+  if (meshes[0]) {
+    hasCell = !!meshes[0].cells || meshes[0].meshData && !!meshes[0].meshData.cells;
+  }
 
   if (bufferCache) {
     allocateBuffer(meshes, bufferCache);
@@ -12317,19 +12324,21 @@ function flattenMeshes(meshes, bufferCache) {
         (_positions2 = positions).push.apply(_positions2, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(mesh.positions));
       }
 
-      var _cells = mesh.cells;
+      if (hasCell) {
+        var _cells = mesh.cells;
 
-      for (var _j = 0; _j < _cells.length; _j++) {
-        var cell = _cells[_j];
+        for (var _j = 0; _j < _cells.length; _j++) {
+          var cell = _cells[_j];
 
-        if (bufferCache) {
-          var _o = 3 * (cidx + _j);
+          if (bufferCache) {
+            var _o = 3 * (cidx + _j);
 
-          cells[_o] = cell[0] + idx;
-          cells[_o + 1] = cell[1] + idx;
-          cells[_o + 2] = cell[2] + idx;
-        } else {
-          cells.push([cell[0] + idx, cell[1] + idx, cell[2] + idx]);
+            cells[_o] = cell[0] + idx;
+            cells[_o + 1] = cell[1] + idx;
+            cells[_o + 2] = cell[2] + idx;
+          } else {
+            cells.push([cell[0] + idx, cell[1] + idx, cell[2] + idx]);
+          }
         }
       } // cells.push(...mesh.cells.map(cell => cell.map(c => c + idx)));
 
@@ -12452,7 +12461,7 @@ function flattenMeshes(meshes, bufferCache) {
       }
 
       idx += mesh.positions.length;
-      cidx += mesh.cells.length;
+      if (hasCell) cidx += mesh.cells.length;
     }
   }
 
@@ -12460,12 +12469,15 @@ function flattenMeshes(meshes, bufferCache) {
   if (hasSourceRect && a_sourceRect && a_sourceRect.length > 0) attributes.a_sourceRect = a_sourceRect;
   var ret = {
     positions: positions,
-    cells: cells,
     attributes: attributes,
     uniforms: uniforms,
-    cellsCount: cidx * 3,
     program: program
   };
+
+  if (hasCell) {
+    ret.cells = cells;
+    ret.cellsCount = cidx * 3;
+  }
 
   if (textureCoord && textureCoord.length) {
     ret.textureCoord = textureCoord;
