@@ -1,7 +1,7 @@
 * Manual
   * [Getting Started](/en/)
   * [Drawing Meshes](/en/mesh)
-  * [Textrues and Text](/en/texture)
+  * [Textures and Text](/en/texture)
   * [Transform](/en/transform)
   * [Filters](/en/filter)
   * [Gradients](/en/gradient)
